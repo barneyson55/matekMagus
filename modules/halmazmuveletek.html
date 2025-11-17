@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Témakör: Halmazműveletek</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --brand-primary: #4A55A2;
+            --brand-secondary: #7895CB;
+            --brand-light: #A0BFE0;
+            --brand-background: #C5DFF8;
+            --text-dark: #2C3333;
+            --text-light: #393E46;
+            --bg-main: #FBFBFF;
+            --bg-card: #FFFFFF;
+            --border-color: #EAEFF2;
+            --success: #2ECC71;
+            --danger: #E74C3C;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-main);
+            color: var(--text-light);
+            padding: 40px;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: var(--brand-primary);
+            border-bottom: 2px solid var(--brand-background);
+            padding-bottom: 10px;
+            margin: 40px 0 20px 0;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        p,
+        li {
+            font-size: 1.1em;
+            line-height: 1.7;
+            max-width: 80ch;
+        }
+
+        ul {
+            padding-left: 25px;
+        }
+
+        b,
+        strong {
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .tab-button {
+            padding: 12px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--dark-gray);
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--brand-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: var(--brand-primary);
+        }
+
+        .tab-button.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .model-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            align-items: stretch;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .op-button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 14px 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-main);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .op-button.active,
+        .op-button:hover {
+            background-color: var(--brand-primary);
+            color: white;
+            border-color: var(--brand-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(74, 85, 162, 0.2);
+        }
+
+        #definition-box {
+            background-color: var(--bg-main);
+            border-radius: 8px;
+            padding: 20px;
+            flex-grow: 1;
+            border: 1px solid var(--border-color);
+        }
+
+        #definition-box p {
+            font-size: 1em;
+        }
+
+        .venn-region {
+            fill: var(--brand-secondary);
+            fill-opacity: 0;
+            transition: fill-opacity 0.3s ease;
+        }
+
+        .venn-region.active {
+            fill-opacity: 0.6;
+        }
+
+        .venn-circle,
+        .venn-universe {
+            fill: var(--brand-light);
+            stroke: var(--brand-primary);
+            stroke-width: 2;
+            fill-opacity: 0.1;
+        }
+
+        #instant-practice {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            display: none;
+        }
+
+        #instant-practice input {
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        #instant-practice button {
+            padding: 8px 15px;
+            border: none;
+            background-color: var(--brand-secondary);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #instant-feedback {
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .test-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-main);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .difficulty-selector button {
+            padding: 10px 18px;
+            border: 1px solid var(--border-color);
+            background-color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            margin: 0 5px;
+            transition: all 0.2s ease;
+        }
+
+        .difficulty-selector button.active {
+            background-color: var(--brand-primary);
+            color: white;
+            border-color: var(--brand-primary);
+            box-shadow: 0 4px 10px rgba(74, 85, 162, 0.2);
+        }
+
+        #start-test-btn,
+        #finish-test-btn {
+            padding: 12px 25px;
+            border: none;
+            background: linear-gradient(45deg, var(--success), #27AE60);
+            color: white;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px -5px var(--success);
+        }
+
+        #start-test-btn:hover,
+        #finish-test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px -5px var(--success);
+        }
+
+        #test-area {
+            display: none;
+        }
+
+        #pagination-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .dot {
+            width: 15px;
+            height: 15px;
+            background-color: var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dot.answered {
+            background-color: var(--success);
+        }
+
+        .dot.current {
+            box-shadow: 0 0 0 4px var(--brand-light);
+            transform: scale(1.2);
+        }
+
+        .question-box {
+            padding: 30px;
+            border-radius: 12px;
+            background-color: var(--bg-main);
+            min-height: 180px;
+            border: 1px solid var(--border-color);
+        }
+
+        .options label {
+            display: block;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .options label:hover {
+            border-color: var(--brand-primary);
+            transform: translateX(5px);
+        }
+
+        .options input[type=radio] {
+            display: none;
+        }
+
+        .options input[type=radio]:checked+label {
+            background-color: var(--brand-background);
+            border-color: var(--brand-primary);
+            font-weight: 600;
+            color: var(--brand-primary);
+        }
+
+        .options-input {
+            padding: 12px;
+            font-size: 1em;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            width: 250px;
+        }
+
+        .test-navigation {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            color: var(--brand-primary);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--brand-primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(74, 85, 162, 0.2);
+        }
+
+        .nav-btn:disabled {
+            background-color: var(--bg-main);
+            color: var(--border-color);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .result-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background-color: rgba(44, 51, 51, 0.9);
+            color: white;
+            padding: 30px 50px;
+            border-radius: 15px;
+            font-size: 2em;
+            opacity: 0;
+            transition: opacity 0.4s, transform 0.4s;
+            pointer-events: none;
+            z-index: 100;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .result-popup.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .result-popup span {
+            display: block;
+            font-size: 0.6em;
+            color: var(--brand-light);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Témakör: Halmazműveletek</h1>
+    <div class="tab-buttons">
+        <button class="tab-button active" onclick="openTab('miert')">Kulcsfogalmak</button>
+        <button class="tab-button" onclick="openTab('hogyan')">Vizuális Modell</button>
+        <button class="tab-button" onclick="openTab('teszt')">Teszt</button>
+    </div>
+
+    <div id="miert" class="tab-content active card">
+        <h2>Miért fontos?</h2>
+        <p>A <b>halmaz</b> a matematikában különböző dolgok, elemek egyértelműen meghatározott összessége. A halmaz
+            elemeit kapcsos zárójelek `{}` között, vesszővel elválasztva soroljuk fel, például: $A = \{1, 2, 3\}$.</p>
+        <p>A halmazműveletek segítségével logikai kapcsolatokat hozhatunk létre két vagy több halmaz között. Ezek a
+            műveletek a logika, a valószínűségszámítás és az informatika alapkövei.</p>
+        <h3>Kulcsfogalmak</h3>
+        <ul>
+            <li><b>Elem:</b> A halmazt alkotó objektum.</li>
+            <li><b>Alaphalmaz (U):</b> A vizsgált kontextusban lehetséges összes elemet tartalmazó halmaz.</li>
+            <li><b>Üres halmaz (∅):</b> Az a halmaz, amelynek egyetlen eleme sincs.</li>
+            <li><b>Részhalmaz:</b> 'A' minden eleme 'B'-nek is eleme.</li>
+            <li><b>Diszjunkt halmazok:</b> Két halmaz, melyeknek nincs közös elemük.</li>
+        </ul>
+        <h3>Jelölések</h3>
+        <ul>
+            <li>$2 \in A$: 2 <b>eleme</b> az A halmaznak.</li>
+            <li>$A \subset B$: A <b>részhalmaza</b> B-nek.</li>
+            <li>$A \cup B$: A és B halmazok <b>uniója</b> (egyesítése).</li>
+            <li>$A \cap B$: A és B halmazok <b>metszete</b> (közös része).</li>
+            <li>$A \setminus B$: A és B halmazok <b>különbsége</b>.</li>
+            <li>$\bar{A}$: Az A halmaz <b>komplementere</b> (az alaphalmazhoz képest).</li>
+            <li>$A \cap B = \emptyset$: A és B halmazok <b>diszjunktak</b>.</li>
+        </ul>
+    </div>
+    <div id="hogyan" class="tab-content card">
+        <div class="model-container">
+            <div class="controls">
+                <h3>Válassz egy műveletet!</h3>
+                <button class="op-button" data-op="union">Unió ( $A \cup B$ )</button>
+                <button class="op-button" data-op="intersection">Metszet ( $A \cap B$ )</button>
+                <button class="op-button" data-op="diff_a_b">Különbség ( $A \setminus B$ )</button>
+                <button class="op-button" data-op="diff_b_a">Különbség ( $B \setminus A$ )</button>
+                <button class="op-button" data-op="comp_a">Komplementer ( $\bar{A}$ )</button>
+                <div id="definition-box">
+                    <p>Kattints egy műveletre a definíció és a vizuális ábrázolás megtekintéséhez.</p>
+                </div>
+            </div>
+            <div class="venn-diagram-container">
+                <svg viewBox="0 0 400 250" id="venn-svg">
+                    <defs>
+                        <mask id="maskA">
+                            <rect x="0" y="0" width="400" height="250" fill="white" />
+                            <circle cx="150" cy="125" r="80" fill="black" />
+                        </mask>
+                        <mask id="maskB">
+                            <rect x="0" y="0" width="400" height="250" fill="white" />
+                            <circle cx="250" cy="125" r="80" fill="black" />
+                        </mask>
+                    </defs>
+                    <rect class="venn-universe" width="400" height="250" rx="12" />
+                    <rect class="venn-region" data-region="universe" width="400" height="250" rx="12"
+                        mask="url(#maskA)" />
+                    <path class="venn-region" data-region="A_only"
+                        d="M150,45 A80,80 0 0,0 150,205 A80,80 0 0,0 200,189.6 A80,80 0 0,1 200,50.4 A80,80 0 0,0 150,45 Z" />
+                    <path class="venn-region" data-region="B_only"
+                        d="M250,45 A80,80 0 0,0 200,50.4 A80,80 0 0,1 200,189.6 A80,80 0 0,0 250,205 A80,80 0 0,0 250,45 Z" />
+                    <path class="venn-region" data-region="intersection"
+                        d="M200,189.6 A80,80 0 0,1 150,205 A80,80 0 0,1 200,50.4 A80,80 0 0,1 250,45 A80,80 0 0,1 200,189.6 Z" />
+                    <circle cx="150" cy="125" r="80" class="venn-circle" />
+                    <circle cx="250" cy="125" r="80" class="venn-circle" />
+                    <text x="110" y="130" font-size="24" font-weight="bold">A</text>
+                    <text x="270" y="130" font-size="24" font-weight="bold">B</text>
+                    <text x="10" y="25" font-size="20" font-weight="bold">U</text>
+                </svg>
+            </div>
+        </div>
+        <div id="instant-practice">
+            <h3>Azonnali Gyakorlás</h3>
+            <p id="instant-q"></p>
+            <input type="text" id="instant-input" placeholder="Eredmény...">
+            <button id="instant-check">Ellenőrzés</button>
+            <p id="instant-feedback"></p>
+        </div>
+    </div>
+    <div id="teszt" class="tab-content card">
+        <h2>Tedd próbára a tudásod!</h2>
+        <div class="test-controls">
+            <div class="difficulty-selector">
+                <b>Nehézség:</b>
+                <button class="difficulty-btn active" data-difficulty="könnyű">Könnyű</button>
+                <button class="difficulty-btn" data-difficulty="közepes">Közepes</button>
+                <button class="difficulty-btn" data-difficulty="nehéz">Nehéz</button>
+            </div>
+            <button id="start-test-btn">Teszt indítása</button>
+        </div>
+        <div id="test-area">
+            <div id="pagination-dots"></div>
+            <div class="question-box" id="question-box">
+                <div id="question-text"></div>
+                <div id="answer-area"></div>
+            </div>
+            <div class="test-navigation">
+                <button id="prev-q" class="nav-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg></button>
+                <h3><span id="current-q-num">1</span> / 10. kérdés</h3>
+                <button id="next-q" class="nav-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg></button>
+            </div>
+            <hr style="margin: 25px 0; border: 1px solid var(--border-color);">
+            <button id="finish-test-btn" style="width: 100%;">Teszt befejezése és értékelés</button>
+        </div>
+    </div>
+    <div class="result-popup" id="resultPopup"></div>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });">
+        </script>
+
+<script>
+        const TOPIC_ID = 'halmazmuveletek'; let currentDifficulty = 'könnyű'; let isTestActive = false; let questions = []; let currentQuestionIndex = 0;
+        
+        const questionBanks = {
+            könnyű: [ { type: 'mc', q: "$A = \\{1, 2, 5\\}, B = \\{2, 3, 5\\}$. Mi az $A \\cup B$?", o: ["$\\{2, 5\\}$", "$\\{1, 2, 3, 5\\}$", "$\\{1, 3\\}$"], a: 1 }, { type: 'mc', q: "$A = \\{a, b, c\\}, B = \\{b, d\\}$. Mi az $A \\cap B$?", o: ["$\\{a, c, d\\}$", "$\\{b\\}$", "$\\{a, b, c, d\\}$"], a: 1 }, { type: 'input', q: "$A = \\{4, 8, 12\\}, B = \\{8, 10\\}$. Mi az $A \\setminus B$? Írd be az elemeket vesszővel!", a: "4,12" }, { type: 'mc', q: "Melyik jelöli az üres halmazt?", o: ["$U$", "$\\emptyset$", "$A'$"], a: 1 }, { type: 'mc', q: "$A = \\{1, 2\\}, B = \\{1, 2, 3\\}$. Melyik állítás igaz?", o: ["$A \\subset B$", "$B \\subset A$", "$A = B$"], a: 0 }, { type: 'input', q: "$A = \\{10, 20\\}, B = \\{20, 30\\}$. Mi az $A \\cap B$? Írd be az elemet!", a: "20" }, { type: 'mc', q: "Ha egy elem A-ban és B-ben is benne van, akkor eleme a ...?", o: ["metszetüknek", "csak A-nak", "különbségüknek"], a: 0 }, { type: 'input', q: "$K = \\{a,b,c\\}, L = \\{c,d,e\\}$. Mi a $K \\cup L$? Írd be az elemeket vesszővel!", a: "a,b,c,d,e" }, { type: 'mc', q: "Mi az $A \\setminus A$ művelet eredménye?", o: ["$A$", "$U$", "$\\emptyset$"], a: 2 }, { type: 'mc', q: "Ha $A \\cap B = \\emptyset$, akkor a két halmaz...", o: ["egyenlő", "diszjunkt", "részhalmazai egymásnak"], a: 1 }, ],
+            közepes: [ { type: 'input', q: "$U = \\{1,2,3,4,5\\}, A = \\{1,3\\}$. Mi az $\\bar{A}$?", a: "2,4,5" }, { type: 'mc', q: "Hány részhalmaza van egy 3 elemű halmaznak?", o: ["6", "8", "9"], a: 1 }, { type: 'input', q: "$A=\\{1,2\\}, B=\\{3,4\\}$. Mi $(A \\cup B) \\cap A$?", a: "1,2" }, { type: 'mc', q: "$A=\\{1,2,3\\}, B=\\{2,3,4\\}$. Hány eleme van a $(A \\setminus B) \\cup (B \\setminus A)$ halmaznak?", o: ["1", "2", "4"], a: 1 }, { type: 'mc', q: "Melyik igaz: $A \\cup \\emptyset = $?", o: ["$A$", "$U$", "$\\emptyset$"], a: 0 }, { type: 'mc', q: "Melyik igaz: $A \\cap U = $?", o: ["$U$", "$\\emptyset$", "$A$"], a: 2 }, { type: 'input', q: "Páros számok halmaza ($P$), Prímszámok halmaza ($T$). Mi $P \\cap T$?", a: "2" }, { type: 'mc', q: "Mi $(\\bar{A})$ komplementere?", o: ["$\\emptyset$", "$U$", "$A$"], a: 2 }, { type: 'mc', q: "Hogyan nevezzük az $(A \\setminus B) \\cup (B \\setminus A)$ műveletet?", o: ["De Morgan-azonosság", "Szimmetrikus differencia", "Asszociativitás"], a: 1 }, { type: 'input', q: "$A=\\{5,10,15\\}, B=\\{10,20\\}$. Mi $B \\setminus A$?", a: "20" } ],
+            nehéz: [ { type: 'mc', q: "Mivel egyenlő $(A \\cup B) \\cap A$?", o:["$A$", "$B$", "$A \\cup B$"], a:0 }, { type: 'mc', q: "A De Morgan-azonosság szerint $\\overline{A \\cup B} = $...", o: ["$\\bar{A} \\cup \\bar{B}$", "$\\bar{A} \\cap \\bar{B}$", "$\\overline{A \\cap B}$"], a: 1 }, { type: 'input', q: "$A=\\{x|x<5, x\\in\\mathbb{N}\\}, B=\\{\\text{páros számok}\\}$. Mi $A\\cap B$?", a:"2,4"}, { type: 'mc', q: "Egy osztályban 15-en tanulnak angolt, 12-en németet. 5-en mindkettőt. Hányan tanulnak legalább egy nyelvet?", o: ["27", "22", "32"], a: 1 }, { type: 'mc', q: "$|A|=5, |B|=4, |A\\cup B|=7$. Mennyi $|A\\cap B|$?", o: ["2", "3", "9"], a: 0 }, { type: 'mc', q: "Mivel egyenlő $A \\cup (A \\cap B)$?", o: ["$A \\cap B$", "$B$", "$A$"], a: 2 }, { type: 'input', q: "$U=\\{1..10\\}, A=\\{\\text{páros}\\}, B=\\{3-mal osztható\\}$. Mi $\\overline{A\\cup B}$?", a: "1,5,7" }, { type: 'mc', q: "$|A|=10, |B|=8$, A és B diszjunktak. Mennyi $|A\\cup B|$?", o: ["Nem lehet tudni", "2", "18"], a: 2 }, { type: 'mc', q: "Mivel egyenlő $(A \\setminus B) \\cap B$?", o: ["$A$", "$\\emptyset$", "$B$"], a: 1 }, { type: 'input', q: "$A=\\{\\text{prímek 10-ig}\\}, B=\\{\\text{páratlanok 10-ig}\\}$. Mi $(A\\cup B)\\setminus(A\\cap B)$?", a: "1,2,9" } ]
+        };
+        const dom = {
+            tabButtons: document.querySelectorAll('.tab-button'), tabContents: document.querySelectorAll('.tab-content'),
+            difficultyBtns: document.querySelectorAll('.difficulty-btn'), startTestBtn: document.getElementById('start-test-btn'),
+            testArea: document.getElementById('test-area'), dotsContainer: document.getElementById('pagination-dots'),
+            questionBox: document.getElementById('question-box'), questionText: document.getElementById('question-text'), 
+            answerArea: document.getElementById('answer-area'), prevBtn: document.getElementById('prev-q'), 
+            nextBtn: document.getElementById('next-q'), finishTestBtn: document.getElementById('finish-test-btn'), 
+            resultPopup: document.getElementById('resultPopup'), currentQNum: document.getElementById('current-q-num'), 
+            opButtons: document.querySelectorAll('.op-button'), definitionBox: document.getElementById('definition-box'), 
+            vennSvg: document.getElementById('venn-svg'), instantPractice: document.getElementById('instant-practice'), 
+            instantQ: document.getElementById('instant-q'), instantInput: document.getElementById('instant-input'), 
+            instantCheck: document.getElementById('instant-check'), instantFeedback: document.getElementById('instant-feedback')
+        };
+        
+        function openTab(tabName) { dom.tabContents.forEach(t => t.classList.remove('active')); document.getElementById(tabName).classList.add('active'); dom.tabButtons.forEach(b => b.classList.remove('active')); document.querySelector(`.tab-button[onclick="openTab('${tabName}')"]`).classList.add('active'); }
+
+        const operations = {
+            union: { def: "<p><b>Unió ($A \\cup B$):</b> Azok az elemek, amelyek <b>legalább az egyik</b> halmazban benne vannak.</p>", regions: ['A_only', 'B_only', 'intersection'], practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $A \\cup B$?", a: "1,2,3" } },
+            intersection: { def: "<p><b>Metszet ($A \\cap B$):</b> Azok az elemek, amelyek <b>mindkét</b> halmazban benne vannak.</p>", regions: ['intersection'], practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $A \\cap B$?", a: "2" } },
+            diff_a_b: { def: "<p><b>Különbség ($A \\setminus B$):</b> Azok az elemek, amelyek <b>A-ban benne vannak, de B-ben nem</b>.</p>", regions: ['A_only'], practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $A\\setminus B$?", a: "1" } },
+            diff_b_a: { def: "<p><b>Különbség ($B \\setminus A$):</b> Azok az elemek, amelyek <b>B-ben benne vannak, de A-ban nem</b>.</p>", regions: ['B_only'], practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $B\\setminus A$?", a: "3" } },
+            comp_a: { def: "<p><b>Komplementer ($\\bar{A}$):</b> Azok az elemek, amelyek az alaphalmazban (U) benne vannak, de az <b>A halmazban nem</b>.</p>", regions: ['universe'], practice: { q: "$U=\\{1,2,3,4\\}, A=\\{1,2\\}$. Mi az $\\bar{A}$?", a: "3,4" } }
+        };
+
+        dom.opButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                dom.opButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active');
+                const op = button.dataset.op;
+                document.querySelectorAll('.venn-region').forEach(r => r.classList.remove('active'));
+                operations[op].regions.forEach(r => dom.vennSvg.querySelector(`[data-region="${r}"]`).classList.add('active'));
+                dom.definitionBox.innerHTML = operations[op].def;
+                
+                dom.instantPractice.style.display = 'block';
+                dom.instantQ.textContent = operations[op].practice.q;
+                dom.instantCheck.onclick = () => checkInstantAnswer(operations[op].practice.a);
+                dom.instantInput.value = ''; dom.instantFeedback.textContent = '';
+                
+                const renderOptions = { delimiters: [ {left: '$', right: '$', display: false} ] };
+                renderMathInElement(dom.definitionBox, renderOptions);
+                renderMathInElement(dom.instantPractice, renderOptions);
+            });
+        });
+
+        function checkInstantAnswer(correctAnswer) { const userAnswer = dom.instantInput.value.replace(/\s/g, ''); const correctSet = new Set(correctAnswer.split(',')); const answerSet = new Set(userAnswer.split(',')); if (correctSet.size === answerSet.size && [...correctSet].every(item => answerSet.has(item))) { dom.instantFeedback.textContent = "Helyes! ✅"; dom.instantFeedback.style.color = "var(--success)"; } else { dom.instantFeedback.textContent = "Próbáld újra! ❌"; dom.instantFeedback.style.color = "var(--danger)"; } }
+        
+        dom.difficultyBtns.forEach(btn => btn.addEventListener('click', () => { if (!isTestActive) { currentDifficulty = btn.dataset.difficulty; dom.difficultyBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); } }));
+        dom.startTestBtn.addEventListener('click', () => { isTestActive = true; questions = [...questionBanks[currentDifficulty]].map(q => ({...q, userAnswer: null})); currentQuestionIndex = 0; dom.startTestBtn.style.display = 'none'; dom.testArea.style.display = 'block'; renderPagination(); renderQuestion(); });
+        dom.prevBtn.addEventListener('click', () => { if(currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); renderPagination(); } });
+        dom.nextBtn.addEventListener('click', () => { if(currentQuestionIndex < questions.length - 1) { currentQuestionIndex++; renderQuestion(); renderPagination(); } });
+
+        function renderPagination() { dom.dotsContainer.innerHTML = ''; questions.forEach((q, index) => { const dot = document.createElement('div'); dot.className = 'dot'; if (index === currentQuestionIndex) dot.classList.add('current'); if (q.userAnswer !== null) dot.classList.add('answered'); dot.addEventListener('click', () => { currentQuestionIndex = index; renderQuestion(); renderPagination(); }); dom.dotsContainer.appendChild(dot); }); }
+
+        function renderQuestion() {
+            const q = questions[currentQuestionIndex];
+            dom.questionText.innerHTML = `<p>${q.q}</p>`;
+            dom.answerArea.innerHTML = '';
+            if (q.type === 'mc') {
+                const optionsHTML = q.o.map((option, index) => `<input type="radio" name="answer" id="opt${index}" value="${index}" ${q.userAnswer === index ? 'checked' : ''} onchange="saveAnswer()"><label for="opt${index}">${option}</label>`).join('');
+                dom.answerArea.innerHTML = `<div class="options">${optionsHTML}</div>`;
+            } else if (q.type === 'input') {
+                dom.answerArea.innerHTML = `<input type="text" class="options-input" placeholder="pl: 1,2,3" value="${q.userAnswer || ''}" oninput="saveAnswer()">`;
+            }
+            dom.currentQNum.textContent = currentQuestionIndex + 1;
+            dom.prevBtn.disabled = currentQuestionIndex === 0;
+            dom.nextBtn.disabled = currentQuestionIndex === questions.length - 1;
+            renderMathInElement(dom.questionBox, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });
+        }
+
+        function saveAnswer() { const q = questions[currentQuestionIndex]; if (q.type === 'mc') { const selected = document.querySelector('input[name="answer"]:checked'); if (selected) q.userAnswer = parseInt(selected.value); } else if (q.type === 'input') { q.userAnswer = document.querySelector('.options-input').value.replace(/\s/g, ''); } renderPagination(); }
+
+        dom.finishTestBtn.addEventListener('click', () => {
+            finishTest(); // Itt hívjuk meg a különálló finishTest függvényt
+        });
+
+        function finishTest() {
+            let correct = 0;
+            questions.forEach(q => {
+                if(q.type === 'mc' && q.userAnswer === q.a) correct++;
+                else if (q.type === 'input') {
+                    const correctSet = new Set(q.a.split(','));
+                    const answerSet = new Set((q.userAnswer || "").split(','));
+                    if (correctSet.size === answerSet.size && [...correctSet].every(item => answerSet.has(item))) correct++;
+                }
+            });
+            const percentage = (correct / questions.length) * 100;
+            let grade = 0; let feedback = "";
+            if (percentage < 40) { grade = 1; feedback = "Elégtelen (1)"; }
+            else if (percentage < 55) { grade = 2; feedback = "Elégséges (2)"; }
+            else if (percentage < 70) { grade = 3; feedback = "Közepes (3)"; }
+            else if (percentage < 85) { grade = 4; feedback = "Jó (4)"; }
+            else { grade = 5; feedback = "Jeles (5)"; }
+            
+            showResultPopup(`Sikeres Teszt! <span>Eredmény: ${percentage.toFixed(0)}% - ${feedback}</span>`);
+            
+            const resultObject = {
+                topicId: TOPIC_ID,
+                topicName: "Halmazműveletek",
+                difficulty: currentDifficulty,
+                grade: grade,
+                percentage: percentage.toFixed(0),
+                timestamp: new Date().toISOString(),
+                questions: questions.map(q => ({
+                    question: q.q,
+                    options: q.o,
+                    correctAnswer: q.a,
+                    userAnswer: q.userAnswer
+                }))
+            };
+            
+            window.parent.postMessage({ type: 'testResult', result: resultObject }, '*');
+            
+            isTestActive = false;
+            dom.testArea.style.display = 'none';
+            dom.startTestBtn.style.display = 'block';
+        }
+
+        function showResultPopup(message) {
+            dom.resultPopup.innerHTML = message;
+            dom.resultPopup.classList.add('show');
+            setTimeout(() => { dom.resultPopup.classList.remove('show'); }, 4000);
+        }
+        
+        openTab('miert');
+    </script>
+</body>
+
+</html>

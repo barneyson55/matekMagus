@@ -1,0 +1,14 @@
+{
+  "name": "matek-mester",
+  "version": "0.1.0",
+  "description": "Interaktív matematika oktatóprogram a magyar diákoknak.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "BarneySmith",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^25.0.0" 
+  }
+}

@@ -1,0 +1,184 @@
+📚 1. Alapozó Modulok
+Gondolkodási módszerek, Halmazok
+
+Halmazműveletek (metszet, unió, különbség)
+
+Logikai szita formula
+
+Skaluly-elv, párosítások
+
+Számelmélet és Számrendszerek
+
+Oszthatósági szabályok
+
+Legnagyobb közös osztó, legkisebb közös többszörös
+
+Prímszámok, prímtényezős felbontás
+
+Számrendszerek (2-es, 10-es, stb.)
+
+Racionális számok
+
+Törtek és műveletek
+
+Tizedes törtek, átváltások
+
+Százalékszámítás
+
+Hatvány, Gyök, Logaritmus
+
+Hatványozás azonosságai (egész, racionális kitevő)
+
+Négyzetgyök, n-edik gyök
+
+A logaritmus fogalma és azonosságai
+
+📐 2. Algebra és Függvények
+Algebrai kifejezések
+
+Műveletek polinomokkal
+
+Nevezetes azonosságok
+
+Algebrai törtek egyszerűsítése
+
+Egyenletek, Egyenlőtlenségek
+
+Lineáris egyenletek, egyenletrendszerek
+
+Másodfokú egyenlet (megoldóképlet, diszkrimináns)
+
+Viète-formulák
+
+Paraméteres másodfokú egyenletek
+
+Abszolútértékes, gyökös, exponenciális, logaritmikus egyenletek
+
+Függvények Általános Tulajdonságai
+
+Értelmezési tartomány, értékkészlet
+
+Monotonitás, szélsőérték, zérushely
+
+Paritás (páros, páratlan)
+
+Függvénytranszformációk (eltolás, nyújtás)
+
+Nevezetes Függvények
+
+Lineáris függvény és ábrázolása
+
+Másodfokú függvény (parabola)
+
+Hatványfüggvények
+
+Exponenciális és logaritmus függvény
+
+Trigonometrikus függvények (sin, cos, tan, ctg)
+
+Abszolútérték-függvény, gyökfüggvény
+
+🗺️ 3. Geometria
+Alapfogalmak és Háromszögek
+
+Nevezetes vonalak (magasság, súlyvonal, szögfelező)
+
+Háromszög-egyenlőtlenség
+
+Pitagorasz-tétel, Befogó- és Magasságtétel
+
+Szinusztétel, Koszinusztétel
+
+Négyszögek és Sokszögek
+
+Terület- és kerületszámítás
+
+Húrnégyszögek, érintőnégyszögek
+
+A Kör
+
+Kerületi és középponti szögek tétele
+
+Látókörív
+
+Kör és egyenes, kör és kör kölcsönös helyzete
+
+Geometriai Transzformációk
+
+Tengelyes és középpontos tükrözés
+
+Eltolás, elforgatás
+
+Középpontos hasonlóság
+
+Koordinátageometria
+
+Vektorok a síkban és a térben (skaláris szorzat)
+
+Pont, szakasz, egyenes egyenlete
+
+Kör egyenlete
+
+Két alakzat metszéspontja
+
+Térgeometria
+
+Hasábok, gúlák felszíne és térfogata
+
+Forgástestek (henger, kúp, gömb) felszíne és térfogata
+
+🎲 4. Valószínűségszámítás és Statisztika
+Kombinatorika
+
+Permutációk (ismétléses, ismétlés nélküli)
+
+Variációk (ismétléses, ismétlés nélküli)
+
+Kombinációk (ismétléses, ismétlés nélküli)
+
+Binomiális tétel
+
+Valószínűségszámítás
+
+Klasszikus valószínűségi modell
+
+Geometriai valószínűség
+
+Feltételes valószínűség, események függetlensége
+
+Statisztika
+
+Adatok ábrázolása (diagramok)
+
+Középértékek (átlag, medián, módusz)
+
+Szóródási mutatók (terjedelem, szórás)
+
+📈 5. Emelt Szintű Kiegészítések
+Sorozatok
+
+Számtani és mértani sorozatok
+
+Kamatoskamat-számítás
+
+A mértani sorozat konvergenciája
+
+Analízis Elemek (Differenciálszámítás)
+
+Függvény határértéke, folytonossága
+
+A derivált fogalma (geometriai, fizikai)
+
+Deriválási szabályok
+
+Függvényvizsgálat deriválttal (szélsőérték, monotonitás)
+
+Analízis Elemek (Integrálszámítás)
+
+A határozatlan integrál (primitív függvény)
+
+A határozott integrál fogalma (területszámítás)
+
+Newton-Leibniz formula
+
+Térfogatszámítás integrállal

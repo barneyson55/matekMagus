@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Eredményeim</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        :root { --brand-primary: #4A55A2; --brand-secondary: #7895CB; --text-dark: #2C3333; --bg-main: #FBFBFF; --border-color: #EAEFF2; --grade-1: #E74C3C; --grade-2: #F39C12; --grade-3: #F1C40F; --grade-4: #27AE60; --grade-5: #2ECC71; --font-main: 'Inter', sans-serif; --success: #2ECC71; --danger: #E74C3C; }
+        body { font-family: var(--font-main); background-color: var(--bg-main); color: var(--text-dark); padding: 40px; margin: 0; }
+        h1 { font-size: 2.5em; color: var(--text-dark); font-weight: 700; margin-bottom: 30px; border-bottom: 2px solid var(--brand-background); padding-bottom: 15px; }
+        #results-container { display: grid; gap: 20px; }
+        .result-item { background-color: #FFFFFF; border-radius: 12px; padding: 20px; box-shadow: 0 5px 20px -10px rgba(0,0,0,0.1); border: 1px solid var(--border-color); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 20px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .result-item:hover { transform: translateY(-3px); box-shadow: 0 8px 25px -8px rgba(0,0,0,0.15); }
+        .grade-badge { font-size: 1.8em; font-weight: 700; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
+        .grade-1 { background-color: var(--grade-1); } .grade-2 { background-color: var(--grade-2); } .grade-3 { background-color: var(--grade-3); } .grade-4 { background-color: var(--grade-4); } .grade-5 { background-color: var(--grade-5); }
+        .result-details h3 { margin: 0 0 5px 0; font-size: 1.2em; color: var(--brand-primary); }
+        .result-details p { margin: 0; color: #576574; font-size: 0.9em; }
+        .result-actions button { padding: 10px 18px; border: none; background-color: var(--brand-secondary); color: white; font-weight: 500; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; }
+        .result-actions button:hover { background-color: var(--brand-primary); }
+        .no-results { text-align: center; padding: 50px; color: #7f8c8d; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
+        .modal.active { display: flex; align-items: center; justify-content: center; }
+        .modal-content { background-color: var(--bg-main); margin: auto; padding: 30px; border: 1px solid var(--border-color); border-radius: 15px; width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; }
+        .modal-close { color: #aaa; position: absolute; top: 15px; right: 25px; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .question-review { border-bottom: 1px solid var(--border-color); padding: 15px 0; }
+        .question-review:last-child { border-bottom: none; }
+        .user-answer { padding: 8px; border-radius: 5px; margin-top: 5px; border: 2px solid; }
+        .user-answer.correct { background-color: #eafaf1; border-color: var(--success); }
+        .user-answer.incorrect { background-color: #fbeeed; border-color: var(--danger); }
+        .correct-answer { margin-top: 10px; font-weight: 500; color: var(--success); }
+    </style>
+</head>
+<body>
+    <h1>Eredményeim</h1>
+    <div id="results-container"></div>
+
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close-btn">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderAllMath()">
+    </script>
+    <script>
+        function renderAllMath() { renderMathInElement(document.body, { delimiters: [ {left: '$', right: '$', display: false} ] }); }
+
+        const container = document.getElementById('results-container');
+        const modal = document.getElementById('details-modal');
+        const modalBody = document.getElementById('modal-body');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            container.innerHTML = `<div class="no-results"><p>Eredmények betöltése...</p></div>`;
+            window.parent.postMessage({ type: 'get-all-results' }, '*');
+            window.addEventListener('message', (event) => {
+                if (event.data.type === 'all-results-response') {
+                    const results = event.data.results;
+                    container.innerHTML = '';
+                    if (!results || results.length === 0) {
+                        container.innerHTML = `<div class="no-results"><h3>Még nincsenek mentett teszteredmények.</h3><p>Tölts ki egy tesztet, és az eredmény itt fog megjelenni!</p></div>`;
+                        return;
+                    }
+
+                    results.forEach(result => {
+                        if (!result || !result.timestamp) return;
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'result-item';
+                        const date = new Date(result.timestamp).toLocaleString('hu-HU', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                        resultItem.innerHTML = `<div class="grade-badge grade-${result.grade}">${result.grade}</div> <div class="result-details"> <h3>${result.topicName}</h3> <p><b>Nehézség:</b> ${result.difficulty} | <b>Eredmény:</b> ${result.percentage}% | <b>Dátum:</b> ${date}</p> </div> <div class="result-actions"><button>Részletek</button></div>`;
+                        const detailsBtn = resultItem.querySelector('button');
+                        detailsBtn.addEventListener('click', () => showDetails(result));
+                        container.appendChild(resultItem);
+                    });
+                }
+            });
+        });
+
+        function showDetails(result) {
+            let detailsHTML = `<h2>${result.topicName} - Kiértékelés</h2>`;
+            result.questions.forEach((q, index) => {
+                const isCorrect = q.userAnswer === q.correctAnswer;
+                const userAnswerText = q.options ? q.options[q.userAnswer] : q.userAnswer;
+                const correctAnswerText = q.options ? q.options[q.correctAnswer] : q.correctAnswer;
+                detailsHTML += `<div class="question-review"> <p><b>${index + 1}. kérdés:</b> ${q.question}</p> <div class="user-answer ${isCorrect ? 'correct' : 'incorrect'}"> Te válaszod: ${userAnswerText || '<i>(nem válaszolt)</i>'} </div> ${!isCorrect ? `<div class="correct-answer">Helyes válasz: ${correctAnswerText}</div>` : ''} </div>`;
+            });
+            modalBody.innerHTML = detailsHTML;
+            modal.classList.add('active');
+            renderAllMath();
+        }
+
+        function closeDetails() { modal.classList.remove('active'); modalBody.innerHTML = ''; }
+        modalCloseBtn.addEventListener('click', closeDetails);
+        modal.addEventListener('click', (event) => { if (event.target === modal) { closeDetails(); } });
+    </script>
+</body>
+</html>

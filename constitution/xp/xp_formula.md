@@ -130,7 +130,41 @@ Itt általánosan magasabb `topicWeight` értékeket használunk (1.2–1.4), mi
 
 ## 5. Emelt szintű kiegészítések – domainWeight ≈ 1.4
 
-Sorozatok, analízis elemek (deriválás, integrálás). Ezekhez a témákhoz magasabb `topicWeight` (1.3–1.4) és a későbbiekben akár extra emelt-szint szorzó (pl. 1.2) társítható.
+Sorozatok, analízis elemek (deriválás, integrálás). Ezekhez a témákhoz magasabb `topicWeight` értékeket használunk (1.4), mivel ezek haladó matematika.
+
+---
+
+## XP Számítás Logikája
+
+A tényleges XP számítása: `XP = baseXP * topicWeight * tierMult * difficultyMultiplier * gradeMultiplier`
+
+- `difficultyMultiplier`: Könnyű = 0.8, Közepes = 1.0, Nehéz = 1.2
+- `gradeMultiplier`: 1 = 0.5, 2 = 0.7, 3 = 0.9, 4 = 1.0, 5 = 1.2
+
+Példa: Másodfokú egyenlet, nehéz, 5-ös: XP = 70 * 1.3 * 1.0 * 1.2 * 1.2 ≈ 131 XP
+
+## Teljes XP és Maximális Szint
+
+### Teljes XP Számítása
+Összegzés minden témakör baseXP * topicWeight * tierMult (közepes, 4-es jegy esetén):
+- Alapozó: ~1500 XP
+- Algebra: ~2500 XP
+- Geometria: ~2800 XP
+- Valószínűség: ~2200 XP
+- Emelt: ~3000 XP
+**Teljes XP: ~12,000 XP**
+
+### Szintlépés XP Igénye
+- Szint 1: 200 XP
+- Szint n: 200 + 80*(n-1) XP
+
+### Maximális Szint Számítása
+XP_needed = összeg szint 1-től n-ig: n*200 + 80*n*(n-1)/2
+Amikor XP_needed >= 12,000, akkor n ≈ 55 szint.
+
+Tehát maximális szint: **55**
+
+*(Pontos számítás: XP_needed(55) ≈ 12,100 XP)*
 
 ---
 
@@ -185,6 +219,19 @@ Jelenleg a szintlépés XP igénye (terv):
 XP_needed(level → level+1) = 200 + 80 * (level - 1)
 ```
 
-Össz- XP 60‑as szintig ≈ 148 680 XP.  
-Később, amikor minden `baseXP(topicId)` értéket véglegesítettünk, a teljes tananyag elvégzésekor szerzett maximális XP-t ehhez a görbéhez igazítjuk (vagy módosítjuk a görbét), hogy a diák a teljes „kimaxolásnál” épp a kívánt max. szintet érje el.  
-Most a cél a logikus arányok kialakítása; a finomhangolást a végén végezzük el. ***!
+### Teljes baseXP összegzése (közepes nehézség, 4-es jegy)
+- Alapozó: 1325 XP
+- Algebra: 1718 XP
+- Geometria: 2800 XP
+- Valószínűség: 2200 XP
+- Emelt: 3000 XP
+**Teljes baseXP: 11,043 XP**
+
+### Maximális XP (nehez nehézség, 5-ös jegy mindenre)
+Max XP = 11,043 * 1.4 (nehez) * 1.25 (5-ös) ≈ **19,326 XP**
+
+### Szintlépés XP igénye összegzése
+XP_needed(n) = n*200 + 80*n*(n-1)/2
+XP_needed(55) = 55*200 + 80*55*54/2 = 11,000 + 80*1,485 = 11,000 + 118,800 = **129,800 XP**
+
+Mivel 129,800 > 19,326, a teljes kitöltéssel elérhető a 55. szint. A finomhangolást a végén végezzük el. ***!

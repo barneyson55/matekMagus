@@ -12,59 +12,77 @@
         .results-btn { background-color: var(--brand-secondary); color: white !important; font-weight: 600 !important; margin-bottom: 20px !important; justify-content: center !important; }
         .results-btn:hover { background-color: var(--brand-primary) !important; }
         .results-btn.active { background-color: var(--brand-primary) !important; }
+        .xp-widget { background-color: #25272b; border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05); }
+        .xp-widget h2 { margin: 0 0 8px 0; font-size: 18px; }
+        .xp-widget p { margin: 4px 0 0 0; font-size: 13px; color: #b9bbbe; }
+        .xp-bar { width: 100%; height: 10px; background-color: #1a1c1f; border-radius: 999px; overflow: hidden; margin: 10px 0; }
+        .xp-bar-fill { height: 100%; background: linear-gradient(90deg, #7c5cff, #a855f7); width: 0%; transition: width 0.4s ease; }
+        .xp-widget .xp-meta { display: flex; justify-content: space-between; font-size: 13px; color: #b9bbbe; }
     </style>
 </head>
 <body>
     <div class="app-container">
         <nav class="sidebar">
             <div>
-                <h1 class="sidebar-title">Matek Mester 🧠</h1>
-                <a href="#" class="module-link results-btn" id="results-btn">📈 Eredményeim</a>
+                <h1 class="sidebar-title">Matek Mester</h1>
+                <a href="#" class="module-link results-btn" id="results-btn">Eredm&#233;nyeim</a>
+                <div class="xp-widget">
+                    <div class="xp-meta">
+                        <span id="xp-level-label">Szint 1</span>
+                        <span id="xp-total-label">0 XP</span>
+                    </div>
+                    <div class="xp-bar">
+                        <div class="xp-bar-fill" id="xp-bar-fill"></div>
+                    </div>
+                    <p id="xp-progress-text">0 / 200 XP a k&#246;vetkez&#337; szintig</p>
+                </div>
+                <a href="#" class="module-link" data-src="modules/xp_guide.html" data-topic-id="xp_guide">XP rendszer s&#250;g&#243;<span class="status grade-0" data-grade-for="xp_guide"></span></a>
+                <a href="#" class="module-link" data-src="modules/settings.html" data-topic-id="settings">Be&#225;ll&#237;t&#225;sok<span class="status grade-0" data-grade-for="settings"></span></a>
             </div>
             <div class="module-list">
 
                 <details>
                     <summary>
                         <a href="#" class="module-link main-topic" data-src="modules/alapozo_modulzaro.html"
-                            data-topic-id="alapozo_modulzaro">📚 Alapozó Modulok</a>
+                            data-topic-id="alapozo_modulzaro">&#173;&#269;&#244;&#220; Alapoz&#9500;&#9474; Modulok</a>
                         <span class="status grade-0" data-grade-for="alapozo_modulzaro"></span>
                     </summary>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/gondolkodas_temazaro.html"
-                                data-topic-id="gondolkodas_temazaro">Gondolkodási módszerek, Halmazok</a>
+                                data-topic-id="gondolkodas_temazaro">Gondolkod&#225;si m&#243;dszerek, Halmazok</a>
                             <span class="status grade-0" data-grade-for="gondolkodas_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/halmazmuveletek.html"
-                                    data-topic-id="halmazmuveletek">Halmazműveletek<span class="status grade-0"
+                                    data-topic-id="halmazmuveletek">Halmazm&#9532;&#9618;veletek<span class="status grade-0"
                                         data-grade-for="halmazmuveletek"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/logikai_szita.html"
                                     data-topic-id="logikai_szita">Logikai szita formula<span class="status grade-0"
                                         data-grade-for="logikai_szita"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/skatulya_elv.html"
-                                    data-topic-id="skatulya_elv">Skatulya-elv, párosítások<span class="status grade-0"
+                                    data-topic-id="skatulya_elv">Skatulya-elv, p&#9500;&#237;ros&#9500;&#351;t&#9500;&#237;sok<span class="status grade-0"
                                         data-grade-for="skatulya_elv"></span></a></li>
                         </ul>
                     </details>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/szamelmelet_temazaro.html"
-                                data-topic-id="szamelmelet_temazaro">Számelmélet és Számrendszerek</a>
+                                data-topic-id="szamelmelet_temazaro">Sz&#9500;&#237;melm&#9500;&#281;let &#9500;&#281;s Sz&#9500;&#237;mrendszerek</a>
                             <span class="status grade-0" data-grade-for="szamelmelet_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/oszthatosag.html"
-                                    data-topic-id="oszthatosag">Oszthatósági szabályok<span class="status grade-0"
+                                    data-topic-id="oszthatosag">Oszthat&#243;s&#225;gi szab&#225;lyok<span class="status grade-0"
                                         data-grade-for="oszthatosag"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/lnko_lkkt.html"
                                     data-topic-id="lnko_lkkt">LNKO, LKKT<span class="status grade-0"
                                         data-grade-for="lnko_lkkt"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/primtenyezok.html"
-                                    data-topic-id="primtenyezok">Prímtényezős felbontás<span class="status grade-0"
+                                    data-topic-id="primtenyezok">Pr&#9500;&#351;mt&#9500;&#281;nyez&#9532;&#313;s felbont&#9500;&#237;s<span class="status grade-0"
                                         data-grade-for="primtenyezok"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/szamrendszerek.html"
-                                    data-topic-id="szamrendszerek">Számrendszerek<span class="status grade-0"
+                                    data-topic-id="szamrendszerek">Sz&#225;mrendszerek<span class="status grade-0"
                                         data-grade-for="szamrendszerek"></span></a></li>
                         </ul>
                     </details>
@@ -72,33 +90,33 @@
                         <summary>
                             <a href="#" class="module-link main-topic"
                                 data-src="modules/racionalis_szamok_temazaro.html"
-                                data-topic-id="racionalis_szamok_temazaro">Racionális számok</a>
+                                data-topic-id="racionalis_szamok_temazaro">Racion&#225;lis sz&#225;mok</a>
                             <span class="status grade-0" data-grade-for="racionalis_szamok_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/tortek.html"
-                                    data-topic-id="tortek">Törtek és műveletek<span class="status grade-0"
+                                    data-topic-id="tortek">T&#9500;&#194;rtek &#9500;&#281;s m&#9532;&#9618;veletek<span class="status grade-0"
                                         data-grade-for="tortek"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/tizedes_tortek.html"
-                                    data-topic-id="tizedes_tortek">Tizedes törtek, átváltások<span
+                                    data-topic-id="tizedes_tortek">Tizedes t&#9500;&#194;rtek, &#9500;&#237;tv&#9500;&#237;lt&#9500;&#237;sok<span
                                         class="status grade-0" data-grade-for="tizedes_tortek"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/szazalekszamitas.html"
-                                    data-topic-id="szazalekszamitas">Százalékszámítás<span class="status grade-0"
+                                    data-topic-id="szazalekszamitas">Sz&#9500;&#237;zal&#9500;&#281;ksz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s<span class="status grade-0"
                                         data-grade-for="szazalekszamitas"></span></a></li>
                         </ul>
                     </details>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/hatvany_temazaro.html"
-                                data-topic-id="hatvany_temazaro">Hatvány, Gyök, Logaritmus</a>
+                                data-topic-id="hatvany_temazaro">Hatv&#9500;&#237;ny, Gy&#9500;&#194;k, Logaritmus</a>
                             <span class="status grade-0" data-grade-for="hatvany_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/hatvanyozas.html"
-                                    data-topic-id="hatvanyozas">Hatványozás azonosságai<span class="status grade-0"
+                                    data-topic-id="hatvanyozas">Hatv&#225;nyoz&#225;s azonoss&#225;gai<span class="status grade-0"
                                         data-grade-for="hatvanyozas"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/gyokvonas.html"
-                                    data-topic-id="gyokvonas">Négyzetgyök, n-edik gyök<span class="status grade-0"
+                                    data-topic-id="gyokvonas">N&#9500;&#281;gyzetgy&#9500;&#194;k, n-edik gy&#9500;&#194;k<span class="status grade-0"
                                         data-grade-for="gyokvonas"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/logaritmus.html"
                                     data-topic-id="logaritmus">A logaritmus fogalma<span class="status grade-0"
@@ -110,69 +128,69 @@
                 <details>
                     <summary>
                         <a href="#" class="module-link main-topic" data-src="modules/algebra_modulzaro.html"
-                            data-topic-id="algebra_modulzaro">📐 Algebra és Függvények</a>
+                            data-topic-id="algebra_modulzaro">&#173;&#269;&#244;&#201; Algebra &#9500;&#281;s F&#9500;&#9565;ggv&#9500;&#281;nyek</a>
                         <span class="status grade-0" data-grade-for="algebra_modulzaro"></span>
                     </summary>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/algebrai_kif_temazaro.html"
-                                data-topic-id="algebrai_kif_temazaro">Algebrai kifejezések</a>
+                                data-topic-id="algebrai_kif_temazaro">Algebrai kifejez&#9500;&#281;sek</a>
                             <span class="status grade-0" data-grade-for="algebrai_kif_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/polinomok.html"
-                                    data-topic-id="polinomok">Műveletek polinomokkal<span class="status grade-0"
+                                    data-topic-id="polinomok">M&#9532;&#9618;veletek polinomokkal<span class="status grade-0"
                                         data-grade-for="polinomok"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/nevezetes_azonossagok.html"
-                                    data-topic-id="nevezetes_azonossagok">Nevezetes azonosságok<span
+                                    data-topic-id="nevezetes_azonossagok">Nevezetes azonoss&#225;gok<span
                                         class="status grade-0" data-grade-for="nevezetes_azonossagok"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/algebrai_tortek.html"
-                                    data-topic-id="algebrai_tortek">Algebrai törtek<span class="status grade-0"
+                                    data-topic-id="algebrai_tortek">Algebrai t&#9500;&#194;rtek<span class="status grade-0"
                                         data-grade-for="algebrai_tortek"></span></a></li>
                         </ul>
                     </details>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/egyenletek_temazaro.html"
-                                data-topic-id="egyenletek_temazaro">Egyenletek, Egyenlőtlenségek</a>
+                                data-topic-id="egyenletek_temazaro">Egyenletek, Egyenl&#9532;&#313;tlens&#9500;&#281;gek</a>
                             <span class="status grade-0" data-grade-for="egyenletek_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/linearis_egyenletek.html"
-                                    data-topic-id="linearis_egyenletek">Lineáris egyenletek<span class="status grade-0"
+                                    data-topic-id="linearis_egyenletek">Line&#225;ris egyenletek<span class="status grade-0"
                                         data-grade-for="linearis_egyenletek"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/masodfoku_egyenlet.html"
-                                    data-topic-id="masodfoku_egyenlet">Másodfokú egyenlet<span class="status grade-0"
+                                    data-topic-id="masodfoku_egyenlet">M&#225;sodfok&#250; egyenlet<span class="status grade-0"
                                         data-grade-for="masodfoku_egyenlet"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/viete_formulak.html"
-                                    data-topic-id="viete_formulak">Viète-formulák<span class="status grade-0"
+                                    data-topic-id="viete_formulak">Vi&#9500;&#280;te-formul&#9500;&#237;k<span class="status grade-0"
                                         data-grade-for="viete_formulak"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/parameteres_masodfoku.html"
-                                    data-topic-id="parameteres_masodfoku">Paraméteres másodfokú egyenletek<span
+                                    data-topic-id="parameteres_masodfoku">Param&#9500;&#281;teres m&#9500;&#237;sodfok&#9500;&#9553; egyenletek<span
                                         class="status grade-0" data-grade-for="parameteres_masodfoku"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/specialis_egyenletek.html"
-                                    data-topic-id="specialis_egyenletek">Abszolútértékes, gyökös stb.<span
+                                    data-topic-id="specialis_egyenletek">Abszol&#9500;&#9553;t&#9500;&#281;rt&#9500;&#281;kes, gy&#9500;&#194;k&#9500;&#194;s stb.<span
                                         class="status grade-0" data-grade-for="specialis_egyenletek"></span></a></li>
                         </ul>
                     </details>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/fuggvenyek_alt_temazaro.html"
-                                data-topic-id="fuggvenyek_alt_temazaro">Függvények Általános Tulajdonságai</a>
+                                data-topic-id="fuggvenyek_alt_temazaro">F&#9500;&#9565;ggv&#9500;&#281;nyek &#9500;&#252;ltal&#9500;&#237;nos Tulajdons&#9500;&#237;gai</a>
                             <span class="status grade-0" data-grade-for="fuggvenyek_alt_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/fuggveny_alapok.html"
-                                    data-topic-id="fuggveny_alapok">Értelmezési tartomány, értékkészlet<span
+                                    data-topic-id="fuggveny_alapok">&#9500;&#235;rtelmez&#9500;&#281;si tartom&#9500;&#237;ny, &#9500;&#281;rt&#9500;&#281;kk&#9500;&#281;szlet<span
                                         class="status grade-0" data-grade-for="fuggveny_alapok"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/fuggveny_jellemzes.html"
-                                    data-topic-id="fuggveny_jellemzes">Monotonitás, szélsőérték<span
+                                    data-topic-id="fuggveny_jellemzes">Monotonit&#9500;&#237;s, sz&#9500;&#281;ls&#9532;&#313;&#9500;&#281;rt&#9500;&#281;k<span
                                         class="status grade-0" data-grade-for="fuggveny_jellemzes"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/paritas.html"
-                                    data-topic-id="paritas">Paritás (páros, páratlan)<span class="status grade-0"
+                                    data-topic-id="paritas">Parit&#225;s (p&#225;ros, p&#225;ratlan)<span class="status grade-0"
                                         data-grade-for="paritas"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/fuggveny_transzformaciok.html"
-                                    data-topic-id="fuggveny_transzformaciok">Függvénytranszformációk<span
+                                    data-topic-id="fuggveny_transzformaciok">F&#9500;&#9565;ggv&#9500;&#281;nytranszform&#9500;&#237;ci&#9500;&#9474;k<span
                                         class="status grade-0" data-grade-for="fuggveny_transzformaciok"></span></a>
                             </li>
                         </ul>
@@ -181,28 +199,28 @@
                         <summary>
                             <a href="#" class="module-link main-topic"
                                 data-src="modules/nevezetes_fuggvenyek_temazaro.html"
-                                data-topic-id="nevezetes_fuggvenyek_temazaro">Nevezetes Függvények</a>
+                                data-topic-id="nevezetes_fuggvenyek_temazaro">Nevezetes F&#9500;&#9565;ggv&#9500;&#281;nyek</a>
                             <span class="status grade-0" data-grade-for="nevezetes_fuggvenyek_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/linearis_fuggveny.html"
-                                    data-topic-id="linearis_fuggveny">Lineáris függvény<span class="status grade-0"
+                                    data-topic-id="linearis_fuggveny">Line&#9500;&#237;ris f&#9500;&#9565;ggv&#9500;&#281;ny<span class="status grade-0"
                                         data-grade-for="linearis_fuggveny"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/masodfoku_fuggveny.html"
-                                    data-topic-id="masodfoku_fuggveny">Másodfokú függvény<span class="status grade-0"
+                                    data-topic-id="masodfoku_fuggveny">M&#9500;&#237;sodfok&#9500;&#9553; f&#9500;&#9565;ggv&#9500;&#281;ny<span class="status grade-0"
                                         data-grade-for="masodfoku_fuggveny"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/hatvanyfuggvenyek.html"
-                                    data-topic-id="hatvanyfuggvenyek">Hatványfüggvények<span class="status grade-0"
+                                    data-topic-id="hatvanyfuggvenyek">Hatv&#9500;&#237;nyf&#9500;&#9565;ggv&#9500;&#281;nyek<span class="status grade-0"
                                         data-grade-for="hatvanyfuggvenyek"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/exp_log_fuggveny.html"
-                                    data-topic-id="exp_log_fuggveny">Exponenciális és logaritmus fv.<span
+                                    data-topic-id="exp_log_fuggveny">Exponenci&#9500;&#237;lis &#9500;&#281;s logaritmus fv.<span
                                         class="status grade-0" data-grade-for="exp_log_fuggveny"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/trigonometrikus_fuggvenyek.html"
                                     data-topic-id="trigonometrikus_fuggvenyek">Trigonometrikus fv.<span
                                         class="status grade-0" data-grade-for="trigonometrikus_fuggvenyek"></span></a>
                             </li>
                             <li><a href="#" class="module-link" data-src="modules/specialis_fuggvenyek.html"
-                                    data-topic-id="specialis_fuggvenyek">Abszolútérték, gyök fv.<span
+                                    data-topic-id="specialis_fuggvenyek">Abszol&#9500;&#9553;t&#9500;&#281;rt&#9500;&#281;k, gy&#9500;&#194;k fv.<span
                                         class="status grade-0" data-grade-for="specialis_fuggvenyek"></span></a></li>
                         </ul>
                     </details>
@@ -211,13 +229,13 @@
                 <details>
                     <summary>
                         <a href="#" class="module-link main-topic" data-src="modules/geometria_modulzaro.html"
-                            data-topic-id="geometria_modulzaro">🗺️ Geometria</a>
+                            data-topic-id="geometria_modulzaro">&#173;&#269;&#346;&#9553;&#180;&#350;&#262; Geometria</a>
                         <span class="status grade-0" data-grade-for="geometria_modulzaro"></span>
                     </summary>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/haromszogek_temazaro.html"
-                                data-topic-id="haromszogek_temazaro">Alapfogalmak és Háromszögek</a>
+                                data-topic-id="haromszogek_temazaro">Alapfogalmak &#9500;&#281;s H&#9500;&#237;romsz&#9500;&#194;gek</a>
                             <span class="status grade-0" data-grade-for="haromszogek_temazaro"></span>
                         </summary>
                         <ul>
@@ -225,65 +243,65 @@
                                     data-topic-id="nevezetes_vonalak">Nevezetes vonalak<span class="status grade-0"
                                         data-grade-for="nevezetes_vonalak"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/haromszog_egyenlotlenseg.html"
-                                    data-topic-id="haromszog_egyenlotlenseg">Háromszög-egyenlőtlenség<span
+                                    data-topic-id="haromszog_egyenlotlenseg">H&#9500;&#237;romsz&#9500;&#194;g-egyenl&#9532;&#313;tlens&#9500;&#281;g<span
                                         class="status grade-0" data-grade-for="haromszog_egyenlotlenseg"></span></a>
                             </li>
                             <li><a href="#" class="module-link" data-src="modules/szogtetelek.html"
-                                    data-topic-id="szogtetelek">Pitagorasz, befogó, magasság<span class="status grade-0"
+                                    data-topic-id="szogtetelek">Pitagorasz, befog&#243;, magass&#225;g<span class="status grade-0"
                                         data-grade-for="szogtetelek"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/szinusz_koszinusz_tetel.html"
-                                    data-topic-id="szinusz_koszinusz_tetel">Szinusztétel, Koszinusztétel<span
+                                    data-topic-id="szinusz_koszinusz_tetel">Szinuszt&#9500;&#281;tel, Koszinuszt&#9500;&#281;tel<span
                                         class="status grade-0" data-grade-for="szinusz_koszinusz_tetel"></span></a></li>
                         </ul>
                     </details>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/sokszogek_temazaro.html"
-                                data-topic-id="sokszogek_temazaro">Négyszögek és Sokszögek</a>
+                                data-topic-id="sokszogek_temazaro">N&#9500;&#281;gysz&#9500;&#194;gek &#9500;&#281;s Soksz&#9500;&#194;gek</a>
                             <span class="status grade-0" data-grade-for="sokszogek_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/terulet_kerulet.html"
-                                    data-topic-id="terulet_kerulet">Terület- és kerületszámítás<span
+                                    data-topic-id="terulet_kerulet">Ter&#9500;&#9565;let- &#9500;&#281;s ker&#9500;&#9565;letsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s<span
                                         class="status grade-0" data-grade-for="terulet_kerulet"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/specialis_negyszogek.html"
-                                    data-topic-id="specialis_negyszogek">Húrnégyszögek, érintőnégyszögek<span
+                                    data-topic-id="specialis_negyszogek">H&#9500;&#9553;rn&#9500;&#281;gysz&#9500;&#194;gek, &#9500;&#281;rint&#9532;&#313;n&#9500;&#281;gysz&#9500;&#194;gek<span
                                         class="status grade-0" data-grade-for="specialis_negyszogek"></span></a></li>
                         </ul>
                     </details>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/kor_temazaro.html"
-                                data-topic-id="kor_temazaro">A Kör</a>
+                                data-topic-id="kor_temazaro">A K&#9500;&#194;r</a>
                             <span class="status grade-0" data-grade-for="kor_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/keruleti_szogek.html"
-                                    data-topic-id="keruleti_szogek">Kerületi és középponti szögek<span
+                                    data-topic-id="keruleti_szogek">Ker&#9500;&#9565;leti &#9500;&#281;s k&#9500;&#194;z&#9500;&#281;pponti sz&#9500;&#194;gek<span
                                         class="status grade-0" data-grade-for="keruleti_szogek"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/latokoriv.html"
-                                    data-topic-id="latokoriv">Látókörív<span class="status grade-0"
+                                    data-topic-id="latokoriv">L&#9500;&#237;t&#9500;&#9474;k&#9500;&#194;r&#9500;&#351;v<span class="status grade-0"
                                         data-grade-for="latokoriv"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/kor_helyzetek.html"
-                                    data-topic-id="kor_helyzetek">Kör és egyenes, kör és kör<span class="status grade-0"
+                                    data-topic-id="kor_helyzetek">K&#9500;&#194;r &#9500;&#281;s egyenes, k&#9500;&#194;r &#9500;&#281;s k&#9500;&#194;r<span class="status grade-0"
                                         data-grade-for="kor_helyzetek"></span></a></li>
                         </ul>
                     </details>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/geo_transzform_temazaro.html"
-                                data-topic-id="geo_transzform_temazaro">Geometriai Transzformációk</a>
+                                data-topic-id="geo_transzform_temazaro">Geometriai Transzform&#225;ci&#243;k</a>
                             <span class="status grade-0" data-grade-for="geo_transzform_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/tukrozes.html"
-                                    data-topic-id="tukrozes">Tengelyes és középpontos tükrözés<span
+                                    data-topic-id="tukrozes">Tengelyes &#9500;&#281;s k&#9500;&#194;z&#9500;&#281;ppontos t&#9500;&#9565;kr&#9500;&#194;z&#9500;&#281;s<span
                                         class="status grade-0" data-grade-for="tukrozes"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/eltolas_forgatas.html"
-                                    data-topic-id="eltolas_forgatas">Eltolás, elforgatás<span class="status grade-0"
+                                    data-topic-id="eltolas_forgatas">Eltol&#225;s, elforgat&#225;s<span class="status grade-0"
                                         data-grade-for="eltolas_forgatas"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/hasonlosag.html"
-                                    data-topic-id="hasonlosag">Középpontos hasonlóság<span class="status grade-0"
+                                    data-topic-id="hasonlosag">K&#9500;&#194;z&#9500;&#281;ppontos hasonl&#9500;&#9474;s&#9500;&#237;g<span class="status grade-0"
                                         data-grade-for="hasonlosag"></span></a></li>
                         </ul>
                     </details>
@@ -291,36 +309,36 @@
                         <summary>
                             <a href="#" class="module-link main-topic"
                                 data-src="modules/koordinatageometria_temazaro.html"
-                                data-topic-id="koordinatageometria_temazaro">Koordinátageometria</a>
+                                data-topic-id="koordinatageometria_temazaro">Koordin&#225;tageometria</a>
                             <span class="status grade-0" data-grade-for="koordinatageometria_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/vektorok.html"
-                                    data-topic-id="vektorok">Vektorok (skaláris szorzat)<span class="status grade-0"
+                                    data-topic-id="vektorok">Vektorok (skal&#225;ris szorzat)<span class="status grade-0"
                                         data-grade-for="vektorok"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/egyenes_egyenlete.html"
                                     data-topic-id="egyenes_egyenlete">Pont, szakasz, egyenes<span class="status grade-0"
                                         data-grade-for="egyenes_egyenlete"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/kor_egyenlete.html"
-                                    data-topic-id="kor_egyenlete">Kör egyenlete<span class="status grade-0"
+                                    data-topic-id="kor_egyenlete">K&#9500;&#194;r egyenlete<span class="status grade-0"
                                         data-grade-for="kor_egyenlete"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/alakzatok_metszespontja.html"
-                                    data-topic-id="alakzatok_metszespontja">Két alakzat metszéspontja<span
+                                    data-topic-id="alakzatok_metszespontja">K&#9500;&#281;t alakzat metsz&#9500;&#281;spontja<span
                                         class="status grade-0" data-grade-for="alakzatok_metszespontja"></span></a></li>
                         </ul>
                     </details>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/tergeometria_temazaro.html"
-                                data-topic-id="tergeometria_temazaro">Térgeometria</a>
+                                data-topic-id="tergeometria_temazaro">T&#9500;&#281;rgeometria</a>
                             <span class="status grade-0" data-grade-for="tergeometria_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/hasabok_gulak.html"
-                                    data-topic-id="hasabok_gulak">Hasábok, gúlák F, V<span class="status grade-0"
+                                    data-topic-id="hasabok_gulak">Has&#225;bok, g&#250;l&#225;k F, V<span class="status grade-0"
                                         data-grade-for="hasabok_gulak"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/forgastestek.html"
-                                    data-topic-id="forgastestek">Forgástestek (henger, kúp, gömb)<span
+                                    data-topic-id="forgastestek">Forg&#9500;&#237;stestek (henger, k&#9500;&#9553;p, g&#9500;&#194;mb)<span
                                         class="status grade-0" data-grade-for="forgastestek"></span></a></li>
                         </ul>
                     </details>
@@ -329,7 +347,7 @@
                 <details>
                     <summary>
                         <a href="#" class="module-link main-topic" data-src="modules/valstat_modulzaro.html"
-                            data-topic-id="valstat_modulzaro">🎲 Valószínűségszámítás és Statisztika</a>
+                            data-topic-id="valstat_modulzaro">&#173;&#269;&#196;&#9619; Val&#9500;&#9474;sz&#9500;&#351;n&#9532;&#9618;s&#9500;&#281;gsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s &#9500;&#281;s Statisztika</a>
                         <span class="status grade-0" data-grade-for="valstat_modulzaro"></span>
                     </summary>
                     <details>
@@ -340,34 +358,34 @@
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/permutaciok.html"
-                                    data-topic-id="permutaciok">Permutációk<span class="status grade-0"
+                                    data-topic-id="permutaciok">Permut&#225;ci&#243;k<span class="status grade-0"
                                         data-grade-for="permutaciok"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/variaciok.html"
-                                    data-topic-id="variaciok">Variációk<span class="status grade-0"
+                                    data-topic-id="variaciok">Vari&#225;ci&#243;k<span class="status grade-0"
                                         data-grade-for="variaciok"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/kombinaciok.html"
-                                    data-topic-id="kombinaciok">Kombinációk<span class="status grade-0"
+                                    data-topic-id="kombinaciok">Kombin&#225;ci&#243;k<span class="status grade-0"
                                         data-grade-for="kombinaciok"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/binomialis_tetel.html"
-                                    data-topic-id="binomialis_tetel">Binomiális tétel<span class="status grade-0"
+                                    data-topic-id="binomialis_tetel">Binomi&#9500;&#237;lis t&#9500;&#281;tel<span class="status grade-0"
                                         data-grade-for="binomialis_tetel"></span></a></li>
                         </ul>
                     </details>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/valszam_temazaro.html"
-                                data-topic-id="valszam_temazaro">Valószínűségszámítás</a>
+                                data-topic-id="valszam_temazaro">Val&#9500;&#9474;sz&#9500;&#351;n&#9532;&#9618;s&#9500;&#281;gsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s</a>
                             <span class="status grade-0" data-grade-for="valszam_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/klasszikus_valoszinuseg.html"
-                                    data-topic-id="klasszikus_valoszinuseg">Klasszikus valószínűségi modell<span
+                                    data-topic-id="klasszikus_valoszinuseg">Klasszikus val&#9500;&#9474;sz&#9500;&#351;n&#9532;&#9618;s&#9500;&#281;gi modell<span
                                         class="status grade-0" data-grade-for="klasszikus_valoszinuseg"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/geometriai_valoszinuseg.html"
-                                    data-topic-id="geometriai_valoszinuseg">Geometriai valószínűség<span
+                                    data-topic-id="geometriai_valoszinuseg">Geometriai val&#9500;&#9474;sz&#9500;&#351;n&#9532;&#9618;s&#9500;&#281;g<span
                                         class="status grade-0" data-grade-for="geometriai_valoszinuseg"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/felteteles_valoszinuseg.html"
-                                    data-topic-id="felteteles_valoszinuseg">Feltételes valószínűség<span
+                                    data-topic-id="felteteles_valoszinuseg">Felt&#9500;&#281;teles val&#9500;&#9474;sz&#9500;&#351;n&#9532;&#9618;s&#9500;&#281;g<span
                                         class="status grade-0" data-grade-for="felteteles_valoszinuseg"></span></a></li>
                         </ul>
                     </details>
@@ -379,13 +397,13 @@
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/adatok_abrazolasa.html"
-                                    data-topic-id="adatok_abrazolasa">Adatok ábrázolása<span class="status grade-0"
+                                    data-topic-id="adatok_abrazolasa">Adatok &#225;br&#225;zol&#225;sa<span class="status grade-0"
                                         data-grade-for="adatok_abrazolasa"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/kozepertekek.html"
-                                    data-topic-id="kozepertekek">Középértékek<span class="status grade-0"
+                                    data-topic-id="kozepertekek">K&#9500;&#194;z&#9500;&#281;p&#9500;&#281;rt&#9500;&#281;kek<span class="status grade-0"
                                         data-grade-for="kozepertekek"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/szorodas.html"
-                                    data-topic-id="szorodas">Szóródási mutatók<span class="status grade-0"
+                                    data-topic-id="szorodas">Sz&#243;r&#243;d&#225;si mutat&#243;k<span class="status grade-0"
                                         data-grade-for="szorodas"></span></a></li>
                         </ul>
                     </details>
@@ -394,7 +412,7 @@
                 <details>
                     <summary>
                         <a href="#" class="module-link main-topic" data-src="modules/emelt_modulzaro.html"
-                            data-topic-id="emelt_modulzaro">📈 Emelt Szintű Kiegészítések</a>
+                            data-topic-id="emelt_modulzaro">&#173;&#269;&#244;&#322; Emelt Szint&#9532;&#9618; Kieg&#9500;&#281;sz&#9500;&#351;t&#9500;&#281;sek</a>
                         <span class="status grade-0" data-grade-for="emelt_modulzaro"></span>
                     </summary>
                     <details>
@@ -405,10 +423,10 @@
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/szamtani_mertani.html"
-                                    data-topic-id="szamtani_mertani">Számtani és mértani sorozatok<span
+                                    data-topic-id="szamtani_mertani">Sz&#9500;&#237;mtani &#9500;&#281;s m&#9500;&#281;rtani sorozatok<span
                                         class="status grade-0" data-grade-for="szamtani_mertani"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/kamatoskamat.html"
-                                    data-topic-id="kamatoskamat">Kamatoskamat-számítás<span class="status grade-0"
+                                    data-topic-id="kamatoskamat">Kamatoskamat-sz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s<span class="status grade-0"
                                         data-grade-for="kamatoskamat"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/konvergencia.html"
                                     data-topic-id="konvergencia">Konvergencia<span class="status grade-0"
@@ -418,42 +436,42 @@
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/differencial_temazaro.html"
-                                data-topic-id="differencial_temazaro">Differenciálszámítás</a>
+                                data-topic-id="differencial_temazaro">Differenci&#9500;&#237;lsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s</a>
                             <span class="status grade-0" data-grade-for="differencial_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/hatarertek.html"
-                                    data-topic-id="hatarertek">Határérték, folytonosság<span class="status grade-0"
+                                    data-topic-id="hatarertek">Hat&#9500;&#237;r&#9500;&#281;rt&#9500;&#281;k, folytonoss&#9500;&#237;g<span class="status grade-0"
                                         data-grade-for="hatarertek"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/derivalt_fogalma.html"
-                                    data-topic-id="derivalt_fogalma">A derivált fogalma<span class="status grade-0"
+                                    data-topic-id="derivalt_fogalma">A deriv&#225;lt fogalma<span class="status grade-0"
                                         data-grade-for="derivalt_fogalma"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/derivalasi_szabalyok.html"
-                                    data-topic-id="derivalasi_szabalyok">Deriválási szabályok<span
+                                    data-topic-id="derivalasi_szabalyok">Deriv&#225;l&#225;si szab&#225;lyok<span
                                         class="status grade-0" data-grade-for="derivalasi_szabalyok"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/fuggvenyvizsgalat.html"
-                                    data-topic-id="fuggvenyvizsgalat">Függvényvizsgálat deriválttal<span
+                                    data-topic-id="fuggvenyvizsgalat">F&#9500;&#9565;ggv&#9500;&#281;nyvizsg&#9500;&#237;lat deriv&#9500;&#237;lttal<span
                                         class="status grade-0" data-grade-for="fuggvenyvizsgalat"></span></a></li>
                         </ul>
                     </details>
                     <details>
                         <summary>
                             <a href="#" class="module-link main-topic" data-src="modules/integral_temazaro.html"
-                                data-topic-id="integral_temazaro">Integrálszámítás</a>
+                                data-topic-id="integral_temazaro">Integr&#9500;&#237;lsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s</a>
                             <span class="status grade-0" data-grade-for="integral_temazaro"></span>
                         </summary>
                         <ul>
                             <li><a href="#" class="module-link" data-src="modules/hatarozatlan_integral.html"
-                                    data-topic-id="hatarozatlan_integral">A határozatlan integrál<span
+                                    data-topic-id="hatarozatlan_integral">A hat&#225;rozatlan integr&#225;l<span
                                         class="status grade-0" data-grade-for="hatarozatlan_integral"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/hatarozott_integral.html"
-                                    data-topic-id="hatarozott_integral">A határozott integrál<span
+                                    data-topic-id="hatarozott_integral">A hat&#225;rozott integr&#225;l<span
                                         class="status grade-0" data-grade-for="hatarozott_integral"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/newton_leibniz.html"
                                     data-topic-id="newton_leibniz">Newton-Leibniz formula<span class="status grade-0"
                                         data-grade-for="newton_leibniz"></span></a></li>
                             <li><a href="#" class="module-link" data-src="modules/terfogatszamitas.html"
-                                    data-topic-id="terfogatszamitas">Térfogatszámítás integrállal<span
+                                    data-topic-id="terfogatszamitas">T&#9500;&#281;rfogatsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s integr&#9500;&#237;llal<span
                                         class="status grade-0" data-grade-for="terfogatszamitas"></span></a></li>
                         </ul>
                     </details>
@@ -476,6 +494,10 @@
         const iframe = document.getElementById('content-frame');
         const tooltip = document.getElementById('sidebarTooltip');
         const resultsBtn = document.getElementById('results-btn');
+        const xpLevelLabel = document.getElementById('xp-level-label');
+        const xpTotalLabel = document.getElementById('xp-total-label');
+        const xpBarFill = document.getElementById('xp-bar-fill');
+        const xpProgressText = document.getElementById('xp-progress-text');
         let progressData = {};
 
         function setActiveLink(activeLink) { allLinks.forEach(l => l.classList.remove('active')); if(activeLink) { activeLink.classList.add('active'); } }
@@ -499,35 +521,89 @@
                 if (!progressData[topicId]) { progressData[topicId] = {}; }
                 progressData[topicId][difficulty] = grade;
                 updateCircleColor(topicId);
+                refreshProgressSummary();
             } 
             else if (data.type === 'get-all-results') {
                 if (window.electronAPI) {
                     const results = await window.electronAPI.getAllResults();
                     iframe.contentWindow.postMessage({ type: 'all-results-response', results: results }, '*');
                 }
+            } else if (data.type === 'request-xp-summary') {
+                if (window.electronAPI) {
+                    const summary = await window.electronAPI.getProgressSummary();
+                    iframe.contentWindow.postMessage({ type: 'xp-summary', summary }, '*');
+                }
             }
         });
+
+        async function refreshProgressSummary() {
+            if (!window.electronAPI) return;
+            try {
+                const summary = await window.electronAPI.getProgressSummary();
+                if (!summary) return;
+                updateXpWidget(summary);
+                if (summary.completions) {
+                    hydrateProgressData(summary.completions);
+                }
+            } catch (error) {
+                console.error('Nem siker&#252;lt bet&#246;lteni az XP &#246;sszegz&#233;st:', error);
+            }
+        }
+
+        function updateXpWidget(summary) {
+            if (!summary || !summary.level) return;
+            const totalXp = summary.xp || 0;
+            xpLevelLabel.textContent = `Szint ${summary.level.level}`;
+            xpTotalLabel.textContent = `${totalXp} XP`;
+            const required = summary.level.xpForNext || 200;
+            const current = summary.level.xpIntoLevel || 0;
+            const percentage = Math.min(100, Math.round((current / required) * 100));
+            xpBarFill.style.width = `${percentage}%`;
+            xpProgressText.textContent = `${current} / ${required} XP a kovetkezo szintig`;
+        }
+
+        function formatDifficultyTooltip(topicData, key, label) {
+            const entry = topicData[key];
+            if (!entry) return `${label}: N/A`;
+            const grade = typeof entry === 'number' ? entry : entry.grade;
+            if (!grade) return `${label}: N/A`;
+            return `${label}: Jegy: ${grade}`;
+        }
+
+        function hydrateProgressData(completions) {
+            progressData = {};
+            Object.entries(completions || {}).forEach(([topicId, difficulties]) => {
+                if (!progressData[topicId]) { progressData[topicId] = {}; }
+                Object.entries(difficulties || {}).forEach(([difficultyLabel, data]) => {
+                    const gradeValue = typeof data === 'number' ? data : data.grade;
+                    progressData[topicId][difficultyLabel] = gradeValue;
+                });
+                updateCircleColor(topicId);
+            });
+        }
 
         function updateCircleColor(topicId) {
             const statusCircle = document.querySelector(`.status[data-grade-for="${topicId}"]`);
             if (statusCircle && progressData[topicId]) {
-                const grades = Object.values(progressData[topicId]).filter(g => g !== null && g > 0);
+                const grades = Object.values(progressData[topicId])
+                    .map(value => typeof value === 'number' ? value : (value ? value.grade : null))
+                    .filter(g => g !== null && g > 0);
                 const bestGrade = grades.length > 0 ? Math.max(...grades) : 0;
                 statusCircle.className = 'status'; 
                 statusCircle.classList.add(`grade-${bestGrade}`);
             }
         }
-        
+
         document.querySelectorAll('.status').forEach(circle => {
             circle.addEventListener('mouseover', (event) => {
                 const topicId = circle.dataset.gradeFor;
                 const topicData = progressData[topicId];
-                let tooltipContent = "Még nincsenek eredmények.";
+                let tooltipContent = "M&#233;g nincsenek eredm&#233;nyek.";
                 if (topicData) {
-                    tooltipContent = `<b>Eredmények (${topicId}):</b><br>
-                        Könnyű: ${topicData['könnyű'] ? `Jegy: ${topicData['könnyű']}` : 'N/A'}<br>
-                        Közepes: ${topicData['közepes'] ? `Jegy: ${topicData['közepes']}` : 'N/A'}<br>
-                        Nehéz: ${topicData['nehéz'] ? `Jegy: ${topicData['nehéz']}` : 'N/A'}`;
+                    tooltipContent = `<b>Eredm&#233;nyek (${topicId}):</b><br>
+                        ${formatDifficultyTooltip(topicData, 'k&#246;nny&#369;', 'K&#246;nny&#369;')}<br>
+                        ${formatDifficultyTooltip(topicData, 'k&#246;zepes', 'K&#246;zepes')}<br>
+                        ${formatDifficultyTooltip(topicData, 'neh&#233;z', 'Neh&#233;z')}`;
                 }
                 tooltip.innerHTML = tooltipContent;
                 tooltip.style.display = 'block';
@@ -535,6 +611,9 @@
             circle.addEventListener('mousemove', (event) => { tooltip.style.left = (event.pageX + 15) + 'px'; tooltip.style.top = (event.pageY + 15) + 'px'; });
             circle.addEventListener('mouseout', () => { tooltip.style.display = 'none'; });
         });
+
+        refreshProgressSummary();
     </script>
 </body>
 </html>
+

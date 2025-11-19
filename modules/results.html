@@ -29,10 +29,26 @@
         .user-answer.correct { background-color: #eafaf1; border-color: var(--success); }
         .user-answer.incorrect { background-color: #fbeeed; border-color: var(--danger); }
         .correct-answer { margin-top: 10px; font-weight: 500; color: var(--success); }
+        .xp-summary { background-color: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid var(--border-color); box-shadow: 0 15px 40px -20px rgba(0,0,0,0.25); margin-bottom: 30px; }
+        .xp-summary h2 { margin: 0 0 10px 0; }
+        .xp-summary p { margin: 0; color: #4b5563; }
+        .xp-summary .xp-meta { display: flex; justify-content: space-between; align-items: center; font-weight: 600; margin-bottom: 12px; }
+        .xp-progress { height: 12px; border-radius: 999px; background-color: #e5e7eb; overflow: hidden; }
+        .xp-progress-fill { height: 100%; background: linear-gradient(90deg, #4A55A2, #7895CB); width: 0%; transition: width 0.4s; }
     </style>
 </head>
 <body>
     <h1>Eredményeim</h1>
+    <div class="xp-summary">
+        <div class="xp-meta">
+            <span>Szint <span id="results-level">1</span></span>
+            <span id="results-total-xp">0 XP</span>
+        </div>
+        <div class="xp-progress">
+            <div class="xp-progress-fill" id="results-xp-progress"></div>
+        </div>
+        <p id="results-xp-text">0 / 200 XP a kovetkezo szintig</p>
+    </div>
     <div id="results-container"></div>
 
     <div id="details-modal" class="modal">
@@ -53,10 +69,15 @@
         const modal = document.getElementById('details-modal');
         const modalBody = document.getElementById('modal-body');
         const modalCloseBtn = document.getElementById('modal-close-btn');
+        const resultsLevel = document.getElementById('results-level');
+        const resultsTotalXp = document.getElementById('results-total-xp');
+        const resultsXpProgress = document.getElementById('results-xp-progress');
+        const resultsXpText = document.getElementById('results-xp-text');
 
         document.addEventListener('DOMContentLoaded', () => {
             container.innerHTML = `<div class="no-results"><p>Eredmények betöltése...</p></div>`;
             window.parent.postMessage({ type: 'get-all-results' }, '*');
+            window.parent.postMessage({ type: 'request-xp-summary' }, '*');
             window.addEventListener('message', (event) => {
                 if (event.data.type === 'all-results-response') {
                     const results = event.data.results;
@@ -77,8 +98,23 @@
                         container.appendChild(resultItem);
                     });
                 }
+                if (event.data.type === 'xp-summary') {
+                    updateXpSummary(event.data.summary);
+                }
             });
         });
+
+        function updateXpSummary(summary) {
+            if (!summary || !summary.level) return;
+            const totalXp = summary.xp || 0;
+            resultsLevel.textContent = summary.level.level;
+            resultsTotalXp.textContent = `${totalXp} XP`;
+            const required = summary.level.xpForNext || 200;
+            const current = summary.level.xpIntoLevel || 0;
+            const percent = Math.min(100, Math.round((current / required) * 100));
+            resultsXpProgress.style.width = `${percent}%`;
+            resultsXpText.textContent = `${current} / ${required} XP a kovetkezo szintig`;
+        }
 
         function showDetails(result) {
             let detailsHTML = `<h2>${result.topicName} - Kiértékelés</h2>`;

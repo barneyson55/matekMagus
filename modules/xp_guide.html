@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>XP rendszer súgó</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 40px;
+            color: #1f2933;
+            line-height: 1.65;
+        }
+        h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        h2 { margin-top: 36px; font-size: 1.4rem; }
+        p { max-width: 70ch; }
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 20px 60px -25px rgba(15,23,42,0.35);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 25px;
+        }
+        ul { padding-left: 20px; }
+        .xp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .xp-table th, .xp-table td {
+            border: 1px solid #e5e7eb;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        .xp-table th { background: #f0f4ff; }
+        .tip {
+            background: #eef2ff;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            color: #4338ca;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>XP rendszer áttekintése</h1>
+        <p>A Matek Mester az MMO-kból ismert fejlődési ívet követi: minden témában szinteket lépsz, ahogy új feladatokat teljesítesz. XP-t csak akkor kapsz, ha egy adott témát és nehézségi szintet <strong>először</strong> teljesítesz legalább elégséges (2) jeggyel, vagy ha korábbi rosszabb eredményt javítasz fel.</p>
+        <div class="tip">A rendszer célja, hogy motiváljon új anyagok felfedezésére – ismételt kitöltés önmagában nem ad új XP-t.</div>
+    </div>
+
+    <div class="card">
+        <h2>XP jutalmak nehézség szerint</h2>
+        <table class="xp-table">
+            <thead>
+                <tr><th>Nehézség</th><th>XP jutalom</th><th>Megjegyzés</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Könnyű</td><td>120 XP</td><td>Alapfogalmak rögzítése, gyors bemelegítés</td></tr>
+                <tr><td>Közepes</td><td>200 XP</td><td>Érettségi-szintű gyakorlat, több lépéses feladatok</td></tr>
+                <tr><td>Nehéz</td><td>320 XP</td><td>Emelt szintű, trükkösebb vagy időigényes feladatok</td></tr>
+            </tbody>
+        </table>
+        <p>Ha ugyanazon témában „könnyű” és „nehéz” tesztet is teljesítesz, mindkettőért megkapod az egyszeri jutalmat.</p>
+    </div>
+
+    <div class="card">
+        <h2>Bónuszok modulokhoz és témazárókhoz</h2>
+        <p>Célozd meg a nagyobb kihívásokat, mert extra XP jár értük:</p>
+        <ul>
+            <li><strong>Modulzáró</strong> (azonosító neve tartalmazza a <code>modulzaro</code> szót): +150 XP</li>
+            <li><strong>Témazáró</strong> (azonosító neve tartalmazza a <code>temazaro</code> szót): +220 XP</li>
+            <li><strong>Emelt modulok</strong> (azonosítóban <code>emelt_</code>): +250 XP</li>
+        </ul>
+        <p>A bónusz a választott nehézségi szint alap XP-jére adódik rá, és ugyanúgy csak egyszer szerezhető meg témánként.</p>
+    </div>
+
+    <div class="card">
+        <h2>Szintlépés görbe</h2>
+        <p>A következő szinthez szükséges XP fokozatosan nő:</p>
+        <ul>
+            <li>Szint 1 → 2: 200 XP</li>
+            <li>Minden további szintnél +80 XP-vel több a szükséges mennyiség (pl. 2→3: 280 XP, 3→4: 360 XP, stb.).</li>
+        </ul>
+        <p>A bal oldali fejlődési sáv és az Eredményeim oldal teteje mindig mutatja, hol tartasz éppen.</p>
+    </div>
+
+    <div class="card">
+        <h2>Hogyan szerezhetek gyorsan XP-t?</h2>
+        <ul>
+            <li>Fedezd fel a különböző témákat: minden új modul első teljesítése XP-t hoz.</li>
+            <li>Válts nehézségi szintet: ugyanabban a témában mindhárom szint külön jutalom.</li>
+            <li>Javíts a jegyeden: ha egy tesztet jobb érdemjeggyel viszel végig, a régi eredmény felülíródik és megkapod az ahhoz tartozó XP-t.</li>
+        </ul>
+        <p>Később achievement jelvények, napi kihívások és skinek is érkeznek, hogy még több motivációt adjanak a tanuláshoz.</p>
+    </div>
+</body>
+</html>

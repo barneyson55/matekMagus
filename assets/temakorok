@@ -1,184 +1,184 @@
-📚 1. Alapozó Modulok
-Gondolkodási módszerek, Halmazok
+&#173;&#269;&#244;&#220; 1. Alapoz&#9500;&#9474; Modulok
+Gondolkod&#225;si m&#243;dszerek, Halmazok
 
-Halmazműveletek (metszet, unió, különbség)
+Halmazm&#9532;&#9618;veletek (metszet, uni&#9500;&#9474;, k&#9500;&#9565;l&#9500;&#194;nbs&#9500;&#281;g)
 
 Logikai szita formula
 
-Skaluly-elv, párosítások
+Skaluly-elv, p&#9500;&#237;ros&#9500;&#351;t&#9500;&#237;sok
 
-Számelmélet és Számrendszerek
+Sz&#9500;&#237;melm&#9500;&#281;let &#9500;&#281;s Sz&#9500;&#237;mrendszerek
 
-Oszthatósági szabályok
+Oszthat&#243;s&#225;gi szab&#225;lyok
 
-Legnagyobb közös osztó, legkisebb közös többszörös
+Legnagyobb k&#9500;&#194;z&#9500;&#194;s oszt&#9500;&#9474;, legkisebb k&#9500;&#194;z&#9500;&#194;s t&#9500;&#194;bbsz&#9500;&#194;r&#9500;&#194;s
+w
+Pr&#9500;&#351;msz&#9500;&#237;mok, pr&#9500;&#351;mt&#9500;&#281;nyez&#9532;&#313;s felbont&#9500;&#237;s
 
-Prímszámok, prímtényezős felbontás
+Sz&#225;mrendszerek (2-es, 10-es, stb.)
 
-Számrendszerek (2-es, 10-es, stb.)
+Racion&#225;lis sz&#225;mok
 
-Racionális számok
+T&#9500;&#194;rtek &#9500;&#281;s m&#9532;&#9618;veletek
 
-Törtek és műveletek
+Tizedes t&#9500;&#194;rtek, &#9500;&#237;tv&#9500;&#237;lt&#9500;&#237;sok
 
-Tizedes törtek, átváltások
+Sz&#9500;&#237;zal&#9500;&#281;ksz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s
 
-Százalékszámítás
+Hatv&#9500;&#237;ny, Gy&#9500;&#194;k, Logaritmus
 
-Hatvány, Gyök, Logaritmus
+Hatv&#9500;&#237;nyoz&#9500;&#237;s azonoss&#9500;&#237;gai (eg&#9500;&#281;sz, racion&#9500;&#237;lis kitev&#9532;&#313;)
 
-Hatványozás azonosságai (egész, racionális kitevő)
+N&#9500;&#281;gyzetgy&#9500;&#194;k, n-edik gy&#9500;&#194;k
 
-Négyzetgyök, n-edik gyök
+A logaritmus fogalma &#9500;&#281;s azonoss&#9500;&#237;gai
 
-A logaritmus fogalma és azonosságai
+&#173;&#269;&#244;&#201; 2. Algebra &#9500;&#281;s F&#9500;&#9565;ggv&#9500;&#281;nyek
+Algebrai kifejez&#9500;&#281;sek
 
-📐 2. Algebra és Függvények
-Algebrai kifejezések
+M&#9532;&#9618;veletek polinomokkal
 
-Műveletek polinomokkal
+Nevezetes azonoss&#225;gok
 
-Nevezetes azonosságok
+Algebrai t&#9500;&#194;rtek egyszer&#9532;&#9618;s&#9500;&#351;t&#9500;&#281;se
 
-Algebrai törtek egyszerűsítése
+Egyenletek, Egyenl&#9532;&#313;tlens&#9500;&#281;gek
 
-Egyenletek, Egyenlőtlenségek
+Line&#225;ris egyenletek, egyenletrendszerek
 
-Lineáris egyenletek, egyenletrendszerek
+M&#9500;&#237;sodfok&#9500;&#9553; egyenlet (megold&#9500;&#9474;k&#9500;&#281;plet, diszkrimin&#9500;&#237;ns)
 
-Másodfokú egyenlet (megoldóképlet, diszkrimináns)
+Vi&#9500;&#280;te-formul&#9500;&#237;k
 
-Viète-formulák
+Param&#9500;&#281;teres m&#9500;&#237;sodfok&#9500;&#9553; egyenletek
 
-Paraméteres másodfokú egyenletek
+Abszol&#9500;&#9553;t&#9500;&#281;rt&#9500;&#281;kes, gy&#9500;&#194;k&#9500;&#194;s, exponenci&#9500;&#237;lis, logaritmikus egyenletek
 
-Abszolútértékes, gyökös, exponenciális, logaritmikus egyenletek
+F&#9500;&#9565;ggv&#9500;&#281;nyek &#9500;&#252;ltal&#9500;&#237;nos Tulajdons&#9500;&#237;gai
 
-Függvények Általános Tulajdonságai
+&#9500;&#235;rtelmez&#9500;&#281;si tartom&#9500;&#237;ny, &#9500;&#281;rt&#9500;&#281;kk&#9500;&#281;szlet
 
-Értelmezési tartomány, értékkészlet
+Monotonit&#9500;&#237;s, sz&#9500;&#281;ls&#9532;&#313;&#9500;&#281;rt&#9500;&#281;k, z&#9500;&#281;rushely
 
-Monotonitás, szélsőérték, zérushely
+Parit&#225;s (p&#225;ros, p&#225;ratlan)
 
-Paritás (páros, páratlan)
+F&#9500;&#9565;ggv&#9500;&#281;nytranszform&#9500;&#237;ci&#9500;&#9474;k (eltol&#9500;&#237;s, ny&#9500;&#9553;jt&#9500;&#237;s)
 
-Függvénytranszformációk (eltolás, nyújtás)
+Nevezetes F&#9500;&#9565;ggv&#9500;&#281;nyek
 
-Nevezetes Függvények
+Line&#9500;&#237;ris f&#9500;&#9565;ggv&#9500;&#281;ny &#9500;&#281;s &#9500;&#237;br&#9500;&#237;zol&#9500;&#237;sa
 
-Lineáris függvény és ábrázolása
+M&#9500;&#237;sodfok&#9500;&#9553; f&#9500;&#9565;ggv&#9500;&#281;ny (parabola)
 
-Másodfokú függvény (parabola)
+Hatv&#9500;&#237;nyf&#9500;&#9565;ggv&#9500;&#281;nyek
 
-Hatványfüggvények
+Exponenci&#9500;&#237;lis &#9500;&#281;s logaritmus f&#9500;&#9565;ggv&#9500;&#281;ny
 
-Exponenciális és logaritmus függvény
+Trigonometrikus f&#9500;&#9565;ggv&#9500;&#281;nyek (sin, cos, tan, ctg)
 
-Trigonometrikus függvények (sin, cos, tan, ctg)
+Abszol&#9500;&#9553;t&#9500;&#281;rt&#9500;&#281;k-f&#9500;&#9565;ggv&#9500;&#281;ny, gy&#9500;&#194;kf&#9500;&#9565;ggv&#9500;&#281;ny
 
-Abszolútérték-függvény, gyökfüggvény
+&#173;&#269;&#346;&#9553;&#180;&#350;&#262; 3. Geometria
+Alapfogalmak &#9500;&#281;s H&#9500;&#237;romsz&#9500;&#194;gek
 
-🗺️ 3. Geometria
-Alapfogalmak és Háromszögek
+Nevezetes vonalak (magass&#9500;&#237;g, s&#9500;&#9553;lyvonal, sz&#9500;&#194;gfelez&#9532;&#313;)
 
-Nevezetes vonalak (magasság, súlyvonal, szögfelező)
+H&#9500;&#237;romsz&#9500;&#194;g-egyenl&#9532;&#313;tlens&#9500;&#281;g
 
-Háromszög-egyenlőtlenség
+Pitagorasz-t&#9500;&#281;tel, Befog&#9500;&#9474;- &#9500;&#281;s Magass&#9500;&#237;gt&#9500;&#281;tel
 
-Pitagorasz-tétel, Befogó- és Magasságtétel
+Szinuszt&#9500;&#281;tel, Koszinuszt&#9500;&#281;tel
 
-Szinusztétel, Koszinusztétel
+N&#9500;&#281;gysz&#9500;&#194;gek &#9500;&#281;s Soksz&#9500;&#194;gek
 
-Négyszögek és Sokszögek
+Ter&#9500;&#9565;let- &#9500;&#281;s ker&#9500;&#9565;letsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s
 
-Terület- és kerületszámítás
+H&#9500;&#9553;rn&#9500;&#281;gysz&#9500;&#194;gek, &#9500;&#281;rint&#9532;&#313;n&#9500;&#281;gysz&#9500;&#194;gek
 
-Húrnégyszögek, érintőnégyszögek
+A K&#9500;&#194;r
 
-A Kör
+Ker&#9500;&#9565;leti &#9500;&#281;s k&#9500;&#194;z&#9500;&#281;pponti sz&#9500;&#194;gek t&#9500;&#281;tele
 
-Kerületi és középponti szögek tétele
+L&#9500;&#237;t&#9500;&#9474;k&#9500;&#194;r&#9500;&#351;v
 
-Látókörív
+K&#9500;&#194;r &#9500;&#281;s egyenes, k&#9500;&#194;r &#9500;&#281;s k&#9500;&#194;r k&#9500;&#194;lcs&#9500;&#194;n&#9500;&#194;s helyzete
 
-Kör és egyenes, kör és kör kölcsönös helyzete
+Geometriai Transzform&#225;ci&#243;k
 
-Geometriai Transzformációk
+Tengelyes &#9500;&#281;s k&#9500;&#194;z&#9500;&#281;ppontos t&#9500;&#9565;kr&#9500;&#194;z&#9500;&#281;s
 
-Tengelyes és középpontos tükrözés
+Eltol&#225;s, elforgat&#225;s
 
-Eltolás, elforgatás
+K&#9500;&#194;z&#9500;&#281;ppontos hasonl&#9500;&#9474;s&#9500;&#237;g
 
-Középpontos hasonlóság
+Koordin&#225;tageometria
 
-Koordinátageometria
-
-Vektorok a síkban és a térben (skaláris szorzat)
+Vektorok a s&#9500;&#351;kban &#9500;&#281;s a t&#9500;&#281;rben (skal&#9500;&#237;ris szorzat)
 
 Pont, szakasz, egyenes egyenlete
 
-Kör egyenlete
+K&#9500;&#194;r egyenlete
 
-Két alakzat metszéspontja
+K&#9500;&#281;t alakzat metsz&#9500;&#281;spontja
 
-Térgeometria
+T&#9500;&#281;rgeometria
 
-Hasábok, gúlák felszíne és térfogata
+Has&#9500;&#237;bok, g&#9500;&#9553;l&#9500;&#237;k felsz&#9500;&#351;ne &#9500;&#281;s t&#9500;&#281;rfogata
 
-Forgástestek (henger, kúp, gömb) felszíne és térfogata
+Forg&#9500;&#237;stestek (henger, k&#9500;&#9553;p, g&#9500;&#194;mb) felsz&#9500;&#351;ne &#9500;&#281;s t&#9500;&#281;rfogata
 
-🎲 4. Valószínűségszámítás és Statisztika
+&#173;&#269;&#196;&#9619; 4. Val&#9500;&#9474;sz&#9500;&#351;n&#9532;&#9618;s&#9500;&#281;gsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s &#9500;&#281;s Statisztika
 Kombinatorika
 
-Permutációk (ismétléses, ismétlés nélküli)
+Permut&#9500;&#237;ci&#9500;&#9474;k (ism&#9500;&#281;tl&#9500;&#281;ses, ism&#9500;&#281;tl&#9500;&#281;s n&#9500;&#281;lk&#9500;&#9565;li)
 
-Variációk (ismétléses, ismétlés nélküli)
+Vari&#9500;&#237;ci&#9500;&#9474;k (ism&#9500;&#281;tl&#9500;&#281;ses, ism&#9500;&#281;tl&#9500;&#281;s n&#9500;&#281;lk&#9500;&#9565;li)
 
-Kombinációk (ismétléses, ismétlés nélküli)
+Kombin&#9500;&#237;ci&#9500;&#9474;k (ism&#9500;&#281;tl&#9500;&#281;ses, ism&#9500;&#281;tl&#9500;&#281;s n&#9500;&#281;lk&#9500;&#9565;li)
 
-Binomiális tétel
+Binomi&#9500;&#237;lis t&#9500;&#281;tel
 
-Valószínűségszámítás
+Val&#9500;&#9474;sz&#9500;&#351;n&#9532;&#9618;s&#9500;&#281;gsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s
 
-Klasszikus valószínűségi modell
+Klasszikus val&#9500;&#9474;sz&#9500;&#351;n&#9532;&#9618;s&#9500;&#281;gi modell
 
-Geometriai valószínűség
+Geometriai val&#9500;&#9474;sz&#9500;&#351;n&#9532;&#9618;s&#9500;&#281;g
 
-Feltételes valószínűség, események függetlensége
+Felt&#9500;&#281;teles val&#9500;&#9474;sz&#9500;&#351;n&#9532;&#9618;s&#9500;&#281;g, esem&#9500;&#281;nyek f&#9500;&#9565;ggetlens&#9500;&#281;ge
 
 Statisztika
 
-Adatok ábrázolása (diagramok)
+Adatok &#225;br&#225;zol&#225;sa (diagramok)
 
-Középértékek (átlag, medián, módusz)
+K&#9500;&#194;z&#9500;&#281;p&#9500;&#281;rt&#9500;&#281;kek (&#9500;&#237;tlag, medi&#9500;&#237;n, m&#9500;&#9474;dusz)
 
-Szóródási mutatók (terjedelem, szórás)
+Sz&#243;r&#243;d&#225;si mutat&#243;k (terjedelem, sz&#243;r&#225;s)
 
-📈 5. Emelt Szintű Kiegészítések
+&#173;&#269;&#244;&#322; 5. Emelt Szint&#9532;&#9618; Kieg&#9500;&#281;sz&#9500;&#351;t&#9500;&#281;sek
 Sorozatok
 
-Számtani és mértani sorozatok
+Sz&#9500;&#237;mtani &#9500;&#281;s m&#9500;&#281;rtani sorozatok
 
-Kamatoskamat-számítás
+Kamatoskamat-sz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s
 
-A mértani sorozat konvergenciája
+A m&#9500;&#281;rtani sorozat konvergenci&#9500;&#237;ja
 
-Analízis Elemek (Differenciálszámítás)
+Anal&#9500;&#351;zis Elemek (Differenci&#9500;&#237;lsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s)
 
-Függvény határértéke, folytonossága
+F&#9500;&#9565;ggv&#9500;&#281;ny hat&#9500;&#237;r&#9500;&#281;rt&#9500;&#281;ke, folytonoss&#9500;&#237;ga
 
-A derivált fogalma (geometriai, fizikai)
+A deriv&#225;lt fogalma (geometriai, fizikai)
 
-Deriválási szabályok
+Deriv&#225;l&#225;si szab&#225;lyok
 
-Függvényvizsgálat deriválttal (szélsőérték, monotonitás)
+F&#9500;&#9565;ggv&#9500;&#281;nyvizsg&#9500;&#237;lat deriv&#9500;&#237;lttal (sz&#9500;&#281;ls&#9532;&#313;&#9500;&#281;rt&#9500;&#281;k, monotonit&#9500;&#237;s)
 
-Analízis Elemek (Integrálszámítás)
+Anal&#9500;&#351;zis Elemek (Integr&#9500;&#237;lsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s)
 
-A határozatlan integrál (primitív függvény)
+A hat&#9500;&#237;rozatlan integr&#9500;&#237;l (primit&#9500;&#351;v f&#9500;&#9565;ggv&#9500;&#281;ny)
 
-A határozott integrál fogalma (területszámítás)
+A hat&#9500;&#237;rozott integr&#9500;&#237;l fogalma (ter&#9500;&#9565;letsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s)
 
 Newton-Leibniz formula
 
-Térfogatszámítás integrállal
+T&#9500;&#281;rfogatsz&#9500;&#237;m&#9500;&#351;t&#9500;&#237;s integr&#9500;&#237;llal

@@ -31,7 +31,7 @@
 
         body {
             font-family: var(--font-main);
-            background-color: var(--bg-main);
+            background-color: transparent;
             color: var(--text-light);
             padding: 40px;
             margin: 0;
@@ -684,6 +684,40 @@
         }
         
         openTab('miert');
+
+        // Request settings from main window on load
+        window.parent.postMessage({ type: 'request-settings' }, '*');
+
+        // Apply settings from main window
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'apply-settings') {
+                const settings = event.data.settings;
+                if (settings.contentBg) {
+                    document.body.style.backgroundColor = settings.contentBg;
+                }
+                if (settings.contentBgImage) {
+                    document.body.style.backgroundImage = settings.contentBgImage;
+                    document.body.style.backgroundSize = 'cover';
+                    document.body.style.backgroundPosition = 'center';
+                }
+                if (settings.contentOverlay) {
+                    let overlay = document.getElementById('content-overlay');
+                    if (!overlay) {
+                        overlay = document.createElement('div');
+                        overlay.id = 'content-overlay';
+                        overlay.style.position = 'fixed';
+                        overlay.top = '0';
+                        overlay.left = '0';
+                        overlay.width = '100%';
+                        overlay.height = '100%';
+                        overlay.pointerEvents = 'none';
+                        overlay.zIndex = '-1';
+                        document.body.appendChild(overlay);
+                    }
+                    overlay.style.backgroundColor = settings.contentOverlay;
+                }
+            }
+        });
     </script>
 </body>
 

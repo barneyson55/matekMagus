@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const progressFilePath = path.join(app.getPath('userData'), 'progress.json');
+const settingsFilePath = path.join(app.getPath('userData'), 'settings.json');
 const XP_REWARDS = { konnyu: 120, kozepes: 200, nehez: 320 };
 const DIFFICULTY_LABELS = { konnyu: 'könnyű', kozepes: 'közepes', nehez: 'nehéz' };
 const TOPIC_BONUSES = [
@@ -25,6 +26,12 @@ function saveProgress(data) {
   try {
     fs.writeFileSync(progressFilePath, JSON.stringify(data, null, 2));
   } catch (error) { console.error('Hiba a progress.json írása közben:', error); }
+}
+
+function saveSettings(data) {
+  try {
+    fs.writeFileSync(settingsFilePath, JSON.stringify(data, null, 2));
+  } catch (error) { console.error('Hiba a settings.json írása közben:', error); }
 }
 
 function ensureProgressShape(progress) {
@@ -112,7 +119,8 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
-      webSecurity: false
+      webSecurity: true,
+      allowRunningInsecureContent: false
     }
   });
   mainWindow.loadFile('index.html');
@@ -123,7 +131,7 @@ app.whenReady().then(() => {
     callback({
       responseHeaders: {
         ...details.responseHeaders,
-        'Content-Security-Policy': [ "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net" ]
+        'Content-Security-Policy': [ "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data:" ]
       }
     });
   });
@@ -152,4 +160,19 @@ ipcMain.handle('get-progress-summary', async () => {
     completions: progress.completions,
     level: calculateLevelStats(progress.xp)
   };
+});
+
+ipcMain.handle('get-settings', async () => {
+  try {
+    if (fs.existsSync(settingsFilePath)) {
+      return JSON.parse(fs.readFileSync(settingsFilePath));
+    }
+  } catch (error) {
+    console.error('Hiba a settings.json olvasása közben:', error);
+  }
+  return {};
+});
+
+ipcMain.on('save-settings', (event, settings) => {
+  saveSettings(settings);
 });

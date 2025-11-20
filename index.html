@@ -522,7 +522,7 @@
                 progressData[topicId][difficulty] = grade;
                 updateCircleColor(topicId);
                 refreshProgressSummary();
-            } 
+            }
             else if (data.type === 'get-all-results') {
                 if (window.electronAPI) {
                     const results = await window.electronAPI.getAllResults();
@@ -532,6 +532,19 @@
                 if (window.electronAPI) {
                     const summary = await window.electronAPI.getProgressSummary();
                     iframe.contentWindow.postMessage({ type: 'xp-summary', summary }, '*');
+                }
+            } else if (data.type === 'apply-settings' && data.settings) {
+                applySettings(data.settings);
+                // Also apply to the current iframe content
+                if (iframe.contentWindow) {
+                    iframe.contentWindow.postMessage({ type: 'apply-settings', settings: data.settings }, '*');
+                }
+            } else if (data.type === 'request-settings') {
+                if (window.electronAPI) {
+                    const settings = await window.electronAPI.getSettings();
+                    if (settings && iframe.contentWindow) {
+                        iframe.contentWindow.postMessage({ type: 'apply-settings', settings }, '*');
+                    }
                 }
             }
         });
@@ -613,6 +626,37 @@
         });
 
         refreshProgressSummary();
+
+        // Load and apply settings on page load
+        async function loadAndApplySettings() {
+            if (window.electronAPI) {
+                const settings = await window.electronAPI.getSettings();
+                if (settings) {
+                    applySettings(settings);
+                }
+            }
+        }
+
+function applySettings(settings) {
+    const root = document.documentElement;
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
+    if (settings.sidebarBg) {
+        sidebar.style.backgroundColor = settings.sidebarBg;
+    }
+    if (settings.contentBg) {
+        content.style.backgroundColor = settings.contentBg;
+    }
+    if (settings.buttonBg) root.style.setProperty('--button-bg', settings.buttonBg);
+    if (settings.buttonText) root.style.setProperty('--button-text', settings.buttonText);
+    if (settings.linkColor) root.style.setProperty('--link-color', settings.linkColor);
+    if (settings.contentOverlay) root.style.setProperty('--content-overlay', settings.contentOverlay);
+    if (settings.contentBgImage) {
+        content.style.backgroundImage = settings.contentBgImage;
+    }
+}
+
+        window.addEventListener('DOMContentLoaded', loadAndApplySettings);
     </script>
 </body>
 </html>

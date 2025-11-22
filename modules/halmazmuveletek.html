@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="hu">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,6 @@
         integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
         :root {
             --brand-primary: #4A55A2;
             --brand-secondary: #7895CB;
@@ -424,22 +422,55 @@
             color: var(--brand-light);
             margin-top: 10px;
         }
+        /* Practice controls and feedback */
+        .practice-controls {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        .practice-controls label {
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .practice-controls button {
+            padding: 10px 18px;
+            border: none;
+            background-color: var(--brand-secondary);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .practice-controls button:hover {
+            background-color: var(--brand-primary);
+        }
+        #practice-area {
+            margin-top: 20px;
+        }
+        #practice-feedback {
+            font-weight: 600;
+            margin-top: 10px;
+        }
     </style>
 </head>
-
 <body>
-
     <h1>Témakör: Halmazműveletek</h1>
     <div class="tab-buttons">
         <button class="tab-button active" onclick="openTab('miert')">Kulcsfogalmak</button>
         <button class="tab-button" onclick="openTab('hogyan')">Vizuális Modell</button>
         <button class="tab-button" onclick="openTab('teszt')">Teszt</button>
+        <button class="tab-button" onclick="openTab('gyakorlas')">Gyakorlás</button>
     </div>
 
+    <!-- Kulcsfogalmak tab -->
     <div id="miert" class="tab-content active card">
         <h2>Miért fontos?</h2>
-        <p>A <b>halmaz</b> a matematikában különböző dolgok, elemek egyértelműen meghatározott összessége. A halmaz
-            elemeit kapcsos zárójelek `{}` között, vesszővel elválasztva soroljuk fel, például: $A = \{1, 2, 3\}$.</p>
+        <p>A <b>halmaz</b> a matematikában különböző dolgok, elemek egyértelműen meghatározott összessége. A halmaz elemeit
+            kapcsos zárójelek `{}` között, vesszővel elválasztva soroljuk fel, például: $A = \{1, 2, 3\}$.</p>
         <p>A halmazműveletek segítségével logikai kapcsolatokat hozhatunk létre két vagy több halmaz között. Ezek a
             műveletek a logika, a valószínűségszámítás és az informatika alapkövei.</p>
         <h3>Kulcsfogalmak</h3>
@@ -461,6 +492,8 @@
             <li>$A \cap B = \emptyset$: A és B halmazok <b>diszjunktak</b>.</li>
         </ul>
     </div>
+
+    <!-- Vizuális Modell tab -->
     <div id="hogyan" class="tab-content card">
         <div class="model-container">
             <div class="controls">
@@ -487,8 +520,7 @@
                         </mask>
                     </defs>
                     <rect class="venn-universe" width="400" height="250" rx="12" />
-                    <rect class="venn-region" data-region="universe" width="400" height="250" rx="12"
-                        mask="url(#maskA)" />
+                    <rect class="venn-region" data-region="universe" width="400" height="250" rx="12" mask="url(#maskA)" />
                     <path class="venn-region" data-region="A_only"
                         d="M150,45 A80,80 0 0,0 150,205 A80,80 0 0,0 200,189.6 A80,80 0 0,1 200,50.4 A80,80 0 0,0 150,45 Z" />
                     <path class="venn-region" data-region="B_only"
@@ -511,6 +543,8 @@
             <p id="instant-feedback"></p>
         </div>
     </div>
+
+    <!-- Teszt tab -->
     <div id="teszt" class="tab-content card">
         <h2>Tedd próbára a tudásod!</h2>
         <div class="test-controls">
@@ -529,13 +563,13 @@
                 <div id="answer-area"></div>
             </div>
             <div class="test-navigation">
-                <button id="prev-q" class="nav-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <button id="prev-q" class="nav-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="15 18 9 12 15 6"></polyline>
                     </svg></button>
                 <h3><span id="current-q-num">1</span> / 10. kérdés</h3>
-                <button id="next-q" class="nav-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <button id="next-q" class="nav-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg></button>
             </div>
@@ -543,82 +577,238 @@
             <button id="finish-test-btn" style="width: 100%;">Teszt befejezése és értékelés</button>
         </div>
     </div>
+
+    <!-- Gyakorlás tab -->
+    <div id="gyakorlas" class="tab-content card">
+        <h2>Gyakorolj!</h2>
+        <div class="practice-controls">
+            <span><b>Nehézségek:</b></span>
+            <label><input type="checkbox" class="practice-difficulty" value="könnyű" checked> Könnyű</label>
+            <label><input type="checkbox" class="practice-difficulty" value="közepes"> Közepes</label>
+            <label><input type="checkbox" class="practice-difficulty" value="nehéz"> Nehéz</label>
+            <button id="start-practice-btn">Gyakorlás indítása</button>
+        </div>
+        <div id="practice-area" style="display:none;">
+            <div id="practice-question"></div>
+            <div id="practice-hint" style="margin-top:10px;"></div>
+            <input type="text" id="practice-input" class="options-input" placeholder="Írd be az elemeket vesszővel..." />
+            <button id="practice-check" style="margin-left:10px; padding: 10px 18px; border:none; background-color: var(--brand-secondary); color:white; border-radius:8px; cursor:pointer;">Ellenőrzés</button>
+            <p id="practice-feedback"></p>
+        </div>
+    </div>
+
     <div class="result-popup" id="resultPopup"></div>
 
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
-        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
-        crossorigin="anonymous"></script>
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
         integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
         onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });">
-        </script>
+    </script>
+    <script>
+        const TOPIC_ID = 'halmazmuveletek';
+        let currentDifficulty = 'könnyű';
+        let isTestActive = false;
+        let questions = [];
+        let currentQuestionIndex = 0;
 
-<script>
-        const TOPIC_ID = 'halmazmuveletek'; let currentDifficulty = 'könnyű'; let isTestActive = false; let questions = []; let currentQuestionIndex = 0;
-        
         const questionBanks = {
-            könnyű: [ { type: 'mc', q: "$A = \\{1, 2, 5\\}, B = \\{2, 3, 5\\}$. Mi az $A \\cup B$?", o: ["$\\{2, 5\\}$", "$\\{1, 2, 3, 5\\}$", "$\\{1, 3\\}$"], a: 1 }, { type: 'mc', q: "$A = \\{a, b, c\\}, B = \\{b, d\\}$. Mi az $A \\cap B$?", o: ["$\\{a, c, d\\}$", "$\\{b\\}$", "$\\{a, b, c, d\\}$"], a: 1 }, { type: 'input', q: "$A = \\{4, 8, 12\\}, B = \\{8, 10\\}$. Mi az $A \\setminus B$? Írd be az elemeket vesszővel!", a: "4,12" }, { type: 'mc', q: "Melyik jelöli az üres halmazt?", o: ["$U$", "$\\emptyset$", "$A'$"], a: 1 }, { type: 'mc', q: "$A = \\{1, 2\\}, B = \\{1, 2, 3\\}$. Melyik állítás igaz?", o: ["$A \\subset B$", "$B \\subset A$", "$A = B$"], a: 0 }, { type: 'input', q: "$A = \\{10, 20\\}, B = \\{20, 30\\}$. Mi az $A \\cap B$? Írd be az elemet!", a: "20" }, { type: 'mc', q: "Ha egy elem A-ban és B-ben is benne van, akkor eleme a ...?", o: ["metszetüknek", "csak A-nak", "különbségüknek"], a: 0 }, { type: 'input', q: "$K = \\{a,b,c\\}, L = \\{c,d,e\\}$. Mi a $K \\cup L$? Írd be az elemeket vesszővel!", a: "a,b,c,d,e" }, { type: 'mc', q: "Mi az $A \\setminus A$ művelet eredménye?", o: ["$A$", "$U$", "$\\emptyset$"], a: 2 }, { type: 'mc', q: "Ha $A \\cap B = \\emptyset$, akkor a két halmaz...", o: ["egyenlő", "diszjunkt", "részhalmazai egymásnak"], a: 1 }, ],
-            közepes: [ { type: 'input', q: "$U = \\{1,2,3,4,5\\}, A = \\{1,3\\}$. Mi az $\\bar{A}$?", a: "2,4,5" }, { type: 'mc', q: "Hány részhalmaza van egy 3 elemű halmaznak?", o: ["6", "8", "9"], a: 1 }, { type: 'input', q: "$A=\\{1,2\\}, B=\\{3,4\\}$. Mi $(A \\cup B) \\cap A$?", a: "1,2" }, { type: 'mc', q: "$A=\\{1,2,3\\}, B=\\{2,3,4\\}$. Hány eleme van a $(A \\setminus B) \\cup (B \\setminus A)$ halmaznak?", o: ["1", "2", "4"], a: 1 }, { type: 'mc', q: "Melyik igaz: $A \\cup \\emptyset = $?", o: ["$A$", "$U$", "$\\emptyset$"], a: 0 }, { type: 'mc', q: "Melyik igaz: $A \\cap U = $?", o: ["$U$", "$\\emptyset$", "$A$"], a: 2 }, { type: 'input', q: "Páros számok halmaza ($P$), Prímszámok halmaza ($T$). Mi $P \\cap T$?", a: "2" }, { type: 'mc', q: "Mi $(\\bar{A})$ komplementere?", o: ["$\\emptyset$", "$U$", "$A$"], a: 2 }, { type: 'mc', q: "Hogyan nevezzük az $(A \\setminus B) \\cup (B \\setminus A)$ műveletet?", o: ["De Morgan-azonosság", "Szimmetrikus differencia", "Asszociativitás"], a: 1 }, { type: 'input', q: "$A=\\{5,10,15\\}, B=\\{10,20\\}$. Mi $B \\setminus A$?", a: "20" } ],
-            nehéz: [ { type: 'mc', q: "Mivel egyenlő $(A \\cup B) \\cap A$?", o:["$A$", "$B$", "$A \\cup B$"], a:0 }, { type: 'mc', q: "A De Morgan-azonosság szerint $\\overline{A \\cup B} = $...", o: ["$\\bar{A} \\cup \\bar{B}$", "$\\bar{A} \\cap \\bar{B}$", "$\\overline{A \\cap B}$"], a: 1 }, { type: 'input', q: "$A=\\{x|x<5, x\\in\\mathbb{N}\\}, B=\\{\\text{páros számok}\\}$. Mi $A\\cap B$?", a:"2,4"}, { type: 'mc', q: "Egy osztályban 15-en tanulnak angolt, 12-en németet. 5-en mindkettőt. Hányan tanulnak legalább egy nyelvet?", o: ["27", "22", "32"], a: 1 }, { type: 'mc', q: "$|A|=5, |B|=4, |A\\cup B|=7$. Mennyi $|A\\cap B|$?", o: ["2", "3", "9"], a: 0 }, { type: 'mc', q: "Mivel egyenlő $A \\cup (A \\cap B)$?", o: ["$A \\cap B$", "$B$", "$A$"], a: 2 }, { type: 'input', q: "$U=\\{1..10\\}, A=\\{\\text{páros}\\}, B=\\{3-mal osztható\\}$. Mi $\\overline{A\\cup B}$?", a: "1,5,7" }, { type: 'mc', q: "$|A|=10, |B|=8$, A és B diszjunktak. Mennyi $|A\\cup B|$?", o: ["Nem lehet tudni", "2", "18"], a: 2 }, { type: 'mc', q: "Mivel egyenlő $(A \\setminus B) \\cap B$?", o: ["$A$", "$\\emptyset$", "$B$"], a: 1 }, { type: 'input', q: "$A=\\{\\text{prímek 10-ig}\\}, B=\\{\\text{páratlanok 10-ig}\\}$. Mi $(A\\cup B)\\setminus(A\\cap B)$?", a: "1,2,9" } ]
+            könnyű: [
+                { type: 'mc', q: "$A = \\{1, 2, 5\\}, B = \\{2, 3, 5\\}$. Mi az $A \\cup B$?", o: ["$\\{2, 5\\}$", "$\\{1, 2, 3, 5\\}$", "$\\{1, 3\\}$"], a: 1 },
+                { type: 'mc', q: "$A = \\{a, b, c\\}, B = \\{b, d\\}$. Mi az $A \\cap B$?", o: ["$\\{a, c, d\\}$", "$\\{b\\}$", "$\\{a, b, c, d\\}$"], a: 1 },
+                { type: 'input', q: "$A = \\{4, 8, 12\\}, B = \\{8, 10\\}$. Mi az $A \\setminus B$? Írd be az elemeket vesszővel!", a: "4,12" },
+                { type: 'mc', q: "Melyik jelöli az üres halmazt?", o: ["$U$", "$\\emptyset$", "$A'$"], a: 1 },
+                { type: 'mc', q: "$A = \\{1, 2\\}, B = \\{1, 2, 3\\}$. Melyik állítás igaz?", o: ["$A \\subset B$", "$B \\subset A$", "$A = B$"], a: 0 },
+                { type: 'input', q: "$A = \\{10, 20\\}, B = \\{20, 30\\}$. Mi az $A \\cap B$? Írd be az elemet!", a: "20" },
+                { type: 'mc', q: "Ha egy elem A-ban és B-ben is benne van, akkor eleme a ...?", o: ["metszetüknek", "csak A-nak", "különbségüknek"], a: 0 },
+                { type: 'input', q: "$K = \\{a,b,c\\}, L = \\{c,d,e\\}$. Mi a $K \\cup L$? Írd be az elemeket vesszővel!", a: "a,b,c,d,e" },
+                { type: 'mc', q: "Mi az $A \\setminus A$ művelet eredménye?", o: ["$A$", "$U$", "$\\emptyset$"], a: 2 },
+                { type: 'mc', q: "Ha $A \\cap B = \\emptyset$, akkor a két halmaz...", o: ["egyenlő", "diszjunkt", "részhalmazai egymásnak"], a: 1 },
+            ],
+            közepes: [
+                { type: 'input', q: "$U = \\{1,2,3,4,5\\}, A = \\{1,3\\}$. Mi az $\\bar{A}$?", a: "2,4,5" },
+                { type: 'mc', q: "Hány részhalmaza van egy 3 elemű halmaznak?", o: ["6", "8", "9"], a: 1 },
+                { type: 'input', q: "$A=\\{1,2\\}, B=\\{3,4\\}$. Mi $(A \\cup B) \\cap A$?", a: "1,2" },
+                { type: 'mc', q: "$A=\\{1,2,3\\}, B=\\{2,3,4\\}$. Hány eleme van a $(A \\setminus B) \\cup (B \\setminus A)$ halmaznak?", o: ["1", "2", "4"], a: 1 },
+                { type: 'mc', q: "Melyik igaz: $A \\cup \\emptyset = $?", o: ["$A$", "$U$", "$\\emptyset$"], a: 0 },
+                { type: 'mc', q: "Melyik igaz: $A \\cap U = $?", o: ["$U$", "$\\emptyset$", "$A$"], a: 2 },
+                { type: 'input', q: "Páros számok halmaza ($P$), Prímszámok halmaza ($T$). Mi $P \\cap T$?", a: "2" },
+                { type: 'mc', q: "Mi $(\\bar{A})$ komplementere?", o: ["$\\emptyset$", "$U$", "$A$"], a: 2 },
+                { type: 'mc', q: "Hogyan nevezzük az $(A \\setminus B) \\cup (B \\setminus A)$ műveletet?", o: ["De Morgan-azonosság", "Szimmetrikus differencia", "Asszociativitás"], a: 1 },
+                { type: 'input', q: "$A=\\{5,10,15\\}, B=\\{10,20\\}$. Mi $B \\setminus A$?", a: "20" },
+            ],
+            nehéz: [
+                { type: 'mc', q: "Mivel egyenlő $(A \\cup B) \\cap A$?", o: ["$A$", "$B$", "$A \\cup B$"], a: 0 },
+                { type: 'mc', q: "A De Morgan-azonosság szerint $\\overline{A \\cup B} = $...", o: ["$\\bar{A} \\cup \\bar{B}$", "$\\bar{A} \\cap \\bar{B}$", "$\\overline{A \\cap B}$"], a: 1 },
+                { type: 'input', q: "$A=\\{x|x<5, x\\in\\mathbb{N}\\}, B=\\{\\text{páros számok}\\}$. Mi $A\\cap B$?", a: "2,4" },
+                { type: 'mc', q: "Egy osztályban 15-en tanulnak angolt, 12-en németet. 5-en mindkettőt. Hányan tanulnak legalább egy nyelvet?", o: ["27", "22", "32"], a: 1 },
+                { type: 'mc', q: "$|A|=5, |B|=4, |A\\cup B|=7$. Mennyi $|A\\cap B|$?", o: ["2", "3", "9"], a: 0 },
+                { type: 'mc', q: "Mivel egyenlő $A \\cup (A \\cap B)$?", o: ["$A \\cap B$", "$B$", "$A$"], a: 2 },
+                { type: 'input', q: "$U=\\{1..10\\}, A=\\{\\text{páros}\\}, B=\\{3-mal osztható\\}$. Mi $\\overline{A\\cup B}$?", a: "1,5,7" },
+                { type: 'mc', q: "$|A|=10, |B|=8$, A és B diszjunktak. Mennyi $|A\\cup B|$?", o: ["Nem lehet tudni", "2", "18"], a: 2 },
+                { type: 'mc', q: "Mivel egyenlő $(A \\setminus B) \\cap B$?", o: ["$A$", "$\\emptyset$", "$B$"], a: 1 },
+                { type: 'input', q: "$A=\\{\\text{prímek 10-ig}\\}, B=\\{\\text{páratlanok 10-ig}\\}$. Mi $(A\\cup B)\\setminus(A\\cap B)$?", a: "1,2,9" },
+            ]
         };
         const dom = {
-            tabButtons: document.querySelectorAll('.tab-button'), tabContents: document.querySelectorAll('.tab-content'),
-            difficultyBtns: document.querySelectorAll('.difficulty-btn'), startTestBtn: document.getElementById('start-test-btn'),
-            testArea: document.getElementById('test-area'), dotsContainer: document.getElementById('pagination-dots'),
-            questionBox: document.getElementById('question-box'), questionText: document.getElementById('question-text'), 
-            answerArea: document.getElementById('answer-area'), prevBtn: document.getElementById('prev-q'), 
-            nextBtn: document.getElementById('next-q'), finishTestBtn: document.getElementById('finish-test-btn'), 
-            resultPopup: document.getElementById('resultPopup'), currentQNum: document.getElementById('current-q-num'), 
-            opButtons: document.querySelectorAll('.op-button'), definitionBox: document.getElementById('definition-box'), 
-            vennSvg: document.getElementById('venn-svg'), instantPractice: document.getElementById('instant-practice'), 
-            instantQ: document.getElementById('instant-q'), instantInput: document.getElementById('instant-input'), 
-            instantCheck: document.getElementById('instant-check'), instantFeedback: document.getElementById('instant-feedback')
+            tabButtons: document.querySelectorAll('.tab-button'),
+            tabContents: document.querySelectorAll('.tab-content'),
+            difficultyBtns: document.querySelectorAll('.difficulty-btn'),
+            startTestBtn: document.getElementById('start-test-btn'),
+            testArea: document.getElementById('test-area'),
+            dotsContainer: document.getElementById('pagination-dots'),
+            questionBox: document.getElementById('question-box'),
+            questionText: document.getElementById('question-text'),
+            answerArea: document.getElementById('answer-area'),
+            prevBtn: document.getElementById('prev-q'),
+            nextBtn: document.getElementById('next-q'),
+            finishTestBtn: document.getElementById('finish-test-btn'),
+            resultPopup: document.getElementById('resultPopup'),
+            currentQNum: document.getElementById('current-q-num'),
+            opButtons: document.querySelectorAll('.op-button'),
+            definitionBox: document.getElementById('definition-box'),
+            vennSvg: document.getElementById('venn-svg'),
+            instantPractice: document.getElementById('instant-practice'),
+            instantQ: document.getElementById('instant-q'),
+            instantInput: document.getElementById('instant-input'),
+            instantCheck: document.getElementById('instant-check'),
+            instantFeedback: document.getElementById('instant-feedback'),
+            // practice elements
+            practiceControls: document.querySelector('.practice-controls'),
+            practiceQuestion: document.getElementById('practice-question'),
+            practiceHint: document.getElementById('practice-hint'),
+            practiceInput: document.getElementById('practice-input'),
+            practiceCheck: document.getElementById('practice-check'),
+            practiceFeedback: document.getElementById('practice-feedback'),
+            practiceArea: document.getElementById('practice-area'),
+            startPracticeBtn: document.getElementById('start-practice-btn')
         };
-        
-        function openTab(tabName) { dom.tabContents.forEach(t => t.classList.remove('active')); document.getElementById(tabName).classList.add('active'); dom.tabButtons.forEach(b => b.classList.remove('active')); document.querySelector(`.tab-button[onclick="openTab('${tabName}')"]`).classList.add('active'); }
+
+        function openTab(tabName) {
+            dom.tabContents.forEach(t => t.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            dom.tabButtons.forEach(b => b.classList.remove('active'));
+            document.querySelector(`.tab-button[onclick="openTab('${tabName}')"]`).classList.add('active');
+        }
 
         const operations = {
-            union: { def: "<p><b>Unió ($A \\cup B$):</b> Azok az elemek, amelyek <b>legalább az egyik</b> halmazban benne vannak.</p>", regions: ['A_only', 'B_only', 'intersection'], practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $A \\cup B$?", a: "1,2,3" } },
-            intersection: { def: "<p><b>Metszet ($A \\cap B$):</b> Azok az elemek, amelyek <b>mindkét</b> halmazban benne vannak.</p>", regions: ['intersection'], practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $A \\cap B$?", a: "2" } },
-            diff_a_b: { def: "<p><b>Különbség ($A \\setminus B$):</b> Azok az elemek, amelyek <b>A-ban benne vannak, de B-ben nem</b>.</p>", regions: ['A_only'], practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $A\\setminus B$?", a: "1" } },
-            diff_b_a: { def: "<p><b>Különbség ($B \\setminus A$):</b> Azok az elemek, amelyek <b>B-ben benne vannak, de A-ban nem</b>.</p>", regions: ['B_only'], practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $B\\setminus A$?", a: "3" } },
-            comp_a: { def: "<p><b>Komplementer ($\\bar{A}$):</b> Azok az elemek, amelyek az alaphalmazban (U) benne vannak, de az <b>A halmazban nem</b>.</p>", regions: ['universe'], practice: { q: "$U=\\{1,2,3,4\\}, A=\\{1,2\\}$. Mi az $\\bar{A}$?", a: "3,4" } }
+            union: {
+                def: "<p><b>Unió ($A \\cup B$):</b> Azok az elemek, amelyek <b>legalább az egyik</b> halmazban benne vannak.</p>",
+                regions: ['A_only', 'B_only', 'intersection'],
+                practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $A \\cup B$?", a: "1,2,3" }
+            },
+            intersection: {
+                def: "<p><b>Metszet ($A \\cap B$):</b> Azok az elemek, amelyek <b>mindkét</b> halmazban benne vannak.</p>",
+                regions: ['intersection'],
+                practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $A \\cap B$?", a: "2" }
+            },
+            diff_a_b: {
+                def: "<p><b>Különbség ($A \\setminus B$):</b> Azok az elemek, amelyek <b>A-ban benne vannak, de B-ben nem</b>.</p>",
+                regions: ['A_only'],
+                practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $A\\setminus B$?", a: "1" }
+            },
+            diff_b_a: {
+                def: "<p><b>Különbség ($B \\setminus A$):</b> Azok az elemek, amelyek <b>B-ben benne vannak, de A-ban nem</b>.</p>",
+                regions: ['B_only'],
+                practice: { q: "$A=\\{1,2\\}, B=\\{2,3\\}$. Mi az $B\\setminus A$?", a: "3" }
+            },
+            comp_a: {
+                def: "<p><b>Komplementer ($\\bar{A}$):</b> Azok az elemek, amelyek az alaphalmazban (U) benne vannak, de az <b>A halmazban nem</b>.</p>",
+                regions: ['universe'],
+                practice: { q: "$U=\\{1,2,3,4\\}, A=\\{1,2\\}$. Mi az $\\bar{A}$?", a: "3,4" }
+            }
         };
 
         dom.opButtons.forEach(button => {
             button.addEventListener('click', () => {
-                dom.opButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active');
+                dom.opButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
                 const op = button.dataset.op;
                 document.querySelectorAll('.venn-region').forEach(r => r.classList.remove('active'));
                 operations[op].regions.forEach(r => dom.vennSvg.querySelector(`[data-region="${r}"]`).classList.add('active'));
                 dom.definitionBox.innerHTML = operations[op].def;
-                
                 dom.instantPractice.style.display = 'block';
                 dom.instantQ.textContent = operations[op].practice.q;
                 dom.instantCheck.onclick = () => checkInstantAnswer(operations[op].practice.a);
-                dom.instantInput.value = ''; dom.instantFeedback.textContent = '';
-                
+                dom.instantInput.value = '';
+                dom.instantFeedback.textContent = '';
                 const renderOptions = { delimiters: [ {left: '$', right: '$', display: false} ] };
                 renderMathInElement(dom.definitionBox, renderOptions);
                 renderMathInElement(dom.instantPractice, renderOptions);
             });
         });
 
-        function checkInstantAnswer(correctAnswer) { const userAnswer = dom.instantInput.value.replace(/\s/g, ''); const correctSet = new Set(correctAnswer.split(',')); const answerSet = new Set(userAnswer.split(',')); if (correctSet.size === answerSet.size && [...correctSet].every(item => answerSet.has(item))) { dom.instantFeedback.textContent = "Helyes! ✅"; dom.instantFeedback.style.color = "var(--success)"; } else { dom.instantFeedback.textContent = "Próbáld újra! ❌"; dom.instantFeedback.style.color = "var(--danger)"; } }
-        
-        dom.difficultyBtns.forEach(btn => btn.addEventListener('click', () => { if (!isTestActive) { currentDifficulty = btn.dataset.difficulty; dom.difficultyBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); } }));
-        dom.startTestBtn.addEventListener('click', () => { isTestActive = true; questions = [...questionBanks[currentDifficulty]].map(q => ({...q, userAnswer: null})); currentQuestionIndex = 0; dom.startTestBtn.style.display = 'none'; dom.testArea.style.display = 'block'; renderPagination(); renderQuestion(); });
-        dom.prevBtn.addEventListener('click', () => { if(currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); renderPagination(); } });
-        dom.nextBtn.addEventListener('click', () => { if(currentQuestionIndex < questions.length - 1) { currentQuestionIndex++; renderQuestion(); renderPagination(); } });
+        function checkInstantAnswer(correctAnswer) {
+            const userAnswer = dom.instantInput.value.replace(/\\s/g, '');
+            const correctSet = new Set(correctAnswer.split(','));
+            const answerSet = new Set(userAnswer.split(','));
+            if (correctSet.size === answerSet.size && [...correctSet].every(item => answerSet.has(item))) {
+                dom.instantFeedback.textContent = "Helyes! ✅";
+                dom.instantFeedback.style.color = "var(--success)";
+            } else {
+                dom.instantFeedback.textContent = "Próbáld újra! ❌";
+                dom.instantFeedback.style.color = "var(--danger)";
+            }
+        }
 
-        function renderPagination() { dom.dotsContainer.innerHTML = ''; questions.forEach((q, index) => { const dot = document.createElement('div'); dot.className = 'dot'; if (index === currentQuestionIndex) dot.classList.add('current'); if (q.userAnswer !== null) dot.classList.add('answered'); dot.addEventListener('click', () => { currentQuestionIndex = index; renderQuestion(); renderPagination(); }); dom.dotsContainer.appendChild(dot); }); }
+        dom.difficultyBtns.forEach(btn => btn.addEventListener('click', () => {
+            if (!isTestActive) {
+                currentDifficulty = btn.dataset.difficulty;
+                dom.difficultyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        }));
+        dom.startTestBtn.addEventListener('click', () => {
+            isTestActive = true;
+            questions = [...questionBanks[currentDifficulty]].map(q => ({ ...q, userAnswer: null }));
+            currentQuestionIndex = 0;
+            dom.startTestBtn.style.display = 'none';
+            dom.testArea.style.display = 'block';
+            renderPagination();
+            renderQuestion();
+        });
+        dom.prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+                renderPagination();
+            }
+        });
+        dom.nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+                renderPagination();
+            }
+        });
+
+        function renderPagination() {
+            dom.dotsContainer.innerHTML = '';
+            questions.forEach((q, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (index === currentQuestionIndex) dot.classList.add('current');
+                if (q.userAnswer !== null) dot.classList.add('answered');
+                dot.addEventListener('click', () => {
+                    currentQuestionIndex = index;
+                    renderQuestion();
+                    renderPagination();
+                });
+                dom.dotsContainer.appendChild(dot);
+            });
+        }
 
         function renderQuestion() {
             const q = questions[currentQuestionIndex];
             dom.questionText.innerHTML = `<p>${q.q}</p>`;
             dom.answerArea.innerHTML = '';
             if (q.type === 'mc') {
-                const optionsHTML = q.o.map((option, index) => `<input type="radio" name="answer" id="opt${index}" value="${index}" ${q.userAnswer === index ? 'checked' : ''} onchange="saveAnswer()"><label for="opt${index}">${option}</label>`).join('');
+                const optionsHTML = q.o
+                    .map(
+                        (option, index) =>
+                            `<input type="radio" name="answer" id="opt${index}" value="${index}" ${q.userAnswer === index ? 'checked' : ''} onchange="saveAnswer()"><label for="opt${index}">${option}</label>`
+                    )
+                    .join('');
                 dom.answerArea.innerHTML = `<div class="options">${optionsHTML}</div>`;
             } else if (q.type === 'input') {
                 dom.answerArea.innerHTML = `<input type="text" class="options-input" placeholder="pl: 1,2,3" value="${q.userAnswer || ''}" oninput="saveAnswer()">`;
@@ -626,38 +816,62 @@
             dom.currentQNum.textContent = currentQuestionIndex + 1;
             dom.prevBtn.disabled = currentQuestionIndex === 0;
             dom.nextBtn.disabled = currentQuestionIndex === questions.length - 1;
-            renderMathInElement(dom.questionBox, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });
+            renderMathInElement(dom.questionBox, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false }
+                ]
+            });
         }
 
-        function saveAnswer() { const q = questions[currentQuestionIndex]; if (q.type === 'mc') { const selected = document.querySelector('input[name="answer"]:checked'); if (selected) q.userAnswer = parseInt(selected.value); } else if (q.type === 'input') { q.userAnswer = document.querySelector('.options-input').value.replace(/\s/g, ''); } renderPagination(); }
+        function saveAnswer() {
+            const q = questions[currentQuestionIndex];
+            if (q.type === 'mc') {
+                const selected = document.querySelector('input[name="answer"]:checked');
+                if (selected) q.userAnswer = parseInt(selected.value);
+            } else if (q.type === 'input') {
+                q.userAnswer = document.querySelector('.options-input').value.replace(/\\s/g, '');
+            }
+            renderPagination();
+        }
 
         dom.finishTestBtn.addEventListener('click', () => {
-            finishTest(); // Itt hívjuk meg a különálló finishTest függvényt
+            finishTest();
         });
 
         function finishTest() {
             let correct = 0;
             questions.forEach(q => {
-                if(q.type === 'mc' && q.userAnswer === q.a) correct++;
+                if (q.type === 'mc' && q.userAnswer === q.a) correct++;
                 else if (q.type === 'input') {
                     const correctSet = new Set(q.a.split(','));
-                    const answerSet = new Set((q.userAnswer || "").split(','));
+                    const answerSet = new Set((q.userAnswer || '').split(','));
                     if (correctSet.size === answerSet.size && [...correctSet].every(item => answerSet.has(item))) correct++;
                 }
             });
             const percentage = (correct / questions.length) * 100;
-            let grade = 0; let feedback = "";
-            if (percentage < 40) { grade = 1; feedback = "Elégtelen (1)"; }
-            else if (percentage < 55) { grade = 2; feedback = "Elégséges (2)"; }
-            else if (percentage < 70) { grade = 3; feedback = "Közepes (3)"; }
-            else if (percentage < 85) { grade = 4; feedback = "Jó (4)"; }
-            else { grade = 5; feedback = "Jeles (5)"; }
-            
+            let grade = 0;
+            let feedback = '';
+            if (percentage < 40) {
+                grade = 1;
+                feedback = 'Elégtelen (1)';
+            } else if (percentage < 55) {
+                grade = 2;
+                feedback = 'Elégséges (2)';
+            } else if (percentage < 70) {
+                grade = 3;
+                feedback = 'Közepes (3)';
+            } else if (percentage < 85) {
+                grade = 4;
+                feedback = 'Jó (4)';
+            } else {
+                grade = 5;
+                feedback = 'Jeles (5)';
+            }
             showResultPopup(`Sikeres Teszt! <span>Eredmény: ${percentage.toFixed(0)}% - ${feedback}</span>`);
-            
             const resultObject = {
                 topicId: TOPIC_ID,
-                topicName: "Halmazműveletek",
+                topicName: 'Halmazműveletek',
                 difficulty: currentDifficulty,
                 grade: grade,
                 percentage: percentage.toFixed(0),
@@ -669,9 +883,7 @@
                     userAnswer: q.userAnswer
                 }))
             };
-            
             window.parent.postMessage({ type: 'testResult', result: resultObject }, '*');
-            
             isTestActive = false;
             dom.testArea.style.display = 'none';
             dom.startTestBtn.style.display = 'block';
@@ -680,14 +892,130 @@
         function showResultPopup(message) {
             dom.resultPopup.innerHTML = message;
             dom.resultPopup.classList.add('show');
-            setTimeout(() => { dom.resultPopup.classList.remove('show'); }, 4000);
+            setTimeout(() => {
+                dom.resultPopup.classList.remove('show');
+            }, 4000);
         }
-        
-        openTab('miert');
 
+        // ----------------- Practice Functionality -----------------------
+        let practiceActive = false;
+        let currentPracticeAnswer = '';
+        let practiceTimeout;
+        function getSelectedPracticeDifficulties() {
+            return Array.from(document.querySelectorAll('.practice-difficulty:checked')).map(cb => cb.value);
+        }
+        dom.startPracticeBtn.addEventListener('click', () => {
+            const selected = getSelectedPracticeDifficulties();
+            if (selected.length === 0) {
+                alert('Válassz legalább egy nehézségi szintet!');
+                return;
+            }
+            practiceActive = true;
+            dom.practiceArea.style.display = 'block';
+            nextPracticeQuestion();
+        });
+        dom.practiceCheck.addEventListener('click', () => {
+            const userAnswer = dom.practiceInput.value.replace(/\\s/g, '');
+            const correctSet = new Set(currentPracticeAnswer.split(','));
+            const answerSet = new Set(userAnswer.split(','));
+            if (correctSet.size === answerSet.size && [...correctSet].every(item => answerSet.has(item))) {
+                dom.practiceFeedback.textContent = 'Helyes! ✅ (+1 XP)';
+                dom.practiceFeedback.style.color = 'var(--success)';
+                // send xp earn message to parent
+                window.parent.postMessage({ type: 'practiceXp', xp: 1, topicId: TOPIC_ID }, '*');
+                clearTimeout(practiceTimeout);
+                practiceTimeout = setTimeout(() => {
+                    nextPracticeQuestion();
+                }, 2000);
+            } else {
+                dom.practiceFeedback.textContent = 'Próbáld újra! ❌';
+                dom.practiceFeedback.style.color = 'var(--danger)';
+            }
+        });
+        function nextPracticeQuestion() {
+            const selectedDiffs = getSelectedPracticeDifficulties();
+            const diff = selectedDiffs[Math.floor(Math.random() * selectedDiffs.length)];
+            const { question, answer, hint } = generatePracticeQuestion(diff);
+            currentPracticeAnswer = answer;
+            dom.practiceQuestion.innerHTML = `<p>${question}</p>`;
+            dom.practiceHint.innerHTML = hint;
+            dom.practiceInput.value = '';
+            dom.practiceFeedback.textContent = '';
+            renderMathInElement(dom.practiceQuestion, { delimiters: [ {left: '$', right: '$', display: false} ] });
+            renderMathInElement(dom.practiceHint, { delimiters: [ {left: '$', right: '$', display: false} ] });
+        }
+        function generatePracticeQuestion(diff) {
+            const U = Array.from({ length: 8 }, (_, i) => i + 1);
+            function getRandomSet(maxLen = 3) {
+                const size = Math.floor(Math.random() * maxLen) + 2;
+                const shuffled = [...U].sort(() => Math.random() - 0.5);
+                const set = shuffled.slice(0, size);
+                return [...new Set(set)].sort((a, b) => a - b);
+            }
+            let A = getRandomSet();
+            let B = getRandomSet();
+            let op;
+            if (diff === 'könnyű') {
+                const ops = ['union', 'intersection', 'diff_ab', 'diff_ba'];
+                op = ops[Math.floor(Math.random() * ops.length)];
+            } else if (diff === 'közepes') {
+                const ops = ['comp_a', 'symdiff'];
+                op = ops[Math.floor(Math.random() * ops.length)];
+            } else {
+                const ops = ['union', 'intersection', 'diff_ab', 'diff_ba', 'comp_a', 'symdiff'];
+                op = ops[Math.floor(Math.random() * ops.length)];
+            }
+            let question = '';
+            let answer = '';
+            let hint = '';
+            const formatSet = (set) => `\\{${set.join(', ')}\\}`;
+            const joinSet = (set) => set.join(',');
+            if (op === 'union') {
+                const unionSet = Array.from(new Set([...A, ...B])).sort((a, b) => a - b);
+                answer = joinSet(unionSet);
+                question = `$A = ${formatSet(A)}, B = ${formatSet(B)}$. Mi az $A \\cup B$? Írd be az elemeket vesszővel!`;
+                // Wrap the union operator in a math environment so KaTeX can render it properly
+                hint = '<p><b>Unió ($A \\cup B$):</b> Azok az elemek, amelyek legalább az egyik halmazban benne vannak.</p>';
+            } else if (op === 'intersection') {
+                const inter = A.filter(x => B.includes(x));
+                answer = joinSet(inter);
+                question = `$A = ${formatSet(A)}, B = ${formatSet(B)}$. Mi az $A \\cap B$? Írd be az elemeket vesszővel!`;
+                // Wrap the intersection operator in a math environment so KaTeX can render it properly
+                hint = '<p><b>Metszet ($A \\cap B$):</b> Azok az elemek, amelyek mindkét halmazban benne vannak.</p>';
+            } else if (op === 'diff_ab') {
+                const diffSet = A.filter(x => !B.includes(x));
+                answer = joinSet(diffSet);
+                question = `$A = ${formatSet(A)}, B = ${formatSet(B)}$. Mi az $A \\setminus B$? Írd be az elemeket vesszővel!`;
+                // Wrap the difference operator in a math environment so KaTeX can render it properly
+                hint = '<p><b>Különbség ($A \\setminus B$):</b> Azok az elemek, amelyek A-ban vannak, de B-ben nem.</p>';
+            } else if (op === 'diff_ba') {
+                const diffSet = B.filter(x => !A.includes(x));
+                answer = joinSet(diffSet);
+                question = `$A = ${formatSet(A)}, B = ${formatSet(B)}$. Mi az $B \\setminus A$? Írd be az elemeket vesszővel!`;
+                // Wrap the difference operator in a math environment so KaTeX can render it properly
+                hint = '<p><b>Különbség ($B \\setminus A$):</b> Azok az elemek, amelyek B-ben vannak, de A-ban nem.</p>';
+            } else if (op === 'comp_a') {
+                const compSet = U.filter(x => !A.includes(x));
+                answer = joinSet(compSet);
+                question = `$U = \{${U.join(', ')}\}, A = ${formatSet(A)}$. Mi az $\\bar{A}$? Írd be az elemeket vesszővel!`;
+                // Wrap the complement operator in a math environment so KaTeX can render it properly
+                hint = '<p><b>Komplementer ($\\bar{A}$):</b> Azok az elemek, amelyek az alaphalmazban benne vannak, de az A-ban nem.</p>';
+            } else {
+                // symdiff
+                const diff1 = A.filter(x => !B.includes(x));
+                const diff2 = B.filter(x => !A.includes(x));
+                const sym = [...diff1, ...diff2].sort((a, b) => a - b);
+                answer = joinSet(sym);
+                question = `$A = ${formatSet(A)}, B = ${formatSet(B)}$. Mi az $(A \\triangle B)$ (szimmetrikus differencia)? Írd be az elemeket vesszővel!`;
+                // Wrap the symmetric difference operator in a math environment so KaTeX can render it properly
+                hint = '<p><b>Szimmetrikus differencia ($A \\triangle B$):</b> Azok az elemek, amelyek pontosan az egyik halmazban vannak, de nem mindkettőben.</p>';
+            }
+            return { question, answer, hint };
+        }
+        // ------------------ End Practice ---------------------------
+        openTab('miert');
         // Request settings from main window on load
         window.parent.postMessage({ type: 'request-settings' }, '*');
-
         // Apply settings from main window
         window.addEventListener('message', (event) => {
             if (event.data.type === 'apply-settings') {
@@ -720,5 +1048,4 @@
         });
     </script>
 </body>
-
 </html>

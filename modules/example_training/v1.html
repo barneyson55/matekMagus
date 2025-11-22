@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Százalékszámítás Mester</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        html, body { height: 100%; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #374151; }
+        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .shake { animation: shake 0.5s ease-in-out; }
+        .custom-checkbox { appearance: none; width: 1.25rem; height: 1.25rem; border: 2px solid #6b7280; border-radius: 0.375rem; transition: all 0.2s; cursor: pointer; }
+        .custom-checkbox:checked { background-color: #818cf8; border-color: #6366f1; }
+        .custom-checkbox:checked + span { color: #e0e7ff; }
+        #visual-modal { transition: opacity 0.3s ease-in-out; }
+        #visual-modal.hidden { opacity: 0; pointer-events: none; }
+        #modal-content { transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; }
+        .modal-enter { opacity: 0; transform: scale(0.95); }
+        .modal-enter-active { opacity: 1; transform: scale(1); }
+        @keyframes slide-up {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .animate-slide-up { animation: slide-up 0.5s ease-out forwards; }
+    </style>
+</head>
+<body class="text-white flex flex-col h-screen">
+
+    <!-- Fő tartalom -->
+    <div class="h-[25%] flex flex-col items-center justify-end p-4 pb-2">
+        <p id="problem-description" class="text-lg text-gray-400 font-light text-center max-w-xl mb-2"></p>
+        <h2 id="problem-title" class="text-xl md:text-2xl font-bold text-indigo-300 text-center">Betöltés...</h2>
+    </div>
+    <div class="h-[25%] flex items-center justify-center p-4 relative">
+        <div id="problem-container" class="flex items-start justify-center flex-wrap gap-x-4 md:gap-x-6 text-2xl md:text-4xl font-light min-h-[52px]"></div>
+        <button id="show-visual-btn" class="absolute top-2 right-4 text-gray-400 hover:text-white transition opacity-0 pointer-events-none" title="Mutasd vizuálisan!">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/></svg>
+        </button>
+    </div>
+    <div class="h-[40%] flex flex-col items-center justify-start p-4 pt-4">
+         <div id="input-container" class="relative flex items-center h-16"></div>
+        <p id="feedback" class="h-6 text-md transition-opacity duration-300">&nbsp;</p>
+        <div id="formula-display" class="mt-4 text-center text-sm text-gray-400 max-w-lg leading-tight space-y-2"></div>
+    </div>
+    <div id="difficulty-controls" class="h-[10%] bg-gray-900/30 border-t border-gray-600/50 flex items-center justify-center">
+        <div class="flex justify-center items-center flex-wrap gap-x-4 md:gap-x-6">
+            <label class="flex items-center cursor-pointer"><input type="checkbox" name="difficulty" value="1" class="custom-checkbox" checked><span class="ml-2">Alapok</span></label>
+            <label class="flex items-center cursor-pointer"><input type="checkbox" name="difficulty" value="2" class="custom-checkbox"><span class="ml-2">Gyakorlati</span></label>
+            <label class="flex items-center cursor-pointer"><input type="checkbox" name="difficulty" value="3" class="custom-checkbox"><span class="ml-2">Pénzügyi</span></label>
+            <label class="flex items-center cursor-pointer"><input type="checkbox" name="difficulty" value="4" class="custom-checkbox"><span class="ml-2">Tudományos</span></label>
+        </div>
+    </div>
+
+    <!-- Vizuális Segédlet Modál -->
+    <div id="visual-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
+        <div id="modal-content" class="bg-slate-100 text-slate-800 rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto modal-enter">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="visual-title" class="text-2xl font-bold text-indigo-600">Vizuális Segédlet</h3>
+                <button id="close-modal-btn" class="text-3xl font-bold text-slate-500 hover:text-slate-800">&times;</button>
+            </div>
+            <div id="visual-aid-content" class="min-h-[200px] space-y-4"></div>
+        </div>
+    </div>
+
+    <script>
+    const problemTitleEl = document.getElementById('problem-title'), problemDescriptionEl = document.getElementById('problem-description'),
+    problemContainerEl = document.getElementById('problem-container'), inputContainerEl = document.getElementById('input-container'),
+    feedbackEl = document.getElementById('feedback'), formulaDisplayEl = document.getElementById('formula-display'),
+    difficultyCheckboxes = document.querySelectorAll('input[name="difficulty"]'), showVisualBtn = document.getElementById('show-visual-btn'),
+    visualModal = document.getElementById('visual-modal'), modalContent = document.getElementById('modal-content'),
+    closeModalBtn = document.getElementById('close-modal-btn'), visualTitleEl = document.getElementById('visual-title'),
+    visualAidContentEl = document.getElementById('visual-aid-content');
+
+    let currentProblem = {};
+    const round = (num) => Math.round((num + Number.EPSILON) * 100) / 100;
+    
+/**
+ * Megjegyzés: A kód feltételezi, hogy létezik egy 'round' nevű
+ * segédfüggvény a kerekítéshez. Ha nem, akkor definiálni kell, pl.:
+ * const round = (value, decimals = 0) => Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+ */
+const problemTypes = [
+    {
+        name: "Százalékérték számítása",
+        difficulty: 1,
+        generate: () => {
+            const b = [20, 40, 50, 80, 100][Math.floor(Math.random() * 5)];
+            const r = [10, 25, 50, 75][Math.floor(Math.random() * 4)];
+            const a = round((b * r) / 100); // Feltételezi a 'round' függvény létezését
+            return {
+                base: b,
+                rate: r,
+                answer: a,
+                question: 'value',
+                labels: { base: 'Kosár', rate: 'Ebből alma', value: 'Almák száma' },
+                description: `Mennyi a(z) ${b} ${r}%-a?`,
+                simpleFormula: `Megoldás: Alap × (Százalékláb / 100)`,
+                formula: `${b} × (${r}/100) = ${a}`,
+                generateSteps: (d) => {
+                    const dr = d.rate / 100;
+                    return `<ol class="list-decimal list-inside text-left text-xs space-y-1"><li class="font-bold">Lépésről lépésre:</li><li>A százalékot (${d.rate}%) átalakítjuk tizedes törtté: <b>${d.rate} / 100 = ${dr}</b></li><li>Megszorozzuk az alappal: <b>${d.base} × ${dr} = ${d.answer}</b></li></ol>`;
+                },
+                generateVisual: (d) => {
+                    const i = Array.from({ length: d.base }, (_, idx) => `<div class="w-5 h-5 border border-slate-300 rounded ${idx < d.answer ? 'bg-indigo-400' : 'bg-slate-200'}"></div>`).join('');
+                    return `<p>Képzeld el a ${d.base} dolgot egy rácson. A ${d.rate}%-uk <b>${d.answer} darabot</b> jelent.</p><div class="grid grid-cols-10 gap-1 animate-slide-up">${i}</div>`;
+                }
+            };
+        }
+    },
+    {
+        name: "Alap számítása",
+        difficulty: 1,
+        generate: () => {
+            const r = [10, 20, 25, 50][Math.floor(Math.random() * 4)];
+            const a = (Math.floor(Math.random() * 30) + 5) * 10;
+            const v = round((a * r) / 100); // Feltételezi a 'round' függvény létezését
+            return {
+                value: v,
+                rate: r,
+                answer: a,
+                question: 'base',
+                labels: { base: 'Akvárium', rate: 'Aranyhal', value: 'Aranyhalak száma' },
+                description: `Melyik számnak a(z) ${r}%-a egyenlő ${v}-val?`,
+                simpleFormula: `Megoldás: Érték / (Láb / 100)`,
+                formula: `${v} / (${r}/100) = ${a}`,
+                generateSteps: (d) => {
+                    const dr = d.rate / 100;
+                    return `<ol class="list-decimal list-inside text-left text-xs space-y-1"><li class="font-bold">Lépésről lépésre:</li><li>A százalékot (${d.rate}%) átalakítjuk tizedes törtté: <b>${d.rate} / 100 = ${dr}</b></li><li>Elosztjuk az értéket ezzel a számmal: <b>${d.value} / ${dr} = ${d.answer}</b></li></ol>`;
+                },
+                generateVisual: (d) => `<p>Ha ${d.value} aranyhal a teljes akvárium ${d.rate}%-a, akkor mennyi a 100%?</p><div class="w-full bg-slate-200 rounded-full h-8 animate-slide-up"><div class="bg-orange-400 h-full rounded-full flex items-center justify-center text-white" style="width: ${d.rate}%">${d.rate}% = ${d.value} db</div></div><p class="mt-4 text-center font-bold">A teljes akvárium (100%) = <b>${d.answer} hal</b></p>`
+            };
+        }
+    },
+    {
+        name: "Százalékláb számítása",
+        difficulty: 1,
+        generate: () => {
+            const v = Math.floor(Math.random() * 10) + 5;
+            const b = v + Math.floor(Math.random() * 10) + 5;
+            const a = round((v / b) * 100); // Feltételezi a 'round' függvény létezését
+            return {
+                base: b,
+                value: v,
+                answer: a,
+                question: 'rate',
+                labels: { base: 'Osztály', rate: 'Lányok aránya', value: 'Lányok száma' },
+                description: `A(z) ${b} fős osztályban ${v} lány van. Hány százalékuk lány?`,
+                simpleFormula: `Megoldás: (Érték / Alap) × 100`,
+                formula: `(${v} / ${b}) × 100 ≈ ${a}`,
+                generateSteps: (d) => {
+                    const div = round(d.value / d.base, 4);
+                    return `<ol class="list-decimal list-inside text-left text-xs space-y-1"><li class="font-bold">Lépésről lépésre:</li><li>Elosztjuk az értéket az alappal: <b>${d.value} / ${d.base} ≈ ${div}</b></li><li>Az eredményt megszorozzuk 100-zal: <b>${div} × 100 ≈ ${d.answer}</b></li></ol>`;
+                },
+                generateVisual: (d) => `<p>A ${d.base} fős osztályból ${d.value} lány. Ez mekkora részét teszi ki az egésznek?</p><div class="flex justify-around items-center gap-4 animate-slide-up"><div class="text-center"><p>Lányok</p><div class="text-3xl">${'👧'.repeat(d.value)}</div><p>${d.value} fő</p></div><div class="text-center"><p>Összesen</p><div class="text-3xl">${'👤'.repeat(d.base)}</div><p>${d.base} fő</p></div></div><p class="mt-4 text-center font-bold">Arány: <b>${d.answer}%</b></p>`
+            };
+        }
+    },
+    {
+        name: "Ár csökkentése (Akció)",
+        difficulty: 2,
+        generate: () => {
+            const b = (Math.floor(Math.random() * 50) + 5) * 1000;
+            const r = [5, 10, 15, 20, 25, 30][Math.floor(Math.random() * 6)];
+            const a = round(b * (1 - r / 100)); // Feltételezi a 'round' függvény létezését
+            return {
+                base: b,
+                rate: r,
+                answer: a,
+                question: 'value',
+                labels: { base: 'Eredeti ár', rate: 'Kedvezmény', value: 'Akciós ár' },
+                description: `Mennyibe kerül egy ${b} Ft-os termék ${r}% kedvezménnyel?`,
+                simpleFormula: `Megoldás: Eredeti ár × (1 - Kedv. / 100)`,
+                formula: `${b} × (1 - ${r}/100) = ${a}`,
+                generateSteps: (d) => {
+                    const dr = d.rate / 100;
+                    const m = 1 - dr;
+                    return `<ol class="list-decimal list-inside text-left text-xs space-y-1"><li class="font-bold">Lépésről lépésre:</li><li>A kedvezményt (${d.rate}%) átalakítjuk: <b>${d.rate} / 100 = ${dr}</b></li><li>Mivel ez kedvezmény, kivonjuk 1-ből (a 100%-ból): <b>1 - ${dr} = ${m}</b></li><li>Az eredeti árat megszorozzuk ezzel a szorzóval: <b>${d.base} × ${m} = ${d.answer}</b></li></ol>`;
+                },
+                generateVisual: (d) => `<p>Az eredeti árból (100%) levonjuk a kedvezményt.</p><div class="relative w-full bg-slate-200 rounded-full h-8 overflow-hidden animate-slide-up"><div class="bg-green-500 h-full rounded-l-full" style="width: ${100-d.rate}%"></div><div class="bg-red-400 h-full absolute right-0 top-0 flex items-center justify-center text-white" style="width: ${d.rate}%">-${d.rate}%</div></div><p class="mt-4 text-center"><span class="line-through text-slate-500">${d.base} Ft</span> <span class="text-2xl font-bold text-green-600 ml-2">${d.answer} Ft</span></p>`
+            };
+        }
+    },
+    {
+        name: "Bruttó ár számítása (ÁFA)",
+        difficulty: 2,
+        generate: () => {
+            const b = (Math.floor(Math.random() * 80) + 10) * 1000;
+            const r = 27;
+            const a = round(b * (1 + r / 100)); // Feltételezi a 'round' függvény létezését
+            return {
+                base: b,
+                rate: r,
+                answer: a,
+                question: 'value',
+                labels: { base: 'Nettó ár', rate: 'ÁFA', value: 'Bruttó ár' },
+                description: `Mennyi a bruttó ára egy ${b} Ft nettó értékű terméknek, ${r}% ÁFA mellett?`,
+                simpleFormula: `Megoldás: Nettó ár × (1 + ÁFA / 100)`,
+                formula: `${b} × (1 + ${r}/100) = ${a}`,
+                generateSteps: (d) => {
+                    const dr = d.rate / 100;
+                    const m = 1 + dr;
+                    return `<ol class="list-decimal list-inside text-left text-xs space-y-1"><li class="font-bold">Lépésről lépésre:</li><li>Az ÁFA-t (${d.rate}%) átalakítjuk: <b>${d.rate} / 100 = ${dr}</b></li><li>Hozzáadjuk 1-hez (a 100%-hoz): <b>1 + ${dr} = ${m}</b></li><li>A nettó árat megszorozzuk ezzel a szorzóval: <b>${d.base} × ${m} = ${d.answer}</b></li></ol>`;
+                },
+                generateVisual: (d) => `<p>A Nettó ár a 100%. Ehhez adjuk hozzá a 27% ÁFA-t.</p><div class="w-full bg-slate-200 rounded-full flex overflow-hidden animate-slide-up"><div class="bg-blue-500 text-center text-white p-2" style="width: ${100/1.27*100}%">Nettó: ${d.base} Ft</div><div class="bg-red-400 text-center text-white p-2" style="width: ${27/1.27*100}%">ÁFA</div></div><p class="mt-4 font-bold text-center">A teljes Bruttó ár (127%): <b>${d.answer} Ft</b></p>`
+            };
+        }
+    },
+    {
+        name: "Árrés (Költség alapú)",
+        difficulty: 3,
+        generate: () => {
+            const c = (Math.floor(Math.random() * 40) + 5) * 100;
+            const m = Math.floor(Math.random() * 80) + 15;
+            const a = round(c * (1 + m / 100)); // Feltételezi a 'round' függvény létezését
+            return {
+                base: c,
+                rate: m,
+                answer: a,
+                question: 'value',
+                labels: { base: 'Költség', rate: 'Árrés', value: 'Eladási ár' },
+                description: `Egy termék beszerzési költsége ${c} Ft. Mennyi lesz az eladási ára ${m}% árréssel számolva?`,
+                simpleFormula: `Megoldás: Költség × (1 + Árrés / 100)`,
+                formula: `${c} × (1 + ${m}/100) = ${a}`,
+                generateSteps: (d) => {
+                    const dr = d.rate / 100;
+                    const mult = 1 + dr;
+                    return `<ol class="list-decimal list-inside text-left text-xs space-y-1"><li class="font-bold">Lépésről lépésre:</li><li>Az árrést (${d.rate}%) átalakítjuk: <b>${d.rate} / 100 = ${dr}</b></li><li>Hozzáadjuk 1-hez (a 100%-hoz): <b>1 + ${dr} = ${mult}</b></li><li>A költséget megszorozzuk ezzel a számmal: <b>${d.base} × ${mult} = ${d.answer}</b></li></ol>`;
+                },
+                generateVisual: (d) => {
+                    const maxHeight = 200;
+                    const costHeight = maxHeight / (1 + m / 100);
+                    const markupHeight = costHeight * (m / 100);
+                    return `<p>A költséghez (100%) hozzáadjuk az árrést.</p><div class="flex items-end gap-4 justify-center h-56 animate-slide-up"><div class="text-center h-full flex flex-col justify-end"><p>Költség</p><div class="w-20 bg-blue-500 rounded-t-lg" style="height: ${costHeight}px"></div><p>${d.base} Ft</p></div><div class="pt-8">+</div><div class="text-center h-full flex flex-col justify-end"><p>Árrés</p><div class="w-20 bg-green-400 rounded-t-lg" style="height: ${markupHeight}px"></div><p>${d.rate}%</p></div><div class="pt-8">=</div><div class="text-center h-full flex flex-col justify-end"><p>Eladási ár</p><div class="w-20 bg-purple-500 rounded-t-lg" style="height: ${maxHeight}px"></div><p>${d.answer} Ft</p></div></div>`;
+                }
+            };
+        }
+    },
+    {
+        name: "Haszonkulcs (Eladási ár alapú)",
+        difficulty: 3,
+        generate: () => {
+            const c = (Math.floor(Math.random() * 50) + 10) * 100;
+            const m = [10, 15, 20, 25, 30, 40, 50][Math.floor(Math.random() * 7)];
+            const a = round(c / (1 - m / 100)); // Feltételezi a 'round' függvény létezését
+            return {
+                base: c,
+                rate: m,
+                answer: a,
+                question: 'value',
+                labels: { base: 'Költség', rate: 'Haszonkulcs', value: 'Eladási ár' },
+                description: `Egy termék beszerzési költsége ${c} Ft. Mennyi az eladási ára, ha ${m}% haszonkulcsot szeretnénk elérni?`,
+                simpleFormula: `Megoldás: Költség / (1 - Haszonkulcs / 100)`,
+                formula: `${c} / (1 - ${m}/100) ≈ ${a}`,
+                generateSteps: (d) => {
+                    const dr = d.rate / 100;
+                    const divisor = 1 - dr;
+                    return `<ol class="list-decimal list-inside text-left text-xs space-y-1"><li class="font-bold">Lépésről lépésre:</li><li>A haszonkulcsot (${d.rate}%) átalakítjuk: <b>${d.rate} / 100 = ${dr}</b></li><li>Kivonjuk 1-ből, hogy megkapjuk a költséghányadot: <b>1 - ${dr} = ${divisor}</b></li><li>A költséget elosztjuk ezzel a számmal: <b>${d.base} / ${divisor} ≈ ${d.answer}</b></li></ol>`;
+                },
+                generateVisual: (d) => `<p>Az eladási ár (100%) a Költségből és a Haszonból áll.</p><div class="w-full bg-slate-200 rounded-full flex overflow-hidden animate-slide-up"><div class="bg-blue-500 text-center text-white p-2" style="width: ${100-d.rate}%">Költség: ${d.base} Ft</div><div class="bg-green-500 text-center text-white p-2" style="width: ${d.rate}%">Haszon</div></div><p class="mt-4 font-bold text-center">A teljes eladási ár (100%): <b>${d.answer} Ft</b></p>`
+            };
+        }
+    },
+    {
+        name: "Oldat töménysége",
+        difficulty: 4,
+        generate: () => {
+            const s = (Math.floor(Math.random() * 20) + 2) * 5;
+            const o = (Math.floor(Math.random() * 40) + 10) * 10;
+            const b = o + s;
+            const a = round((s / b) * 100); // Feltételezi a 'round' függvény létezését
+            return {
+                base: b,
+                value: s,
+                solvent: o,
+                answer: a,
+                question: 'rate',
+                labels: { base: 'Oldat', rate: 'Töménység', value: 'Oldott anyag' },
+                description: `Hány tömegszázalékos oldatot kapunk, ha ${o}g vízben feloldunk ${s}g sót?`,
+                simpleFormula: `Megoldás: (Oldott anyag / Teljes tömeg) × 100`,
+                formula: `(${s} / ${b}) × 100 ≈ ${a}`,
+                generateSteps: (d) => {
+                    const div = round(d.value / d.base, 4);
+                    return `<ol class="list-decimal list-inside text-left text-xs space-y-1"><li class="font-bold">Lépésről lépésre:</li><li>Összeadjuk az oldószert és az oldott anyagot: <b>${d.solvent} + ${d.value} = ${d.base}</b></li><li>Az oldott anyagot elosztjuk a teljes tömeggel: <b>${d.value} / ${d.base} ≈ ${div}</b></li><li>Az arányt megszorozzuk 100-zal a százalékért: <b>${div} × 100 ≈ ${d.answer}</b></li></ol>`;
+                },
+                generateVisual: (d) => `<p>Összeöntjük az oldószert (víz) és az oldott anyagot (só).</p><div class="flex justify-around items-end animate-slide-up"><div class="text-center"><div class="w-20 h-24 bg-blue-200 rounded-t-lg border-2 border-blue-400 flex items-end justify-center pb-2">${d.solvent}g Víz</div></div><span class="text-4xl font-bold mb-8">+</span><div class="text-center"><div class="w-20 h-12 bg-gray-300 rounded-t-lg border-2 border-gray-500 flex items-end justify-center pb-2">${d.value}g Só</div></div><span class="text-4xl font-bold mb-8">=</span><div class="text-center"><div class="w-24 h-32 bg-cyan-200 rounded-t-lg border-2 border-cyan-500 flex items-end justify-center pb-2">${d.base}g Oldat</div></div></div><p class="mt-4 text-center">A töménység a Só aránya a teljes Oldathoz képest: <b>${d.answer}%</b></p>`
+            };
+        }
+    }
+];
+    
+    function createLabeledBlock(label, value, isQuestion = false) { const block = document.createElement('div'); block.className = 'flex flex-col items-center text-center'; const labelEl = document.createElement('span'); labelEl.className = 'text-sm md:text-base text-indigo-300 font-medium'; labelEl.textContent = label; const valueEl = document.createElement('span'); valueEl.className = 'text-2xl md:text-4xl text-white font-light mt-1'; valueEl.textContent = isQuestion ? '___' : value; if (isQuestion) { valueEl.classList.add('tracking-[.2em]'); } block.appendChild(labelEl); block.appendChild(valueEl); return block; }
+    function createOperator(symbol) { const op = document.createElement('div'); op.className = 'flex items-center justify-center text-2xl md:text-3xl text-gray-400 h-full pt-6'; op.textContent = symbol; return op; }
+    
+    function displayProblem() {
+        problemTitleEl.textContent = currentProblem.name;
+        problemDescriptionEl.textContent = currentProblem.description;
+        formulaDisplayEl.innerHTML = `<p>${currentProblem.simpleFormula}</p><p class="font-mono text-gray-300">${currentProblem.formula}</p>${currentProblem.generateSteps(currentProblem)}`;
+        problemContainerEl.innerHTML = '';
+        inputContainerEl.innerHTML = '';
+        const { base, rate, value, question, labels } = currentProblem;
+        const baseValue = currentProblem.base !== undefined ? currentProblem.base : '?';
+        const rateValue = currentProblem.rate !== undefined ? currentProblem.rate : '?';
+        const valueValue = currentProblem.value !== undefined ? currentProblem.value : '?';
+        const isComplex = currentProblem.name.includes('Ár') || currentProblem.name.includes('ár');
+        const baseBlock = createLabeledBlock(labels.base, `${baseValue}${isComplex ? ' Ft' : ''}`, question === 'base');
+        const rateBlock = createLabeledBlock(labels.rate, `${rateValue}%`, question === 'rate');
+        const valueBlock = createLabeledBlock(labels.value, `${valueValue}${isComplex ? ' Ft' : ''}`, question === 'value');
+        let operator1 = '⋅'; if (currentProblem.name.includes('csökkentése')) operator1 = '−'; if (currentProblem.name.includes('Bruttó')) operator1 = '+';
+        problemContainerEl.appendChild(baseBlock); problemContainerEl.appendChild(createOperator(operator1)); problemContainerEl.appendChild(rateBlock); problemContainerEl.appendChild(createOperator('=')); problemContainerEl.appendChild(valueBlock);
+        
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.id = 'answer-input';
+        input.className = 'bg-gray-800 text-white text-center text-2xl md:text-4xl font-light w-40 md:w-48 rounded-lg p-2 border-2 border-gray-600 focus:border-indigo-400 focus:outline-none transition-colors';
+        input.setAttribute('placeholder', 'Válasz');
+        input.setAttribute('autocomplete', 'off');
+        input.addEventListener('keydown', (e) => { if (e.key === 'Enter') checkAnswer(); });
+        inputContainerEl.appendChild(input);
+
+        let suffixText = ''; if (question === 'rate' || currentProblem.name.includes("Töménység")) suffixText = '%'; if (question === 'value' && (isComplex || currentProblem.name.includes("Haszonkulcs") || currentProblem.name.includes("Árrés"))) suffixText = 'Ft';
+        if (suffixText) { const suffixEl = document.createElement('span'); suffixEl.className = 'ml-3 text-2xl md:text-4xl text-gray-400'; suffixEl.textContent = suffixText; inputContainerEl.appendChild(suffixEl); }
+        
+        visualTitleEl.textContent = `Vizuális Segédlet: ${currentProblem.name}`;
+        visualAidContentEl.innerHTML = currentProblem.generateVisual(currentProblem);
+        
+        showVisualBtn.classList.remove('opacity-0', 'pointer-events-none');
+        setTimeout(() => document.getElementById('answer-input')?.focus(), 100);
+    }
+
+    function checkAnswer() { const input = document.getElementById('answer-input'); if (!input || input.disabled) return; const userAnswer = parseFloat(input.value); if (isNaN(userAnswer)) { feedbackEl.textContent = "Kérlek, számot adj meg!"; feedbackEl.className = 'h-6 text-md text-yellow-400'; return; } if (userAnswer === currentProblem.answer) { feedbackEl.textContent = "Helyes válasz!"; feedbackEl.className = 'h-6 text-md text-green-400'; input.disabled = true; input.classList.remove('border-gray-600', 'border-red-500'); input.classList.add('border-green-500'); setTimeout(generateNewProblem, 1500); } else { feedbackEl.textContent = `Sajnos nem jó. Próbáld újra!`; feedbackEl.className = 'h-6 text-md text-red-400'; input.classList.add('shake'); input.classList.remove('border-gray-600'); input.classList.add('border-red-500'); setTimeout(() => { input.classList.remove('shake'); }, 500); } }
+    
+    function generateNewProblem() {
+        feedbackEl.textContent = '\u00A0';
+        formulaDisplayEl.innerHTML = '';
+        problemDescriptionEl.textContent = '';
+        feedbackEl.classList.remove('text-green-400', 'text-red-400', 'text-yellow-400');
+        inputContainerEl.innerHTML = '';
+        showVisualBtn.classList.add('opacity-0', 'pointer-events-none');
+        let selectedDifficulties = [...difficultyCheckboxes].filter(cb => cb.checked).map(cb => parseInt(cb.value));
+        if (selectedDifficulties.length === 0) { problemTitleEl.textContent = "Nincs kiválasztott szint"; problemContainerEl.innerHTML = '<span class="text-lg text-gray-400">Kérlek, válassz legalább egy nehézségi szintet.</span>'; return; }
+        const availableProblems = problemTypes.filter(p => selectedDifficulties.includes(p.difficulty));
+        if (availableProblems.length === 0) { problemTitleEl.textContent = "Nincs feladat"; problemContainerEl.innerHTML = '<span class="text-lg text-gray-400">A kiválasztott szint(ek)hez nincsenek feladatok.</span>'; return; }
+        const randomIndex = Math.floor(Math.random() * availableProblems.length);
+        const problemType = availableProblems[randomIndex];
+        currentProblem = { ...problemType.generate(), name: problemType.name };
+        displayProblem();
+    }
+    
+    difficultyCheckboxes.forEach(cb => { cb.addEventListener('change', generateNewProblem); });
+    
+    showVisualBtn.addEventListener('click', () => {
+        visualModal.classList.remove('hidden');
+        setTimeout(() => {
+            modalContent.classList.remove('modal-enter');
+            modalContent.classList.add('modal-enter-active');
+        }, 10);
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        modalContent.classList.add('modal-enter');
+        modalContent.classList.remove('modal-enter-active');
+        setTimeout(() => visualModal.classList.add('hidden'), 300);
+    });
+
+    visualModal.addEventListener('click', (e) => { if (e.target === visualModal) closeModalBtn.click(); });
+    
+    document.addEventListener('DOMContentLoaded', generateNewProblem);
+    </script>
+</body>
+</html>
+

@@ -8,6 +8,8 @@
         integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        /* Import a decorative font for headings */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
         :root {
             --brand-primary: #4A55A2;
             --brand-secondary: #7895CB;
@@ -21,6 +23,7 @@
             --success: #2ECC71;
             --danger: #E74C3C;
             --font-main: 'Inter', sans-serif;
+            --font-heading: 'Cinzel', serif;
         }
 
         * {
@@ -41,6 +44,7 @@
             color: var(--text-dark);
             font-weight: 700;
             margin-bottom: 20px;
+            font-family: var(--font-heading), var(--font-main);
         }
 
         h2 {
@@ -50,6 +54,7 @@
             padding-bottom: 10px;
             margin: 40px 0 20px 0;
             font-weight: 600;
+            font-family: var(--font-heading), var(--font-main);
         }
 
         h3 {
@@ -74,6 +79,11 @@
         strong {
             color: var(--brand-primary);
             font-weight: 600;
+        }
+
+        .practice-info {
+            font-style: italic;
+            color: var(--brand-secondary);
         }
 
         .card {
@@ -581,6 +591,12 @@
     <!-- Gyakorlás tab -->
     <div id="gyakorlas" class="tab-content card">
         <h2>Gyakorolj!</h2>
+        <!-- XP reward explanation for practice questions -->
+        <p class="practice-info" style="margin-top:-10px;">
+            <strong>XP Jutalom:</strong> Könnyű kérdésért 1 XP, Közepes kérdésért 2 XP,
+            Nehéz kérdésért 3 XP. Válassz több nehézséget egyszerre, hogy nagyobb
+            jutalmat szerezz!
+        </p>
         <div class="practice-controls">
             <span><b>Nehézségek:</b></span>
             <label><input type="checkbox" class="practice-difficulty" value="könnyű" checked> Könnyű</label>
@@ -898,8 +914,11 @@
         }
 
         // ----------------- Practice Functionality -----------------------
+        // XP rewards by difficulty for practice questions
+        const practiceXpRewards = { 'könnyű': 1, 'közepes': 2, 'nehéz': 3 };
         let practiceActive = false;
         let currentPracticeAnswer = '';
+        let currentPracticeDifficulty = '';
         let practiceTimeout;
         function getSelectedPracticeDifficulties() {
             return Array.from(document.querySelectorAll('.practice-difficulty:checked')).map(cb => cb.value);
@@ -919,10 +938,11 @@
             const correctSet = new Set(currentPracticeAnswer.split(','));
             const answerSet = new Set(userAnswer.split(','));
             if (correctSet.size === answerSet.size && [...correctSet].every(item => answerSet.has(item))) {
-                dom.practiceFeedback.textContent = 'Helyes! ✅ (+1 XP)';
+                // Determine XP reward based on current practice difficulty
+                const xpReward = practiceXpRewards[currentPracticeDifficulty] || 1;
+                dom.practiceFeedback.textContent = `Helyes! ✅ (+${xpReward} XP)`;
                 dom.practiceFeedback.style.color = 'var(--success)';
-                // send xp earn message to parent
-                window.parent.postMessage({ type: 'practiceXp', xp: 1, topicId: TOPIC_ID }, '*');
+                window.parent.postMessage({ type: 'practiceXp', xp: xpReward, topicId: TOPIC_ID }, '*');
                 clearTimeout(practiceTimeout);
                 practiceTimeout = setTimeout(() => {
                     nextPracticeQuestion();
@@ -932,9 +952,18 @@
                 dom.practiceFeedback.style.color = 'var(--danger)';
             }
         });
+        // Allow submitting the practice answer by pressing Enter
+        dom.practiceInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                dom.practiceCheck.click();
+            }
+        });
         function nextPracticeQuestion() {
             const selectedDiffs = getSelectedPracticeDifficulties();
             const diff = selectedDiffs[Math.floor(Math.random() * selectedDiffs.length)];
+            // Save difficulty so XP reward can be determined later
+            currentPracticeDifficulty = diff;
             const { question, answer, hint } = generatePracticeQuestion(diff);
             currentPracticeAnswer = answer;
             dom.practiceQuestion.innerHTML = `<p>${question}</p>`;
@@ -945,30 +974,40 @@
             renderMathInElement(dom.practiceHint, { delimiters: [ {left: '$', right: '$', display: false} ] });
         }
         function generatePracticeQuestion(diff) {
-            const U = Array.from({ length: 8 }, (_, i) => i + 1);
-            function getRandomSet(maxLen = 3) {
-                const size = Math.floor(Math.random() * maxLen) + 2;
+            // Vary the universal set size, set sizes and available operations by difficulty
+            let U;
+            let minSize;
+            let maxSize;
+            let ops;
+            if (diff === 'könnyű') {
+                U = Array.from({ length: 6 }, (_, i) => i + 1);
+                minSize = 2;
+                maxSize = 3;
+                ops = ['union', 'intersection'];
+            } else if (diff === 'közepes') {
+                U = Array.from({ length: 8 }, (_, i) => i + 1);
+                minSize = 3;
+                maxSize = 4;
+                ops = ['union', 'intersection', 'diff_ab', 'diff_ba'];
+            } else {
+                U = Array.from({ length: 10 }, (_, i) => i + 1);
+                minSize = 4;
+                maxSize = 5;
+                ops = ['union', 'intersection', 'diff_ab', 'diff_ba', 'comp_a', 'symdiff'];
+            }
+            function getRandomSet() {
+                const size = Math.floor(Math.random() * (maxSize - minSize + 1)) + minSize;
                 const shuffled = [...U].sort(() => Math.random() - 0.5);
                 const set = shuffled.slice(0, size);
                 return [...new Set(set)].sort((a, b) => a - b);
             }
             let A = getRandomSet();
             let B = getRandomSet();
-            let op;
-            if (diff === 'könnyű') {
-                const ops = ['union', 'intersection', 'diff_ab', 'diff_ba'];
-                op = ops[Math.floor(Math.random() * ops.length)];
-            } else if (diff === 'közepes') {
-                const ops = ['comp_a', 'symdiff'];
-                op = ops[Math.floor(Math.random() * ops.length)];
-            } else {
-                const ops = ['union', 'intersection', 'diff_ab', 'diff_ba', 'comp_a', 'symdiff'];
-                op = ops[Math.floor(Math.random() * ops.length)];
-            }
+            let op = ops[Math.floor(Math.random() * ops.length)];
             let question = '';
             let answer = '';
             let hint = '';
-            const formatSet = (set) => `\\{${set.join(', ')}\\}`;
+            const formatSet = (set) => `\\\\{${set.join(', ')}\\\\}`;
             const joinSet = (set) => set.join(',');
             if (op === 'union') {
                 const unionSet = Array.from(new Set([...A, ...B])).sort((a, b) => a - b);

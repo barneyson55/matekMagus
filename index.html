@@ -657,7 +657,126 @@ function applySettings(settings) {
 }
 
         window.addEventListener('DOMContentLoaded', loadAndApplySettings);
+
+    document.addEventListener('DOMContentLoaded', () => {
+  const topicNames = {
+    alapozo_modulzaro: 'Alapozó Modulok',
+    gondolkodas_temazaro: 'Gondolkodási módszerek, Halmazok',
+    halmazmuveletek: 'Halmazműveletek',
+    logikai_szita: 'Logikai szita formula',
+    skatulya_elv: 'Skatulya-elv, párosítások',
+    szamelmelet_temazaro: 'Számelmélet és Számrendszerek',
+    oszthatosag: 'Oszthatósági szabályok',
+    lnko_lkkt: 'LNKO, LKKT',
+    primtenyezok: 'Prímtényezős felbontás',
+    szamrendszerek: 'Számrendszerek',
+    racionalis_szamok_temazaro: 'Racionális számok',
+    tortek: 'Törtek és műveletek',
+    tizedes_tortek: 'Tizedes törtek, átváltások',
+    szazalekszamitas: 'Százalékszámítás',
+    hatvany_temazaro: 'Hatvány, Gyök, Logaritmus',
+    hatvanyozas: 'Hatványozás azonosságai',
+    gyokvonas: 'Négyzetgyök, n-edik gyök',
+    logaritmus: 'A logaritmus fogalma',
+    algebra_modulzaro: 'Algebra és Függvények',
+    algebrai_kif_temazaro: 'Algebrai kifejezések',
+    polinomok: 'Műveletek polinomokkal',
+    nevezetes_azonossagok: 'Nevezetes azonosságok',
+    algebrai_tortek: 'Algebrai törtek',
+    egyenletek_temazaro: 'Egyenletek, Egyenlőtlenségek',
+    linearis_egyenletek: 'Lineáris egyenletek',
+    masodfoku_egyenlet: 'Másodfokú egyenlet',
+    viete_formulak: 'Viète-formulák',
+    parameteres_masodfoku: 'Paraméteres másodfokú egyenletek',
+    specialis_egyenletek: 'Abszolútértékes, gyökös stb.',
+    fuggvenyek_alt_temazaro: 'Függvények általános tulajdonságai',
+    fuggveny_alapok: 'Értelmezési tartomány, értékkészlet',
+    fuggveny_jellemzes: 'Monotonitás, szélsőértékek',
+    paritas: 'Paritás (páros, páratlan)',
+    fuggveny_transzformaciok: 'Függvénytranszformációk',
+    nevezetes_fuggvenyek_temazaro: 'Nevezetes függvények',
+    linearis_fuggveny: 'Lineáris függvény',
+    masodfoku_fuggveny: 'Másodfokú függvény',
+    hatvanyfuggvenyek: 'Hatványfüggvények',
+    exp_log_fuggveny: 'Exponenciális és logaritmus fv.',
+    trigonometrikus_fuggvenyek: 'Trigonometrikus fv.',
+    specialis_fuggvenyek: 'Abszolútérték, gyök fv.',
+    geometria_modulzaro: 'Geometria',
+    haromszogek_temazaro: 'Alapfogalmak és Háromszögek',
+    nevezetes_vonalak: 'Nevezetes vonalak',
+    haromszog_egyenlotlenseg: 'Háromszög-egyenlőtlenség',
+    szogtetelek: 'Pitagorasz, befogó, magasság',
+    szinusz_koszinusz_tetel: 'Szinusztétel, Koszinusztétel',
+    sokszogek_temazaro: 'Négyzetek és Sokszögek',
+    terulet_kerulet: 'Terület- és kerületszámítás',
+    specialis_negyszogek: 'Húrnégyszögek, érintőnégyszögek',
+    kor_temazaro: 'A Kör',
+    keruleti_szogek: 'Kerületi és középponti szögek',
+    latokoriv: 'Látókörív',
+    kor_helyzetek: 'Kör és egyenes, kör és kör',
+    geo_transzform_temazaro: 'Geometriai Transzformációk',
+    tukrozes: 'Tengelyes és középpontos tükrözés',
+    eltolas_forgatas: 'Eltolás, elforgatás',
+    hasonlosag: 'Középpontos hasonlóság',
+    koordinatageometria_temazaro: 'Koordinátageometria',
+    vektorok: 'Vektorok (skaláris szorzat)',
+    egyenes_egyenlete: 'Pont, szakasz, egyenes',
+    kor_egyenlete: 'Kör egyenlete',
+    alakzatok_metszespontja: 'Két alakzat metszéspontja',
+    tergeometria_temazaro: 'Térgeometria',
+    hasabok_gulak: 'Hasábok, gúlák F, V',
+    forgastestek: 'Forgástestek (henger, kúp, gömb)',
+    valstat_modulzaro: 'Valószínűségszámítás és Statisztika',
+    kombinatorika_temazaro: 'Kombinatorika',
+    permutaciok: 'Permutációk',
+    variaciok: 'Variációk',
+    kombinaciok: 'Kombinációk',
+    binomialis_tetel: 'Binomiális tétel',
+    valszam_temazaro: 'Valószínűségszámítás',
+    klasszikus_valoszinuseg: 'Klasszikus valószínűségi modell',
+    geometriai_valoszinuseg: 'Geometriai valószínűség',
+    felteteles_valoszinuseg: 'Feltételes valószínűség',
+    statisztika_temazaro: 'Statisztika',
+    adatok_abrazolasa: 'Adatok ábrázolása',
+    kozepertekek: 'Középértékek',
+    szorodas: 'Szóródási mutatók',
+    emelt_modulzaro: 'Emelt Szintű Kiegészítések',
+    sorozatok_temazaro: 'Sorozatok',
+    szamtani_mertani: 'Számtani és mértani sorozatok',
+    kamatoskamat: 'Kamatoskamat-számítás',
+    konvergencia: 'Konvergencia',
+    differencial_temazaro: 'Differenciálszámítás',
+    hatarertek: 'Határértékek, folytonosság',
+    derivalt_fogalma: 'A derivált fogalma',
+    derivalsi_szabalyok: 'Deriválási szabályok',
+    fuggvenyvizsgalat: 'Függvényvizsgálat deriválttal',
+    integral_temazaro: 'Integrálszámítás',
+    hatarozatlan_integral: 'A határozatlan integrál',
+    hatarozott_integral: 'A határozott integrál',
+    newton_leibniz: 'Newton-Leibniz formula',
+    terfogatszamitas: 'Térfogatszámítás integrállal'
+  };
+  document.querySelectorAll('.module-link').forEach(link => {
+    const id = link.getAttribute('data-topic-id');
+    if (id && topicNames[id]) {
+      const textNodes = Array.from(link.childNodes).filter(n => n.nodeType === Node.TEXT_NODE);
+      if (textNodes.length > 0) {
+        textNodes[0].nodeValue = topicNames[id];
+      } else {
+        const span = link.querySelector('span');
+        if (span) {
+          span.remove();
+          link.textContent = topicNames[id];
+          link.appendChild(span);
+        } else {
+          link.textContent = topicNames[id];
+        }
+      }
+    }
+  });
+});
     </script>
 </body>
 </html>
 
+]

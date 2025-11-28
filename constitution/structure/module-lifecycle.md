@@ -76,7 +76,7 @@ Jellemzők:
   * altéma/főtémakör teszteket teljesíthet,
   * XP-t és jegyeket szerezhet.
 
-**Állapotváltás ACTIVE → COMPLETED_MAXED** később, a 4. fejezetben kerül részletezésre (kimaxolt feltételek).
+**Állapotváltás ACTIVE → COMPLETED** később, a 4. fejezetben kerül részletezésre (kimaxolt feltételek).
 
 ### 2.3. COMPLETED – kimaxolt küldetés
 

@@ -159,7 +159,6 @@
 <body>
     <div class="card">
         <div class="pill"> Beallitasok</div>
-        <h1>Szemelyre szabas</h1>
         <p>
             Testreszabhatja a Matek Mester megjelenését saját ízlése szerint. Válasszon színsémát, témát vagy töltse fel saját hátterét.
         </p>
@@ -261,17 +260,15 @@
         let currentSettings = {};
         let bgImageData = null;
 
-        // Load settings on page load
-        window.addEventListener('DOMContentLoaded', async () => {
-            try {
-                console.log('Loading settings...');
-                if (window.electronAPI) {
-                    currentSettings = await window.electronAPI.getSettings();
-                    console.log('Loaded settings:', currentSettings);
-                    applySettingsToUI(currentSettings);
-                }
-            } catch (error) {
-                console.error('Error loading settings:', error);
+        // Load settings on page load via parent window
+        window.addEventListener('DOMContentLoaded', () => {
+            window.parent.postMessage({ type: 'request-settings' }, '*');
+        });
+
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'apply-settings' && event.data.settings) {
+                currentSettings = { ...event.data.settings };
+                applySettingsToUI(currentSettings);
             }
         });
 
@@ -313,14 +310,10 @@
         });
 
         // Save button
-        document.getElementById('save-btn').addEventListener('click', async () => {
+        document.getElementById('save-btn').addEventListener('click', () => {
             console.log('Saving settings:', currentSettings);
-            if (window.electronAPI) {
-                await window.electronAPI.saveSettings(currentSettings);
-                alert('Beállítások elmentve!');
-                // Apply settings to main window
-                window.parent.postMessage({ type: 'apply-settings', settings: currentSettings }, '*');
-            }
+            window.parent.postMessage({ type: 'save-settings', settings: currentSettings }, '*');
+            alert('Beállítások elmentve!');
         });
 
         // Reset button

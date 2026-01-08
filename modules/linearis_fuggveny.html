@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lineáris Függvények Modul</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Modul-specifikus stílusok */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+        :root {
+            --brand-primary: #4A55A2;
+            --brand-secondary: #7895CB;
+            --brand-light: #A0BFE0;
+            --brand-background: #C5DFF8;
+            --text-dark: #2C3333;
+            --text-light: #393E46;
+            --bg-main: #FBFBFF;
+            --bg-card: #FFFFFF;
+            --border-color: #EAEFF2;
+            --success: #2ECC71;
+            --danger: #E74C3C;
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Cinzel', serif;
+        }
+
+        html, body {
+            background-color: transparent;
+        }
+        body {
+            font-family: var(--font-main);
+            color: var(--text-light);
+            padding: 40px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            font-weight: 400;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: var(--brand-primary);
+            border-bottom: 2px solid var(--brand-background);
+            padding-bottom: 10px;
+            margin: 40px 0 20px 0;
+            font-weight: 600;
+            font-family: var(--font-heading), var(--font-main);
+        }
+        p { font-size: 1.1em; line-height: 1.7; max-width: 80ch; }
+        h3 {
+            font-size: 1.2em;
+            color: var(--brand-primary);
+            margin: 18px 0 8px 0;
+            font-weight: 600;
+            font-family: var(--font-main);
+        }
+
+        .theory-section + .theory-section {
+            margin-top: 18px;
+        }
+
+        .theory-grid {
+            display: grid;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        @media (min-width: 900px) {
+            .theory-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-light);
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--brand-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: var(--brand-primary);
+        }
+
+        .tab-button.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .model-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            align-items: stretch;
+        }
+
+        .card {
+            background-color: var(--bg-card, rgba(255, 255, 255, var(--module-card-opacity, 1)));
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .controls,
+        .interactive-chart {
+            background-color: var(--bg-main);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .slider-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: 500;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        #equation {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--brand-primary);
+            background-color: var(--bg-main);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .test-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .test-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .meta-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .difficulty-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .difficulty-btn.active {
+            background-color: var(--brand-primary);
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(74, 85, 162, 0.25);
+        }
+
+        .test-area,
+        .practice-area {
+            margin-top: 16px;
+        }
+
+        .test-area.is-hidden,
+        .practice-area.is-hidden {
+            display: none;
+        }
+
+        .test-question,
+        .practice-question {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .test-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .test-progress {
+            font-weight: 600;
+            color: var(--brand-primary);
+        }
+
+        .btn {
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+        .btn:focus-visible {
+            outline: 2px solid var(--brand-primary);
+            outline-offset: 2px;
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: default;
+            box-shadow: none;
+        }
+        .btn-primary {
+            background-color: var(--brand-primary);
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(74, 85, 162, 0.25);
+        }
+        .btn-primary:hover { transform: translateY(-1px); }
+        .btn-secondary,
+        .secondary {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+        .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+        .module-input {
+            width: min(320px, 100%);
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            font-size: 1em;
+        }
+        .module-input:focus {
+            outline: 2px solid var(--brand-primary);
+            border-color: var(--brand-primary);
+        }
+
+        .learning-hint {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--brand-primary);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 14px 0;
+            color: var(--text-dark);
+        }
+        .learning-hint h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.05em;
+            color: var(--brand-primary);
+        }
+        .learning-hint ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-light);
+        }
+        .learning-hint li { margin-bottom: 6px; }
+        .input-help {
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: var(--text-light);
+        }
+
+        .practice-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .practice-controls label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95em;
+        }
+        .practice-info {
+            margin-top: -10px;
+        }
+
+        .muted {
+            color: var(--text-light);
+            font-size: 0.95em;
+        }
+
+        .example-panel {
+            margin-top: 18px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .example-card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 12px;
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            cursor: pointer;
+            font-weight: 600;
+            text-align: left;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .example-card:hover {
+            border-color: var(--brand-primary);
+            box-shadow: 0 8px 18px rgba(74, 85, 162, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .example-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* Felugró Eredmény Stíl */
+        .result-popup {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background-color: rgba(0,0,0,0.8); color: white;
+            padding: 30px 50px; border-radius: 15px; font-size: 2em;
+            opacity: 0; transition: opacity 0.5s; pointer-events: none; z-index: 100;
+        }
+        .result-popup.show { opacity: 1; }
+    </style>
+</head>
+<body>
+    <div class="tab-buttons" role="tablist">
+        <button class="tab-button active" data-tab="elmelet" type="button" role="tab" aria-selected="true">Elmélet</button>
+        <button class="tab-button" data-tab="vizualis" type="button" role="tab" aria-selected="false">Vizuális modell</button>
+        <button class="tab-button" data-tab="teszt" type="button" role="tab" aria-selected="false">Teszt</button>
+        <button class="tab-button" data-tab="gyakorlas" type="button" role="tab" aria-selected="false">Gyakorlás</button>
+    </div>
+
+    <div id="elmelet" class="tab-content card active" role="tabpanel">
+        <h2>Lineáris függvény alapjai</h2>
+        <p>A lineáris függvény egyenletes változást ír le: ha x egy egységgel nő, f(x) mindig ugyanannyival változik. Ezért sok valós helyzetben használjuk: állandó sebesség, fix díj + változó költség, vagy egy tartály folyamatos töltése.</p>
+        <div class="theory-grid">
+            <div class="learning-hint">
+                <h3>Definíció és jelölés</h3>
+                <p>A lineáris függvény alakja: <b>f(x) = m * x + b</b>.</p>
+                <ul>
+                    <li><b>m</b> a meredekség: megmutatja, mennyivel változik f(x), ha x 1-et nő.</li>
+                    <li><b>b</b> a tengelymetszet: f(0) értéke.</li>
+                </ul>
+            </div>
+            <div class="learning-hint">
+                <h3>Meredekség két pontból</h3>
+                <ul>
+                    <li>Ha adott két pont: (x1, y1) és (x2, y2), akkor</li>
+                    <li><b>m = (y2 - y1) / (x2 - x1)</b> (ha x1 ≠ x2).</li>
+                    <li>Ez az egyenes „meredeksége”, vagyis az iránytényező.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="theory-section">
+            <h3>Meredekség (m) értelmezése</h3>
+            <ul>
+                <li>m &gt; 0: a függvény növekszik.</li>
+                <li>m &lt; 0: a függvény csökken.</li>
+                <li>m = 0: állandó függvény (vízszintes egyenes).</li>
+            </ul>
+        </div>
+        <div class="theory-section">
+            <h3>Tengelymetszet és metszéspontok</h3>
+            <ul>
+                <li>Y-tengelymetszet: <b>(0, b)</b>.</li>
+                <li>X-tengelymetszet: ha m ≠ 0, akkor <b>x = -b / m</b>.</li>
+            </ul>
+        </div>
+        <div class="theory-section">
+            <h3>Egyenlet felírása pontból</h3>
+            <p>Ha adott a meredekség és egy pont (x0, y0), akkor <b>b = y0 - m * x0</b>.</p>
+        </div>
+        <div class="theory-section">
+            <h3>Grafikon felrajzolása 3 lépésben</h3>
+            <ol>
+                <li>Olvasd le m-et és b-t az egyenletből.</li>
+                <li>Jelöld be a (0, b) pontot.</li>
+                <li>Az m meredekséggel lépj: ha x nő 1-et, f(x) m-mel változik.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Példa levezetés</h3>
+            <p>Legyen f(x) = 2x - 3. Ekkor b = -3, tehát a grafikon a (0, -3) pontból indul.</p>
+            <p>Ha x = 2, akkor f(2) = 2 * 2 - 3 = 1. A grafikon átmegy a (2, 1) ponton is.</p>
+            <p>Két pontból: (1, 2) és (3, 6). Ekkor m = (6 - 2) / (3 - 1) = 2, és b = 2 - 2 * 1 = 0, tehát f(x) = 2x.</p>
+        </div>
+        <div class="theory-section">
+            <h3>Mini-ellenőrzés (értékelés nélkül)</h3>
+            <ul>
+                <li>Ha m = 0, milyen a függvény? (Állandó.)</li>
+                <li>Mi a b, ha az egyenes átmegy a (0, 5) ponton? (b = 5)</li>
+                <li>f(x) = -1.5x + 4, mennyi f(2)? (1)</li>
+                <li>Az egyenes átmegy (2, 3) ponton és m = 1.5. Mi b? (b = 0)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="vizualis" class="tab-content card" role="tabpanel">
+        <div class="model-container">
+            <div class="controls">
+                <h2>Hogyan néz ki? Játszósarok!</h2>
+                <div class="slider-group">
+                    <label for="sliderM">Meredekség (m): <span id="valueM">1</span></label>
+                    <input type="range" id="sliderM" min="-8" max="8" value="1" step="0.5">
+                </div>
+                <div class="slider-group">
+                    <label for="sliderB">Tengelymetszet (b): <span id="valueB">2</span></label>
+                    <input type="range" id="sliderB" min="-10" max="10" value="2" step="0.5">
+                </div>
+                <p id="equation">f(x) = 1x + 2</p>
+                <div class="example-panel">
+                    <h3>Gyors példák</h3>
+                    <p class="muted">Kattints egy példára, vagy kérj új készletet a gyorsabb próbálgatáshoz.</p>
+                    <div class="example-grid" id="example-grid"></div>
+                    <div class="example-actions">
+                        <button id="random-example-btn" class="btn btn-secondary" type="button">Véletlen beállítás</button>
+                        <button id="regen-examples-btn" class="btn btn-secondary" type="button">Új példák</button>
+                    </div>
+                </div>
+            </div>
+            <div class="interactive-chart">
+                <canvas id="functionChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div id="teszt" class="tab-content card" role="tabpanel">
+        <h2>Teszt</h2>
+        <p>Rövid teszt, ami ellenőrzi a meredekség, tengelymetszet és értékek számolását. Válassz nehézséget, majd oldd meg a kérdéseket.</p>
+        <div class="learning-hint" data-role="test-help">
+            <h3>Megoldási lépések</h3>
+            <ul>
+                <li>Olvasd le a meredekséget (m) és a tengelymetszetet (b) az egyenletből.</li>
+                <li>Számolásnál használd a képletet: f(x) = m * x + b.</li>
+                <li>Két pontból: m = (y2 - y1) / (x2 - x1).</li>
+                <li>Pont és meredekség alapján: b = y0 - m * x0.</li>
+                <li>X-tengelymetszet: x = -b / m (ha m ≠ 0).</li>
+                <li>A nehézség a m, b és x tartományt szabja meg.</li>
+                <li>Tizedes válasz is lehet; tizedespont vagy tizedesvessző is jó.</li>
+            </ul>
+            <div class="input-help">Enterrel is beküldheted a választ.</div>
+        </div>
+        <div class="test-meta">
+            <div class="meta-row">
+                <span class="meta-label">Nehézség:</span>
+                <div class="difficulty-buttons">
+                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="könnyű" type="button">Könnyű</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="közepes" type="button">Közepes</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="nehéz" type="button">Nehéz</button>
+                </div>
+            </div>
+        </div>
+        <div class="test-controls">
+            <button id="start-test-btn" class="btn btn-secondary" type="button" hidden>&Uacute;j teszt</button>
+            <span id="test-progress" class="test-progress">0 / 0</span>
+        </div>
+        <div id="test-area" class="test-area is-hidden">
+            <div id="test-question" class="test-question"></div>
+            <input type="text" id="test-answer" class="module-input" placeholder="Válasz...">
+            <div class="test-actions">
+                <button id="test-submit" class="btn btn-primary" type="button">Ellenőrzés</button>
+                <button id="test-next" class="btn btn-secondary" type="button" hidden>Következő</button>
+            </div>
+            <p id="test-feedback"></p>
+        </div>
+    </div>
+
+    <div id="gyakorlas" class="tab-content card" role="tabpanel">
+        <h2>Gyakorlás</h2>
+        <p class="practice-info">Végtelenített gyakorlás. XP jutalom: könnyű = 1 XP, közepes = 2 XP, nehéz = 3 XP.</p>
+        <div class="learning-hint" data-role="practice-help">
+            <h3>Gyakorlási tipp</h3>
+            <ul>
+                <li>Válassz legalább egy nehézséget a feladatokhoz.</li>
+                <li>A válasz f(x) = m * x + b alapján adható meg.</li>
+                <li>Két pontból: m = (y2 - y1) / (x2 - x1).</li>
+                <li>Pontból b: b = y0 - m * x0.</li>
+                <li>Tizedes válasz is lehet; tizedespont vagy tizedesvessző is jó.</li>
+                <li>Helyes válasz után automatikusan jön a következő kérdés.</li>
+            </ul>
+        </div>
+        <div class="practice-controls">
+            <span class="meta-label">Nehézségek:</span>
+            <label><input type="checkbox" class="practice-difficulty" value="könnyű" checked> Könnyű</label>
+            <label><input type="checkbox" class="practice-difficulty" value="közepes"> Közepes</label>
+            <label><input type="checkbox" class="practice-difficulty" value="nehéz"> Nehéz</label>
+            <button id="start-practice-btn" class="btn btn-primary" type="button">Gyakorlás indítása</button>
+        </div>
+        <div id="practice-area" class="practice-area is-hidden">
+            <div id="practice-question" class="practice-question"></div>
+            <input type="text" id="practice-input" class="module-input" placeholder="Válasz...">
+            <button id="practice-check" class="btn btn-primary" type="button">Ellenőrzés</button>
+            <p id="practice-feedback"></p>
+        </div>
+    </div>
+
+    <div class="result-popup" id="resultPopup"></div>
+
+    <script>
+        const TOPIC_ID = 'linearis_fuggveny';
+        const TOPIC_NAME = 'Lineáris függvény';
+        const TAB_LABELS = {
+            elmelet: 'Elmélet',
+            vizualis: 'Vizuális modell',
+            teszt: 'Teszt',
+            gyakorlas: 'Gyakorlás'
+        };
+        const DIFFICULTY_LABELS = {
+            'könnyű': 'Könnyű',
+            'közepes': 'Közepes',
+            'nehéz': 'Nehéz'
+        };
+        const TEST_QUESTION_COUNT = 10;
+        const QUESTION_TYPES = ['value-from-equation', 'slope-from-points', 'intercept-from-point', 'x-intercept'];
+        const DIFFICULTY_CONFIGS = {
+            'könnyű': { m: { min: -3, max: 3, step: 1 }, b: { min: -6, max: 6, step: 1 }, x: { min: -5, max: 5, step: 1 } },
+            'közepes': { m: { min: -5, max: 5, step: 0.5 }, b: { min: -8, max: 8, step: 0.5 }, x: { min: -8, max: 8, step: 1 } },
+            'nehéz': { m: { min: -8, max: 8, step: 0.5 }, b: { min: -10, max: 10, step: 0.5 }, x: { min: -10, max: 10, step: 1 } }
+        };
+        const PRACTICE_XP_REWARDS = {
+            'könnyű': 1,
+            'közepes': 2,
+            'nehéz': 3
+        };
+
+        let currentTestDifficulty = 'könnyű';
+        let currentPracticeDifficulty = 'könnyű';
+        let activeTab = 'elmelet';
+        let currentTestAnswer = '';
+        let currentPracticeAnswer = '';
+        window.currentTestAnswer = '';
+        window.currentPracticeAnswer = '';
+
+        const sliderM = document.getElementById('sliderM');
+        const sliderB = document.getElementById('sliderB');
+        const valueM = document.getElementById('valueM');
+        const valueB = document.getElementById('valueB');
+        const equation = document.getElementById('equation');
+        const resultPopup = document.getElementById('resultPopup');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        const testStartBtn = document.getElementById('start-test-btn');
+        const testArea = document.getElementById('test-area');
+        const testQuestion = document.getElementById('test-question');
+        const testAnswerInput = document.getElementById('test-answer');
+        const testSubmitBtn = document.getElementById('test-submit');
+        const testNextBtn = document.getElementById('test-next');
+        const testFeedback = document.getElementById('test-feedback');
+        const testProgress = document.getElementById('test-progress');
+
+        const practiceStartBtn = document.getElementById('start-practice-btn');
+        const practiceArea = document.getElementById('practice-area');
+        const practiceQuestion = document.getElementById('practice-question');
+        const practiceInput = document.getElementById('practice-input');
+        const practiceCheck = document.getElementById('practice-check');
+        const practiceFeedback = document.getElementById('practice-feedback');
+        const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+        const practiceDifficultyInputs = document.querySelectorAll('.practice-difficulty');
+        const exampleGrid = document.getElementById('example-grid');
+        const randomExampleBtn = document.getElementById('random-example-btn');
+        const regenExamplesBtn = document.getElementById('regen-examples-btn');
+
+        let testQuestions = [];
+        let currentTestIndex = 0;
+        let correctAnswers = 0;
+        let isTestRunning = false;
+        let practiceActive = false;
+
+        const ctx = document.getElementById('functionChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 21}, (_, i) => i - 10),
+                datasets: [{
+                    label: 'f(x) = mx + b',
+                    data: [],
+                    borderColor: '#5865f2',
+                    borderWidth: 3,
+                    fill: false,
+                    tension: 0.1,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        grid: { color: '#e0e5ec' },
+                        ticks: { font: { size: 14, weight: '500' } }
+                    },
+                    y: {
+                        grid: { color: '#e0e5ec' },
+                        ticks: { font: { size: 14, weight: '500' } }
+                    }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        function announceActiveTab(tabName) {
+            const subtitle = TAB_LABELS[tabName] || '';
+            if (window.parent) {
+                window.parent.postMessage({ type: 'module-sheet', topicId: TOPIC_ID, subtitle }, '*');
+            }
+        }
+
+        function setActiveTab(tabName) {
+            tabButtons.forEach(btn => {
+                const isActive = btn.dataset.tab === tabName;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+            tabContents.forEach(section => {
+                section.classList.toggle('active', section.id === tabName);
+            });
+            activeTab = tabName;
+            announceActiveTab(tabName);
+            if (tabName === 'teszt' && !isTestRunning) {
+                startTest();
+            }
+        }
+
+        function updateFunction() {
+            const m = parseFloat(sliderM.value);
+            const b = parseFloat(sliderB.value);
+            valueM.textContent = m;
+            valueB.textContent = b;
+            equation.textContent = formatEquation(m, b);
+            const newData = chart.data.labels.map(x => m * x + b);
+            chart.data.datasets[0].data = newData;
+            chart.update();
+        }
+
+        function formatNumber(value) {
+            if (!Number.isFinite(value)) return '';
+            const rounded = Math.round(value * 100) / 100;
+            return Number.isInteger(rounded) ? String(rounded) : String(rounded);
+        }
+
+        function formatEquation(m, b) {
+            const formattedM = formatNumber(m);
+            const formattedB = formatNumber(Math.abs(b));
+            const sign = b >= 0 ? '+' : '-';
+            return `f(x) = ${formattedM}x ${sign} ${formattedB}`;
+        }
+
+        function parseNumberInput(value) {
+            const normalized = value.trim().replace(',', '.');
+            if (!normalized) return null;
+            const parsed = Number(normalized);
+            return Number.isFinite(parsed) ? parsed : null;
+        }
+
+        function isClose(a, b) {
+            return Math.abs(a - b) <= 0.01;
+        }
+
+        function randomInt(min, max, avoidZero = false) {
+            let value = Math.floor(Math.random() * (max - min + 1)) + min;
+            if (!avoidZero) return value;
+            while (value === 0) {
+                value = Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+            return value;
+        }
+
+        function getDifficultyConfig(difficulty) {
+            return DIFFICULTY_CONFIGS[difficulty] || DIFFICULTY_CONFIGS['könnyű'];
+        }
+
+        function randomStep(min, max, step) {
+            const totalSteps = Math.round((max - min) / step);
+            const index = randomInt(0, totalSteps);
+            const value = min + (index * step);
+            return Math.round(value * 100) / 100;
+        }
+
+        function getSliderConfig(input) {
+            return {
+                min: parseFloat(input.min),
+                max: parseFloat(input.max),
+                step: parseFloat(input.step || '1')
+            };
+        }
+
+        function buildExampleFromSliders() {
+            const mConfig = getSliderConfig(sliderM);
+            const bConfig = getSliderConfig(sliderB);
+            const m = randomStep(mConfig.min, mConfig.max, mConfig.step);
+            const b = randomStep(bConfig.min, bConfig.max, bConfig.step);
+            return { m, b };
+        }
+
+        function applyLinearExample(m, b) {
+            sliderM.value = String(m);
+            sliderB.value = String(b);
+            updateFunction();
+        }
+
+        function createExampleLabel(m, b) {
+            return `m=${formatNumber(m)}, b=${formatNumber(b)}`;
+        }
+
+        function renderExampleGrid(examples) {
+            if (!exampleGrid) return;
+            exampleGrid.innerHTML = '';
+            examples.forEach((example) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'example-card';
+                btn.textContent = createExampleLabel(example.m, example.b);
+                btn.addEventListener('click', () => applyLinearExample(example.m, example.b));
+                exampleGrid.appendChild(btn);
+            });
+        }
+
+        function generateExampleSet(count = 6) {
+            const examples = [];
+            while (examples.length < count) {
+                examples.push(buildExampleFromSliders());
+            }
+            return examples;
+        }
+
+        function buildLinearParams(difficulty, options = {}) {
+            const config = getDifficultyConfig(difficulty);
+            const avoidZero = options.avoidZeroM === true;
+            let m = randomStep(config.m.min, config.m.max, config.m.step);
+            if (avoidZero) {
+                let guard = 0;
+                while (m === 0 && guard < 20) {
+                    m = randomStep(config.m.min, config.m.max, config.m.step);
+                    guard += 1;
+                }
+                if (m === 0) m = config.m.step;
+            }
+            const b = randomStep(config.b.min, config.b.max, config.b.step);
+            const x = randomStep(config.x.min, config.x.max, config.x.step);
+            return { m, b, x };
+        }
+
+        function pickDistinctX(config, avoidValue) {
+            let next = randomStep(config.x.min, config.x.max, config.x.step);
+            let guard = 0;
+            while (next === avoidValue && guard < 20) {
+                next = randomStep(config.x.min, config.x.max, config.x.step);
+                guard += 1;
+            }
+            return next;
+        }
+
+        function buildQuestionByType(difficulty, type) {
+            const config = getDifficultyConfig(difficulty);
+            const requiresNonZeroM = type === 'x-intercept';
+            const line = buildLinearParams(difficulty, { avoidZeroM: requiresNonZeroM });
+            const eq = formatEquation(line.m, line.b);
+            const x1 = randomStep(config.x.min, config.x.max, config.x.step);
+            const x2 = pickDistinctX(config, x1);
+            const y1 = line.m * x1 + line.b;
+            const y2 = line.m * x2 + line.b;
+            const x0 = randomStep(config.x.min, config.x.max, config.x.step);
+            const y0 = line.m * x0 + line.b;
+            const xValue = randomStep(config.x.min, config.x.max, config.x.step);
+            const xIntercept = -line.b / line.m;
+
+            if (type === 'slope-from-points') {
+                return {
+                    kind: 'slope-from-points',
+                    question: `Az egyenes átmegy a (${formatNumber(x1)}, ${formatNumber(y1)}) és (${formatNumber(x2)}, ${formatNumber(y2)}) pontokon. Mi a meredeksége (m)?`,
+                    answer: line.m
+                };
+            }
+            if (type === 'intercept-from-point') {
+                return {
+                    kind: 'intercept-from-point',
+                    question: `Az egyenes meredeksége m = ${formatNumber(line.m)} és átmegy a (${formatNumber(x0)}, ${formatNumber(y0)}) ponton. Mi a tengelymetszete (b)?`,
+                    answer: line.b
+                };
+            }
+            if (type === 'x-intercept') {
+                return {
+                    kind: 'x-intercept',
+                    question: `Hol metszi az x-tengelyt az egyenes? (${eq}) Add meg az x értékét!`,
+                    answer: xIntercept
+                };
+            }
+            return {
+                kind: 'value-from-equation',
+                question: `Mennyi f(${formatNumber(xValue)})? (${eq})`,
+                answer: line.m * xValue + line.b
+            };
+        }
+
+        function buildRandomQuestion(difficulty) {
+            const index = randomInt(0, QUESTION_TYPES.length - 1);
+            return buildQuestionByType(difficulty, QUESTION_TYPES[index]);
+        }
+
+        function buildTestQuestions(difficulty) {
+            const questions = [];
+            QUESTION_TYPES.forEach((type) => {
+                questions.push(buildQuestionByType(difficulty, type));
+            });
+            while (questions.length < TEST_QUESTION_COUNT) {
+                questions.push(buildRandomQuestion(difficulty));
+            }
+            return questions;
+        }
+
+        function updateTestProgress() {
+            if (testProgress) {
+                testProgress.textContent = `${currentTestIndex + 1} / ${testQuestions.length}`;
+            }
+        }
+
+        function showTestQuestion(index) {
+            const current = testQuestions[index];
+            if (!current) return;
+            testQuestion.textContent = current.question;
+            currentTestAnswer = current.answer;
+            window.currentTestAnswer = currentTestAnswer;
+            window.currentTestKind = current.kind || '';
+            testAnswerInput.value = '';
+            testFeedback.textContent = '';
+            testSubmitBtn.disabled = false;
+            testNextBtn.hidden = true;
+            updateTestProgress();
+        }
+
+        function startTest() {
+            testQuestions = buildTestQuestions(currentTestDifficulty);
+            currentTestIndex = 0;
+            correctAnswers = 0;
+            isTestRunning = true;
+            testArea.classList.remove('is-hidden');
+            testNextBtn.hidden = true;
+            window.currentTestQuestionCount = testQuestions.length;
+            window.currentTestDifficulty = currentTestDifficulty;
+            if (testStartBtn) {
+                testStartBtn.disabled = true;
+                testStartBtn.hidden = true;
+            }
+            showTestQuestion(currentTestIndex);
+        }
+
+        function checkTestAnswer() {
+            if (!isTestRunning) return;
+            const rawInput = testAnswerInput.value.trim();
+            const parsed = parseNumberInput(rawInput);
+            const isCorrect = parsed !== null && isClose(parsed, currentTestAnswer);
+            const formattedCorrect = formatNumber(currentTestAnswer);
+            const formattedUser = parsed !== null ? formatNumber(parsed) : rawInput;
+            testQuestions[currentTestIndex].userAnswer = formattedUser;
+            testQuestions[currentTestIndex].correctAnswer = formattedCorrect;
+            testQuestions[currentTestIndex].isCorrect = isCorrect;
+            if (isCorrect) {
+                correctAnswers += 1;
+                testFeedback.textContent = 'Helyes! ✅';
+                testFeedback.style.color = '#43b581';
+            } else {
+                testFeedback.textContent = `Helytelen. Helyes válasz: ${formattedCorrect}`;
+                testFeedback.style.color = '#f04747';
+            }
+            testSubmitBtn.disabled = true;
+            testNextBtn.textContent = (currentTestIndex === testQuestions.length - 1)
+                ? 'Eredmény'
+                : 'Következő';
+            testNextBtn.hidden = false;
+        }
+
+        function showResultPopup(message) {
+            resultPopup.textContent = message;
+            resultPopup.classList.add('show');
+            setTimeout(() => {
+                resultPopup.classList.remove('show');
+            }, 3000);
+        }
+
+        function finishTest() {
+            const total = testQuestions.length || 1;
+            const percentage = Math.round((correctAnswers / total) * 100);
+            let grade = 0;
+            let feedback = '';
+
+            if (percentage < 40) { grade = 1; feedback = 'Elégtelen (1)'; }
+            else if (percentage < 55) { grade = 2; feedback = 'Elégséges (2)'; }
+            else if (percentage < 70) { grade = 3; feedback = 'Közepes (3)'; }
+            else if (percentage < 85) { grade = 4; feedback = 'Jó (4)'; }
+            else { grade = 5; feedback = 'Jeles (5)'; }
+
+            showResultPopup(`Eredmény: ${percentage}% - ${feedback}`);
+
+            const result = {
+                topicId: TOPIC_ID,
+                topicName: TOPIC_NAME,
+                difficulty: currentTestDifficulty,
+                grade,
+                percentage,
+                timestamp: new Date().toISOString(),
+                questions: testQuestions.map((q) => ({
+                    question: q.question,
+                    userAnswer: q.userAnswer || '',
+                    correctAnswer: q.correctAnswer || formatNumber(q.answer)
+                }))
+            };
+            if (window.parent) {
+                window.parent.postMessage({ type: 'testResult', result }, '*');
+            }
+
+            isTestRunning = false;
+            if (testStartBtn) {
+                testStartBtn.disabled = false;
+                testStartBtn.hidden = false;
+                testStartBtn.innerHTML = '&Uacute;j teszt';
+            }
+            testNextBtn.hidden = true;
+            testAnswerInput.value = '';
+            currentTestAnswer = '';
+            window.currentTestAnswer = '';
+        }
+
+        function goToNextTestQuestion() {
+            if (currentTestIndex >= testQuestions.length - 1) {
+                finishTest();
+                return;
+            }
+            currentTestIndex += 1;
+            showTestQuestion(currentTestIndex);
+        }
+
+        function getEnabledPracticeDifficulties() {
+            return Array.from(practiceDifficultyInputs)
+                .filter(input => input.checked)
+                .map(input => input.value);
+        }
+
+        function pickRandomDifficulty(list) {
+            if (!list.length) return 'könnyű';
+            const index = randomInt(0, list.length - 1);
+            return list[index];
+        }
+
+        function buildPracticeQuestion(difficulty) {
+            const index = randomInt(0, QUESTION_TYPES.length - 1);
+            return buildQuestionByType(difficulty, QUESTION_TYPES[index]);
+        }
+
+        function nextPracticeQuestion() {
+            const enabled = getEnabledPracticeDifficulties();
+            if (!enabled.length) {
+                practiceFeedback.textContent = 'Válassz legalább egy nehézséget.';
+                practiceFeedback.style.color = '#f04747';
+                return;
+            }
+            currentPracticeDifficulty = pickRandomDifficulty(enabled);
+            window.currentPracticeDifficulty = currentPracticeDifficulty;
+            const label = DIFFICULTY_LABELS[currentPracticeDifficulty] || currentPracticeDifficulty;
+            const practiceItem = buildPracticeQuestion(currentPracticeDifficulty);
+            currentPracticeAnswer = practiceItem.answer;
+            window.currentPracticeAnswer = currentPracticeAnswer;
+            window.currentPracticeKind = practiceItem.kind || '';
+            practiceQuestion.textContent = `${label} feladat: ${practiceItem.question}`;
+            practiceInput.value = '';
+            practiceFeedback.textContent = '';
+            practiceFeedback.style.color = '#2c3e50';
+        }
+
+        function checkPracticeAnswer() {
+            if (!practiceActive) return;
+            const rawInput = practiceInput.value.trim();
+            const parsed = parseNumberInput(rawInput);
+            if (parsed !== null && isClose(parsed, currentPracticeAnswer)) {
+                const xpReward = PRACTICE_XP_REWARDS[currentPracticeDifficulty] || 1;
+                practiceFeedback.textContent = `Helyes! ✅ (+${xpReward} XP)`;
+                practiceFeedback.style.color = '#43b581';
+                if (window.parent) {
+                    window.parent.postMessage({ type: 'practiceXp', xp: xpReward, topicId: TOPIC_ID }, '*');
+                }
+                setTimeout(() => {
+                    if (practiceActive) {
+                        nextPracticeQuestion();
+                    }
+                }, 2000);
+            } else {
+                practiceFeedback.textContent = 'Próbáld újra!';
+                practiceFeedback.style.color = '#f04747';
+            }
+        }
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                setActiveTab(button.dataset.tab);
+            });
+        });
+
+        difficultyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const nextDifficulty = button.dataset.difficulty;
+                if (!nextDifficulty) return;
+                currentTestDifficulty = nextDifficulty;
+                difficultyButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.difficulty === currentTestDifficulty);
+                });
+                if (activeTab === 'teszt') {
+                    startTest();
+                }
+            });
+        });
+
+        if (testStartBtn) testStartBtn.addEventListener('click', startTest);
+        if (testSubmitBtn) testSubmitBtn.addEventListener('click', checkTestAnswer);
+        if (testNextBtn) testNextBtn.addEventListener('click', goToNextTestQuestion);
+        if (testAnswerInput) {
+            testAnswerInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    checkTestAnswer();
+                }
+            });
+        }
+
+        if (practiceStartBtn) {
+            practiceStartBtn.addEventListener('click', () => {
+                const enabled = getEnabledPracticeDifficulties();
+                if (!enabled.length) {
+                    practiceFeedback.textContent = 'Válassz legalább egy nehézséget.';
+                    practiceFeedback.style.color = '#f04747';
+                    return;
+                }
+                practiceActive = true;
+                practiceArea.classList.remove('is-hidden');
+                nextPracticeQuestion();
+            });
+        }
+        if (practiceCheck) practiceCheck.addEventListener('click', checkPracticeAnswer);
+        if (practiceInput) {
+            practiceInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    checkPracticeAnswer();
+                }
+            });
+        }
+
+        sliderM.addEventListener('input', updateFunction);
+        sliderB.addEventListener('input', updateFunction);
+
+        if (randomExampleBtn) {
+            randomExampleBtn.addEventListener('click', () => {
+                const example = buildExampleFromSliders();
+                applyLinearExample(example.m, example.b);
+            });
+        }
+        if (regenExamplesBtn) {
+            regenExamplesBtn.addEventListener('click', () => {
+                renderExampleGrid(generateExampleSet());
+            });
+        }
+
+        const initialDifficulty = Array.from(difficultyButtons)
+            .find(btn => btn.classList.contains('active'))?.dataset.difficulty;
+        if (initialDifficulty) {
+            currentTestDifficulty = initialDifficulty;
+        }
+
+        updateFunction();
+        renderExampleGrid(generateExampleSet());
+        setActiveTab('elmelet');
+    </script>
+</body>
+</html>
+
+
+
+

@@ -30,9 +30,11 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            background-color: transparent;
+        }
         body {
             font-family: var(--font-main);
-            background-color: transparent;
             color: var(--text-light);
             padding: 40px;
             margin: 0;
@@ -87,7 +89,7 @@
         }
 
         .card {
-            background-color: var(--bg-card);
+            background-color: var(--bg-card, rgba(255, 255, 255, var(--module-card-opacity, 1)));
             border-radius: 12px;
             padding: 30px;
             box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
@@ -226,20 +228,8 @@
             display: none;
         }
 
-        #instant-practice input {
-            padding: 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
+        #instant-practice .module-input {
             margin-right: 10px;
-        }
-
-        #instant-practice button {
-            padding: 8px 15px;
-            border: none;
-            background-color: var(--brand-secondary);
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
         }
 
         #instant-feedback {
@@ -261,12 +251,13 @@
         .difficulty-selector button {
             padding: 10px 18px;
             border: 1px solid var(--border-color);
-            background-color: white;
+            background-color: var(--bg-card);
             border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
             margin: 0 5px;
             transition: all 0.2s ease;
+            color: var(--text-dark);
         }
 
         .difficulty-selector button.active {
@@ -278,22 +269,7 @@
 
         #start-test-btn,
         #finish-test-btn {
-            padding: 12px 25px;
-            border: none;
-            background: linear-gradient(45deg, var(--success), #27AE60);
-            color: white;
             font-size: 1em;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px -5px var(--success);
-        }
-
-        #start-test-btn:hover,
-        #finish-test-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px -5px var(--success);
         }
 
         #test-area {
@@ -335,13 +311,14 @@
 
         .options label {
             display: block;
-            background-color: white;
+            background-color: var(--bg-card);
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 10px;
             cursor: pointer;
             border: 1px solid var(--border-color);
             transition: all 0.2s ease;
+            color: var(--text-dark);
         }
 
         .options label:hover {
@@ -361,11 +338,81 @@
         }
 
         .options-input {
-            padding: 12px;
-            font-size: 1em;
-            border: 1px solid var(--border-color);
+            width: min(320px, 100%);
+            margin-top: 8px;
+        }
+
+        .btn {
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+        .btn:focus-visible {
+            outline: 2px solid var(--brand-primary);
+            outline-offset: 2px;
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: default;
+            box-shadow: none;
+        }
+        .btn-primary {
+            background-color: var(--brand-primary);
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(74, 85, 162, 0.25);
+        }
+        .btn-primary:hover { transform: translateY(-1px); }
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+        .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+        .module-input {
+            padding: 10px 12px;
             border-radius: 8px;
-            width: 250px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            font-size: 1em;
+        }
+        .module-input:focus {
+            outline: 2px solid var(--brand-primary);
+            border-color: var(--brand-primary);
+        }
+
+        .learning-hint {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--brand-primary);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 16px 0;
+            color: var(--text-dark);
+        }
+        .learning-hint h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.05em;
+            color: var(--brand-primary);
+        }
+        .learning-hint ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-light);
+        }
+        .learning-hint li { margin-bottom: 6px; }
+        .input-help {
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: var(--text-light);
+        }
+        .help-compact {
+            margin-top: 12px;
         }
 
         .test-navigation {
@@ -446,7 +493,7 @@
             align-items: center;
             gap: 5px;
         }
-        .practice-controls button {
+        .practice-controls button:not(.btn) {
             padding: 10px 18px;
             border: none;
             background-color: var(--brand-secondary);
@@ -455,7 +502,7 @@
             cursor: pointer;
             font-weight: 500;
         }
-        .practice-controls button:hover {
+        .practice-controls button:not(.btn):hover {
             background-color: var(--brand-primary);
         }
         #practice-area {
@@ -468,7 +515,6 @@
     </style>
 </head>
 <body>
-    <h1>Témakör: Halmazműveletek</h1>
     <div class="tab-buttons">
         <button class="tab-button active" onclick="openTab('miert')">Kulcsfogalmak</button>
         <button class="tab-button" onclick="openTab('hogyan')">Vizuális Modell</button>
@@ -548,8 +594,8 @@
         <div id="instant-practice">
             <h3>Azonnali Gyakorlás</h3>
             <p id="instant-q"></p>
-            <input type="text" id="instant-input" placeholder="Eredmény...">
-            <button id="instant-check">Ellenőrzés</button>
+            <input type="text" id="instant-input" class="module-input" placeholder="Eredmény...">
+            <button id="instant-check" class="btn btn-secondary">Ellenőrzés</button>
             <p id="instant-feedback"></p>
         </div>
     </div>
@@ -557,6 +603,16 @@
     <!-- Teszt tab -->
     <div id="teszt" class="tab-content card">
         <h2>Tedd próbára a tudásod!</h2>
+        <div class="learning-hint" data-role="test-help">
+            <h3>Megoldási útmutató</h3>
+            <ul>
+                <li>Unió: ami legalább az egyik halmazban benne van.</li>
+                <li>Metszet: ami mindkét halmaz közös eleme.</li>
+                <li>Különbség: A-ban benne van, B-ben nincs.</li>
+                <li>Az elemek sorrendje nem számít, vesszővel írd be (pl. 1,2,3).</li>
+            </ul>
+            <div class="input-help">Üres halmaz esetén használd az &empty; jelet.</div>
+        </div>
         <div class="test-controls">
             <div class="difficulty-selector">
                 <b>Nehézség:</b>
@@ -564,7 +620,7 @@
                 <button class="difficulty-btn" data-difficulty="közepes">Közepes</button>
                 <button class="difficulty-btn" data-difficulty="nehéz">Nehéz</button>
             </div>
-            <button id="start-test-btn">Teszt indítása</button>
+            <button id="start-test-btn" class="btn btn-secondary" type="button" hidden>&Uacute;j teszt</button>
         </div>
         <div id="test-area">
             <div id="pagination-dots"></div>
@@ -584,7 +640,7 @@
                     </svg></button>
             </div>
             <hr style="margin: 25px 0; border: 1px solid var(--border-color);">
-            <button id="finish-test-btn" style="width: 100%;">Teszt befejezése és értékelés</button>
+            <button id="finish-test-btn" class="btn btn-primary" style="width: 100%;">Teszt befejezése és értékelés</button>
         </div>
     </div>
 
@@ -597,18 +653,26 @@
             Nehéz kérdésért 3 XP. Válassz több nehézséget egyszerre, hogy nagyobb
             jutalmat szerezz!
         </p>
+        <div class="learning-hint" data-role="practice-help">
+            <h3>Gyakorlási segítség</h3>
+            <ul>
+                <li>A válaszokat vesszővel add meg, a sorrend nem számít.</li>
+                <li>Ha elakadsz, nézd meg a feladat alatti magyarázó tippet.</li>
+                <li>Üres halmaz: &empty;.</li>
+            </ul>
+        </div>
         <div class="practice-controls">
             <span><b>Nehézségek:</b></span>
             <label><input type="checkbox" class="practice-difficulty" value="könnyű" checked> Könnyű</label>
             <label><input type="checkbox" class="practice-difficulty" value="közepes"> Közepes</label>
             <label><input type="checkbox" class="practice-difficulty" value="nehéz"> Nehéz</label>
-            <button id="start-practice-btn">Gyakorlás indítása</button>
+            <button id="start-practice-btn" class="btn btn-primary">Gyakorlás indítása</button>
         </div>
         <div id="practice-area" style="display:none;">
             <div id="practice-question"></div>
-            <div id="practice-hint" style="margin-top:10px;"></div>
-            <input type="text" id="practice-input" class="options-input" placeholder="Írd be az elemeket vesszővel..." />
-            <button id="practice-check" style="margin-left:10px; padding: 10px 18px; border:none; background-color: var(--brand-secondary); color:white; border-radius:8px; cursor:pointer;">Ellenőrzés</button>
+            <div id="practice-hint" class="learning-hint help-compact"></div>
+            <input type="text" id="practice-input" class="options-input module-input" placeholder="Írd be az elemeket vesszővel..." />
+            <button id="practice-check" class="btn btn-primary">Ellenőrzés</button>
             <p id="practice-feedback"></p>
         </div>
     </div>
@@ -623,6 +687,13 @@
     </script>
     <script>
         const TOPIC_ID = 'halmazmuveletek';
+        const TAB_LABELS = {
+            miert: 'Kulcsfogalmak',
+            hogyan: 'Vizuális Modell',
+            teszt: 'Teszt',
+            gyakorlas: 'Gyakorlás'
+        };
+        let activeTab = 'miert';
         let currentDifficulty = 'könnyű';
         let isTestActive = false;
         let questions = [];
@@ -700,12 +771,65 @@
             startPracticeBtn: document.getElementById('start-practice-btn')
         };
 
+        function normalizeSetToken(token) {
+            const trimmed = token.trim();
+            if (!trimmed) return '';
+            const lowered = trimmed.toLowerCase();
+            if (/^-?\d+$/.test(lowered)) {
+                return String(Number(lowered));
+            }
+            return lowered;
+        }
+
+        function parseSetInput(raw) {
+            if (!raw) return [];
+            const trimmed = raw.trim();
+            if (!trimmed) return [];
+            const collapsed = trimmed.replace(/\s+/g, '').toLowerCase();
+            if (collapsed === '∅' || collapsed === 'emptyset') return [];
+            let cleaned = trimmed.replace(/[{}]/g, '').replace(/[()]/g, '');
+            cleaned = cleaned.replace(/;/g, ',');
+            const parts = cleaned.includes(',')
+                ? cleaned.split(',')
+                : cleaned.trim().split(/\s+/);
+            return parts.map(normalizeSetToken).filter(Boolean);
+        }
+
+        function normalizeSetInput(raw) {
+            const tokens = parseSetInput(raw);
+            return Array.from(new Set(tokens)).sort();
+        }
+
+        function setsEqual(expectedRaw, actualRaw) {
+            const expected = normalizeSetInput(expectedRaw);
+            const actual = normalizeSetInput(actualRaw);
+            if (expected.length !== actual.length) return false;
+            for (let i = 0; i < expected.length; i++) {
+                if (expected[i] !== actual[i]) return false;
+            }
+            return true;
+        }
+
+        function announceActiveTab(tabName) {
+            const subtitle = TAB_LABELS[tabName] || '';
+            if (window.parent) {
+                window.parent.postMessage({ type: 'module-sheet', topicId: TOPIC_ID, subtitle }, '*');
+            }
+        }
+
         function openTab(tabName) {
             dom.tabContents.forEach(t => t.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
             dom.tabButtons.forEach(b => b.classList.remove('active'));
             document.querySelector(`.tab-button[onclick="openTab('${tabName}')"]`).classList.add('active');
+            announceActiveTab(tabName);
+            activeTab = tabName;
+            if (tabName === 'teszt' && !isTestActive) {
+                startTest();
+            }
         }
+
+        announceActiveTab('miert');
 
         const operations = {
             union: {
@@ -755,10 +879,8 @@
         });
 
         function checkInstantAnswer(correctAnswer) {
-            const userAnswer = dom.instantInput.value.replace(/\\s/g, '');
-            const correctSet = new Set(correctAnswer.split(','));
-            const answerSet = new Set(userAnswer.split(','));
-            if (correctSet.size === answerSet.size && [...correctSet].every(item => answerSet.has(item))) {
+            const userAnswer = dom.instantInput.value;
+            if (setsEqual(correctAnswer, userAnswer)) {
                 dom.instantFeedback.textContent = "Helyes! ✅";
                 dom.instantFeedback.style.color = "var(--success)";
             } else {
@@ -767,22 +889,40 @@
             }
         }
 
+        dom.instantInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                dom.instantCheck.click();
+            }
+        });
+
         dom.difficultyBtns.forEach(btn => btn.addEventListener('click', () => {
-            if (!isTestActive) {
-                currentDifficulty = btn.dataset.difficulty;
-                dom.difficultyBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+            const nextDifficulty = btn.dataset.difficulty;
+            if (!nextDifficulty) return;
+            currentDifficulty = nextDifficulty;
+            dom.difficultyBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            if (activeTab === 'teszt') {
+                startTest();
             }
         }));
-        dom.startTestBtn.addEventListener('click', () => {
+        function startTest() {
             isTestActive = true;
             questions = [...questionBanks[currentDifficulty]].map(q => ({ ...q, userAnswer: null }));
             currentQuestionIndex = 0;
-            dom.startTestBtn.style.display = 'none';
+            if (dom.startTestBtn) {
+                dom.startTestBtn.hidden = true;
+                dom.startTestBtn.style.display = 'none';
+            }
             dom.testArea.style.display = 'block';
             renderPagination();
             renderQuestion();
-        });
+        }
+        if (dom.startTestBtn) {
+            dom.startTestBtn.addEventListener('click', () => {
+                startTest();
+            });
+        }
         dom.prevBtn.addEventListener('click', () => {
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
@@ -827,7 +967,7 @@
                     .join('');
                 dom.answerArea.innerHTML = `<div class="options">${optionsHTML}</div>`;
             } else if (q.type === 'input') {
-                dom.answerArea.innerHTML = `<input type="text" class="options-input" placeholder="pl: 1,2,3" value="${q.userAnswer || ''}" oninput="saveAnswer()">`;
+                dom.answerArea.innerHTML = `<input type="text" class="options-input module-input" placeholder="pl: 1,2,3" value="${q.userAnswer || ''}" oninput="saveAnswer()">`;
             }
             dom.currentQNum.textContent = currentQuestionIndex + 1;
             dom.prevBtn.disabled = currentQuestionIndex === 0;
@@ -846,7 +986,7 @@
                 const selected = document.querySelector('input[name="answer"]:checked');
                 if (selected) q.userAnswer = parseInt(selected.value);
             } else if (q.type === 'input') {
-                q.userAnswer = document.querySelector('.options-input').value.replace(/\\s/g, '');
+                q.userAnswer = document.querySelector('.options-input').value;
             }
             renderPagination();
         }
@@ -860,9 +1000,7 @@
             questions.forEach(q => {
                 if (q.type === 'mc' && q.userAnswer === q.a) correct++;
                 else if (q.type === 'input') {
-                    const correctSet = new Set(q.a.split(','));
-                    const answerSet = new Set((q.userAnswer || '').split(','));
-                    if (correctSet.size === answerSet.size && [...correctSet].every(item => answerSet.has(item))) correct++;
+                    if (setsEqual(q.a, q.userAnswer || '')) correct++;
                 }
             });
             const percentage = (correct / questions.length) * 100;
@@ -902,7 +1040,11 @@
             window.parent.postMessage({ type: 'testResult', result: resultObject }, '*');
             isTestActive = false;
             dom.testArea.style.display = 'none';
-            dom.startTestBtn.style.display = 'block';
+            if (dom.startTestBtn) {
+                dom.startTestBtn.hidden = false;
+                dom.startTestBtn.style.display = 'inline-block';
+                dom.startTestBtn.innerHTML = '&Uacute;j teszt';
+            }
         }
 
         function showResultPopup(message) {
@@ -934,10 +1076,8 @@
             nextPracticeQuestion();
         });
         dom.practiceCheck.addEventListener('click', () => {
-            const userAnswer = dom.practiceInput.value.replace(/\\s/g, '');
-            const correctSet = new Set(currentPracticeAnswer.split(','));
-            const answerSet = new Set(userAnswer.split(','));
-            if (correctSet.size === answerSet.size && [...correctSet].every(item => answerSet.has(item))) {
+            const userAnswer = dom.practiceInput.value;
+            if (setsEqual(currentPracticeAnswer, userAnswer)) {
                 // Determine XP reward based on current practice difficulty
                 const xpReward = practiceXpRewards[currentPracticeDifficulty] || 1;
                 dom.practiceFeedback.textContent = `Helyes! ✅ (+${xpReward} XP)`;
@@ -1058,33 +1198,13 @@
         // Apply settings from main window
         window.addEventListener('message', (event) => {
             if (event.data.type === 'apply-settings') {
-                const settings = event.data.settings;
-                if (settings.contentBg) {
-                    document.body.style.backgroundColor = settings.contentBg;
-                }
-                if (settings.contentBgImage) {
-                    document.body.style.backgroundImage = settings.contentBgImage;
-                    document.body.style.backgroundSize = 'cover';
-                    document.body.style.backgroundPosition = 'center';
-                }
-                if (settings.contentOverlay) {
-                    let overlay = document.getElementById('content-overlay');
-                    if (!overlay) {
-                        overlay = document.createElement('div');
-                        overlay.id = 'content-overlay';
-                        overlay.style.position = 'fixed';
-                        overlay.top = '0';
-                        overlay.left = '0';
-                        overlay.width = '100%';
-                        overlay.height = '100%';
-                        overlay.pointerEvents = 'none';
-                        overlay.zIndex = '-1';
-                        document.body.appendChild(overlay);
-                    }
-                    overlay.style.backgroundColor = settings.contentOverlay;
-                }
+                document.body.style.backgroundColor = 'transparent';
+                document.body.style.backgroundImage = 'none';
             }
         });
     </script>
 </body>
 </html>
+
+
+

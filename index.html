@@ -12,32 +12,49 @@
         .results-btn { background-color: var(--brand-secondary); color: white !important; font-weight: 600 !important; margin-bottom: 20px !important; justify-content: center !important; }
         .results-btn:hover { background-color: var(--brand-primary) !important; }
         .results-btn.active { background-color: var(--brand-primary) !important; }
-        .xp-widget { background-color: #25272b; border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05); }
-        .xp-widget h2 { margin: 0 0 8px 0; font-size: 18px; }
-        .xp-widget p { margin: 4px 0 0 0; font-size: 13px; color: #b9bbbe; }
-        .xp-bar { width: 100%; height: 10px; background-color: #1a1c1f; border-radius: 999px; overflow: hidden; margin: 10px 0; }
-        .xp-bar-fill { height: 100%; background: linear-gradient(90deg, #7c5cff, #a855f7); width: 0%; transition: width 0.4s ease; }
-        .xp-widget .xp-meta { display: flex; justify-content: space-between; font-size: 13px; color: #b9bbbe; }
     </style>
 </head>
 <body>
-    <div class="app-container">
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="header-hamburger">
+                <button class="icon-button" id="quest-toggle" type="button" aria-label="Quest Log" aria-expanded="true">
+                    <svg class="burger-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                        <path class="burger-frame" d="M32 4 L54 16 V48 L32 60 L10 48 V16 Z"></path>
+                        <path class="burger-bar" d="M20 24 H44"></path>
+                        <path class="burger-bar" d="M20 32 H44"></path>
+                        <path class="burger-bar" d="M20 40 H44"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="header-main">
+                <div class="header-top">
+                    <div class="buffs" aria-label="Aktív buffok">
+                        <span class="buff-icon" title="Fókusz" aria-hidden="true"></span>
+                        <span class="buff-icon" title="Kitartás" aria-hidden="true"></span>
+                    </div>
+                    <div class="app-title">MatekMester</div>
+                    <div class="player-panel">
+                        <button id="xp-level-label" class="player-level" type="button" aria-label="Karakterlap">Lv. 1</button>
+                        <span id="xp-level-name" class="level-name" aria-hidden="true"></span>
+                        <button class="avatar-button" id="player-avatar" type="button" aria-label="Karakterlap">
+                            <span class="avatar" aria-hidden="true"></span>
+                        </button>
+                        <span id="xp-total-label" class="sr-only">0 XP</span>
+                    </div>
+                </div>
+                <div class="header-bottom">
+                    <div class="xp-bar" id="xp-bar" tabindex="0" aria-label="XP sáv">
+                        <div class="xp-bar-fill" id="xp-bar-fill"></div>
+                        <div class="xp-tooltip" id="xp-progress-text">0 / 200 XP a következő szintig</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="app-container">
         <nav class="sidebar">
             <div>
-                <h1 class="sidebar-title">Matek Mester</h1>
                 <a href="#" class="module-link results-btn" id="results-btn">Eredm&#233;nyeim</a>
-                <div class="xp-widget">
-                    <div class="xp-meta">
-                        <span id="xp-level-label">Szint 1</span>
-                        <span id="xp-total-label">0 XP</span>
-                    </div>
-                    <div class="xp-bar">
-                        <div class="xp-bar-fill" id="xp-bar-fill"></div>
-                    </div>
-                    <p id="xp-progress-text">0 / 200 XP a k&#246;vetkez&#337; szintig</p>
-                </div>
-                <a href="#" class="module-link" data-src="modules/xp_guide.html" data-topic-id="xp_guide">XP rendszer s&#250;g&#243;<span class="status grade-0" data-grade-for="xp_guide"></span></a>
-                <a href="#" class="module-link" data-src="modules/settings.html" data-topic-id="settings">Be&#225;ll&#237;t&#225;sok<span class="status grade-0" data-grade-for="settings"></span></a>
             </div>
             <div class="module-list">
 
@@ -481,11 +498,165 @@
         </nav>
 
         <main class="content">
-            <iframe id="content-frame" src="modules/placeholder.html" frameborder="0"></iframe>
+            <div class="module-banner" id="module-banner" hidden>
+                <div class="module-title" id="module-title">
+                    <div class="module-title-text" id="module-title-text"></div>
+                    <div class="module-subtitle" id="module-subtitle" hidden></div>
+                </div>
+            </div>
+            <div class="module-stage">
+                <div class="module-lock is-hidden" id="module-lock">
+                    <button class="quest-accept-btn" id="quest-accept-btn" type="button">Küldetés elfogadása</button>
+                </div>
+                <iframe id="content-frame" src="modules/placeholder.html" frameborder="0"></iframe>
+            </div>
         </main>
     </div>
     
     <div class="sidebar-tooltip" id="sidebarTooltip"></div>
+    </div>
+
+    <button class="settings-fab" id="settings-fab" type="button" aria-haspopup="dialog" aria-controls="settings-overlay" aria-label="Beállítások">
+        <span class="settings-fab-icon" aria-hidden="true">⚙</span>
+    </button>
+
+    <div class="settings-overlay is-hidden" id="settings-overlay" aria-hidden="true">
+        <div class="settings-panel" id="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+            <div class="settings-header">
+                <h2 id="settings-title">Beállítások</h2>
+                <button class="icon-button settings-close" id="settings-close" type="button" aria-label="Bezárás">✕</button>
+            </div>
+            <div class="settings-body">
+                <nav class="settings-categories" aria-label="Beállítás kategóriák">
+                    <button class="settings-tab is-active" data-section="theme" type="button">Skin &amp; Téma</button>
+                    <button class="settings-tab" data-section="ui" type="button">UI &amp; Hozzáférhetőség</button>
+                    <button class="settings-tab" data-section="sound" type="button">Hang &amp; Visszajelzés</button>
+                    <button class="settings-tab" data-section="gameplay" type="button">Játékélmény</button>
+                </nav>
+                <div class="settings-content">
+                    <section class="settings-section is-active" data-section="theme">
+                        <h3>Skin &amp; Téma</h3>
+                        <p class="settings-hint">Válassz alap skint, majd finomhangold az egyéni színeket vagy háttérképet.</p>
+                        <div class="settings-theme-grid" role="list">
+                            <button class="theme-card" type="button" data-theme="pergamen" role="listitem">
+                                <h4>Pergamen</h4>
+                                <p>Meleg, klasszikus hangulat.</p>
+                            </button>
+                            <button class="theme-card" type="button" data-theme="galaxis" role="listitem">
+                                <h4>Galaxis</h4>
+                                <p>Mély kék, kozmikus akcentus.</p>
+                            </button>
+                            <button class="theme-card" type="button" data-theme="futurisztikus" role="listitem">
+                                <h4>Futurisztikus</h4>
+                                <p>Letisztult, neon jelleg.</p>
+                            </button>
+                            <button class="theme-card" type="button" data-theme="dark" role="listitem">
+                                <h4>Dark / Night</h4>
+                                <p>Alacsony fény, fókuszált tanulás.</p>
+                            </button>
+                            <button class="theme-card" type="button" data-theme="custom" role="listitem">
+                                <h4>Egyéni</h4>
+                                <p>Saját színbeállításokkal.</p>
+                            </button>
+                        </div>
+
+                        <div class="settings-group">
+                            <h4>Egyéni színek</h4>
+                            <div class="settings-field">
+                                <label for="setting-sidebar-bg">Oldalsáv háttér</label>
+                                <input type="color" id="setting-sidebar-bg" value="#1e2124">
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-content-bg">Tartalom háttér</label>
+                                <input type="color" id="setting-content-bg" value="#f6f7fb">
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-button-bg">Primary gomb</label>
+                                <input type="color" id="setting-button-bg" value="#5865f2">
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-button-text">Primary szöveg</label>
+                                <input type="color" id="setting-button-text" value="#ffffff">
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-link-color">Link szín</label>
+                                <input type="color" id="setting-link-color" value="#b9bbbe">
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-content-overlay">Tartalom overlay</label>
+                                <input type="text" id="setting-content-overlay" value="rgba(255, 255, 255, 0.8)" placeholder="rgba(255, 255, 255, 0.8)">
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-content-overlay-alpha">H&aacute;tt&eacute;r overlay er&#337;ss&eacute;g</label>
+                                <div class="settings-range">
+                                    <input type="range" id="setting-content-overlay-alpha" min="0.35" max="0.9" step="0.05" value="0.8">
+                                    <span class="range-value" id="setting-content-overlay-alpha-value">0.80</span>
+                                </div>
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-module-opacity">Tananyag panel áttetszőség</label>
+                                <div class="settings-range">
+                                    <input type="range" id="setting-module-opacity" min="0" max="1" step="0.05" value="1">
+                                    <span class="range-value" id="setting-module-opacity-value">1.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h4>Avatar</h4>
+                            <div class="settings-field">
+                                <label for="setting-avatar-file">Avatar feltöltése</label>
+                                <input type="file" id="setting-avatar-file" accept="image/*">
+                            </div>
+                            <div class="avatar-preview" id="setting-avatar-preview">Nincs avatar</div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h4>Háttérkép</h4>
+                            <div class="settings-field">
+                                <label for="setting-bg-file">Saját háttérkép feltöltése</label>
+                                <input type="file" id="setting-bg-file" accept="image/*">
+                            </div>
+                            <div class="bg-preview" id="setting-bg-preview">Nincs kép kiválasztva</div>
+                            <p class="settings-hint">A háttér mindig kap egy minimális overlayt az olvashatóságért.</p>
+                        </div>
+                    </section>
+
+                    <section class="settings-section" data-section="ui">
+                        <h3>UI &amp; Hozzáférhetőség</h3>
+                        <div class="settings-group">
+                            <div class="settings-field">
+                                <label for="setting-font-scale">Betűméret</label>
+                                <select id="setting-font-scale">
+                                    <option value="100">Normál</option>
+                                    <option value="110">Nagyobb</option>
+                                    <option value="120">Nagyon nagy</option>
+                                </select>
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-reduce-motion">Animációk csökkentése</label>
+                                <input type="checkbox" id="setting-reduce-motion">
+                            </div>
+                        </div>
+                        <p class="settings-hint">A változások mentés után érvényesülnek.</p>
+                    </section>
+
+                    <section class="settings-section" data-section="sound">
+                        <h3>Hang &amp; Visszajelzés</h3>
+                        <p class="settings-hint">Hamarosan elérhető.</p>
+                    </section>
+
+                    <section class="settings-section" data-section="gameplay">
+                        <h3>Játékélmény &amp; Segítség</h3>
+                        <p class="settings-hint">Hamarosan elérhető.</p>
+                    </section>
+                </div>
+            </div>
+            <div class="settings-footer">
+                <button class="settings-btn secondary" id="settings-cancel" type="button">Mégse</button>
+                <button class="settings-btn primary" id="settings-save" type="button">Mentés</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -495,32 +666,1039 @@
         const tooltip = document.getElementById('sidebarTooltip');
         const resultsBtn = document.getElementById('results-btn');
         const xpLevelLabel = document.getElementById('xp-level-label');
+        const xpLevelName = document.getElementById('xp-level-name');
         const xpTotalLabel = document.getElementById('xp-total-label');
+        const xpBar = document.getElementById('xp-bar');
         const xpBarFill = document.getElementById('xp-bar-fill');
         const xpProgressText = document.getElementById('xp-progress-text');
+        const playerAvatar = document.getElementById('player-avatar');
+        const questToggle = document.getElementById('quest-toggle');
+        const moduleBanner = document.getElementById('module-banner');
+        const moduleTitleText = document.getElementById('module-title-text');
+        const moduleSubtitle = document.getElementById('module-subtitle');
+        const questAcceptBtn = document.getElementById('quest-accept-btn');
+        const moduleLock = document.getElementById('module-lock');
+        const settingsFab = document.getElementById('settings-fab');
+        const settingsOverlay = document.getElementById('settings-overlay');
+        const settingsPanel = document.getElementById('settings-panel');
+        const settingsClose = document.getElementById('settings-close');
+        const settingsCancel = document.getElementById('settings-cancel');
+        const settingsSave = document.getElementById('settings-save');
+        const settingsTabs = document.querySelectorAll('.settings-tab');
+        const settingsSections = document.querySelectorAll('.settings-section');
+        const themeCards = document.querySelectorAll('.theme-card');
+        const settingSidebarBg = document.getElementById('setting-sidebar-bg');
+        const settingContentBg = document.getElementById('setting-content-bg');
+        const settingButtonBg = document.getElementById('setting-button-bg');
+        const settingButtonText = document.getElementById('setting-button-text');
+        const settingLinkColor = document.getElementById('setting-link-color');
+        const settingContentOverlay = document.getElementById('setting-content-overlay');
+        const settingContentOverlayAlpha = document.getElementById('setting-content-overlay-alpha');
+        const settingContentOverlayAlphaValue = document.getElementById('setting-content-overlay-alpha-value');
+        const settingModuleOpacity = document.getElementById('setting-module-opacity');
+        const settingModuleOpacityValue = document.getElementById('setting-module-opacity-value');
+        const settingAvatarFile = document.getElementById('setting-avatar-file');
+        const settingAvatarPreview = document.getElementById('setting-avatar-preview');
+        const settingBgFile = document.getElementById('setting-bg-file');
+        const settingBgPreview = document.getElementById('setting-bg-preview');
+        const settingFontScale = document.getElementById('setting-font-scale');
+        const settingReduceMotion = document.getElementById('setting-reduce-motion');
+        const QUEST_STORAGE_KEY = 'matek-mester-quests-v1';
+        const QUEST_STATUS = {
+            NOT_ACCEPTED: 'NOT_ACCEPTED',
+            ACTIVE: 'ACTIVE',
+            COMPLETED: 'COMPLETED'
+        };
+        const QUEST_STATUS_ORDER = {
+            NOT_ACCEPTED: 0,
+            ACTIVE: 1,
+            COMPLETED: 2
+        };
+        const QUEST_EXCLUDED_TOPICS = new Set(['settings', 'xp_guide']);
+        const SHEET_BANNER_MAP = {
+            'modules/character_sheet.html': {
+                title: 'Karakterlap',
+                subtitle: 'Rövid áttekintés a szintedről, küldetésekről és eredményekről.'
+            },
+            'modules/results.html': {
+                title: 'Eredményeim',
+                subtitle: ''
+            }
+        };
+        const moduleSheetSubtitles = {};
+        const SETTINGS_MIN_OVERLAY_ALPHA = 0.35;
+        const SETTINGS_MAX_OVERLAY_ALPHA = 0.9;
+        const THEME_TOKENS = {
+            pergamen: {
+                themeId: 'pergamen',
+                sidebarBg: '#2f2a24',
+                contentBg: '#f6f1e7',
+                buttonBg: '#9b6b3d',
+                buttonText: '#ffffff',
+                linkColor: '#d9c4a4',
+                contentOverlay: 'rgba(248, 242, 228, 0.75)',
+                headerBg: '#2a251f',
+                headerBorder: '#4a3c2a',
+                xpBarBg: '#1d1a17',
+                xpBarFill: 'linear-gradient(90deg, #c88d4a, #f2c37c)',
+                xpBarTick: 'rgba(255, 255, 255, 0.12)',
+                buffBg: '#4a3c2a',
+                buffBorder: 'rgba(255, 255, 255, 0.2)',
+                avatarBg: '#5b4632',
+                titleColor: '#f6f1e7'
+            },
+            galaxis: {
+                themeId: 'galaxis',
+                sidebarBg: '#141525',
+                contentBg: '#f5f7fb',
+                buttonBg: '#4f46e5',
+                buttonText: '#ffffff',
+                linkColor: '#9ea7ff',
+                contentOverlay: 'rgba(18, 20, 38, 0.7)',
+                headerBg: '#111326',
+                headerBorder: '#262a4d',
+                xpBarBg: '#0d0f1f',
+                xpBarFill: 'linear-gradient(90deg, #5b5cff, #9f7bff)',
+                xpBarTick: 'rgba(255, 255, 255, 0.1)',
+                buffBg: '#232548',
+                buffBorder: 'rgba(255, 255, 255, 0.2)',
+                avatarBg: '#2a2e5b',
+                titleColor: '#f3f4ff'
+            },
+            futurisztikus: {
+                themeId: 'futurisztikus',
+                sidebarBg: '#1a1f26',
+                contentBg: '#f4f7fb',
+                buttonBg: '#19c37d',
+                buttonText: '#0b1016',
+                linkColor: '#7bdac0',
+                contentOverlay: 'rgba(235, 240, 244, 0.75)',
+                headerBg: '#12161b',
+                headerBorder: '#2b333d',
+                xpBarBg: '#0f1419',
+                xpBarFill: 'linear-gradient(90deg, #19c37d, #4fd5ff)',
+                xpBarTick: 'rgba(255, 255, 255, 0.12)',
+                buffBg: '#24303a',
+                buffBorder: 'rgba(255, 255, 255, 0.18)',
+                avatarBg: '#2c3944',
+                titleColor: '#e6f6f2'
+            },
+            dark: {
+                themeId: 'dark',
+                sidebarBg: '#1e2124',
+                contentBg: '#f5f7fb',
+                buttonBg: '#5865f2',
+                buttonText: '#ffffff',
+                linkColor: '#b9bbbe',
+                contentOverlay: 'rgba(15, 18, 22, 0.7)',
+                headerBg: '#181b1f',
+                headerBorder: '#2a2e34',
+                xpBarBg: '#101215',
+                xpBarFill: 'linear-gradient(90deg, #7c5cff, #a855f7)',
+                xpBarTick: 'rgba(255, 255, 255, 0.08)',
+                buffBg: '#2a2e34',
+                buffBorder: 'rgba(255, 255, 255, 0.12)',
+                avatarBg: '#3b4047',
+                titleColor: '#f5f6f7'
+            }
+        };
         let progressData = {};
+        let questState = loadQuestState();
+        let currentTopicId = null;
+        let lockedTopicId = null;
+        let lockedModuleSrc = null;
+        let sheetBannerActive = false;
+        let activeSettings = null;
+        let draftSettings = null;
+        let lastFocusedElement = null;
 
         function setActiveLink(activeLink) { allLinks.forEach(l => l.classList.remove('active')); if(activeLink) { activeLink.classList.add('active'); } }
 
-        resultsBtn.addEventListener('click', (event) => { event.preventDefault(); setActiveLink(resultsBtn); iframe.src = 'modules/results.html'; });
+        function getDefaultSettings() {
+            return {
+                ...THEME_TOKENS.dark,
+                themeId: 'dark',
+                contentBgImage: 'none',
+                avatarImage: '',
+                moduleCardOpacity: 1,
+                reduceMotion: false,
+                fontScale: 100
+            };
+        }
+        function clampOverlayAlpha(value) {
+            if (!Number.isFinite(value)) return SETTINGS_MIN_OVERLAY_ALPHA;
+            return Math.min(SETTINGS_MAX_OVERLAY_ALPHA, Math.max(SETTINGS_MIN_OVERLAY_ALPHA, value));
+        }
+
+        function parseOverlayColor(value) {
+            const fallback = { r: 15, g: 18, b: 22, a: SETTINGS_MIN_OVERLAY_ALPHA };
+            if (!value || typeof value !== 'string') return fallback;
+            const trimmed = value.trim();
+            const rgbaMatch = trimmed.match(/^rgba?\(([^)]+)\)$/i);
+            if (rgbaMatch) {
+                const parts = rgbaMatch[1].split(',').map(part => part.trim());
+                const r = Number(parts[0]);
+                const g = Number(parts[1]);
+                const b = Number(parts[2]);
+                if ([r, g, b].some(Number.isNaN)) return fallback;
+                const alpha = parts.length > 3 ? Number(parts[3]) : SETTINGS_MIN_OVERLAY_ALPHA;
+                return { r, g, b, a: Number.isNaN(alpha) ? SETTINGS_MIN_OVERLAY_ALPHA : alpha };
+            }
+            const hexMatch = trimmed.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+            if (hexMatch) {
+                const hex = hexMatch[1];
+                const full = hex.length === 3 ? hex.split('').map(ch => ch + ch).join('') : hex;
+                const r = parseInt(full.slice(0, 2), 16);
+                const g = parseInt(full.slice(2, 4), 16);
+                const b = parseInt(full.slice(4, 6), 16);
+                return { r, g, b, a: SETTINGS_MIN_OVERLAY_ALPHA };
+            }
+            return fallback;
+        }
+
+        function formatOverlayColor(color) {
+            return `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+        }
+
+        function normalizeOverlayColor(value) {
+            const parsed = parseOverlayColor(value);
+            return formatOverlayColor({ ...parsed, a: clampOverlayAlpha(parsed.a) });
+        }
+
+        function getOverlayAlpha(value) {
+            const parsed = parseOverlayColor(value);
+            return clampOverlayAlpha(parsed.a);
+        }
+
+        function applyOverlayAlpha(value, alpha) {
+            const parsed = parseOverlayColor(value);
+            return formatOverlayColor({ ...parsed, a: clampOverlayAlpha(alpha) });
+        }
+        function parseHexColor(hex) {
+            const match = (hex || '').trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+            if (!match) return null;
+            const raw = match[1];
+            const full = raw.length === 3 ? raw.split('').map(ch => ch + ch).join('') : raw;
+            return {
+                r: parseInt(full.slice(0, 2), 16),
+                g: parseInt(full.slice(2, 4), 16),
+                b: parseInt(full.slice(4, 6), 16)
+            };
+        }
+
+        function parseRgbColor(value) {
+            const match = (value || '').trim().match(/^rgba?\(([^)]+)\)$/i);
+            if (!match) return null;
+            const parts = match[1].split(',').map(part => part.trim());
+            if (parts.length < 3) return null;
+            const r = Number(parts[0]);
+            const g = Number(parts[1]);
+            const b = Number(parts[2]);
+            if ([r, g, b].some(Number.isNaN)) return null;
+            return { r, g, b };
+        }
+
+        function isDarkColor(value) {
+            const rgb = parseHexColor(value) || parseRgbColor(value);
+            if (!rgb) return false;
+            const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+            return luminance < 0.5;
+        }
+
+        function rgbaFromHex(hex, alpha) {
+            const rgb = parseHexColor(hex);
+            if (!rgb) return '';
+            return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+        }
+
+        function lightenHexColor(hex, amount) {
+            const rgb = parseHexColor(hex);
+            if (!rgb) return '';
+            const r = Math.round(rgb.r + (255 - rgb.r) * amount);
+            const g = Math.round(rgb.g + (255 - rgb.g) * amount);
+            const b = Math.round(rgb.b + (255 - rgb.b) * amount);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function buildModuleThemeTokens(settings) {
+            const contentBg = settings.contentBg || '#f5f7fb';
+            const dark = isDarkColor(contentBg);
+            const primary = settings.buttonBg || '#5865f2';
+            const secondary = settings.linkColor || '#b9bbbe';
+            const brandBackground = rgbaFromHex(primary, 0.22);
+            const brandLight = lightenHexColor(primary, 0.4) || secondary;
+            const cardBase = dark ? '20, 24, 30' : '255, 255, 255';
+            return {
+                '--brand-primary': primary,
+                '--brand-secondary': secondary,
+                '--brand-light': brandLight,
+                '--brand-background': brandBackground || '',
+                '--bg-main': contentBg,
+                '--bg-card': `rgba(${cardBase}, ${settings.moduleCardOpacity})`,
+                '--border-color': dark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(15, 23, 42, 0.1)',
+                '--text-dark': dark ? '#f3f4f6' : '#2c3333',
+                '--text-light': dark ? '#d1d5db' : '#393e46'
+            };
+        }
+
+        function normalizeSettings(settings) {
+            const base = getDefaultSettings();
+            const merged = { ...base, ...(settings || {}) };
+            merged.contentBgImage = merged.contentBgImage || 'none';
+            merged.avatarImage = merged.avatarImage || '';
+            merged.contentOverlay = normalizeOverlayColor(merged.contentOverlay);
+            const opacityValue = Number(merged.moduleCardOpacity);
+            merged.moduleCardOpacity = Number.isFinite(opacityValue)
+                ? Math.min(1, Math.max(0, opacityValue))
+                : 1;
+            return merged;
+        }
+
+        function applySettings(settings) {
+            const normalized = normalizeSettings(settings);
+            const root = document.documentElement;
+            root.style.setProperty('--sidebar-bg', normalized.sidebarBg);
+            root.style.setProperty('--content-bg', normalized.contentBg);
+            root.style.setProperty('--content-bg-image', normalized.contentBgImage);
+            root.style.setProperty('--button-bg', normalized.buttonBg);
+            root.style.setProperty('--button-text', normalized.buttonText);
+            root.style.setProperty('--link-color', normalized.linkColor);
+            root.style.setProperty('--content-overlay', normalized.contentOverlay);
+            root.style.setProperty('--module-card-opacity', normalized.moduleCardOpacity);
+            if (normalized.headerBg) root.style.setProperty('--header-bg', normalized.headerBg);
+            if (normalized.headerBorder) root.style.setProperty('--header-border', normalized.headerBorder);
+            if (normalized.xpBarBg) root.style.setProperty('--xp-bar-bg', normalized.xpBarBg);
+            if (normalized.xpBarFill) root.style.setProperty('--xp-bar-fill', normalized.xpBarFill);
+            if (normalized.xpBarTick) root.style.setProperty('--xp-bar-tick', normalized.xpBarTick);
+            if (normalized.buffBg) root.style.setProperty('--buff-bg', normalized.buffBg);
+            if (normalized.buffBorder) root.style.setProperty('--buff-border', normalized.buffBorder);
+            if (normalized.avatarBg) root.style.setProperty('--avatar-bg', normalized.avatarBg);
+            if (normalized.titleColor) root.style.setProperty('--title-color', normalized.titleColor);
+            if (normalized.avatarImage) {
+                root.style.setProperty('--avatar-image', normalized.avatarImage);
+            } else {
+                root.style.removeProperty('--avatar-image');
+            }
+            const content = document.querySelector('.content');
+            if (content) {
+                content.style.backgroundColor = normalized.contentBg;
+                content.style.backgroundImage = normalized.contentBgImage;
+                content.style.backgroundSize = 'cover';
+                content.style.backgroundPosition = 'center';
+            }
+            root.style.fontSize = normalized.fontScale ? `${normalized.fontScale}%` : '';
+            document.body.classList.toggle('reduce-motion', Boolean(normalized.reduceMotion));
+            applySettingsToIframe(normalized);
+        }
+
+        function applySettingsToIframe(settings) {
+            if (!iframe || !iframe.contentDocument) return;
+            const normalized = normalizeSettings(settings);
+            const doc = iframe.contentDocument;
+            const root = doc.documentElement;
+            root.style.setProperty('--module-card-opacity', normalized.moduleCardOpacity);
+            root.style.setProperty('--content-bg', normalized.contentBg);
+            root.style.setProperty('--content-bg-image', normalized.contentBgImage);
+            root.style.setProperty('--content-overlay', normalized.contentOverlay);
+            root.style.setProperty('--button-bg', normalized.buttonBg);
+            root.style.setProperty('--button-text', normalized.buttonText);
+            root.style.setProperty('--link-color', normalized.linkColor);
+            root.style.setProperty('--accent-color', normalized.buttonBg);
+            root.style.backgroundColor = 'transparent';
+            root.style.backgroundImage = 'none';
+            root.style.fontSize = normalized.fontScale ? `${normalized.fontScale}%` : '';
+            const moduleTokens = buildModuleThemeTokens(normalized);
+            Object.entries(moduleTokens).forEach(([key, value]) => {
+                if (value) {
+                    root.style.setProperty(key, value);
+                }
+            });
+            if (doc.body) {
+                doc.body.style.backgroundColor = 'transparent';
+                doc.body.style.backgroundImage = 'none';
+                doc.body.classList.toggle('reduce-motion', Boolean(normalized.reduceMotion));
+            }
+        }
+
+        function broadcastSettings(settings) {
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ type: 'apply-settings', settings }, '*');
+            }
+        }
+
+        function setActiveSettings(settings) {
+            activeSettings = normalizeSettings(settings);
+            draftSettings = { ...activeSettings };
+            applySettings(activeSettings);
+            broadcastSettings(activeSettings);
+        }
+
+        function setThemeSelection(themeId) {
+            themeCards.forEach(card => {
+                card.classList.toggle('selected', card.dataset.theme === themeId);
+            });
+        }
+
+        function syncSettingsUI(settings) {
+            if (!settings) return;
+            setThemeSelection(settings.themeId || 'custom');
+            if (settingSidebarBg) settingSidebarBg.value = settings.sidebarBg;
+            if (settingContentBg) settingContentBg.value = settings.contentBg;
+            if (settingButtonBg) settingButtonBg.value = settings.buttonBg;
+            if (settingButtonText) settingButtonText.value = settings.buttonText;
+            if (settingLinkColor) settingLinkColor.value = settings.linkColor;
+            if (settingContentOverlay) settingContentOverlay.value = settings.contentOverlay;
+            const overlayAlpha = getOverlayAlpha(settings.contentOverlay);
+            if (settingContentOverlayAlpha) settingContentOverlayAlpha.value = String(overlayAlpha);
+            if (settingContentOverlayAlphaValue) settingContentOverlayAlphaValue.textContent = overlayAlpha.toFixed(2);
+            if (settingModuleOpacity) settingModuleOpacity.value = String(settings.moduleCardOpacity ?? 1);
+            if (settingModuleOpacityValue) {
+                settingModuleOpacityValue.textContent = Number(settings.moduleCardOpacity ?? 1).toFixed(2);
+            }
+            if (settingFontScale) settingFontScale.value = String(settings.fontScale || 100);
+            if (settingReduceMotion) settingReduceMotion.checked = Boolean(settings.reduceMotion);
+            if (settingAvatarPreview) {
+                if (settings.avatarImage) {
+                    settingAvatarPreview.style.backgroundImage = settings.avatarImage;
+                    settingAvatarPreview.textContent = '';
+                } else {
+                    settingAvatarPreview.style.backgroundImage = 'none';
+                    settingAvatarPreview.textContent = 'Nincs avatar';
+                }
+            }
+            if (settingBgPreview) {
+                if (settings.contentBgImage && settings.contentBgImage !== 'none') {
+                    settingBgPreview.style.backgroundImage = settings.contentBgImage;
+                    settingBgPreview.textContent = '';
+                } else {
+                    settingBgPreview.style.backgroundImage = 'none';
+                    settingBgPreview.textContent = 'Nincs kép kiválasztva';
+                }
+            }
+        }
+
+        function updateSettingsDraft(next) {
+            const base = draftSettings || activeSettings || getDefaultSettings();
+            draftSettings = normalizeSettings({ ...base, ...next });
+            applySettings(draftSettings);
+        }
+
+        function openSettingsOverlay() {
+            if (!settingsOverlay) return;
+            lastFocusedElement = document.activeElement;
+            if (!draftSettings) {
+                draftSettings = { ...(activeSettings || getDefaultSettings()) };
+            }
+            syncSettingsUI(draftSettings);
+            settingsOverlay.classList.remove('is-hidden');
+            settingsOverlay.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('settings-open');
+            const focusTarget = settingsTabs && settingsTabs.length ? settingsTabs[0] : settingsClose;
+            if (focusTarget) {
+                focusTarget.focus();
+            }
+        }
+
+        function closeSettingsOverlay(resetDraft = true) {
+            if (!settingsOverlay) return;
+            settingsOverlay.classList.add('is-hidden');
+            settingsOverlay.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('settings-open');
+            if (resetDraft && activeSettings) {
+                draftSettings = { ...activeSettings };
+                applySettings(activeSettings);
+                broadcastSettings(activeSettings);
+            }
+            if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+                lastFocusedElement.focus();
+            }
+        }
+
+        function openCharacterSheet() {
+            setActiveLink(null);
+            updateModuleBanner(null);
+            unlockModule();
+            if (iframe) {
+                iframe.src = 'modules/character_sheet.html';
+            }
+        }
+        function loadQuestState() {
+            try {
+                const raw = localStorage.getItem(QUEST_STORAGE_KEY);
+                if (!raw) {
+                    return { version: 1, topics: {} };
+                }
+                const parsed = JSON.parse(raw);
+                if (!parsed || typeof parsed !== 'object') {
+                    return { version: 1, topics: {} };
+                }
+                if (!parsed.topics || typeof parsed.topics !== 'object') {
+                    parsed.topics = {};
+                }
+                return parsed;
+            } catch (error) {
+                return { version: 1, topics: {} };
+            }
+        }
+
+        function saveQuestState() {
+            try {
+                localStorage.setItem(QUEST_STORAGE_KEY, JSON.stringify(questState));
+            } catch (error) {
+                console.error('Nem sikerult a quest allapot mentese:', error);
+            }
+            if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+                try {
+                    window.electronAPI.saveQuestState(questState);
+                } catch (error) {
+                    console.error('Nem sikerult a quest allapot szinkron:', error);
+                }
+            }
+        }
+
+        function isQuestableTopic(topicId) {
+            return Boolean(topicId && !QUEST_EXCLUDED_TOPICS.has(topicId));
+        }
+
+        function getQuestStatus(topicId) {
+            const status = questState && questState.topics ? questState.topics[topicId] : null;
+            if (status === QUEST_STATUS.ACTIVE || status === QUEST_STATUS.COMPLETED || status === QUEST_STATUS.NOT_ACCEPTED) {
+                return status;
+            }
+            return QUEST_STATUS.NOT_ACCEPTED;
+        }
+
+        function setQuestStatus(topicId, nextStatus) {
+            if (!isQuestableTopic(topicId)) return;
+            const current = getQuestStatus(topicId);
+            if (QUEST_STATUS_ORDER[nextStatus] < QUEST_STATUS_ORDER[current]) return;
+            if (current === nextStatus) return;
+            questState.topics[topicId] = nextStatus;
+            saveQuestState();
+            const link = document.querySelector(`[data-topic-id="${topicId}"]`);
+            if (link) {
+                applyQuestStatusToLink(link);
+            }
+            if (currentTopicId === topicId) {
+                updateModuleBanner(link);
+            }
+            maybeUnlockContent(topicId);
+        }
+
+        function applyQuestStatusToLink(link) {
+            const topicId = link.getAttribute('data-topic-id');
+            const statusCircle = topicId
+                ? document.querySelector(`.status[data-grade-for="${topicId}"]`)
+                : null;
+            if (!isQuestableTopic(topicId)) {
+                link.removeAttribute('data-quest-status');
+                if (statusCircle) {
+                    statusCircle.removeAttribute('data-quest-status');
+                }
+                return;
+            }
+            const status = getQuestStatus(topicId);
+            link.setAttribute('data-quest-status', status);
+            if (statusCircle) {
+                statusCircle.setAttribute('data-quest-status', status);
+            }
+        }
+
+        function ensureQuestDefaults() {
+            if (!questState || typeof questState !== 'object') {
+                questState = { version: 1, topics: {} };
+            }
+            if (!questState.topics || typeof questState.topics !== 'object') {
+                questState.topics = {};
+            }
+            contentLinks.forEach(link => {
+                const topicId = link.getAttribute('data-topic-id');
+                if (!isQuestableTopic(topicId)) return;
+                if (!questState.topics[topicId]) {
+                    questState.topics[topicId] = QUEST_STATUS.NOT_ACCEPTED;
+                }
+                applyQuestStatusToLink(link);
+            });
+            saveQuestState();
+        }
+
+        function getLinkLabel(link) {
+            const textNode = Array.from(link.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.nodeValue.trim());
+            if (textNode) {
+                return textNode.nodeValue.trim();
+            }
+            return link.textContent.trim();
+        }
+
+        function setModuleBannerText(title, subtitle) {
+            if (!moduleTitleText) return;
+            moduleTitleText.textContent = title || '';
+            if (moduleSubtitle) {
+                if (subtitle) {
+                    moduleSubtitle.textContent = subtitle;
+                    moduleSubtitle.hidden = false;
+                } else {
+                    moduleSubtitle.textContent = '';
+                    moduleSubtitle.hidden = true;
+                }
+            }
+        }
+
+        function clearSheetBanner() {
+            sheetBannerActive = false;
+            if (moduleBanner) {
+                moduleBanner.classList.remove('sheet-banner');
+            }
+            setModuleBannerText('', '');
+        }
+
+        function showSheetBanner(title, subtitle) {
+            if (!moduleBanner || !moduleTitleText || !questAcceptBtn) return;
+            setModuleBannerText(title, subtitle);
+            moduleBanner.hidden = false;
+            moduleBanner.classList.add('sheet-banner');
+            questAcceptBtn.hidden = true;
+            questAcceptBtn.disabled = true;
+            sheetBannerActive = true;
+        }
+
+        function getSheetBannerFromSrc(src) {
+            const normalized = src || '';
+            if (SHEET_BANNER_MAP[normalized]) {
+                return SHEET_BANNER_MAP[normalized];
+            }
+            const match = Object.keys(SHEET_BANNER_MAP).find((key) => normalized.endsWith(key));
+            return match ? SHEET_BANNER_MAP[match] : null;
+        }
+
+        function syncSheetHeaderInBanner() {
+            if (!iframe || currentTopicId) return;
+            const src = iframe.getAttribute('src') || iframe.src || '';
+            const banner = getSheetBannerFromSrc(src);
+            if (banner) {
+                showSheetBanner(banner.title, banner.subtitle);
+                return;
+            }
+            if (sheetBannerActive && moduleBanner) {
+                moduleBanner.hidden = true;
+                clearSheetBanner();
+            }
+        }
+
+        function updateModuleBanner(link) {
+            if (!moduleBanner || !moduleTitleText || !questAcceptBtn) return;
+            clearSheetBanner();
+            if (!link) {
+                moduleBanner.hidden = true;
+                currentTopicId = null;
+                return;
+            }
+            const topicId = link.getAttribute('data-topic-id');
+            if (!isQuestableTopic(topicId)) {
+                moduleBanner.hidden = true;
+                currentTopicId = null;
+                return;
+            }
+            currentTopicId = topicId;
+            const sheetSubtitle = moduleSheetSubtitles[topicId] || '';
+            setModuleBannerText(getLinkLabel(link), sheetSubtitle);
+            moduleBanner.hidden = false;
+            const status = getQuestStatus(topicId);
+            questAcceptBtn.hidden = status !== QUEST_STATUS.NOT_ACCEPTED;
+            questAcceptBtn.disabled = status !== QUEST_STATUS.NOT_ACCEPTED;
+        }
+
+        function lockModule(link) {
+            if (!moduleLock || !iframe) return;
+            lockedTopicId = link.getAttribute('data-topic-id');
+            lockedModuleSrc = link.getAttribute('data-src');
+            moduleLock.classList.remove('is-hidden');
+            iframe.classList.add('is-hidden');
+        }
+
+        function unlockModule(loadLocked = false) {
+            if (!moduleLock || !iframe) return;
+            moduleLock.classList.add('is-hidden');
+            iframe.classList.remove('is-hidden');
+            if (loadLocked && lockedTopicId === currentTopicId && lockedModuleSrc) {
+                iframe.src = lockedModuleSrc;
+            }
+            lockedTopicId = null;
+            lockedModuleSrc = null;
+        }
+
+        function maybeUnlockContent(topicId) {
+            if (!topicId) return;
+            const status = getQuestStatus(topicId);
+            if (status === QUEST_STATUS.NOT_ACCEPTED) return;
+            if (currentTopicId === topicId) {
+                unlockModule(true);
+            }
+        }
+
+        function normalizeDifficultyKey(key) {
+            if (!key) return '';
+            return key.toString().toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z]/g, '');
+        }
+
+        function getGradeValue(value) {
+            if (typeof value === 'number') return value;
+            if (value && typeof value.grade === 'number') return value.grade;
+            return null;
+        }
+
+        function getTopicGradeSummary(topicData) {
+            const normalized = {};
+            let hasAnyGrade = false;
+            Object.entries(topicData || {}).forEach(([difficulty, value]) => {
+                const grade = getGradeValue(value);
+                if (grade === null) return;
+                if (grade > 0) {
+                    hasAnyGrade = true;
+                }
+                const key = normalizeDifficultyKey(difficulty);
+                if (!key) return;
+                if (normalized[key] === undefined || grade > normalized[key]) {
+                    normalized[key] = grade;
+                }
+            });
+            return { normalized, hasAnyGrade };
+        }
+
+        function isTopicCompleted(topicId) {
+            const topicData = progressData[topicId];
+            if (!topicData) return false;
+            const { normalized } = getTopicGradeSummary(topicData);
+            const difficultyKeys = ['konnyu', 'kozepes', 'nehez'];
+            const hasDifficultyGrades = difficultyKeys.some(key => normalized[key] !== undefined);
+            if (hasDifficultyGrades) {
+                return difficultyKeys.every(key => (normalized[key] || 0) >= 5);
+            }
+            return Object.values(normalized).some(grade => grade >= 5);
+        }
+
+        function syncQuestStatusFromProgress(topicId) {
+            if (!isQuestableTopic(topicId)) return;
+            const topicData = progressData[topicId];
+            if (!topicData) return;
+            const summary = getTopicGradeSummary(topicData);
+            if (!summary.hasAnyGrade) return;
+            if (getQuestStatus(topicId) === QUEST_STATUS.NOT_ACCEPTED) {
+                setQuestStatus(topicId, QUEST_STATUS.ACTIVE);
+            }
+            if (isTopicCompleted(topicId)) {
+                setQuestStatus(topicId, QUEST_STATUS.COMPLETED);
+            }
+        }
+
+        function syncQuestStatusesFromProgress() {
+            Object.keys(progressData || {}).forEach(topicId => {
+                syncQuestStatusFromProgress(topicId);
+            });
+        }
+
+        function countQuestTopics(state) {
+            if (!state || !state.topics) return 0;
+            return Object.keys(state.topics).length;
+        }
+
+        function syncQuestStateFromSummary(summaryQuests) {
+            if (!summaryQuests || typeof summaryQuests !== 'object') {
+                ensureQuestDefaults();
+                return;
+            }
+            const incoming = {
+                version: Number(summaryQuests.version) || 1,
+                topics: (summaryQuests.topics && typeof summaryQuests.topics === 'object') ? summaryQuests.topics : {}
+            };
+            const incomingCount = countQuestTopics(incoming);
+            const localCount = countQuestTopics(questState);
+            if (incomingCount > 0 || localCount === 0) {
+                questState = incoming;
+                ensureQuestDefaults();
+                maybeUnlockContent(currentTopicId);
+                return;
+            }
+            ensureQuestDefaults();
+        }
+
+        ensureQuestDefaults();
+        if (moduleBanner) {
+            moduleBanner.hidden = true;
+        }
+        if (questAcceptBtn) {
+            questAcceptBtn.hidden = true;
+            questAcceptBtn.disabled = true;
+        }
+        if (moduleLock) {
+            moduleLock.classList.add('is-hidden');
+        }
+        if (iframe) {
+            iframe.classList.remove('is-hidden');
+            iframe.addEventListener('load', () => {
+                syncSheetHeaderInBanner();
+                applySettingsToIframe(activeSettings || getDefaultSettings());
+            });
+        }
+
+        if (questToggle) {
+            questToggle.addEventListener('click', () => {
+                const isCollapsed = document.body.classList.toggle('quest-collapsed');
+                questToggle.setAttribute('aria-expanded', String(!isCollapsed));
+            });
+        }
+
+        if (settingsTabs && settingsTabs.length) {
+            settingsTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.dataset.section;
+                    settingsTabs.forEach(btn => btn.classList.toggle('is-active', btn === tab));
+                    settingsSections.forEach(section => {
+                        section.classList.toggle('is-active', section.dataset.section === target);
+                    });
+                });
+            });
+        }
+
+        if (themeCards && themeCards.length) {
+            themeCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const themeId = card.dataset.theme;
+                    if (!themeId) return;
+                    if (themeId === 'custom') {
+                        setThemeSelection('custom');
+                        updateSettingsDraft({ themeId: 'custom' });
+                        return;
+                    }
+                    const theme = THEME_TOKENS[themeId];
+                    if (!theme) return;
+                    const preservedImage = draftSettings ? draftSettings.contentBgImage : 'none';
+                    const preservedAvatar = draftSettings ? draftSettings.avatarImage : '';
+                    updateSettingsDraft({ ...theme, themeId, contentBgImage: preservedImage, avatarImage: preservedAvatar });
+                    syncSettingsUI(draftSettings);
+                });
+            });
+        }
+
+        if (settingSidebarBg) {
+            settingSidebarBg.addEventListener('input', (event) => {
+                updateSettingsDraft({ sidebarBg: event.target.value, themeId: 'custom' });
+                setThemeSelection('custom');
+            });
+        }
+        if (settingContentBg) {
+            settingContentBg.addEventListener('input', (event) => {
+                updateSettingsDraft({ contentBg: event.target.value, themeId: 'custom' });
+                setThemeSelection('custom');
+            });
+        }
+        if (settingButtonBg) {
+            settingButtonBg.addEventListener('input', (event) => {
+                updateSettingsDraft({ buttonBg: event.target.value, themeId: 'custom' });
+                setThemeSelection('custom');
+            });
+        }
+        if (settingButtonText) {
+            settingButtonText.addEventListener('input', (event) => {
+                updateSettingsDraft({ buttonText: event.target.value, themeId: 'custom' });
+                setThemeSelection('custom');
+            });
+        }
+        if (settingLinkColor) {
+            settingLinkColor.addEventListener('input', (event) => {
+                updateSettingsDraft({ linkColor: event.target.value, themeId: 'custom' });
+                setThemeSelection('custom');
+            });
+        }
+        if (settingContentOverlay) {
+            settingContentOverlay.addEventListener('input', (event) => {
+                const value = event.target.value;
+                updateSettingsDraft({ contentOverlay: value, themeId: 'custom' });
+                setThemeSelection('custom');
+                const overlayAlpha = getOverlayAlpha(value);
+                if (settingContentOverlayAlpha) settingContentOverlayAlpha.value = String(overlayAlpha);
+                if (settingContentOverlayAlphaValue) settingContentOverlayAlphaValue.textContent = overlayAlpha.toFixed(2);
+            });
+        }
+        if (settingContentOverlayAlpha) {
+            settingContentOverlayAlpha.addEventListener('input', (event) => {
+                const rawValue = Number(event.target.value);
+                const safeAlpha = clampOverlayAlpha(Number.isFinite(rawValue) ? rawValue : SETTINGS_MIN_OVERLAY_ALPHA);
+                const baseSettings = draftSettings || activeSettings || getDefaultSettings();
+                const baseOverlay = (settingContentOverlay && settingContentOverlay.value)
+                    ? settingContentOverlay.value
+                    : baseSettings.contentOverlay;
+                const nextOverlay = applyOverlayAlpha(baseOverlay, safeAlpha);
+                if (settingContentOverlay) {
+                    settingContentOverlay.value = nextOverlay;
+                }
+                updateSettingsDraft({ contentOverlay: nextOverlay, themeId: 'custom' });
+                setThemeSelection('custom');
+                if (settingContentOverlayAlphaValue) {
+                    settingContentOverlayAlphaValue.textContent = safeAlpha.toFixed(2);
+                }
+            });
+        }
+        if (settingModuleOpacity) {
+            settingModuleOpacity.addEventListener('input', (event) => {
+                const value = Number(event.target.value);
+                updateSettingsDraft({ moduleCardOpacity: value, themeId: 'custom' });
+                setThemeSelection('custom');
+                if (settingModuleOpacityValue) {
+                    settingModuleOpacityValue.textContent = Number.isFinite(value) ? value.toFixed(2) : '1.00';
+                }
+            });
+        }
+        if (settingFontScale) {
+            settingFontScale.addEventListener('change', (event) => {
+                const value = Number(event.target.value || 100);
+                updateSettingsDraft({ fontScale: Number.isNaN(value) ? 100 : value });
+            });
+        }
+        if (settingReduceMotion) {
+            settingReduceMotion.addEventListener('change', (event) => {
+                updateSettingsDraft({ reduceMotion: Boolean(event.target.checked) });
+            });
+        }
+        if (settingBgFile) {
+            settingBgFile.addEventListener('change', (event) => {
+                const file = event.target.files && event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (loadEvent) => {
+                    const result = loadEvent.target && loadEvent.target.result;
+                    if (typeof result !== 'string') return;
+                    updateSettingsDraft({ contentBgImage: `url(${result})`, themeId: 'custom' });
+                    setThemeSelection('custom');
+                    syncSettingsUI(draftSettings);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        if (settingAvatarFile) {
+            settingAvatarFile.addEventListener('change', (event) => {
+                const file = event.target.files && event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (loadEvent) => {
+                    const result = loadEvent.target && loadEvent.target.result;
+                    if (typeof result !== 'string') return;
+                    updateSettingsDraft({ avatarImage: `url(${result})`, themeId: 'custom' });
+                    setThemeSelection('custom');
+                    syncSettingsUI(draftSettings);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        if (settingsFab) {
+            settingsFab.addEventListener('click', () => {
+                openSettingsOverlay();
+            });
+        }
+        if (settingsClose) {
+            settingsClose.addEventListener('click', () => {
+                closeSettingsOverlay(true);
+            });
+        }
+        if (settingsCancel) {
+            settingsCancel.addEventListener('click', () => {
+                closeSettingsOverlay(true);
+            });
+        }
+        if (settingsSave) {
+            settingsSave.addEventListener('click', async () => {
+                if (!draftSettings) return;
+                const normalized = normalizeSettings(draftSettings);
+                setActiveSettings(normalized);
+                if (window.electronAPI) {
+                    try {
+                        await window.electronAPI.saveSettings(normalized);
+                    } catch (error) {
+                        console.error('Nem sikerült a beállítások mentése:', error);
+                    }
+                }
+                closeSettingsOverlay(false);
+            });
+        }
+        if (settingsOverlay) {
+            settingsOverlay.addEventListener('click', (event) => {
+                if (event.target === settingsOverlay) {
+                    closeSettingsOverlay(true);
+                }
+            });
+        }
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && settingsOverlay && !settingsOverlay.classList.contains('is-hidden')) {
+                event.preventDefault();
+                closeSettingsOverlay(true);
+            }
+        });
+
+        if (playerAvatar) {
+            playerAvatar.addEventListener('click', () => {
+                openCharacterSheet();
+            });
+        }
+        if (xpLevelLabel) {
+            xpLevelLabel.addEventListener('click', () => {
+                openCharacterSheet();
+            });
+        }
+
+        if (questAcceptBtn) {
+            questAcceptBtn.addEventListener('click', () => {
+                if (!currentTopicId) return;
+                setQuestStatus(currentTopicId, QUEST_STATUS.ACTIVE);
+            });
+        }
+
+        resultsBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            setActiveLink(resultsBtn);
+            iframe.src = 'modules/results.html';
+            updateModuleBanner(null);
+            unlockModule();
+        });
 
         contentLinks.forEach(link => {
             link.addEventListener('click', (event) => {
                 event.preventDefault();
                 if (link.classList.contains('main-topic')) { event.stopPropagation(); }
+                const topicId = link.getAttribute('data-topic-id');
+                if (topicId === 'settings') {
+                    openSettingsOverlay();
+                    return;
+                }
                 setActiveLink(link);
+                updateModuleBanner(link);
+                if (isQuestableTopic(topicId) && getQuestStatus(topicId) === QUEST_STATUS.NOT_ACCEPTED) {
+                    lockModule(link);
+                    return;
+                }
+                unlockModule();
                 iframe.src = link.getAttribute('data-src');
             });
         });
 
         window.addEventListener('message', async (event) => {
             const data = event.data;
-            if (data.type === 'testResult' && data.result) {
-                if (window.electronAPI) { window.electronAPI.saveTestResult(data.result); }
-                const { topicId, difficulty, grade } = data.result;
-                if (!progressData[topicId]) { progressData[topicId] = {}; }
-                progressData[topicId][difficulty] = grade;
-                updateCircleColor(topicId);
+            if (data.type === 'testResult') {
+                const result = data.result || (data.topicId ? { ...data } : null);
+                if (!result) return;
+                if (result.type) delete result.type;
+                if (window.electronAPI) { window.electronAPI.saveTestResult(result); }
+                const topicId = result.topicId;
+                const difficultyKey = result.difficulty || 'teszt';
+                const gradeValue = Number(result.grade);
+                if (topicId && !Number.isNaN(gradeValue)) {
+                    if (!progressData[topicId]) { progressData[topicId] = {}; }
+                    progressData[topicId][difficultyKey] = gradeValue;
+                    updateCircleColor(topicId);
+                    syncQuestStatusFromProgress(topicId);
+                }
                 refreshProgressSummary();
             }
             else if (data.type === 'get-all-results') {
@@ -533,18 +1711,47 @@
                     const summary = await window.electronAPI.getProgressSummary();
                     iframe.contentWindow.postMessage({ type: 'xp-summary', summary }, '*');
                 }
-            } else if (data.type === 'apply-settings' && data.settings) {
-                applySettings(data.settings);
-                // Also apply to the current iframe content
-                if (iframe.contentWindow) {
-                    iframe.contentWindow.postMessage({ type: 'apply-settings', settings: data.settings }, '*');
-                }
-            } else if (data.type === 'request-settings') {
+            } else if (data.type === 'save-settings' && data.settings) {
                 if (window.electronAPI) {
-                    const settings = await window.electronAPI.getSettings();
-                    if (settings && iframe.contentWindow) {
-                        iframe.contentWindow.postMessage({ type: 'apply-settings', settings }, '*');
+                    try {
+                        await window.electronAPI.saveSettings(data.settings);
+                    } catch (error) {
+                        console.error('Nem sikerült a beállítások mentése:', error);
                     }
+                }
+                setActiveSettings(data.settings);
+            } else if (data.type === 'practiceXp') {
+                if (window.electronAPI) {
+                    const xp = Number(data.xp);
+                    if (!Number.isNaN(xp) && xp > 0) {
+                        try {
+                            await window.electronAPI.savePracticeXp({ topicId: data.topicId, xp });
+                            await refreshProgressSummary();
+                        } catch (error) {
+                            console.error('Nem sikerült a practice XP mentése:', error);
+                        }
+                    }
+                }
+            } else if (data.type === 'module-sheet') {
+                const topicId = typeof data.topicId === 'string' ? data.topicId : '';
+                const subtitle = typeof data.subtitle === 'string' ? data.subtitle.trim() : '';
+                if (!topicId || !isQuestableTopic(topicId)) return;
+                moduleSheetSubtitles[topicId] = subtitle;
+                if (currentTopicId === topicId && !sheetBannerActive) {
+                    const link = document.querySelector(`[data-topic-id="${topicId}"]`);
+                    if (link) {
+                        setModuleBannerText(getLinkLabel(link), subtitle);
+                        if (moduleBanner) {
+                            moduleBanner.hidden = false;
+                        }
+                    }
+                }
+            } else if (data.type === 'apply-settings' && data.settings) {
+                setActiveSettings(data.settings);
+            } else if (data.type === 'request-settings') {
+                const settings = activeSettings || (window.electronAPI ? await window.electronAPI.getSettings() : null);
+                if (settings && iframe.contentWindow) {
+                    iframe.contentWindow.postMessage({ type: 'apply-settings', settings }, '*');
                 }
             }
         });
@@ -555,6 +1762,7 @@
                 const summary = await window.electronAPI.getProgressSummary();
                 if (!summary) return;
                 updateXpWidget(summary);
+                syncQuestStateFromSummary(summary.quests);
                 if (summary.completions) {
                     hydrateProgressData(summary.completions);
                 }
@@ -566,13 +1774,20 @@
         function updateXpWidget(summary) {
             if (!summary || !summary.level) return;
             const totalXp = summary.xp || 0;
-            xpLevelLabel.textContent = `Szint ${summary.level.level}`;
+            xpLevelLabel.textContent = `Lv. ${summary.level.level}`;
+            if (xpLevelName) {
+                const name = summary.level.levelName || '';
+                xpLevelName.textContent = name ? `– ${name}` : '';
+            }
             xpTotalLabel.textContent = `${totalXp} XP`;
             const required = summary.level.xpForNext || 200;
             const current = summary.level.xpIntoLevel || 0;
             const percentage = Math.min(100, Math.round((current / required) * 100));
             xpBarFill.style.width = `${percentage}%`;
-            xpProgressText.textContent = `${current} / ${required} XP a kovetkezo szintig`;
+            xpProgressText.textContent = `${current} / ${required} XP a következő szintig`;
+            if (xpBar) {
+                xpBar.setAttribute('title', `${current} / ${required} XP`);
+            }
         }
 
         function formatDifficultyTooltip(topicData, key, label) {
@@ -593,6 +1808,7 @@
                 });
                 updateCircleColor(topicId);
             });
+            syncQuestStatusesFromProgress();
         }
 
         function updateCircleColor(topicId) {
@@ -630,31 +1846,18 @@
         // Load and apply settings on page load
         async function loadAndApplySettings() {
             if (window.electronAPI) {
-                const settings = await window.electronAPI.getSettings();
-                if (settings) {
-                    applySettings(settings);
+                try {
+                    const settings = await window.electronAPI.getSettings();
+                    if (settings) {
+                        setActiveSettings(settings);
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Nem sikerült a beállítások betöltése:', error);
                 }
             }
+            setActiveSettings(getDefaultSettings());
         }
-
-function applySettings(settings) {
-    const root = document.documentElement;
-    const sidebar = document.querySelector('.sidebar');
-    const content = document.querySelector('.content');
-    if (settings.sidebarBg) {
-        sidebar.style.backgroundColor = settings.sidebarBg;
-    }
-    if (settings.contentBg) {
-        content.style.backgroundColor = settings.contentBg;
-    }
-    if (settings.buttonBg) root.style.setProperty('--button-bg', settings.buttonBg);
-    if (settings.buttonText) root.style.setProperty('--button-text', settings.buttonText);
-    if (settings.linkColor) root.style.setProperty('--link-color', settings.linkColor);
-    if (settings.contentOverlay) root.style.setProperty('--content-overlay', settings.contentOverlay);
-    if (settings.contentBgImage) {
-        content.style.backgroundImage = settings.contentBgImage;
-    }
-}
 
         window.addEventListener('DOMContentLoaded', loadAndApplySettings);
 
@@ -780,3 +1983,10 @@ function applySettings(settings) {
 </html>
 
 ]
+
+
+
+
+
+
+

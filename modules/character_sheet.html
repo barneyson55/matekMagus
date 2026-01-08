@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Karakterlap</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --accent: #5865f2;
+            --surface: #f5f7fb;
+            --panel: rgba(255, 255, 255, var(--module-card-opacity, 0.92));
+            --panel-strong: rgba(255, 255, 255, var(--module-card-opacity, 1));
+            --text: #1f2933;
+            --muted: #6b7280;
+            --border: rgba(15, 23, 42, 0.1);
+            --overlay: rgba(255, 255, 255, 0.8);
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --avatar-image: radial-gradient(circle at 30% 30%, #8b93a7, #2e3642);
+        }
+
+        * { box-sizing: border-box; }
+        html, body { background-color: transparent; }
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            padding: 32px;
+            min-height: 100vh;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sheet {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(280px, 1.1fr) minmax(320px, 0.9fr);
+            gap: 24px;
+        }
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+        }
+        .tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tab-button {
+            border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text);
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .tab-button.is-active {
+            border-color: var(--accent);
+            transform: translateY(-1px);
+            background: var(--panel-strong);
+        }
+        .tab-panel { display: none; }
+        .tab-panel.is-active { display: block; }
+        .list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 10px;
+        }
+        .list-item {
+            width: 100%;
+            text-align: left;
+            background: var(--panel-strong);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .list-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        .item-title { font-weight: 600; }
+        .item-meta { color: var(--muted); font-size: 0.9rem; }
+        .empty-state {
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px dashed var(--border);
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.5);
+        }
+        .section-title {
+            margin: 18px 0 10px;
+            font-size: 1rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .badge.success { background: var(--success); }
+        .badge.warning { background: var(--warning); }
+
+        .profile {
+            display: grid;
+            gap: 18px;
+        }
+        .profile-header {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--avatar-image);
+            background-size: cover;
+            background-position: center;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+        .profile-header h2 {
+            margin: 0 0 4px;
+            font-size: 1.4rem;
+        }
+        .profile-header p {
+            margin: 0;
+            color: var(--muted);
+        }
+        .xp-block {
+            background: var(--panel-strong);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: grid;
+            gap: 8px;
+        }
+        .xp-meta {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+        }
+        .xp-bar {
+            height: 12px;
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .xp-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #9f7bff);
+            transition: width 0.3s ease;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+        .stat-card {
+            background: var(--panel-strong);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px;
+        }
+        .stat-card span { color: var(--muted); font-size: 0.85rem; }
+        .stat-card strong { display: block; margin-top: 4px; font-size: 1.2rem; }
+        .achievement-list {
+            display: grid;
+            gap: 10px;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .achievement-item {
+            background: var(--panel-strong);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: grid;
+            gap: 4px;
+        }
+        .achievement-item h4 { margin: 0; font-size: 1rem; }
+        .achievement-item p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+
+        @media (max-width: 960px) {
+            .sheet {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sheet">
+        <section class="card">
+            <div class="tabs">
+                <button class="tab-button is-active" type="button" data-tab="active">Akt&iacute;v k&uuml;ldet&eacute;seim</button>
+                <button class="tab-button" type="button" data-tab="results">Eredm&eacute;nyeim</button>
+            </div>
+
+            <div class="tab-panel is-active" id="tab-active">
+                <ul class="list" id="active-quest-list"></ul>
+                <div class="empty-state" id="active-empty" style="display:none;">Nincs akt&iacute;v k&uuml;ldet&eacute;s.</div>
+            </div>
+
+            <div class="tab-panel" id="tab-results">
+                <div class="section-title">Kimaxolt modulok</div>
+                <ul class="list" id="completed-quest-list"></ul>
+                <div class="empty-state" id="completed-empty" style="display:none;">M&eacute;g nincs kimaxolt modul.</div>
+
+                <div class="section-title">Legut&oacute;bbi tesztek</div>
+                <ul class="list" id="recent-results-list"></ul>
+                <div class="empty-state" id="results-empty" style="display:none;">Nincs mentett teszteredm&eacute;ny.</div>
+            </div>
+        </section>
+
+        <section class="card profile">
+            <div class="profile-header">
+                <div class="avatar"></div>
+                <div>
+                    <h2 id="profile-level">Lv. 1</h2>
+                    <p id="profile-xp">Osszes XP: 0</p>
+                    <p id="profile-next">Kovetkezo szint: 0 XP</p>
+                </div>
+            </div>
+
+            <div class="xp-block">
+                <div class="xp-meta">
+                    <span id="xp-progress-text">0 / 200 XP</span>
+                    <span id="xp-percent-text">0%</span>
+                </div>
+                <div class="xp-bar">
+                    <div class="xp-bar-fill" id="xp-bar-fill"></div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span>Akt&iacute;v k&uuml;ldet&eacute;sek</span>
+                    <strong id="stat-active">0</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Kimaxolt modulok</span>
+                    <strong id="stat-completed">0</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Osszes teszt</span>
+                    <strong id="stat-tests">0</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Gyakorlas XP</span>
+                    <strong id="stat-practice-xp">0</strong>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-title">Achievementek</div>
+                <div class="achievement-list" id="achievement-list"></div>
+                <div class="empty-state" id="achievement-empty" style="display:none;">M&eacute;g nincsenek achievementek.</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const dom = {
+            tabs: document.querySelectorAll('.tab-button'),
+            panels: {
+                active: document.getElementById('tab-active'),
+                results: document.getElementById('tab-results'),
+            },
+            activeList: document.getElementById('active-quest-list'),
+            activeEmpty: document.getElementById('active-empty'),
+            completedList: document.getElementById('completed-quest-list'),
+            completedEmpty: document.getElementById('completed-empty'),
+            resultsList: document.getElementById('recent-results-list'),
+            resultsEmpty: document.getElementById('results-empty'),
+            profileLevel: document.getElementById('profile-level'),
+            profileXp: document.getElementById('profile-xp'),
+            profileNext: document.getElementById('profile-next'),
+            xpText: document.getElementById('xp-progress-text'),
+            xpPercent: document.getElementById('xp-percent-text'),
+            xpBarFill: document.getElementById('xp-bar-fill'),
+            statActive: document.getElementById('stat-active'),
+            statCompleted: document.getElementById('stat-completed'),
+            statTests: document.getElementById('stat-tests'),
+            statPracticeXp: document.getElementById('stat-practice-xp'),
+            achievementList: document.getElementById('achievement-list'),
+            achievementEmpty: document.getElementById('achievement-empty'),
+        };
+
+        let summaryData = null;
+        let resultsData = [];
+        const topicLabelCache = {};
+
+        function parseHexColor(hex) {
+            const match = (hex || '').trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+            if (!match) return null;
+            const raw = match[1];
+            const full = raw.length === 3 ? raw.split('').map(ch => ch + ch).join('') : raw;
+            return {
+                r: parseInt(full.slice(0, 2), 16),
+                g: parseInt(full.slice(2, 4), 16),
+                b: parseInt(full.slice(4, 6), 16),
+            };
+        }
+
+        function isDarkColor(hex) {
+            const rgb = parseHexColor(hex);
+            if (!rgb) return false;
+            const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+            return luminance < 0.5;
+        }
+
+        function normalizeOverlayColor(value) {
+            const minAlpha = 0.35;
+            const fallback = `rgba(15, 18, 22, ${minAlpha})`;
+            if (!value || typeof value !== 'string') return fallback;
+            const trimmed = value.trim();
+            const rgbaMatch = trimmed.match(/^rgba?\\(([^)]+)\\)$/i);
+            if (rgbaMatch) {
+                const parts = rgbaMatch[1].split(',').map(part => part.trim());
+                const r = Number(parts[0]);
+                const g = Number(parts[1]);
+                const b = Number(parts[2]);
+                if ([r, g, b].some(Number.isNaN)) return fallback;
+                const alpha = parts.length > 3 ? Number(parts[3]) : minAlpha;
+                const safeAlpha = Math.min(0.9, Math.max(minAlpha, Number.isNaN(alpha) ? minAlpha : alpha));
+                return `rgba(${r}, ${g}, ${b}, ${safeAlpha})`;
+            }
+            const hexMatch = trimmed.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+            if (hexMatch) {
+                const rgb = parseHexColor(trimmed);
+                if (!rgb) return fallback;
+                return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${minAlpha})`;
+            }
+            return fallback;
+        }
+
+        function applySettings(settings) {
+            if (!settings) return;
+            const contentBg = settings.contentBg || '#f5f7fb';
+            const isDark = isDarkColor(contentBg);
+            const rawOpacity = Number(settings.moduleCardOpacity);
+            const panelAlpha = Number.isFinite(rawOpacity) ? Math.min(1, Math.max(0.5, rawOpacity)) : 0.92;
+            const panelStrongAlpha = Math.min(1, panelAlpha + 0.08);
+            const panelRgb = isDark ? '20, 24, 30' : '255, 255, 255';
+            document.documentElement.style.setProperty('--accent', settings.buttonBg || '#5865f2');
+            document.documentElement.style.setProperty('--overlay', normalizeOverlayColor(settings.contentOverlay));
+            document.documentElement.style.setProperty('--panel', `rgba(${panelRgb}, ${panelAlpha})`);
+            document.documentElement.style.setProperty('--panel-strong', `rgba(${panelRgb}, ${panelStrongAlpha})`);
+            document.documentElement.style.setProperty('--text', isDark ? '#f3f4f6' : '#1f2933');
+            document.documentElement.style.setProperty('--muted', isDark ? '#cbd5f5' : '#6b7280');
+            document.documentElement.style.setProperty('--border', isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(15, 23, 42, 0.1)');
+            if (settings.avatarImage) {
+                document.documentElement.style.setProperty('--avatar-image', settings.avatarImage);
+            } else {
+                document.documentElement.style.removeProperty('--avatar-image');
+            }
+            document.body.style.backgroundColor = 'transparent';
+            document.body.style.backgroundImage = 'none';
+        }
+
+        function getTopicLabel(topicId) {
+            if (!topicId) return '';
+            if (topicLabelCache[topicId]) return topicLabelCache[topicId];
+            try {
+                const link = window.parent && window.parent.document
+                    ? window.parent.document.querySelector(`[data-topic-id="${topicId}"]`)
+                    : null;
+                if (link) {
+                    const textNode = Array.from(link.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.nodeValue.trim());
+                    const label = textNode ? textNode.nodeValue.trim() : link.textContent.trim();
+                    topicLabelCache[topicId] = label;
+                    return label;
+                }
+            } catch (error) {
+                // ignore cross-context access issues
+            }
+            const fallback = topicId.replace(/_/g, ' ');
+            topicLabelCache[topicId] = fallback;
+            return fallback;
+        }
+
+        function navigateToTopic(topicId) {
+            if (!topicId) return;
+            try {
+                const link = window.parent && window.parent.document
+                    ? window.parent.document.querySelector(`[data-topic-id="${topicId}"]`)
+                    : null;
+                if (link) {
+                    link.click();
+                }
+            } catch (error) {
+                // ignore navigation failures
+            }
+        }
+
+        function getQuestTopics(status) {
+            const quests = summaryData && summaryData.quests && summaryData.quests.topics ? summaryData.quests.topics : {};
+            return Object.entries(quests)
+                .filter(([, value]) => value === status)
+                .map(([topicId]) => topicId);
+        }
+
+        function getBestGrade(topicData) {
+            let best = null;
+            Object.values(topicData || {}).forEach((value) => {
+                const grade = typeof value === 'number' ? value : value && typeof value.grade === 'number' ? value.grade : null;
+                if (grade === null) return;
+                if (best === null || grade > best) best = grade;
+            });
+            return best;
+        }
+
+        function renderList(listEl, emptyEl, items, builder) {
+            listEl.innerHTML = '';
+            if (!items.length) {
+                emptyEl.style.display = 'block';
+                return;
+            }
+            emptyEl.style.display = 'none';
+            items.forEach(item => {
+                listEl.appendChild(builder(item));
+            });
+        }
+
+        function renderActiveQuests() {
+            const activeTopics = getQuestTopics('ACTIVE');
+            renderList(dom.activeList, dom.activeEmpty, activeTopics, (topicId) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'list-item';
+                button.innerHTML = `<span class="item-title">${getTopicLabel(topicId)}</span><span class="item-meta">Aktiv</span>`;
+                button.addEventListener('click', () => navigateToTopic(topicId));
+                li.appendChild(button);
+                return li;
+            });
+        }
+
+        function renderCompletedQuests() {
+            const completedTopics = getQuestTopics('COMPLETED');
+            renderList(dom.completedList, dom.completedEmpty, completedTopics, (topicId) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'list-item';
+                const bestGrade = getBestGrade(summaryData && summaryData.completions ? summaryData.completions[topicId] : null);
+                const metaText = bestGrade ? `Legjobb jegy: ${bestGrade}` : 'Kimaxolt';
+                button.innerHTML = `<span class="item-title">${getTopicLabel(topicId)}</span><span class="item-meta">${metaText}</span>`;
+                button.addEventListener('click', () => navigateToTopic(topicId));
+                li.appendChild(button);
+                return li;
+            });
+        }
+
+        function renderRecentResults() {
+            const recent = (resultsData || []).slice(0, 5);
+            renderList(dom.resultsList, dom.resultsEmpty, recent, (result) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'list-item';
+                const grade = typeof result.grade === 'number' ? result.grade : '-';
+                button.innerHTML = `<span class="item-title">${getTopicLabel(result.topicId || '')}</span><span class="item-meta">Jegy: ${grade}</span>`;
+                if (result.topicId) {
+                    button.addEventListener('click', () => navigateToTopic(result.topicId));
+                }
+                li.appendChild(button);
+                return li;
+            });
+        }
+
+        function renderStats() {
+            const activeCount = getQuestTopics('ACTIVE').length;
+            const completedCount = getQuestTopics('COMPLETED').length;
+            const testsCount = resultsData ? resultsData.length : 0;
+            const practiceXp = summaryData && summaryData.practiceXp
+                ? Object.values(summaryData.practiceXp).reduce((sum, value) => sum + Number(value || 0), 0)
+                : 0;
+            dom.statActive.textContent = activeCount;
+            dom.statCompleted.textContent = completedCount;
+            dom.statTests.textContent = testsCount;
+            dom.statPracticeXp.textContent = practiceXp;
+        }
+
+        function renderAchievements() {
+            const achievements = [];
+            const completedCount = getQuestTopics('COMPLETED').length;
+            const xpTotal = summaryData ? summaryData.xp || 0 : 0;
+            if (resultsData && resultsData.length > 0) {
+                achievements.push({ title: 'Elso teszt', detail: 'Az elso teszted teljesitve.' });
+            }
+            if (completedCount > 0) {
+                achievements.push({ title: 'Elso kimaxolt modul', detail: 'Kimaxoltal egy teljes modult.' });
+            }
+            if (xpTotal >= 100) {
+                achievements.push({ title: '100 XP', detail: 'Elerted a 100 ossz-XP szintet.' });
+            }
+            if (xpTotal >= 500) {
+                achievements.push({ title: '500 XP', detail: 'Felig az ut a mesterszintig.' });
+            }
+            dom.achievementList.innerHTML = '';
+            if (!achievements.length) {
+                dom.achievementEmpty.style.display = 'block';
+                return;
+            }
+            dom.achievementEmpty.style.display = 'none';
+            achievements.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'achievement-item';
+                card.innerHTML = `<h4>${item.title}</h4><p>${item.detail}</p>`;
+                dom.achievementList.appendChild(card);
+            });
+        }
+
+        function renderProfile() {
+            if (!summaryData || !summaryData.level) return;
+            const level = summaryData.level.level || 1;
+            const levelName = summaryData.level.levelName || '';
+            const xpTotal = summaryData.xp || 0;
+            const xpForNext = summaryData.level.xpForNext || 200;
+            const xpInto = summaryData.level.xpIntoLevel || 0;
+            const xpToNext = summaryData.level.xpToNext || (xpForNext - xpInto);
+            const percent = xpForNext ? Math.min(100, Math.round((xpInto / xpForNext) * 100)) : 0;
+            dom.profileLevel.textContent = levelName ? `Lv. ${level} – ${levelName}` : `Lv. ${level}`;
+            dom.profileXp.textContent = `Osszes XP: ${xpTotal}`;
+            dom.profileNext.textContent = `Kovetkezo szint: ${xpToNext} XP`;
+            dom.xpText.textContent = `${xpInto} / ${xpForNext} XP`;
+            dom.xpPercent.textContent = `${percent}%`;
+            dom.xpBarFill.style.width = `${percent}%`;
+        }
+
+        function renderAll() {
+            renderProfile();
+            renderActiveQuests();
+            renderCompletedQuests();
+            renderRecentResults();
+            renderStats();
+            renderAchievements();
+        }
+
+        dom.tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                dom.tabs.forEach(btn => btn.classList.toggle('is-active', btn === tab));
+                const target = tab.dataset.tab;
+                Object.entries(dom.panels).forEach(([key, panel]) => {
+                    panel.classList.toggle('is-active', key === target);
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.parent.postMessage({ type: 'request-xp-summary' }, '*');
+            window.parent.postMessage({ type: 'get-all-results' }, '*');
+            window.parent.postMessage({ type: 'request-settings' }, '*');
+        });
+
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'xp-summary') {
+                summaryData = event.data.summary;
+                renderAll();
+            }
+            if (event.data.type === 'all-results-response') {
+                resultsData = Array.isArray(event.data.results) ? event.data.results : [];
+                renderAll();
+            }
+            if (event.data.type === 'apply-settings') {
+                applySettings(event.data.settings);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -4,11 +4,14 @@
   "description": "Interaktív matematika oktatóprogram a magyar diákoknak.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "test:e2e": "node --test tests/e2e/electron-smoke.test.js",
+    "test": "npm run test:e2e"
   },
   "author": "BarneySmith",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^25.0.0" 
+    "electron": "^25.0.0",
+    "playwright-core": "^1.57.0"
   }
 }

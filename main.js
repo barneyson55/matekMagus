@@ -22,6 +22,59 @@ const TOPIC_BONUSES = [
   { match: /temazaro/i, bonus: 220, label: 'Témazáró' },
   { match: /emelt_/i, bonus: 250, label: 'Emelt modul' }
 ];
+// Level names from constitution/xp/xp_roadmap.md
+const LEVEL_NAMES = [
+  'Kezdő Diák',
+  'Alapozó Tanonc',
+  'Számtan Felfedező',
+  'Logika Tanuló',
+  'Szorgalmas Gyakorló',
+  'Alapok Őre',
+  'Számvarázsló Jelölt',
+  'Fogalomkalandor',
+  'Gondolkodó Tanuló',
+  'Stabil Alapozó',
+  'Képletkezdő',
+  'Algebra Tanonc',
+  'Egyenletoldó',
+  'Függvénykutató',
+  'Grafikonvadász',
+  'Geometria Felfedező',
+  'Háromszögmester',
+  'Körvarázsló',
+  'Térlátó Tanonc',
+  'Koordináta Navigátor',
+  'Kombinatorika Tanonc',
+  'Valószínűségi Felfedező',
+  'Statisztikai Elemző',
+  'Adatvarázsló',
+  'Sorozatkutató',
+  'Analízis Tanonc',
+  'Deriválás Harcosa',
+  'Integrálvadász',
+  'Függvénystratéga',
+  'Matematikai Mesterjelölt',
+  'Emelt Szintű Tanuló',
+  'Absztrakt Gondolkodó',
+  'Problémamegoldó Szakértő',
+  'Tételkovács',
+  'Bizonyításépítő',
+  'Versenyfeladat-vadász',
+  'Matematikai Alkimista',
+  'Elméleti Matematikus',
+  'Alkalmazott Matematikus',
+  'Kombinált Stratéga',
+  'Struktúraépítő',
+  'Fogalomrendszerező',
+  'Rendszerszintű Gondolkodó',
+  'Tanítósegéd',
+  'Mentoráló Diák',
+  'Junior Tanár',
+  'Oktató Mester',
+  'Tudás Nagykövete',
+  'Legendás Matematika Hős',
+  'Matematikai Nagymester'
+];
 
 // Read the progress.json file if it exists, otherwise return an empty object
 function readProgress() {
@@ -53,6 +106,21 @@ function saveSettings(data) {
   }
 }
 
+function coerceQuestState(raw) {
+  const normalized = { version: 1, topics: {} };
+  if (!raw || typeof raw !== 'object') {
+    return normalized;
+  }
+  const versionNumber = Number(raw.version);
+  if (Number.isFinite(versionNumber) && versionNumber > 0) {
+    normalized.version = versionNumber;
+  }
+  if (raw.topics && typeof raw.topics === 'object') {
+    normalized.topics = { ...raw.topics };
+  }
+  return normalized;
+}
+
 // Ensure the progress object has the expected shape
 function ensureProgressShape(progress) {
   if (!progress.tests) progress.tests = [];
@@ -60,6 +128,7 @@ function ensureProgressShape(progress) {
   if (!progress.completions) progress.completions = {};
   // Track practice XP separately per topic
   if (!progress.practiceXp) progress.practiceXp = {};
+  progress.quests = coerceQuestState(progress.quests);
   return progress;
 }
 
@@ -124,8 +193,10 @@ function calculateLevelStats(totalXp = 0) {
     level += 1;
     xpForNext = 200 + (level - 1) * 80;
   }
+  const levelName = LEVEL_NAMES[level - 1] || `Szint ${level}`;
   return {
     level,
+    levelName,
     xpIntoLevel,
     xpForNext,
     xpToNext: xpForNext - xpIntoLevel,
@@ -195,6 +266,7 @@ ipcMain.handle('get-progress-summary', async () => {
     xp: progress.xp,
     completions: progress.completions,
     practiceXp: progress.practiceXp,
+    quests: progress.quests,
     level: calculateLevelStats(progress.xp),
   };
 });
@@ -230,3 +302,15 @@ ipcMain.on('save-practice-xp', (event, { topicId, xp }) => {
     console.error('Hiba a practice XP mentése közben:', error);
   }
 });
+
+// IPC: save quest state
+ipcMain.on('save-quest-state', (event, questState) => {
+  try {
+    const progress = ensureProgressShape(readProgress());
+    progress.quests = coerceQuestState(questState);
+    saveProgress(progress);
+  } catch (error) {
+    console.error('Hiba a quest allapot mentese kozben:', error);
+  }
+});
+

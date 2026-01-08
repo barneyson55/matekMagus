@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        :root {
+            --text-dark: #2c3e50;
+            --text-light: #576574;
+            --bg-card: rgba(255, 255, 255, var(--module-card-opacity, 1));
+        }
+        html, body { background-color: transparent; }
         body { 
             font-family: 'Inter', sans-serif;
             display: flex;
@@ -12,26 +18,30 @@
             text-align: center;
             height: 100vh;
             margin: 0;
-            background-color: #f7f9fc;
-            color: #2c3e50;
+            color: var(--text-dark);
         }
         .container {
             max-width: 500px;
+            padding: 24px 28px;
+            border-radius: 16px;
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
         }
-        h1 { 
+        .intro-title { 
             font-size: 2.5em;
             font-weight: 600;
             margin-bottom: 10px;
         }
         p {
             font-size: 1.2em;
-            color: #576574;
+            color: var(--text-light);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Üdv a Matek Mesterben!</h1>
+        <p class="intro-title">Üdv a Matek Mesterben!</p>
         <p>Válassz egy témakört a bal oldali menüből a tanulás megkezdéséhez! 🚀</p>
     </div>
 </body>

@@ -30,7 +30,7 @@ matekMagus/
 │   └── temakorok                  # Szöveges tanmenet
 ├── modules/
 │   ├── halmazmuveletek.html       # Teljesen működő modul
-│   ├── linearis_fuggvenyek.html   # Vizualizáció + teszt mód prototípus
+│   ├── linearis_fuggveny.html   # Vizualizáció + teszt mód prototípus
 │   ├── placeholder.html           # Kezdő képernyő
 │   └── results.html               # Eredmények listája
 ├── index.html                     # Fő UI + modul loader
@@ -60,7 +60,7 @@ matekMagus/
 - Bal oldalon többszintű `details/summary` alapú tematika-fa, a jobb oldalon egy `iframe` (`modules/placeholder.html` a nyitó nézet).
 - A `module-link` elemek `data-src` attribútuma határozza meg, hogy melyik modul töltődjön az iframe-be. A `'results-btn'` külön kezeli a `modules/results.html`-t.
 - A `window.postMessage`-en keresztül érkező üzeneteket fogadja:
-  - `type: 'testResult'` → ha tartozik hozzá `result` objektum, menti és frissíti a státusz jelzőt.
+  - `type: 'testResult'` → `result` objektummal (vagy legacy top-level mezőkkel) menti és frissíti a státusz jelzőt.
   - `type: 'get-all-results'` → bekéri a diszken tárolt eredményeket és továbbítja az iframe-nek.
 - A státuszkörök megjelenítéséhez `progressData` objektumban tárolja a legjobb jegyet nehézség szerint, és tooltipben bontja ki.
 
@@ -69,7 +69,7 @@ matekMagus/
 | Modul | Funkcionalitás | Állapot |
 | --- | --- | --- |
 | `halmazmuveletek.html` | Részletes elméleti kártyák (tabs), interaktív Venn-diagram KaTeX-szel, instant ellenőrző kérdések, három nehézségű kérdésbank, 10 feladatot számláló teszt, eredmény-összegzés és mentés. | Kész, teljes mentési folyamat bekötve (`type: 'testResult'` + `result` objektum). |
-| `linearis_fuggvenyek.html` | Chart.js grafikon csúszkákkal, test mód váltó, vizuális eredménypopup. | A teszt kérdésgenerálás és a `result` objektumra épülő IPC még hiányzik; jelenleg csak a teszt mód UI él. |
+| `linearis_fuggveny.html` | Chart.js grafikon csúszkákkal, test mód váltó, vizuális eredménypopup. | A teszt kérdésgenerálás még hiányzik, de az eredmény mentése már `result` objektummal működik (alapértelmezett nehézség + üres `questions`). |
 | `results.html` | Betölti a lokális `tests` tömböt, vizuálisan sorolja őket, és modális részletezőben kérdésenkénti visszanézést ad (KaTeX támogatással). | Kész; arra számít, hogy a főablak `type: 'all-results-response'` üzenetet küld. |
 | `placeholder.html` | Barátságos kezdő képernyő, ami témaválasztásra ösztönöz. | Kész. |
 
@@ -99,7 +99,7 @@ matekMagus/
 ## Ismert hiányosságok és teendők
 
 - A navigációban felsorolt legtöbb modulhoz még nincs HTML-fájl; jelenleg a Halmazműveletek és a Lineáris függvény modul érhető el, a többi helyett placeholder tartalom töltődik.
-- A `linearis_fuggvenyek.html` teszt módja még nem generál feladatokat, így XP-t sem oszt teljesítésre.
+- A `linearis_fuggveny.html` teszt módja még nem generál feladatokat, így XP-t sem oszt teljesítésre.
 - Az XP/Beállítások felület továbbra is minimális: nincsenek achievement jelvények, teljes testreszabási opciók vagy értesítések.
 - A `mainWindow` konfiguráció `icon` mezője `assets/icon.png`-ra mutat, de ilyen fájl jelenleg nincs a repóban.
 - A globális CSS több helyen hibás karakterkódolású (például `summary::before` ikonja), emiatt egyes UI elemek nem jelennek meg megfelelően Windows alatt.

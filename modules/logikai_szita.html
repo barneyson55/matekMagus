@@ -1,0 +1,1368 @@
+﻿<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logikai szita formula</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+        :root {
+            --brand-primary: #4A55A2;
+            --brand-secondary: #7895CB;
+            --brand-light: #A0BFE0;
+            --brand-background: #C5DFF8;
+            --text-dark: #2C3333;
+            --text-light: #393E46;
+            --bg-main: #FBFBFF;
+            --bg-card: #FFFFFF;
+            --border-color: #EAEFF2;
+            --success: #2ECC71;
+            --danger: #E74C3C;
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Cinzel', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-light);
+            padding: 40px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            font-weight: 400;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: var(--brand-primary);
+            border-bottom: 2px solid var(--brand-background);
+            padding-bottom: 10px;
+            margin: 30px 0 16px 0;
+            font-weight: 600;
+            font-family: var(--font-heading), var(--font-main);
+        }
+
+        h3 {
+            font-size: 1.2em;
+            color: var(--text-dark);
+            margin: 16px 0 8px 0;
+            font-weight: 600;
+        }
+
+        p,
+        li {
+            font-size: 1.05em;
+            line-height: 1.7;
+            max-width: 80ch;
+        }
+
+        ul,
+        ol {
+            padding-left: 24px;
+        }
+
+        b,
+        strong {
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+
+        .muted {
+            color: var(--text-light);
+            font-size: 0.95em;
+        }
+
+        .theory-grid {
+            display: grid;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        @media (min-width: 900px) {
+            .theory-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .theory-section + .theory-section {
+            margin-top: 16px;
+        }
+
+        .card {
+            background-color: var(--bg-card, rgba(255, 255, 255, var(--module-card-opacity, 1)));
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-light);
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--brand-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: var(--brand-primary);
+        }
+
+        .tab-button.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .learning-hint {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--brand-primary);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 14px 0;
+            color: var(--text-dark);
+        }
+        .learning-hint h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.05em;
+            color: var(--brand-primary);
+        }
+        .learning-hint ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-light);
+        }
+        .learning-hint li { margin-bottom: 6px; }
+
+        .formula-line {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-main);
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 10px 12px;
+            color: var(--text-dark);
+            display: inline-block;
+        }
+
+        .model-container {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .model-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .model-card {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group input {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            font-size: 1em;
+        }
+
+        .formula-box {
+            background-color: var(--bg-card);
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--text-dark);
+        }
+
+        .result-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .result-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .example-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px;
+        }
+
+        .example-card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px;
+            background-color: var(--bg-card);
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(74, 85, 162, 0.15);
+        }
+
+        .example-card strong {
+            color: var(--brand-primary);
+        }
+
+        .example-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .test-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .difficulty-btn.active {
+            background-color: var(--brand-primary);
+            color: #fff;
+            border-color: var(--brand-primary);
+        }
+
+        .test-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .test-area,
+        .practice-area {
+            margin-top: 16px;
+        }
+
+        .test-area.is-hidden,
+        .practice-area.is-hidden {
+            display: none;
+        }
+
+        .test-navigation {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #pagination-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            background-color: var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dot.answered {
+            background-color: var(--success);
+        }
+
+        .dot.current {
+            box-shadow: 0 0 0 4px var(--brand-light);
+            transform: scale(1.15);
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 46px;
+            height: 46px;
+            cursor: pointer;
+            color: var(--brand-primary);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--brand-primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(74, 85, 162, 0.2);
+        }
+
+        .nav-btn:disabled {
+            background-color: var(--bg-main);
+            color: var(--border-color);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .question-box {
+            padding: 24px;
+            border-radius: 12px;
+            background-color: var(--bg-main);
+            min-height: 160px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .test-question,
+        .practice-question {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--brand-primary);
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background-color: var(--brand-primary);
+            color: white;
+            border-color: var(--brand-primary);
+        }
+
+        .btn-primary:hover { transform: translateY(-1px); }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+
+        .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+        .module-input {
+            width: min(320px, 100%);
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            font-size: 1em;
+        }
+
+        .module-input:focus {
+            outline: 2px solid var(--brand-primary);
+            border-color: var(--brand-primary);
+        }
+
+        .input-help {
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: var(--text-light);
+        }
+
+        .practice-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .practice-controls label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95em;
+        }
+
+        .practice-info {
+            font-style: italic;
+            color: var(--brand-secondary);
+        }
+
+        .result-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 30px 50px;
+            border-radius: 15px;
+            font-size: 2em;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .result-popup.show { opacity: 1; }
+    </style>
+</head>
+<body>
+    <div class="tab-buttons" role="tablist">
+        <button class="tab-button active" data-tab="elmelet" type="button" role="tab" aria-selected="true">Elm&#233;let</button>
+        <button class="tab-button" data-tab="vizualis" type="button" role="tab" aria-selected="false">Vizu&#225;lis modell</button>
+        <button class="tab-button" data-tab="teszt" type="button" role="tab" aria-selected="false">Teszt</button>
+        <button class="tab-button" data-tab="gyakorlas" type="button" role="tab" aria-selected="false">Gyakorl&#225;s</button>
+    </div>
+
+    <div id="elmelet" class="tab-content card active" role="tabpanel">
+        <h2>Logikai szita formula - alapok</h2>
+        <p>A logikai szita formula (inkl&#250;zi&#243;-exkl&#250;zi&#243;) akkor hasznos, ha t&#246;bb felt&#233;tel k&#246;z&#252;l legal&#225;bb az egyiket teljes&#237;t&#337; elemek sz&#225;m&#225;t keress&#252;k. K&#233;t halmaz eset&#233;n a metszetet egyszer levonjuk, mert a k&#246;z&#246;s elemeket k&#233;tszer sz&#225;moltuk.</p>
+        <div class="theory-grid">
+            <div class="learning-hint">
+                <h3>K&#233;t halmaz szit&#225;ja</h3>
+                <p>Alap k&#233;plet:</p>
+                <p class="formula-line">|A&#8746;B| = |A| + |B| - |A&#8745;B|</p>
+                <ul>
+                    <li>|A| &#233;s |B|: k&#252;l&#246;n-k&#252;l&#246;n elemsz&#225;m.</li>
+                    <li>|A&#8745;B|: a k&#246;z&#246;s elemek sz&#225;ma.</li>
+                    <li>Ha a metszetet nem vonod le, a k&#246;z&#246;s elemeket k&#233;tszer sz&#225;molod.</li>
+                </ul>
+            </div>
+            <div class="learning-hint">
+                <h3>H&#225;rom halmaz (kitekint&#233;s)</h3>
+                <p>Ha A, B, C is van:</p>
+                <p class="formula-line">|A&#8746;B&#8746;C| = |A| + |B| + |C| - |A&#8745;B| - |A&#8745;C| - |B&#8745;C| + |A&#8745;B&#8745;C|</p>
+                <p class="muted">A logika ugyanaz: egyszer sz&#225;molunk, majd a t&#246;bbsz&#246;r&#246;s besz&#225;m&#237;t&#225;st korrig&#225;ljuk.</p>
+            </div>
+        </div>
+        <div class="theory-section">
+            <h3>Oszthat&#243;s&#225;gi szita</h3>
+            <p>1-t&#337;l N-ig a-val vagy b-vel oszthat&#243; sz&#225;mok sz&#225;ma:</p>
+            <ul>
+                <li>|A| = floor(N / a)</li>
+                <li>|B| = floor(N / b)</li>
+                <li>|A&#8745;B| = floor(N / lkkt(a, b))</li>
+            </ul>
+            <p>A v&#233;geredm&#233;ny: |A&#8746;B| = |A| + |B| - |A&#8745;B|.</p>
+        </div>
+        <div class="theory-section">
+            <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre</h3>
+            <ol>
+                <li>&#205;rd fel, mi az A &#233;s B halmaz (vagy a felt&#233;telek).</li>
+                <li>Sz&#225;mold ki |A| &#233;s |B| elemsz&#225;m&#225;t.</li>
+                <li>Sz&#225;mold ki a metszetet: |A&#8745;B|.</li>
+                <li>Alkalmazd a szita formul&#225;t: |A&#8746;B| = |A| + |B| - |A&#8745;B|.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k</h3>
+            <ul>
+                <li>A metszetet elfelejted levonni.</li>
+                <li>Az LKKT helyett szorzatot haszn&#225;lsz (ez csak akkor j&#243;, ha a &#233;s b relat&#237;v pr&#237;mek).</li>
+                <li>Nem ellen&#337;rz&#246;d, hogy a metszet nem nagyobb, mint |A| vagy |B|.</li>
+            </ul>
+        </div>
+        <div class="theory-section">
+            <h3>Mini-ellen&#337;rz&#233;s</h3>
+            <ul>
+                <li>|A| = 12, |B| = 9, |A&#8745;B| = 4. Mennyi |A&#8746;B|? (17)</li>
+                <li>1..30 k&#246;z&#246;tt h&#225;ny sz&#225;m oszthat&#243; 2-vel vagy 5-tel? (21)</li>
+                <li>Ha |A&#8746;B| = 18, |A| = 11, |B| = 10, akkor |A&#8745;B| = ? (3)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="vizualis" class="tab-content card" role="tabpanel">
+        <div class="model-container">
+            <div class="model-card">
+                <h2>Szita kalkul&#225;tor</h2>
+                <p class="muted">Add meg |A|, |B| &#233;s a metszetet. A rendszer kisz&#225;m&#237;tja az uni&#243;t &#233;s a csak A/B elemek sz&#225;m&#225;t.</p>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="set-size-a">|A| elemsz&#225;m</label>
+                        <input type="number" id="set-size-a" min="0" max="40" value="12" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="set-size-b">|B| elemsz&#225;m</label>
+                        <input type="number" id="set-size-b" min="0" max="40" value="9" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="set-intersection">|A&#8745;B| metszet</label>
+                        <input type="number" id="set-intersection" min="0" max="12" value="4" step="1">
+                    </div>
+                </div>
+                <div class="formula-box" id="set-formula"></div>
+                <div class="result-list">
+                    <div class="result-row"><span>|A&#8745;B| (metszet)</span><strong id="set-intersection-value">0</strong></div>
+                    <div class="result-row"><span>Csak A</span><strong id="set-only-a">0</strong></div>
+                    <div class="result-row"><span>Csak B</span><strong id="set-only-b">0</strong></div>
+                    <div class="result-row"><span>|A&#8746;B| (uni&#243;)</span><strong id="set-union-value">0</strong></div>
+                </div>
+                <div class="example-panel">
+                    <h3>Gyors p&#233;ld&#225;k</h3>
+                    <p class="muted">Kattints egy p&#233;ld&#225;ra, vagy k&#233;rj &#250;j k&#233;szletet a gyorsabb gyakorl&#225;shoz.</p>
+                    <div class="example-grid" id="set-example-grid"></div>
+                    <div class="example-actions">
+                        <button id="random-set-btn" class="btn btn-secondary" type="button">V&#233;letlen p&#233;lda</button>
+                        <button id="regen-set-btn" class="btn btn-secondary" type="button">&#218;j p&#233;ld&#225;k</button>
+                    </div>
+                </div>
+            </div>
+            <div class="model-card">
+                <h2>Oszthat&#243;s&#225;gi szita</h2>
+                <p class="muted">Sz&#225;mold meg, h&#225;ny sz&#225;m oszthat&#243; a-val vagy b-vel 1..N k&#246;z&#246;tt. A metszet az LKKT-vel oszthat&#243; sz&#225;mok sz&#225;ma.</p>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="range-n">N (fels&#337; hat&#225;r)</label>
+                        <input type="number" id="range-n" min="10" max="150" value="50" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="range-a">a oszt&#243;</label>
+                        <input type="number" id="range-a" min="2" max="20" value="4" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="range-b">b oszt&#243;</label>
+                        <input type="number" id="range-b" min="2" max="20" value="6" step="1">
+                    </div>
+                </div>
+                <div class="formula-box" id="range-formula"></div>
+                <div class="result-list">
+                    <div class="result-row"><span>floor(N / a)</span><strong id="range-count-a">0</strong></div>
+                    <div class="result-row"><span>floor(N / b)</span><strong id="range-count-b">0</strong></div>
+                    <div class="result-row"><span>floor(N / lkkt(a,b))</span><strong id="range-count-both">0</strong></div>
+                    <div class="result-row"><span>Uni&#243; (A&#8746;B)</span><strong id="range-count-union">0</strong></div>
+                </div>
+                <div class="example-actions">
+                    <button id="random-range-btn" class="btn btn-secondary" type="button">V&#233;letlen p&#233;lda</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="teszt" class="tab-content card" role="tabpanel">
+        <h2>Teszt</h2>
+        <p>R&#246;vid teszt, ami ellen&#337;rzi a szita formula haszn&#225;lat&#225;t halmazokra &#233;s oszthat&#243;s&#225;gi feladatokra. V&#225;lassz neh&#233;zs&#233;get, majd oldd meg a k&#233;rd&#233;seket.</p>
+        <div class="learning-hint" data-role="test-help">
+            <h3>Megold&#225;si l&#233;p&#233;sek</h3>
+            <ul>
+                <li>Haszn&#225;ld a k&#233;pletet: |A&#8746;B| = |A| + |B| - |A&#8745;B|.</li>
+                <li>Oszthat&#243;s&#225;gn&#225;l: |A| = floor(N / a), |B| = floor(N / b), |A&#8745;B| = floor(N / lkkt(a,b)).</li>
+                <li>A metszetet mindig egyszer vonjuk le.</li>
+                <li>Ha eg&#233;sz sz&#225;m j&#246;n ki, eg&#233;sz sz&#225;mot &#237;rj be.</li>
+            </ul>
+            <div class="input-help">Enterrel is bek&#252;ldheted a v&#225;laszt.</div>
+        </div>
+        <div class="test-meta">
+            <div class="meta-row">
+                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <div class="difficulty-buttons">
+                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="k&#246;zepes" type="button">K&#246;zepes</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="neh&#233;z" type="button">Neh&#233;z</button>
+                </div>
+            </div>
+        </div>
+        <div class="test-controls">
+            <button id="start-test-btn" class="btn btn-secondary" type="button" hidden>&#218;j teszt</button>
+        </div>
+        <div id="test-area" class="test-area is-hidden">
+            <div class="test-navigation">
+                <button id="prev-q" class="nav-btn" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg></button>
+                <div id="pagination-dots"></div>
+                <button id="next-q" class="nav-btn" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg></button>
+            </div>
+            <div class="question-box">
+                <div id="test-question" class="test-question"></div>
+                <input type="text" id="test-answer" class="module-input" placeholder="V&#225;lasz...">
+            </div>
+            <button id="finish-test-btn" class="btn btn-primary" type="button" style="width: 100%;">Teszt befejez&#233;se &#233;s &#233;rt&#233;kel&#233;s</button>
+        </div>
+    </div>
+
+    <div id="gyakorlas" class="tab-content card" role="tabpanel">
+        <h2>Gyakorl&#225;s</h2>
+        <p class="practice-info">V&#233;gtelen&#237;tett gyakorl&#225;s. XP jutalom: k&#246;nny&#369; = 1 XP, k&#246;zepes = 2 XP, neh&#233;z = 3 XP.</p>
+        <div class="learning-hint" data-role="practice-help">
+            <h3>Gyakorl&#225;si tipp</h3>
+            <ul>
+                <li>V&#225;lassz legal&#225;bb egy neh&#233;zs&#233;get a feladatokhoz.</li>
+                <li>Haszn&#225;ld a szita formul&#225;t: |A&#8746;B| = |A| + |B| - |A&#8745;B|.</li>
+                <li>Oszthat&#243;s&#225;gn&#225;l el&#337;sz&#246;r sz&#225;mold ki a floor(N / a) &#233;rt&#233;keket.</li>
+                <li>Helyes v&#225;lasz ut&#225;n automatikusan j&#246;n a k&#246;vetkez&#337; k&#233;rd&#233;s.</li>
+            </ul>
+        </div>
+        <div class="practice-controls">
+            <span class="meta-label">Neh&#233;zs&#233;gek:</span>
+            <label><input type="checkbox" class="practice-difficulty" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
+            <label><input type="checkbox" class="practice-difficulty" value="k&#246;zepes"> K&#246;zepes</label>
+            <label><input type="checkbox" class="practice-difficulty" value="neh&#233;z"> Neh&#233;z</label>
+            <button id="start-practice-btn" class="btn btn-primary" type="button">Gyakorl&#225;s ind&#237;t&#225;sa</button>
+        </div>
+        <div id="practice-area" class="practice-area is-hidden">
+            <div id="practice-question" class="practice-question"></div>
+            <input type="text" id="practice-input" class="module-input" placeholder="V&#225;lasz...">
+            <button id="practice-check" class="btn btn-primary" type="button">Ellen&#337;rz&#233;s</button>
+            <p id="practice-feedback"></p>
+        </div>
+    </div>
+
+    <div class="result-popup" id="resultPopup"></div>
+
+    <script>
+        const TOPIC_ID = 'logikai_szita';
+        const TOPIC_NAME = 'Logikai szita formula';
+        const TAB_LABELS = {
+            elmelet: 'Elm\u00e9let',
+            vizualis: 'Vizu\u00e1lis modell',
+            teszt: 'Teszt',
+            gyakorlas: 'Gyakorl\u00e1s'
+        };
+        const DIFF_EASY = 'k\u00f6nny\u0171';
+        const DIFF_NORMAL = 'k\u00f6zepes';
+        const DIFF_HARD = 'neh\u00e9z';
+        const DIFFICULTY_LABELS = {
+            [DIFF_EASY]: 'K\u00f6nny\u0171',
+            [DIFF_NORMAL]: 'K\u00f6zepes',
+            [DIFF_HARD]: 'Neh\u00e9z'
+        };
+        const TEST_QUESTION_COUNT = 10;
+        const QUESTION_TYPES_BY_DIFFICULTY = {
+            [DIFF_EASY]: ['set-union', 'set-intersection'],
+            [DIFF_NORMAL]: ['set-union', 'set-intersection', 'multiples-union'],
+            [DIFF_HARD]: ['set-union', 'set-intersection', 'multiples-union', 'multiples-intersection']
+        };
+        const PRACTICE_XP_REWARDS = {
+            [DIFF_EASY]: 1,
+            [DIFF_NORMAL]: 2,
+            [DIFF_HARD]: 3
+        };
+        const SET_RANGES = {
+            [DIFF_EASY]: { min: 4, max: 14 },
+            [DIFF_NORMAL]: { min: 8, max: 24 },
+            [DIFF_HARD]: { min: 12, max: 34 }
+        };
+        const MULTIPLES_RANGES = {
+            [DIFF_EASY]: { nMin: 30, nMax: 60, divisorMin: 2, divisorMax: 6 },
+            [DIFF_NORMAL]: { nMin: 40, nMax: 80, divisorMin: 2, divisorMax: 10 },
+            [DIFF_HARD]: { nMin: 60, nMax: 120, divisorMin: 3, divisorMax: 12 }
+        };
+        const unionSymbol = '\u222a';
+        const intersectionSymbol = '\u2229';
+
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const testQuestion = document.getElementById('test-question');
+        const testAnswerInput = document.getElementById('test-answer');
+        const paginationDots = document.getElementById('pagination-dots');
+        const prevTestBtn = document.getElementById('prev-q');
+        const nextTestBtn = document.getElementById('next-q');
+        const finishTestBtn = document.getElementById('finish-test-btn');
+        const testStartBtn = document.getElementById('start-test-btn');
+        const testArea = document.getElementById('test-area');
+        const resultPopup = document.getElementById('resultPopup');
+        const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+
+        const practiceStartBtn = document.getElementById('start-practice-btn');
+        const practiceArea = document.getElementById('practice-area');
+        const practiceQuestion = document.getElementById('practice-question');
+        const practiceInput = document.getElementById('practice-input');
+        const practiceCheck = document.getElementById('practice-check');
+        const practiceFeedback = document.getElementById('practice-feedback');
+        const practiceDifficultyInputs = document.querySelectorAll('.practice-difficulty');
+
+        const setSizeA = document.getElementById('set-size-a');
+        const setSizeB = document.getElementById('set-size-b');
+        const setIntersectionInput = document.getElementById('set-intersection');
+        const setFormulaText = document.getElementById('set-formula');
+        const setUnionValue = document.getElementById('set-union-value');
+        const setIntersectionValue = document.getElementById('set-intersection-value');
+        const setOnlyA = document.getElementById('set-only-a');
+        const setOnlyB = document.getElementById('set-only-b');
+        const setExampleGrid = document.getElementById('set-example-grid');
+        const randomSetBtn = document.getElementById('random-set-btn');
+        const regenSetBtn = document.getElementById('regen-set-btn');
+
+        const rangeN = document.getElementById('range-n');
+        const rangeA = document.getElementById('range-a');
+        const rangeB = document.getElementById('range-b');
+        const rangeFormula = document.getElementById('range-formula');
+        const rangeCountA = document.getElementById('range-count-a');
+        const rangeCountB = document.getElementById('range-count-b');
+        const rangeCountBoth = document.getElementById('range-count-both');
+        const rangeCountUnion = document.getElementById('range-count-union');
+        const randomRangeBtn = document.getElementById('random-range-btn');
+
+        let activeTab = 'elmelet';
+        let testQuestions = [];
+        let currentTestIndex = 0;
+        let currentTestDifficulty = DIFF_EASY;
+        let currentTestAnswer = '';
+        let correctAnswers = 0;
+        let isTestRunning = false;
+
+        let currentPracticeAnswer = '';
+        let currentPracticeDifficulty = DIFF_EASY;
+        let practiceActive = false;
+
+        function announceActiveTab(tabName) {
+            const subtitle = TAB_LABELS[tabName] || '';
+            if (window.parent) {
+                window.parent.postMessage({ type: 'module-sheet', topicId: TOPIC_ID, subtitle }, '*');
+            }
+        }
+
+        function setActiveTab(tabName) {
+            tabButtons.forEach(btn => {
+                const isActive = btn.dataset.tab === tabName;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+            tabContents.forEach(section => {
+                section.classList.toggle('active', section.id === tabName);
+            });
+            activeTab = tabName;
+            announceActiveTab(tabName);
+            if (tabName === 'teszt' && !isTestRunning) {
+                startTest();
+            }
+        }
+
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function clamp(value, min, max) {
+            return Math.min(Math.max(value, min), max);
+        }
+
+        function readInt(input, fallback) {
+            const value = Number.parseInt(input.value, 10);
+            return Number.isFinite(value) ? value : fallback;
+        }
+
+        function gcd(a, b) {
+            let x = Math.abs(a);
+            let y = Math.abs(b);
+            while (y !== 0) {
+                const temp = y;
+                y = x % y;
+                x = temp;
+            }
+            return x;
+        }
+
+        function lcm(a, b) {
+            if (a === 0 || b === 0) return 0;
+            return Math.abs(a * b) / gcd(a, b);
+        }
+
+        function formatNumber(value) {
+            if (!Number.isFinite(value)) return '';
+            const rounded = Math.round(value * 100) / 100;
+            return Number.isInteger(rounded) ? String(rounded) : String(rounded);
+        }
+
+        function parseNumberInput(value) {
+            const normalized = value.trim().replace(',', '.');
+            if (normalized.length === 0) return null;
+            const parsed = Number.parseFloat(normalized);
+            return Number.isFinite(parsed) ? parsed : null;
+        }
+
+        function isClose(a, b) {
+            return Math.abs(a - b) < 0.0001;
+        }
+
+        function buildSetExample(range) {
+            const a = randomInt(range.min, range.max);
+            const b = randomInt(range.min, range.max);
+            const intersection = randomInt(0, Math.min(a, b));
+            const union = a + b - intersection;
+            return { a, b, intersection, union };
+        }
+
+        function buildRangeExample(range) {
+            const n = randomInt(range.nMin, range.nMax);
+            let a = randomInt(range.divisorMin, range.divisorMax);
+            let b = randomInt(range.divisorMin, range.divisorMax);
+            if (a === b) {
+                b = a === range.divisorMax ? a - 1 : a + 1;
+            }
+            return { n, a, b };
+        }
+
+        function applySetExample(example) {
+            setSizeA.value = String(example.a);
+            setSizeB.value = String(example.b);
+            setIntersectionInput.value = String(example.intersection);
+            updateSetModel();
+        }
+
+        function applyRangeExample(example) {
+            rangeN.value = String(example.n);
+            rangeA.value = String(example.a);
+            rangeB.value = String(example.b);
+            updateRangeModel();
+        }
+
+        function generateSetExamples(count = 6) {
+            const range = SET_RANGES[DIFF_NORMAL];
+            const examples = [];
+            for (let i = 0; i < count; i += 1) {
+                examples.push(buildSetExample(range));
+            }
+            return examples;
+        }
+
+        function renderSetExamples(examples) {
+            if (!setExampleGrid) return;
+            setExampleGrid.innerHTML = '';
+            examples.forEach(example => {
+                const card = document.createElement('button');
+                card.type = 'button';
+                card.className = 'example-card';
+                const line1 = document.createElement('strong');
+                line1.textContent = `|A|=${example.a}`;
+                const line2 = document.createElement('span');
+                line2.textContent = `|B|=${example.b}`;
+                const line3 = document.createElement('span');
+                line3.textContent = `|A${intersectionSymbol}B|=${example.intersection}`;
+                card.append(line1, line2, line3);
+                card.addEventListener('click', () => applySetExample(example));
+                setExampleGrid.appendChild(card);
+            });
+        }
+
+        function updateSetModel() {
+            const a = readInt(setSizeA, 12);
+            const b = readInt(setSizeB, 9);
+            const maxIntersection = Math.min(a, b);
+            let intersection = readInt(setIntersectionInput, 4);
+            intersection = clamp(intersection, 0, maxIntersection);
+            setIntersectionInput.max = String(maxIntersection);
+            if (setIntersectionInput.value !== String(intersection)) {
+                setIntersectionInput.value = String(intersection);
+            }
+            const union = a + b - intersection;
+            const onlyA = a - intersection;
+            const onlyB = b - intersection;
+
+            setFormulaText.textContent = `|A${unionSymbol}B| = |A| + |B| - |A${intersectionSymbol}B| = ${a} + ${b} - ${intersection} = ${union}`;
+            setUnionValue.textContent = String(union);
+            setIntersectionValue.textContent = String(intersection);
+            setOnlyA.textContent = String(onlyA);
+            setOnlyB.textContent = String(onlyB);
+        }
+
+        function updateRangeModel() {
+            const n = readInt(rangeN, 50);
+            const a = clamp(readInt(rangeA, 4), 1, 999);
+            const b = clamp(readInt(rangeB, 6), 1, 999);
+            if (rangeA.value !== String(a)) {
+                rangeA.value = String(a);
+            }
+            if (rangeB.value !== String(b)) {
+                rangeB.value = String(b);
+            }
+            const lcmValue = lcm(a, b);
+            const countA = Math.floor(n / a);
+            const countB = Math.floor(n / b);
+            const countBoth = lcmValue === 0 ? 0 : Math.floor(n / lcmValue);
+            const union = countA + countB - countBoth;
+
+            rangeFormula.textContent = `|A${unionSymbol}B| = floor(N / a) + floor(N / b) - floor(N / lkkt(a,b)) = ${countA} + ${countB} - ${countBoth} = ${union}`;
+            rangeCountA.textContent = String(countA);
+            rangeCountB.textContent = String(countB);
+            rangeCountBoth.textContent = String(countBoth);
+            rangeCountUnion.textContent = String(union);
+        }
+
+        function buildSetUnionQuestion(difficulty) {
+            const range = SET_RANGES[difficulty] || SET_RANGES[DIFF_EASY];
+            const data = buildSetExample(range);
+            return {
+                question: `Adott: |A| = ${data.a}, |B| = ${data.b}, |A${intersectionSymbol}B| = ${data.intersection}. Sz\u00e1m\u00edtsd ki |A${unionSymbol}B|-t!`,
+                answer: data.union,
+                kind: 'set-union'
+            };
+        }
+
+        function buildSetIntersectionQuestion(difficulty) {
+            const range = SET_RANGES[difficulty] || SET_RANGES[DIFF_EASY];
+            const data = buildSetExample(range);
+            return {
+                question: `Adott: |A| = ${data.a}, |B| = ${data.b}, |A${unionSymbol}B| = ${data.union}. Mennyi |A${intersectionSymbol}B|?`,
+                answer: data.intersection,
+                kind: 'set-intersection'
+            };
+        }
+
+        function buildMultiplesUnionQuestion(difficulty) {
+            const range = MULTIPLES_RANGES[difficulty] || MULTIPLES_RANGES[DIFF_NORMAL];
+            const example = buildRangeExample(range);
+            const lcmValue = lcm(example.a, example.b);
+            const countA = Math.floor(example.n / example.a);
+            const countB = Math.floor(example.n / example.b);
+            const countBoth = Math.floor(example.n / lcmValue);
+            const union = countA + countB - countBoth;
+            return {
+                question: `H\u00e1ny 1..${example.n} k\u00f6z\u00f6tti sz\u00e1m oszthat\u00f3 ${example.a}-val vagy ${example.b}-vel?`,
+                answer: union,
+                kind: 'multiples-union'
+            };
+        }
+
+        function buildMultiplesIntersectionQuestion(difficulty) {
+            const range = MULTIPLES_RANGES[difficulty] || MULTIPLES_RANGES[DIFF_HARD];
+            const example = buildRangeExample(range);
+            const lcmValue = lcm(example.a, example.b);
+            const countBoth = Math.floor(example.n / lcmValue);
+            return {
+                question: `H\u00e1ny 1..${example.n} k\u00f6z\u00f6tti sz\u00e1m oszthat\u00f3 egyszerre ${example.a}-val \u00e9s ${example.b}-vel?`,
+                answer: countBoth,
+                kind: 'multiples-intersection'
+            };
+        }
+
+        function buildQuestionByType(difficulty, type) {
+            switch (type) {
+                case 'set-union':
+                    return buildSetUnionQuestion(difficulty);
+                case 'set-intersection':
+                    return buildSetIntersectionQuestion(difficulty);
+                case 'multiples-union':
+                    return buildMultiplesUnionQuestion(difficulty);
+                case 'multiples-intersection':
+                    return buildMultiplesIntersectionQuestion(difficulty);
+                default:
+                    return buildSetUnionQuestion(difficulty);
+            }
+        }
+
+        function shuffle(list) {
+            const arr = [...list];
+            for (let i = arr.length - 1; i > 0; i -= 1) {
+                const j = randomInt(0, i);
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function buildTestQuestions(difficulty) {
+            const allowed = QUESTION_TYPES_BY_DIFFICULTY[difficulty] || QUESTION_TYPES_BY_DIFFICULTY[DIFF_EASY];
+            const questions = [];
+            if (allowed.length >= 2) {
+                const shuffledTypes = shuffle(allowed);
+                questions.push(buildQuestionByType(difficulty, shuffledTypes[0]));
+                questions.push(buildQuestionByType(difficulty, shuffledTypes[1]));
+            } else if (allowed.length === 1) {
+                questions.push(buildQuestionByType(difficulty, allowed[0]));
+            }
+            while (questions.length < TEST_QUESTION_COUNT) {
+                const type = allowed[randomInt(0, allowed.length - 1)];
+                questions.push(buildQuestionByType(difficulty, type));
+            }
+            return shuffle(questions).slice(0, TEST_QUESTION_COUNT);
+        }
+
+        function renderPagination() {
+            if (!paginationDots) return;
+            paginationDots.innerHTML = '';
+            testQuestions.forEach((q, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (index === currentTestIndex) dot.classList.add('current');
+                if (q.userAnswer && q.userAnswer.trim().length > 0) dot.classList.add('answered');
+                dot.addEventListener('click', () => {
+                    saveTestAnswer();
+                    goToTestQuestion(index);
+                });
+                paginationDots.appendChild(dot);
+            });
+        }
+
+        function saveTestAnswer() {
+            if (!testQuestions[currentTestIndex] || !testAnswerInput) return;
+            testQuestions[currentTestIndex].userAnswer = testAnswerInput.value.trim();
+        }
+
+        function renderTestQuestion() {
+            const current = testQuestions[currentTestIndex];
+            if (!current) return;
+            testQuestion.textContent = current.question;
+            currentTestAnswer = current.answer;
+            window.currentTestAnswer = currentTestAnswer;
+            window.currentTestKind = current.kind || '';
+            testAnswerInput.value = current.userAnswer || '';
+            renderPagination();
+            if (prevTestBtn) prevTestBtn.disabled = currentTestIndex === 0;
+            if (nextTestBtn) nextTestBtn.disabled = currentTestIndex >= testQuestions.length - 1;
+        }
+
+        function goToTestQuestion(index) {
+            if (index < 0 || index >= testQuestions.length) return;
+            currentTestIndex = index;
+            renderTestQuestion();
+        }
+
+        function startTest() {
+            testQuestions = buildTestQuestions(currentTestDifficulty);
+            currentTestIndex = 0;
+            correctAnswers = 0;
+            isTestRunning = true;
+            testArea.classList.remove('is-hidden');
+            window.currentTestQuestionCount = testQuestions.length;
+            window.currentTestDifficulty = currentTestDifficulty;
+            if (testStartBtn) {
+                testStartBtn.disabled = true;
+                testStartBtn.hidden = true;
+            }
+            renderTestQuestion();
+        }
+
+        function showResultPopup(message) {
+            resultPopup.textContent = message;
+            resultPopup.classList.add('show');
+            setTimeout(() => {
+                resultPopup.classList.remove('show');
+            }, 3000);
+        }
+
+        function finishTest() {
+            saveTestAnswer();
+            const total = testQuestions.length || 1;
+            correctAnswers = 0;
+            testQuestions.forEach((q) => {
+                const parsed = parseNumberInput(q.userAnswer || '');
+                const isCorrect = parsed !== null && isClose(parsed, q.answer);
+                q.correctAnswer = formatNumber(q.answer);
+                q.isCorrect = isCorrect;
+                if (isCorrect) correctAnswers += 1;
+            });
+            const percentage = Math.round((correctAnswers / total) * 100);
+            let grade = 0;
+            let feedback = '';
+
+            if (percentage < 40) { grade = 1; feedback = 'El\u00e9gtelen (1)'; }
+            else if (percentage < 55) { grade = 2; feedback = 'El\u00e9gs\u00e9ges (2)'; }
+            else if (percentage < 70) { grade = 3; feedback = 'K\u00f6zepes (3)'; }
+            else if (percentage < 85) { grade = 4; feedback = 'J\u00f3 (4)'; }
+            else { grade = 5; feedback = 'Jeles (5)'; }
+
+            showResultPopup(`Eredm\u00e9ny: ${percentage}% - ${feedback}`);
+
+            const result = {
+                topicId: TOPIC_ID,
+                topicName: TOPIC_NAME,
+                difficulty: currentTestDifficulty,
+                grade,
+                percentage,
+                timestamp: new Date().toISOString(),
+                questions: testQuestions.map((q) => ({
+                    question: q.question,
+                    userAnswer: q.userAnswer || '',
+                    correctAnswer: q.correctAnswer || formatNumber(q.answer)
+                }))
+            };
+            if (window.parent) {
+                window.parent.postMessage({ type: 'testResult', result }, '*');
+            }
+
+            isTestRunning = false;
+            if (testStartBtn) {
+                testStartBtn.disabled = false;
+                testStartBtn.hidden = false;
+                testStartBtn.innerHTML = '&Uacute;j teszt';
+            }
+            testAnswerInput.value = '';
+            currentTestAnswer = '';
+            window.currentTestAnswer = '';
+            window.currentTestKind = '';
+            if (testArea) {
+                testArea.classList.add('is-hidden');
+            }
+        }
+
+        function getEnabledPracticeDifficulties() {
+            return Array.from(practiceDifficultyInputs)
+                .filter(input => input.checked)
+                .map(input => input.value);
+        }
+
+        function pickRandomDifficulty(list) {
+            if (!list.length) return DIFF_EASY;
+            const index = randomInt(0, list.length - 1);
+            return list[index];
+        }
+
+        function buildPracticeQuestion(difficulty) {
+            const allowed = QUESTION_TYPES_BY_DIFFICULTY[difficulty] || QUESTION_TYPES_BY_DIFFICULTY[DIFF_EASY];
+            const index = randomInt(0, allowed.length - 1);
+            return buildQuestionByType(difficulty, allowed[index]);
+        }
+
+        function nextPracticeQuestion() {
+            const enabled = getEnabledPracticeDifficulties();
+            if (!enabled.length) {
+                practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
+                practiceFeedback.style.color = '#f04747';
+                return;
+            }
+            currentPracticeDifficulty = pickRandomDifficulty(enabled);
+            window.currentPracticeDifficulty = currentPracticeDifficulty;
+            const label = DIFFICULTY_LABELS[currentPracticeDifficulty] || currentPracticeDifficulty;
+            const practiceItem = buildPracticeQuestion(currentPracticeDifficulty);
+            currentPracticeAnswer = practiceItem.answer;
+            window.currentPracticeAnswer = currentPracticeAnswer;
+            window.currentPracticeKind = practiceItem.kind || '';
+            practiceQuestion.textContent = `${label} feladat: ${practiceItem.question}`;
+            practiceInput.value = '';
+            practiceFeedback.textContent = '';
+            practiceFeedback.style.color = '#2c3e50';
+        }
+
+        function checkPracticeAnswer() {
+            if (!practiceActive) return;
+            const rawInput = practiceInput.value.trim();
+            const parsed = parseNumberInput(rawInput);
+            if (parsed !== null && isClose(parsed, currentPracticeAnswer)) {
+                const xpReward = PRACTICE_XP_REWARDS[currentPracticeDifficulty] || 1;
+                practiceFeedback.textContent = `Helyes! (+${xpReward} XP)`;
+                practiceFeedback.style.color = '#43b581';
+                if (window.parent) {
+                    window.parent.postMessage({ type: 'practiceXp', xp: xpReward, topicId: TOPIC_ID }, '*');
+                }
+                setTimeout(() => {
+                    if (practiceActive) {
+                        nextPracticeQuestion();
+                    }
+                }, 2000);
+            } else {
+                practiceFeedback.textContent = 'Pr\u00f3b\u00e1ld \u00fajra!';
+                practiceFeedback.style.color = '#f04747';
+            }
+        }
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                setActiveTab(button.dataset.tab);
+            });
+        });
+
+        difficultyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const nextDifficulty = button.dataset.difficulty;
+                if (!nextDifficulty) return;
+                currentTestDifficulty = nextDifficulty;
+                difficultyButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.difficulty === currentTestDifficulty);
+                });
+                if (activeTab === 'teszt') {
+                    startTest();
+                }
+            });
+        });
+
+        if (testStartBtn) testStartBtn.addEventListener('click', startTest);
+        if (prevTestBtn) {
+            prevTestBtn.addEventListener('click', () => {
+                saveTestAnswer();
+                goToTestQuestion(currentTestIndex - 1);
+            });
+        }
+        if (nextTestBtn) {
+            nextTestBtn.addEventListener('click', () => {
+                saveTestAnswer();
+                goToTestQuestion(currentTestIndex + 1);
+            });
+        }
+        if (finishTestBtn) finishTestBtn.addEventListener('click', finishTest);
+        if (testAnswerInput) {
+            testAnswerInput.addEventListener('input', () => {
+                saveTestAnswer();
+                renderPagination();
+            });
+            testAnswerInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    saveTestAnswer();
+                    if (currentTestIndex < testQuestions.length - 1) {
+                        goToTestQuestion(currentTestIndex + 1);
+                    }
+                }
+            });
+        }
+
+        if (practiceStartBtn) {
+            practiceStartBtn.addEventListener('click', () => {
+                const enabled = getEnabledPracticeDifficulties();
+                if (!enabled.length) {
+                    practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
+                    practiceFeedback.style.color = '#f04747';
+                    return;
+                }
+                practiceActive = true;
+                practiceArea.classList.remove('is-hidden');
+                nextPracticeQuestion();
+            });
+        }
+        if (practiceCheck) practiceCheck.addEventListener('click', checkPracticeAnswer);
+        if (practiceInput) {
+            practiceInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    checkPracticeAnswer();
+                }
+            });
+        }
+
+        if (setSizeA) setSizeA.addEventListener('input', updateSetModel);
+        if (setSizeB) setSizeB.addEventListener('input', updateSetModel);
+        if (setIntersectionInput) setIntersectionInput.addEventListener('input', updateSetModel);
+        if (rangeN) rangeN.addEventListener('input', updateRangeModel);
+        if (rangeA) rangeA.addEventListener('input', updateRangeModel);
+        if (rangeB) rangeB.addEventListener('input', updateRangeModel);
+
+        if (randomSetBtn) {
+            randomSetBtn.addEventListener('click', () => {
+                const example = buildSetExample(SET_RANGES[DIFF_NORMAL]);
+                applySetExample(example);
+            });
+        }
+        if (regenSetBtn) {
+            regenSetBtn.addEventListener('click', () => {
+                renderSetExamples(generateSetExamples());
+            });
+        }
+        if (randomRangeBtn) {
+            randomRangeBtn.addEventListener('click', () => {
+                const example = buildRangeExample(MULTIPLES_RANGES[DIFF_NORMAL]);
+                applyRangeExample(example);
+            });
+        }
+
+        const initialDifficulty = Array.from(difficultyButtons)
+            .find(btn => btn.classList.contains('active'))?.dataset.difficulty;
+        if (initialDifficulty) {
+            currentTestDifficulty = initialDifficulty;
+        }
+
+        renderSetExamples(generateSetExamples());
+        updateSetModel();
+        updateRangeModel();
+        setActiveTab('elmelet');
+    </script>
+</body>
+</html>

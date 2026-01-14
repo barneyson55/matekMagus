@@ -139,6 +139,12 @@ Szerkezeti elemek:
    * válaszmezők (egy vagy több input),
    * Teszt végezkor eredményösszegzés.
 
+   Navigációs elv:
+
+   * a kérdések között **paginációs pontokkal** és **bal/jobb nyilakkal** lehet lépni,
+   * a pontok és nyilak **egy sorban** helyezkednek el,
+   * számozott „kérdés x / y” jelzés **nem szükséges**.
+
 4. **Eredménymegjelenítés**
 
    * a teszt lezárása után:

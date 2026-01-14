@@ -220,21 +220,79 @@
             display: none;
         }
 
+        .test-navigation {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #pagination-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            background-color: var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dot.answered {
+            background-color: var(--success);
+        }
+
+        .dot.current {
+            box-shadow: 0 0 0 4px var(--brand-light);
+            transform: scale(1.15);
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 46px;
+            height: 46px;
+            cursor: pointer;
+            color: var(--brand-primary);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--brand-primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(74, 85, 162, 0.2);
+        }
+
+        .nav-btn:disabled {
+            background-color: var(--bg-main);
+            color: var(--border-color);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .question-box {
+            padding: 24px;
+            border-radius: 12px;
+            background-color: var(--bg-main);
+            min-height: 160px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
         .test-question,
         .practice-question {
             font-size: 1.1em;
             margin-bottom: 10px;
-        }
-
-        .test-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .test-progress {
-            font-weight: 600;
-            color: var(--brand-primary);
         }
 
         .btn {
@@ -507,16 +565,24 @@
         </div>
         <div class="test-controls">
             <button id="start-test-btn" class="btn btn-secondary" type="button" hidden>&Uacute;j teszt</button>
-            <span id="test-progress" class="test-progress">0 / 0</span>
         </div>
         <div id="test-area" class="test-area is-hidden">
-            <div id="test-question" class="test-question"></div>
-            <input type="text" id="test-answer" class="module-input" placeholder="Válasz...">
-            <div class="test-actions">
-                <button id="test-submit" class="btn btn-primary" type="button">Ellenőrzés</button>
-                <button id="test-next" class="btn btn-secondary" type="button" hidden>Következő</button>
+            <div class="test-navigation">
+                <button id="prev-q" class="nav-btn" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg></button>
+                <div id="pagination-dots"></div>
+                <button id="next-q" class="nav-btn" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg></button>
             </div>
-            <p id="test-feedback"></p>
+            <div class="question-box">
+                <div id="test-question" class="test-question"></div>
+                <input type="text" id="test-answer" class="module-input" placeholder="Válasz...">
+            </div>
+            <button id="finish-test-btn" class="btn btn-primary" type="button" style="width: 100%;">Teszt befejezése és értékelés</button>
         </div>
     </div>
 
@@ -599,11 +665,10 @@
         const testArea = document.getElementById('test-area');
         const testQuestion = document.getElementById('test-question');
         const testAnswerInput = document.getElementById('test-answer');
-        const testSubmitBtn = document.getElementById('test-submit');
-        const testNextBtn = document.getElementById('test-next');
-        const testFeedback = document.getElementById('test-feedback');
-        const testProgress = document.getElementById('test-progress');
-
+        const paginationDots = document.getElementById('pagination-dots');
+        const prevTestBtn = document.getElementById('prev-q');
+        const nextTestBtn = document.getElementById('next-q');
+        const finishTestBtn = document.getElementById('finish-test-btn');
         const practiceStartBtn = document.getElementById('start-practice-btn');
         const practiceArea = document.getElementById('practice-area');
         const practiceQuestion = document.getElementById('practice-question');
@@ -864,24 +929,44 @@
             return questions;
         }
 
-        function updateTestProgress() {
-            if (testProgress) {
-                testProgress.textContent = `${currentTestIndex + 1} / ${testQuestions.length}`;
-            }
+        function renderPagination() {
+            if (!paginationDots) return;
+            paginationDots.innerHTML = '';
+            testQuestions.forEach((q, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (index === currentTestIndex) dot.classList.add('current');
+                if (q.userAnswer && q.userAnswer.trim().length > 0) dot.classList.add('answered');
+                dot.addEventListener('click', () => {
+                    saveTestAnswer();
+                    goToTestQuestion(index);
+                });
+                paginationDots.appendChild(dot);
+            });
         }
 
-        function showTestQuestion(index) {
-            const current = testQuestions[index];
+        function saveTestAnswer() {
+            if (!testQuestions[currentTestIndex] || !testAnswerInput) return;
+            testQuestions[currentTestIndex].userAnswer = testAnswerInput.value.trim();
+        }
+
+        function renderTestQuestion() {
+            const current = testQuestions[currentTestIndex];
             if (!current) return;
             testQuestion.textContent = current.question;
             currentTestAnswer = current.answer;
             window.currentTestAnswer = currentTestAnswer;
             window.currentTestKind = current.kind || '';
-            testAnswerInput.value = '';
-            testFeedback.textContent = '';
-            testSubmitBtn.disabled = false;
-            testNextBtn.hidden = true;
-            updateTestProgress();
+            testAnswerInput.value = current.userAnswer || '';
+            renderPagination();
+            if (prevTestBtn) prevTestBtn.disabled = currentTestIndex === 0;
+            if (nextTestBtn) nextTestBtn.disabled = currentTestIndex >= testQuestions.length - 1;
+        }
+
+        function goToTestQuestion(index) {
+            if (index < 0 || index >= testQuestions.length) return;
+            currentTestIndex = index;
+            renderTestQuestion();
         }
 
         function startTest() {
@@ -890,39 +975,13 @@
             correctAnswers = 0;
             isTestRunning = true;
             testArea.classList.remove('is-hidden');
-            testNextBtn.hidden = true;
             window.currentTestQuestionCount = testQuestions.length;
             window.currentTestDifficulty = currentTestDifficulty;
             if (testStartBtn) {
                 testStartBtn.disabled = true;
                 testStartBtn.hidden = true;
             }
-            showTestQuestion(currentTestIndex);
-        }
-
-        function checkTestAnswer() {
-            if (!isTestRunning) return;
-            const rawInput = testAnswerInput.value.trim();
-            const parsed = parseNumberInput(rawInput);
-            const isCorrect = parsed !== null && isClose(parsed, currentTestAnswer);
-            const formattedCorrect = formatNumber(currentTestAnswer);
-            const formattedUser = parsed !== null ? formatNumber(parsed) : rawInput;
-            testQuestions[currentTestIndex].userAnswer = formattedUser;
-            testQuestions[currentTestIndex].correctAnswer = formattedCorrect;
-            testQuestions[currentTestIndex].isCorrect = isCorrect;
-            if (isCorrect) {
-                correctAnswers += 1;
-                testFeedback.textContent = 'Helyes! ✅';
-                testFeedback.style.color = '#43b581';
-            } else {
-                testFeedback.textContent = `Helytelen. Helyes válasz: ${formattedCorrect}`;
-                testFeedback.style.color = '#f04747';
-            }
-            testSubmitBtn.disabled = true;
-            testNextBtn.textContent = (currentTestIndex === testQuestions.length - 1)
-                ? 'Eredmény'
-                : 'Következő';
-            testNextBtn.hidden = false;
+            renderTestQuestion();
         }
 
         function showResultPopup(message) {
@@ -934,7 +993,16 @@
         }
 
         function finishTest() {
+            saveTestAnswer();
             const total = testQuestions.length || 1;
+            correctAnswers = 0;
+            testQuestions.forEach((q) => {
+                const parsed = parseNumberInput(q.userAnswer || '');
+                const isCorrect = parsed !== null && isClose(parsed, q.answer);
+                q.correctAnswer = formatNumber(q.answer);
+                q.isCorrect = isCorrect;
+                if (isCorrect) correctAnswers += 1;
+            });
             const percentage = Math.round((correctAnswers / total) * 100);
             let grade = 0;
             let feedback = '';
@@ -970,19 +1038,13 @@
                 testStartBtn.hidden = false;
                 testStartBtn.innerHTML = '&Uacute;j teszt';
             }
-            testNextBtn.hidden = true;
             testAnswerInput.value = '';
             currentTestAnswer = '';
             window.currentTestAnswer = '';
-        }
-
-        function goToNextTestQuestion() {
-            if (currentTestIndex >= testQuestions.length - 1) {
-                finishTest();
-                return;
+            window.currentTestKind = '';
+            if (testArea) {
+                testArea.classList.add('is-hidden');
             }
-            currentTestIndex += 1;
-            showTestQuestion(currentTestIndex);
         }
 
         function getEnabledPracticeDifficulties() {
@@ -1065,13 +1127,31 @@
         });
 
         if (testStartBtn) testStartBtn.addEventListener('click', startTest);
-        if (testSubmitBtn) testSubmitBtn.addEventListener('click', checkTestAnswer);
-        if (testNextBtn) testNextBtn.addEventListener('click', goToNextTestQuestion);
+        if (prevTestBtn) {
+            prevTestBtn.addEventListener('click', () => {
+                saveTestAnswer();
+                goToTestQuestion(currentTestIndex - 1);
+            });
+        }
+        if (nextTestBtn) {
+            nextTestBtn.addEventListener('click', () => {
+                saveTestAnswer();
+                goToTestQuestion(currentTestIndex + 1);
+            });
+        }
+        if (finishTestBtn) finishTestBtn.addEventListener('click', finishTest);
         if (testAnswerInput) {
+            testAnswerInput.addEventListener('input', () => {
+                saveTestAnswer();
+                renderPagination();
+            });
             testAnswerInput.addEventListener('keydown', (event) => {
                 if (event.key === 'Enter') {
                     event.preventDefault();
-                    checkTestAnswer();
+                    saveTestAnswer();
+                    if (currentTestIndex < testQuestions.length - 1) {
+                        goToTestQuestion(currentTestIndex + 1);
+                    }
                 }
             });
         }

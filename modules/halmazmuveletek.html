@@ -280,7 +280,7 @@
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 30px;
+            flex: 1;
         }
 
         .dot {
@@ -416,10 +416,10 @@
         }
 
         .test-navigation {
-            margin-top: 25px;
+            margin: 20px 0;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 12px;
         }
 
         .nav-btn {
@@ -623,21 +623,20 @@
             <button id="start-test-btn" class="btn btn-secondary" type="button" hidden>&Uacute;j teszt</button>
         </div>
         <div id="test-area">
-            <div id="pagination-dots"></div>
-            <div class="question-box" id="question-box">
-                <div id="question-text"></div>
-                <div id="answer-area"></div>
-            </div>
             <div class="test-navigation">
                 <button id="prev-q" class="nav-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="15 18 9 12 15 6"></polyline>
                     </svg></button>
-                <h3><span id="current-q-num">1</span> / 10. kérdés</h3>
+                <div id="pagination-dots"></div>
                 <button id="next-q" class="nav-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg></button>
+            </div>
+            <div class="question-box" id="question-box">
+                <div id="question-text"></div>
+                <div id="answer-area"></div>
             </div>
             <hr style="margin: 25px 0; border: 1px solid var(--border-color);">
             <button id="finish-test-btn" class="btn btn-primary" style="width: 100%;">Teszt befejezése és értékelés</button>
@@ -751,7 +750,6 @@
             nextBtn: document.getElementById('next-q'),
             finishTestBtn: document.getElementById('finish-test-btn'),
             resultPopup: document.getElementById('resultPopup'),
-            currentQNum: document.getElementById('current-q-num'),
             opButtons: document.querySelectorAll('.op-button'),
             definitionBox: document.getElementById('definition-box'),
             vennSvg: document.getElementById('venn-svg'),
@@ -969,7 +967,6 @@
             } else if (q.type === 'input') {
                 dom.answerArea.innerHTML = `<input type="text" class="options-input module-input" placeholder="pl: 1,2,3" value="${q.userAnswer || ''}" oninput="saveAnswer()">`;
             }
-            dom.currentQNum.textContent = currentQuestionIndex + 1;
             dom.prevBtn.disabled = currentQuestionIndex === 0;
             dom.nextBtn.disabled = currentQuestionIndex === questions.length - 1;
             renderMathInElement(dom.questionBox, {

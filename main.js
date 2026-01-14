@@ -8,6 +8,11 @@ const { app, BrowserWindow, session, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
+const customUserDataDir = process.env.MATEK_MESTER_USER_DATA;
+if (customUserDataDir) {
+  app.setPath('userData', customUserDataDir);
+}
+
 // Paths for storing progress and settings in the user's data directory
 const progressFilePath = path.join(app.getPath('userData'), 'progress.json');
 const settingsFilePath = path.join(app.getPath('userData'), 'settings.json');

@@ -43,7 +43,7 @@ Logikai mezők (példa):
 
 * `templateId` – sablon egyedi azonosítója.
 * `topicId` – melyik témakörhöz tartozik.
-* `difficulty` – melyik nehézségi szinthez soroljuk (`easy` / `normal` / `hard`).
+* `difficulty` – melyik nehézségi szinthez soroljuk (`könnyű` / `normál` / `nehéz`).
 * `parameterSpec` – milyen paraméterekből generálható változat:
 
   * pl. szám-tartományok, halmazméretek, halmazelemek tartománya.
@@ -144,13 +144,13 @@ Ha a sablon domain-je kicsi (kevés lehetséges variáció):
 ### 2.3. Nehézségi eloszlás és keverés
 
 Ha a felhasználó több nehézségi szintet is bepipált
-(pl. `könnyű` + `közepes`), a motor:
+(pl. `könnyű` + `normál`), a motor:
 
 * egy **nehézség-választó logika** alapján dönti el,
   hogy a következő kérdés melyik szintről érkezzen,
 * egyszerű esetben ez lehet egyenletes eloszlás,
-* később lehet **súlyozott** (pl. 70% könnyű, 30% közepes),
-* vagy akár adaptív (ha a tanuló túl könnyen megoldja, több közepes / nehéz jön).
+* később lehet **súlyozott** (pl. 70% könnyű, 30% normál),
+* vagy akár adaptív (ha a tanuló túl könnyen megoldja, több normál / nehéz jön).
 
 A nehézség-döntés szerkezeti fogalom, a konkrét algoritmus
 (egyenletes vs. adaptív) későbbi game design kérdés.
@@ -194,7 +194,7 @@ sorrendfüggetlen összehasonlítás szükséges).
   * XP-eventet küld az XP-rendszer felé (lásd: `structure/xp-system.md`):
 
     * könnyű kérdés → 1 XP,
-    * közepes kérdés → 2 XP,
+    * normál kérdés → 2 XP,
     * nehéz kérdés → 3 XP,
   * az XP hozzáadódik a globális `totalXp`-hez,
   * frissül a felső fejléc XP-sávja.

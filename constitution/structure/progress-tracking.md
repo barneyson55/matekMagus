@@ -97,7 +97,7 @@ Minden teszthez (témakör / altéma / főtéma) az alábbi alapadatokat tárolj
 
 Témakör szinten a tesztek több nehézségi szinten léteznek:
 
-* `difficulty` ∈ { `easy`, `normal`, `hard` }.
+* `difficulty` ∈ { `könnyű`, `normál`, `nehéz` }.
 
 Logikai struktúra:
 
@@ -115,23 +115,33 @@ A `bestGrade` mező alapján döntjük el:
 * a témakör **nehézségi szinten** kimaxolt-e,
 * modul-szinten mikor teljesülnek a kimaxolási feltételek.
 
-#### 1.3.2. Altéma és főtéma tesztek – egy teszt, nehézség nélkül
+#### 1.3.2. Altéma tesztek – nehézségi szintekkel
 
-Altéma és főtéma teszteknél nincs nehézségi bontás.
+Altéma szinten is több nehézségi szint létezik:
+
+* `difficulty` ∈ { `könnyű`, `normál`, `nehéz` }.
 
 Logikai struktúra:
 
-* `subtopicResults[subtopicId]`:
+* `subtopicResults[subtopicId].difficulties[difficulty]`:
 
-  * `bestGrade`
-  * `attempts[]`
+  * `bestGrade` – legjobb jegy az adott nehézségen,
+  * `attempts[]` – próbálkozási előzmények.
+
+Ezek a mezők az altéma-tesztek **nehézségenkénti legjobb jegyét** tartják nyilván.
+
+#### 1.3.3. Főtéma tesztek – egy teszt, nehézség nélkül
+
+Főtéma szinten egyetlen összefoglaló teszt létezik.
+
+Logikai struktúra:
 
 * `mainTopicResults[mainTopicId]`:
 
   * `bestGrade`
   * `attempts[]`
 
-Ezek a mezők a témazáró és modulzáró tesztek **legjobb elért jegyét** tartják nyilván.
+Ezek a mezők a modulzáró tesztek **legjobb elért jegyét** tartják nyilván.
 
 ### 1.4. Gyakorlás statisztikák
 
@@ -142,7 +152,7 @@ A gyakorlás célja elsősorban az **XP-szerzés** és készségfejlesztés, nem
 Logikai szinten opcionálisan tárolhatjuk:
 
 * összes helyes válasz gyakorlásban,
-* nehézség szerinti bontást (pl. `practiceStats.easy.correctCount`),
+* nehézség szerinti bontást (pl. `practiceStats["könnyű"].correctCount`),
 * sorozatok (streak-ek) hosszát,
 * legutóbbi gyakorlási időpontot.
 
@@ -211,7 +221,8 @@ Hatás:
 3. **XP-event generálása**:
 
    * a teszteredmény alapján XP-jutalom számítódik (lásd: `xp-system.md`),
-   * az XP hozzáadódik a `totalXp` mezőhöz,
+   * **csak javulás esetén** kerül jóváírásra az új és a korábbi legjobb jegyhez tartozó XP különbözete,
+   * ez az XP hozzáadódik a `totalXp` mezőhöz,
    * szükség esetén szintlépés esemény is létrejön.
 
 ### 2.3. Gyakorlófeladat megoldása
@@ -224,7 +235,7 @@ Hatás:
 
 * XP-event generálása a kérdés nehézségi szintje alapján
   (1 / 2 / 3 XP, lásd: `xp-system.md`).
-* a releváns gyakorlás statisztikák növelése (pl. `practiceStats.easy.correctCount++`).
+* a releváns gyakorlás statisztikák növelése (pl. `practiceStats["könnyű"].correctCount++`).
 
 A gyakorlás **nem módosítja közvetlenül** a `bestGrade` mezőket
 és a quest `status` mezőket.

@@ -40,7 +40,7 @@ Ide tartozik minden olyan adat, ami a tanuló **egyéni előrehaladását** írj
   főtéma / altéma / témakör szinten
 * teszteredmények:
 
-  * bestGrade értékek (témakör + nehézség, altéma, főtéma)
+  * bestGrade értékek (témakör + nehézség, altéma + nehézség, főtéma)
   * próbálkozási előzmények (attempts)
 * gyakorlás statisztikák (opc.):
 

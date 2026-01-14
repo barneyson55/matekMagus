@@ -74,7 +74,7 @@ nehézségi szintek szerint.
 Minden helyes megoldás után XP jár, a kérdés **nehézségi szintjétől függően**:
 
 * `könnyű` kérdés → **1 XP**
-* `közepes` kérdés → **2 XP**
+* `normál` kérdés → **2 XP**
 * `nehéz` kérdés → **3 XP**
 
 Ez az érték skálázható a későbbiekben, de szerkezeti szinten:
@@ -119,7 +119,7 @@ Ez az érték skálázható a későbbiekben, de szerkezeti szinten:
 A Teszt fülön a tanuló **értékeléssel járó** feladatsorokat teljesít:
 
 * témakör szinten (nehézségi szintekkel),
-* altéma szinten (egy teszt, nehézségi bontás nélkül),
+* altéma szinten (nehézségi szintekkel),
 * főtéma szinten (összefoglaló teszt, nehézségi bontás nélkül).
 
 ### 4.1. Témaköri tesztek XP-je (nehézségi szinttel)
@@ -135,27 +135,42 @@ Szerkezeti elv:
 * a ténylegesen jóváírt XP a **jegytől függő szorzóval** módosul,
 * a pontos képlet (pl. `XP = baseTopicXP * difficultyMult * gradeMult`) az XP-formula dokumentumban van definiálva.
 
-A rendszer minden sikeres teszt után:
+A rendszer sikeres teszt után:
 
 * frissíti a `best_grade_difficulty_level` értéket,
-* hozzáadja a kiszámolt XP-t a tanuló globális XP-jéhez.
+* **csak javulás esetén** ad XP-t: az új jegyhez tartozó XP és a korábbi legjobb jegyhez tartozó XP **különbözete** kerül jóváírásra,
+* ha nincs javulás, nem jár új XP.
 
-### 4.2. Altéma és főtéma tesztek XP-je
+### 4.2. Altéma tesztek XP-je (nehézségi szinttel)
 
-Altéma és főtéma esetén **nincs nehézségi bontás**, egyetlen teszt tartozik az egységhez.
+Altéma szinten a tesztekhez nehézségi szint tartozik (`könnyű` / `normál` / `nehéz`).
 
 Szerkezeti elv:
 
-* altéma/főtémak teszteknél is:
+* minden altéma + nehézségi szint kombinációhoz tartozik egy **alap XP-érték**,
+* a ténylegesen jóváírt XP a **jegytől** és **nehézségi szinttől** függhet,
+* a pontos képlet az XP-formula dokumentumban van definiálva.
 
-  * jegy keletkezik (1–5),
-  * XP-jutalom keletkezhet,
+Itt is:
+
+* frissül a nehézségi szinthez tartozó **legjobb jegy**,
+* **csak javulás esetén** kerül jóváírásra az új és a korábbi legjobb jegyhez tartozó XP-különbözet.
+
+### 4.3. Főtéma tesztek XP-je (nehézségi bontás nélkül)
+
+Főtéma szinten **nincs nehézségi bontás**, egyetlen összefoglaló teszt tartozik az egységhez.
+
+Szerkezeti elv:
+
+* jegy keletkezik (1–5),
+* XP-jutalom keletkezhet,
 * az XP-jutalom függhet:
 
-  * a teszt típusától (altéma vs főtéma),
+  * a teszt típusától (főtéma),
   * a jegytől,
 
-Itt is az XP-formulák rögzítik a tényleges számítást.
+Itt is az XP-formulák rögzítik a tényleges számítást, és **csak javulás esetén**
+kerül jóváírásra a korábbi legjobb jegyhez képesti XP-különbözet.
 
 ---
 

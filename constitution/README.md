@@ -1,25 +1,41 @@
-# Constitution Mappa
+# Constitution Folder
 
-Ez a mappa tartalmaz minden tervet és specifikációt, ami a matekMagus alkalmazás működését definiálja. Csak a tervezési és fejlesztési fázisban használjuk ezt a mappát; a végleges kódban nem szerepelnek ezek a fájlok.
+This folder holds design and specification docs for MatekMagus. These files guide
+implementation and are not shipped with the final build.
 
-## Cél
+## Purpose
+- Provide a single source of truth for structure, flow, and UI behavior.
+- Define XP, level, quest lifecycle, and curriculum scope.
+- Keep visuals consistent across themes.
 
-A constitution biztosítja, hogy az alkalmazás fejlesztése strukturált és konzisztens legyen. Itt definiáljuk az XP rendszert, achievementeket, skineket és a tananyagok nehezségét, hogy a program logikusan és motiválóan működjön.
+## Structure
+- xp/: XP and level system docs
+  - xp_formula.md
+  - xp_roadmap.md
+- achievements/: Achievement plan
+  - README.md
+- curriculum/: Curriculum hierarchy and difficulty weights
+  - roadmap.md
+  - difficulties.md
+- structure/: App shell, navigation, module lifecycle, progress tracking
+  - app-shell.md
+  - navigation-flow.md
+  - module-view.md
+  - module-lifecycle.md
+  - quest-log.md
+  - settings-overlay.md
+  - xp-system.md
+  - practice-enginge.md
+  - progress-tracking.md
+  - persistence-and-sync.md
+  - character-sheet.md
+- style/: Visual style rules and tokens
+  - app-shell.md
+  - colors-and-themes.md
+  - quest-log.md
+  - typography-and-icons.md
+  - ui-elements.md
 
-## Struktúra
-
-- **xp/**: XP rendszer tervei, szintlépés, jutalmak.
-  - README.md: XP rendszer áttekintése.
-  - xp_progress_plan.md: Témák súlyai és baseXP-ek.
-  - level_names.md: Szintenkénti nevek a tanulók motivációjára.
-
-- **achievements/**: Achievementek tervezése.
-  - README.md: Achievementek listája és logikája.
-
-- **skins/**: Felhasználói testreszabás tervei.
-  - colors.md: Színsémák.
-  - backgrounds.md: Háttér opciók.
-  - themes.md: Általános témák.
-
-- **curriculum/**: Tananyagok nehezsége és részletei.
-  - difficulties.md: Főtémák, altémák, témakörök nehezségének leírása.
+Notes:
+- The xp docs above replace older "xp_progress_plan" and "level_names" files.
+- There is no skins/ directory; theme tokens live in style/.

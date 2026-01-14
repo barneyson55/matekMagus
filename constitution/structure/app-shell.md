@@ -121,8 +121,8 @@ Három állapot:
 * Élénk szín + **zöld pipa**.
 * **Definíció:**
 
-  * minden **témakörben** minden **nehézségi szinten** (könnyű/közepes/nehéz) a legjobb jegy megszerzése,
-  * **ÉS** minden altéma és főtémakör **egyetlen** tesztjén **ötös** jegy elérése (nincs nehézségi szint).
+  * minden **témakörben** minden **nehézségi szinten** (könnyű/normál/nehéz) a legjobb jegy megszerzése,
+  * **ÉS** minden altéma **minden nehézségi szintjén** **ötös** jegy elérése, továbbá minden főtémakör **egyetlen** tesztjén **ötös** jegy elérése.
 
 A kimaxolt modul továbbra is interaktív, tesztek és gyakorlások végezhetők.
 

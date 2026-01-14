@@ -299,4 +299,5 @@ A `colors-and-themes` rendszer célja, hogy:
 * egyben teret adjon többféle világ (Pergamen, Galaxis, Futurisztikus, Dark, Custom) megvalósításának.
 
 A konkrét theme-ek részleteit külön skin-leírások bontják ki
-(pl. `skins/pergamen.md`, `skins/galaxis.md`, stb.), erre ez a dokumentum adja az **alap keretet**.
+ha később theme-specifikus leírások születnek, azok a `style/` alá kerülhetnek;
+erre ez a dokumentum adja az **alap keretet**.

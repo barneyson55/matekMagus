@@ -192,7 +192,7 @@ Lehetséges tartalmak:
 * Témakör-szintű eredmények:
 
   * témakör neve,
-  * nehézségi szintek legjobb jegye (pl. `könnyű: 5`, `közepes: 4`, `nehéz: 5`),
+  * nehézségi szintek legjobb jegye (pl. `könnyű: 5`, `normál: 4`, `nehéz: 5`),
   * kattintásra az adott témakör Teszt vagy Eredmény-alnézetére ugrik.
 
 * Altéma és főtéma tesztek eredményei:

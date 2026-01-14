@@ -82,9 +82,9 @@ Minden altéma sor tartalmaz:
   * kattintva lefelé mutat (▼) → a témakörök megjelennek az altéma alatt.
 * altéma név (pl. „Halmazműveletek alapjai”),
 * állapotjelzést az altémára vonatkozóan:
-  * `NOT_ACCEPTED` – még nem írt belőle témazárót,
-  * `ACTIVE` – már írt belőle tesztet, de még nincs max jegy,
-  * `COMPLETED` – a témazáróból max (pl. 5-ös) jegyet ért el.
+  * `NOT_ACCEPTED` – még nincs altéma-tesztpróba,
+  * `ACTIVE` – van altéma-tesztpróba, de nem minden nehézségi szinten max a jegy,
+  * `COMPLETED` – az altéma-tesztből minden nehézségi szinten max (pl. 5-ös) jegyet ért el.
 
 Az altéma sorára kattintva:
 
@@ -174,7 +174,7 @@ Jellemzők:
 * `COMPLETED` állapot akkor jön létre, ha a `structure/module-lifecycle.md`-ben
   definiált **kimaxolási feltételek** az adott szinten teljesülnek:
   * témakör: minden nehézségi szinten max jegy,
-  * altéma: témazáró max jegy,
+  * altéma: altéma-teszt minden nehézségi szinten max jegy,
   * főtéma: modulzáró max jegy + alárendelt egységek teljesítése.
 * A Quest Log listában az elem:
 

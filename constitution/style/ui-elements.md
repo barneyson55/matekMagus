@@ -213,4 +213,148 @@ Ha valahol hosszabb válasz / jegyzet szükséges:
 
 Használat:
 
-* Gyakorlás nehézségi szintek választása (`könnyű / közepes / nehéz`)
+* Gyakorlás nehézségi szintek választása (`könnyű / normál / nehéz`)
+
+Vizuális elv:
+
+* Enyhén lekerekített négyzet vagy tiszta négyzetforma.
+* Jelölés: kontrasztos pipa vagy kitöltés.
+* A felirat (label) közvetlen mellette, kattintható területtel.
+
+Állapotok:
+
+* `default` / `hover` / `checked` / `disabled` / `focused`.
+* Fókusszal mindig látható outline (akadálymentesítés).
+
+### 3.4. Rádiógombok (radio)
+
+Használat:
+
+* Egyszeres választás, ahol csak egy opció lehet aktív.
+
+Vizuális elv:
+
+* Kör alapú jelölő, aktív állapotban középső ponttal.
+* Felirat a jelölő mellett, ugyanaz a tipográfia, mint a checkboxnál.
+
+### 3.5. Csúszka (range slider)
+
+Használat:
+
+* Beállítások (pl. overlay áttetszőség, modul-kártya opacity).
+
+Vizuális elv:
+
+* Két rész: track + thumb.
+* Track: finom háttér, aktív rész kiemelt színnel.
+* Thumb: kör alak, megfelelő kontraszttal, hover-re kiemelés.
+
+### 3.6. Választólista (select / dropdown)
+
+Használat:
+
+* Csak ott, ahol tényleg szükséges (pl. modul-specifikus választó, ritka beállítás).
+
+Vizuális elv:
+
+* Panel-háttér, finom border.
+* Nyitott állapotban a lista kártyaszerű blokk.
+* Aktív opció kiemelve, de olvasható marad.
+
+---
+
+## 4. Fülek (Tabs)
+
+Használat:
+
+* Modulnézet fő fülei (Elmélet / Vizuális modell / Teszt / Gyakorlás).
+
+Vizuális elv:
+
+* Aktív fül: erősebb szín, enyhe háttér vagy aláhúzás.
+* Inaktív fül: halványabb szín, nélkülözhető kontraszt.
+* Billentyűzettel is váltható (left/right, tab).
+
+---
+
+## 5. Kártyák / Panelek
+
+Használat:
+
+* Elmélet blokk, vizuális modell kártya, teszt/gyakorlás kérdés dobozok.
+
+Vizuális elv:
+
+* Enyhén lekerekített sarkok.
+* Finom border + visszafogott árnyék.
+* Opcionális fejléc / footer rész.
+
+---
+
+## 6. Visszajelzések (feedback)
+
+Használat:
+
+* Teszt/gyakorlás helyes/hibás visszajelzés.
+
+Vizuális elv:
+
+* `success` / `error` / `info` státusz-színek.
+* Rövid, egyértelmű szöveg.
+* Ne takarja el a tartalmat, csak emelje ki.
+
+---
+
+## 7. Overlay-ek és modálok
+
+Használat:
+
+* Beállítás overlay, teszteredmény modál, részletes eredmény nézet.
+
+Vizuális elv:
+
+* Háttér elhomályosítás / sötétített réteg.
+* Központi panel, jól olvasható, görgethető.
+* Bezárás: X gomb, ESC, háttér kattintás (ha engedélyezett).
+
+---
+
+## 8. Teszt-navigáció és pagináció
+
+Használat:
+
+* Teszt kérdések közötti léptetés.
+
+Vizuális elv:
+
+* Paginációs pontok és bal/jobb nyilak **egy sorban**.
+* Alapállapot: pontok szürkék (inaktív).
+* Megválaszolt pont: zöld (pozitív státusz).
+* Aktuális pont kiemelve, megválaszolt pont diszkrét jelzéssel.
+* A nyilak disabled állapotban halványak.
+
+---
+
+## 9. Progress indikátorok
+
+Használat:
+
+* XP / szint haladás, teszteredmény sávok.
+
+Vizuális elv:
+
+* Kerekített sáv, kitöltés fokozatos.
+* Százalék opcionálisan megjelenik, de ne zsúfolja a UI-t.
+
+---
+
+## 10. Tooltip és hint
+
+Használat:
+
+* XP tooltip, gyors segédek (input formátum, példa).
+
+Vizuális elv:
+
+* Kicsi panel, magas kontraszt, gyors eltűnés.
+* Billentyűzetes fókuszra is megjelenik.

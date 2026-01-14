@@ -130,7 +130,7 @@ Logikai működés:
 
 * A kiválasztott skin az aktuális felhasználó **profilhoz kötött beállítás**.
 * A skin a teljes alkalmazásra (App Shell + modulok + karakterlap) érvényes.
-* A skinhez tartozó stílus-definíciókat (színek, betűk, díszítések) a `style/` és a korábbi `skins` koncepció egyesített dokumentumai tartalmazzák.
+* A skinhez tartozó stílus-definíciókat (színek, betűk, díszítések) a `style/` dokumentumok tartalmazzák.
 
 ### 4.2. Felhasználói felület & Hozzáférhetőség
 
@@ -168,7 +168,7 @@ Lehetséges beállítások:
 * **Vizuális segítségek** (pl. kiemelések, segéd-vonalak a diagramokon).
 * **Alapértelmezett nehézségi szint** gyakorláskor:
 
-  * pl. legutóbb használt, vagy mindig könnyű / közepes / nehéz.
+* pl. legutóbb használt, vagy mindig könnyű / normál / nehéz.
 
 ### 4.5. Adatok & Reset (opcionális)
 

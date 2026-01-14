@@ -117,14 +117,19 @@ Tipikus fülek:
 
 A Teszt fül használatának fő lépései:
 
-1. A felhasználó a kiválasztott **témakörön** és **nehézségi szinten** tesztet indít.
-2. Kitölti a tesztet, elküldi a megoldást.
-3. A rendszer kiértékeli:
+1. Teszt indítás:
+
+   * **témakör** esetén nehézségi szintet választ (`könnyű` / `normál` / `nehéz`),
+   * **altéma** esetén nehézségi szintet választ, majd rövid ismertető után `Teszt indítása` gombbal indul a teszt,
+   * **főtéma** esetén rövid ismertető után `Teszt indítása` gombbal indul a teszt.
+2. A teszt a paginációs pontok + bal/jobb nyilak sávval navigálható, a kérdések ez alatt jelennek meg.
+3. A felhasználó kitölti a tesztet, elküldi a megoldást.
+4. A rendszer kiértékeli:
 
    * jegyet generál a témakör + nehézségi szint kombinációhoz,
    * frissíti a témakörre vonatkozó `best_grade_difficulty_level` adatot.
-4. Eredmény megjelenik (pl. összefoglaló dobozban vagy modálban).
-5. A felhasználó:
+5. Eredmény megjelenik (pl. összefoglaló dobozban vagy modálban), válasz-áttekintővel és helyes megoldásokkal.
+6. A felhasználó:
 
    * maradhat a Teszt fülön (új próba), vagy
    * válthat Gyakorlás fülre, vagy
@@ -136,7 +141,7 @@ A modul kimaxolása szempontjából **csak a tesztek jegyei számítanak**, nem 
 
 A Gyakorlás fül tipikus folyamata (példa-szinten):
 
-1. A tanuló kiválasztja, mely nehézségi szintekről szeretne kérdéseket kapni (könnyű / közepes / nehéz) – akár több egyszerre is.
+1. A tanuló kiválasztja, mely nehézségi szintekről szeretne kérdéseket kapni (könnyű / normál / nehéz) – akár több egyszerre is.
 2. A rendszer **véletlenszerűen** generál feladatokat az adott témakörből, a kiválasztott nehézségi szintek alapján. A kérdések a nehézségi szintekhez igazodnak, de tartalmuk randomizált függvények által készül el (pl. véletlenszerűen generált számok, véletlenszerűen generált kérdések, stb.). Így a tanuló nagy eséllyel nem fogja kétszer ugyanazt a kérdést kapni, jobban tanulhat.
 3. Minden kérdésnél:
 

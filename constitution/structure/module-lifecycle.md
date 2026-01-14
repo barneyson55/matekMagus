@@ -22,7 +22,7 @@ Nem foglalkozik vizuális megjelenéssel (színek, ikonok, betűtípusok), kizá
 A tananyag hierarchikusan épül fel. A releváns szintek:
 
 1. **Főtéma** – Egy teljes középiskolai osztály tananyagának összefoglalója, gyűjteménye, egy bizonyos szintet szimbolizál a tanluó tudásának megflelően, egymásra építve, egyre nehezedve. Csak egy teszt létezik a legvégén, ha minden altémáját és témakörét elvégezte a tanuló, majd egy modulzáró írásával jegyet kap rá és a modul kimaxolódik, ha elérte az 5-ösjegyet a modulzáróban.
-2. **Altéma** – Egy biznyos témát foglal össze a tanéven belül, így a témakörei elvégzése után témazáró írható belőle, egyetlen nehézségi szinttel, majd a tanuló elérhet jegyet a témazáróban. A témazáró kimaxolása akkor történik, ha megkapta rá az 5-ös jegyet.
+2. **Altéma** – Egy bizonyos témát foglal össze a tanéven belül, így a témakörei elvégzése után témazáró írható belőle, **nehézségi szintekkel** (`könnyű` / `normál` / `nehéz`). A témazáró kimaxolása akkor történik, ha **minden nehézségi szinten** megkapta rá az 5-ös jegyet.
 3. **Témakör** – Egy témán belüli témakör, nehézségi szintek szerinti tesztekkel, minden nehézségi szinten elért teljesítmény után különböző XP jutalmat kap a hallgató, az elért jegy függvényében. Témakörön belül XP jutalomért gyakorlások tölthetőek ki. Ezekben az entitásokban lehet elsajátítani a témával kapcsoaltos tudást, itt van megtanítva a tanuló arra, amiről valójában szól a témakör, részben az altéma, és a főtéma. Képletekkel, szöveggel, vizuális segítséggel, amit éppen az adott tudás igényel a megértetéshez.  
 
 A **quest log** (bal oldali sáv) modul-szinten mutatja a haladást, de a modul állapotát az alatta lévő szinteken elért teljesítmény határozza meg.
@@ -107,42 +107,71 @@ A **témakörök** azok az egységek, ahol a tanuló **több nehézségi szinten
 
 * Elérhető nehézségi szintek (tipikusan):
 
-  * `könnyű` (easy),
-  * `közepes` (normal),
-  * `nehéz` (hard).
+  * `könnyű`,
+  * `normál`,
+  * `nehéz`.
 
 * Minden nehézségi szinthez tartozik:
 
   * egy vagy több teszt-próba,
   * minden próbából jegy (1–5 vagy hasonló skála) származik.
+  * kérdésszám: **10 kérdés / nehézségi szint**.
 
 A rendszer **témakör szinten** nyilvántartja:
 
 * adott témakör + adott nehézségi szint **legjobb elért jegyét** (`best_grade_difficulty_level`).
 
-### 3.2. Altéma – egyetlen teszt, nehézségi bontás nélkül
+### 3.2. Altéma – nehézségi szintekkel rendelkező tesztek
 
 Az **altéma** esetén:
 
-* csak **egyetlen teszt** tartozik az adott altémához,
-* **nincs nehézségi szint bontás** (nincs easy/normal/hard variáns),
-* a tanuló itt is jegyet szerez (jellemzően 1–5 közötti).
+* nehézségi szintek: `könnyű` / `normál` / `nehéz`,
+* minden nehézségi szinthez tartozik tesztpróba,
+* a tanuló itt is jegyet szerez (jellemzően 1–5 közötti),
+* kérdésszám: **10 kérdés / nehézségi szint**.
 
-A rendszer altéma szinten nyilvántartja:
+A rendszer altéma szinten nehézségi bontásban nyilvántartja:
 
-* az **elért legjobb jegyet** az altéma egyetlen tesztjéből (`best_grade_subtopic`).
+* az **elért legjobb jegyet** az altéma + nehézség kombinációra (`subtopicId + difficulty`).
 
 ### 3.3. Főtéma – egyetlen teszt, nehézségi bontás nélkül
 
 A **főtéma** hasonló az altémához abból a szempontból, hogy:
 
 * a modul egy-egy főbb egységéhez **egy darab összefoglaló teszt** tartozik,
-* **nincs nehézségi szint bontás** (nincs easy/normal/hard),
+* **nincs nehézségi szint bontás** (nincs könnyű/normál/nehéz),
 * a tanuló itt is jegyet szerez.
+* kérdésszám: **20 kérdés**.
 
 A rendszer főtémak szinten nyilvántartja:
 
 * az **elért legjobb jegyet** a főtémak tesztjéből (`best_grade_maintopic`).
+
+---
+
+### 3.4. Quest-hierarchia státusz aggregáció
+
+Az állapotok a hierarchiában (főtéma → altéma → témakör) **egymásra hatnak**. Az
+aggregáció azt jelenti, hogy a szülő szint státusza nem csak a saját tesztjeiből,
+hanem az alatta lévő szintek állapotából is számítódik, és a Quest Logban ez a
+**összegzett** állapot jelenik meg:
+
+* **Témakör**
+  * `NOT_ACCEPTED`: nincs elfogadás és nincs tesztpróba.
+  * `ACTIVE`: elfogadta, vagy legalább egy tesztpróbája van.
+  * `COMPLETED`: minden nehézségi szinten elérte a max jegyet.
+
+* **Altéma**
+  * `NOT_ACCEPTED`: nincs elfogadás és nincs altéma-tesztpróba, valamint nincs aktív/kimaxolt témakör alatta.
+  * `ACTIVE`: elfogadta, vagy van altéma-tesztpróba, vagy legalább egy alá tartozó témakör `ACTIVE`/`COMPLETED`.
+* `COMPLETED`: altéma-tesztből **minden nehézségi szinten** max jegy **és** minden alá tartozó témakör `COMPLETED`.
+
+* **Főtéma**
+  * `NOT_ACCEPTED`: nincs elfogadás és nincs főtéma-tesztpróba, valamint nincs aktív/kimaxolt altéma alatta.
+  * `ACTIVE`: elfogadta, vagy van főtéma-tesztpróba, vagy legalább egy alá tartozó altéma `ACTIVE`/`COMPLETED`.
+  * `COMPLETED`: főtéma-tesztből max jegy **és** minden alá tartozó altéma `COMPLETED`.
+
+Ezek az aggregációk biztosítják, hogy a Quest Log státuszai a hierarchia teljesítményét tükrözzék.
 
 ---
 
@@ -154,7 +183,7 @@ Egy modul akkor lép `COMPLETED` állapotba, ha a tanuló **minden alá tartozó
 
 Témakör szinten a feltétel:
 
-* **minden elérhető nehézségi szinten** (könnyű, közepes, nehéz),
+* **minden elérhető nehézségi szinten** (könnyű, normál, nehéz),
 * a tanuló **elérte a legjobb jegyet**.
 
 "Legjobb jegy" alatt itt azt értjük, hogy:
@@ -162,12 +191,12 @@ Témakör szinten a feltétel:
 * a rendszer által definiált **maximális jegyet** (tipikusan 5-ös) eléri, vagy
 * ha később a jegyrendszer változik, akkor mindig a **konkrét skála szerinti plafont**.
 
-### 4.2. Kimaxolás altéma és főtémakör szinten (nehézségi bontás nélkül)
+### 4.2. Kimaxolás altéma és főtémakör szinten
 
-Altéma és főtémakör esetén nincs nehézségi szint, ezért itt a feltétel:
+Altéma esetén van nehézségi szint, főtéma esetén nincs.
 
-* minden altémához tartozó **egyetlen tesztből** a tanuló **ötös (vagy maximális) jegyet** ér el,
-* minden főtémakörhöz tartozó **egyetlen összefoglaló tesztből** a tanuló **ötös (vagy maximális) jegyet** ér el.
+* **Altéma**: minden nehézségi szinten az altéma-tesztből a tanuló **ötös (vagy maximális) jegyet** ér el.
+* **Főtéma**: minden főtémakörhöz tartozó **egyetlen összefoglaló tesztből** a tanuló **ötös (vagy maximális) jegyet** ér el.
 
 ### 4.3. Modul kimaxolása (összefoglaló feltétel)
 
@@ -179,9 +208,8 @@ A modul akkor lép `COMPLETED` állapotba, ha **egyidejűleg teljesül** az alá
 
 2. **Altéma + főtéma feltétel:**
 
-   * minden altémához tartozó egyetlen tesztből, és
-   * minden főtémához tartozó egyetlen tesztből
-   * ötös (vagy adott skálán maximális) jegy elérése.
+   * minden altémához tartozó teszt **minden nehézségi szintjén** ötös (vagy adott skálán maximális) jegy elérése,
+   * minden főtémához tartozó egyetlen tesztből ötös (vagy adott skálán maximális) jegy elérése.
 
 Amint mindkét feltétel teljesül, a modul állapota:
 
@@ -224,6 +252,7 @@ A Teszt/Gyakorlás pontos XP- és jegykezelését külön dokumentum (pl. XP-for
 * A modul akkor lesz `COMPLETED`, ha:
 
   * minden témakör minden nehézségszintjén a legjobb (maximális) jegyet elérte,
-  * minden altéma és főtéma egyetlen tesztjéből ötös (vagy maximális) jegyet szerzett.
+  * minden altéma minden nehézségi szintjén ötös (vagy maximális) jegyet szerzett,
+  * minden főtéma egyetlen tesztjéből ötös (vagy maximális) jegyet szerzett.
 * A kimaxolt modul is **továbbra is használható**, a pipa csak a quest-szintű teljesítettséget jelöli.
 * A vizuális megjelenítést (színek, ikonok, pipák, szürkítés) a `style/` mappában található dokumentumok definiálják.

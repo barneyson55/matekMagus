@@ -123,36 +123,55 @@ hogy teljesülnek-e a modul "kimaxolásának" feltételei.
 
 Szerkezeti elemek:
 
-1. **Témakör választó**
+Megjegyzés: témakör szinten **nincs** témakör-választó; a teszt mindig az aktuális témakörre
+vonatkozik. Altéma/főtéma esetén a teszt a hozzájuk tartozó témakörökből áll össze, külön
+választó nélkül.
 
-   * a modulhoz tartozó témakörök listája,
-   * kiválasztható, melyik témakörből szeretné a tanuló a tesztet.
+1. **Teszt indító blokk (altéma/főtéma)**
 
-2. **Nehézségi szint választó** (csak témaköröknél)
+   * akkor látszik, amikor a modul `ACTIVE` és a teszt még nem indult el,
+   * megjeleníti az altéma/főtéma címét és egy **rövid ismertetőt** a témakörökről,
+   * főtéma esetén vizuális jelzés (pl. „Összefoglaló teszt” jelvény) emeli ki a komolyabb teszt jellegét,
+   * altéma esetén a nehézségi szint választó a teszt indítása előtt jelenik meg,
+   * tartalmazza a `Teszt indítása` gombot.
 
-   * `könnyű` / `közepes` / `nehéz` szintek,
-   * egy időben **egy** nehézségi szinthez tartozó teszt fut.
+2. **Nehézségi szint választó** (témaköröknél és altémáknál)
 
-3. **Tesztkérdések megjelenítő blokkok**
+   * `könnyű` / `normál` / `nehéz` szintek,
+   * egyszerre **egy** nehézségi szinthez tartozó teszt fut,
+   * kérdésszám: **10 kérdés / nehézségi szint**.
 
-   * kérdés szövege (vagy képletekkel, táblázattal, ábrával kiegészítve),
-   * válaszmezők (egy vagy több input),
-   * Teszt végezkor eredményösszegzés.
+   Altéma teszt: **10 kérdés / nehézségi szint**, főtéma teszt: **20 kérdés**, nehézségi bontás nélkül.
 
-   Navigációs elv:
+3. **Teszt navigációs sáv**
 
-   * a kérdések között **paginációs pontokkal** és **bal/jobb nyilakkal** lehet lépni,
-   * a pontok és nyilak **egy sorban** helyezkednek el,
+   * **paginációs pontok** és **bal/jobb nyilak** egy sorban,
+   * alapállapot: a pontok szürkék (inaktív),
+   * elfogadott válasz után a pont zöldre vált,
+   * az aktuális pont kiemelt,
    * számozott „kérdés x / y” jelzés **nem szükséges**.
 
-4. **Eredménymegjelenítés**
+4. **Feladvány blokk**
+
+   * kérdés szövege (képletekkel, táblázattal, ábrával kiegészítve),
+   * válaszmezők (egy vagy több input), rádiógombok, szükséges kontrollok,
+   * kísérő infók és rövid instrukció.
+
+5. **Teszt lezárása és értékelés**
+
+   * alul fix `Teszt befejezése` / `Értékelés` gomb,
+   * beküldés után lezárja a futó tesztet.
+
+6. **Eredménymegjelenítés**
 
    * a teszt lezárása után:
 
      * megjelenik a **jegy**,
      * meta-információk (pl. helyes válaszok száma, időtartam),
+     * válasz-áttekintő (helyes / helytelen + helyes megoldás),
    * a rendszer frissíti a `best_grade_difficulty_level` (témakör + nehézség) adatot,
-   * altéma / főtéma esetén az ott definiált egyetlen tesztre vonatkozó legjobb jegyet.
+   * altéma esetén a **nehézségi szinthez** tartozó legjobb jegyet,
+   * főtéma esetén az egyetlen tesztre vonatkozó legjobb jegyet.
 
 A Teszt fül **eredményei** döntik el, hogy a modul mikor lesz `COMPLETED` (kimaxolt),
 a `structure/module-lifecycle.md` szabályai szerint.
@@ -166,9 +185,9 @@ Szerkezeti elemek:
 
 1. **Nehézségi szint szűrők (checkboxok)**
 
-   * `könnyű` / `közepes` / `nehéz` jelölőnégyzetek,
+   * `könnyű` / `normál` / `nehéz` jelölőnégyzetek,
    * alapértelmezés: a `könnyű` be van pipálva,
-   * ha a tanuló bepipálja a `közepes` vagy `nehéz` szintet, onnan is kaphat kérdéseket,
+   * ha a tanuló bepipálja a `normál` vagy `nehéz` szintet, onnan is kaphat kérdéseket,
    * ha kiveszi a pipát `könnyű` szintről, akkor csak a megmaradt szintekről érkeznek kérdések.
 
 2. **Aktuális kérdés blokk**
@@ -192,7 +211,7 @@ Szerkezeti elemek:
      * a nehézségi szintnek megfelelő XP jóváírása,
 
        * pl. könnyű: 1 XP,
-       * közepes: 2 XP,
+       * normál: 2 XP,
        * nehéz: 3 XP,
      * az XP azonnal hozzáadódik a **globális XP-hez**, ami a felső fejléc XP-sávján is megjelenik.
    * hibás válasz esetén:

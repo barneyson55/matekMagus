@@ -22,12 +22,12 @@ Minden entitásnak van:
 - `szint` – főtéma / altéma / témakör,
 - `tierMult` – struktúraszint szorzó (modulzáró 1.5, témazáró 1.2, témakör 1.0),
 - `topicWeight` – relatív nehézség (1.0–1.4),
-- `baseXP` – alap XP (2-es jegy esetén, témaköröknél közepes nehézség mellett).
+- `baseXP` – alap XP (2-es jegy esetén, témakör/altéma teszteknél normál nehézség mellett).
 
 A tényleges XP-t ezek módosítják:
 
 - **gradeMultiplier** – jegy szorzó,
-- **difficultyMultiplier** (csak témakörnél),
+- **difficultyMultiplier** (témakör/altéma teszteknél),
 - **tierMult** – vizsgaszint,
 - **topicWeight** – valódi nehézség.
 
@@ -55,13 +55,13 @@ A tényleges XP-t ezek módosítják:
 
 ---
 
-## Teszt nehézség szorzók (difficultyMultiplier – csak témakör)
+## Teszt nehézség szorzók (difficultyMultiplier – témakör és altéma)
 
 | difficulty | multiplier |
 |-----------|------------|
-| konnyu    | 0.7        |
-| kozepes   | 1.0        |
-| nehez     | 1.4        |
+| könnyű    | 0.7        |
+| normál    | 1.0        |
+| nehéz     | 1.4        |
 
 ---
 
@@ -289,10 +289,10 @@ A játék motorja minden vizsgát egységes XP-szabály szerint számol, csak a 
   - 4 → 1.2  
   - 5 → 1.3
 
-- **difficultyMultiplier(diff)** (csak témaköröknél)  
-  - konnyu → 0.7  
-  - kozepes → 1.0  
-  - nehez → 1.4
+- **difficultyMultiplier(diff)** (témakör/altéma teszteknél)  
+  - könnyű → 0.7  
+  - normál → 1.0  
+  - nehéz → 1.4
 
 ---
 
@@ -300,19 +300,21 @@ A játék motorja minden vizsgát egységes XP-szabály szerint számol, csak a 
 `XP_fotema(topicId, grade) = round( baseXP(topicId) * topicWeight(topicId) * 1.5 * gradeMultiplier(grade) )`
 
 ## 6.3 Altéma XP képlet
-`XP_altema(topicId, grade) = round( baseXP(topicId) * topicWeight(topicId) * 1.2 * gradeMultiplier(grade) )`
+`XP_altema(topicId, grade, diff) = round( baseXP(topicId) * topicWeight(topicId) * 1.2 * difficultyMultiplier(diff) * gradeMultiplier(grade) )`
 
 ## 6.4 Témakör XP képlet
 `XP_temakor(topicId, grade, diff) = round( baseXP(topicId) * topicWeight(topicId) * 1.0 * difficultyMultiplier(diff) * gradeMultiplier(grade) )`
 
 ## 6.5 Egységesített „run” képlet
-`XP_run(topicId, levelType, grade, diff) = round( baseXP(topicId) * topicWeight(topicId) * tierMult(levelType) * gradeMultiplier(grade) * ( levelType == "temakor" ? difficultyMultiplier(diff) : 1.0 ) )`
+`XP_run(topicId, levelType, grade, diff) = round( baseXP(topicId) * topicWeight(topicId) * tierMult(levelType) * gradeMultiplier(grade) * ( levelType == "temakor" || levelType == "altema" ? difficultyMultiplier(diff) : 1.0 ) )`
 
 **Szabályok:**
 
 - Minden `(topicId, difficulty)` kombináció **első sikeres lefutása** (jegy ≥ 2) ad XP-t.  
-- Későbbi jegyjavítás („upgrade XP”) az 1. verzióban nem létezik.  
-- A teljes tananyagból maximum kinyerhető XP (mindenre 5-ös és „nehez” témaköri teszt): **~19 400 XP**.
+- Jegyjavítás esetén a korábbi legjobb jegyhez tartozó XP és az új jegyhez tartozó XP **különbözete** jár.  
+- Ha nincs javulás, nem jár új XP.  
+- A teljes tananyagból maximum kinyerhető XP (mindenre 5-ös és „nehéz” témaköri teszt): **~19 400 XP**.
+- Megjegyzés: az altéma tesztek nehézségi bontásával ez az érték újraszámolandó.
 
 ---
 
@@ -322,7 +324,7 @@ A játék motorja minden vizsgát egységes XP-szabály szerint számol, csak a 
 
 - Az első 10–15 szint gyorsan teljesüljenek.  
 - A felsőbb szintek egyre nagyobb XP-t igényeljenek.  
-- A teljes tananyag (≈19 400 XP) kb. **47–49. szintig** vigye a diákot.  
+- A teljes tananyag (≈19 400 XP, újraszámolandó az altéma nehézségi bontás után) kb. **47–49. szintig** vigye a diákot.  
 - A plafon 50-es szint legyen.  
 - Full clear + néhány extra jutalom XP → éppen elérhesse a 50-et, de ne legyen garantált.
 
@@ -344,7 +346,7 @@ Példák:
 ## 7.4 Teljes összeg
 TotalXP_to_50 ≈ 20 325 XP
 
-Ez **ideális**: a tartalomból kinyerhető ~19 400 XP → kb. 96% teljesítés → 47–49. szint.
+Ez **ideális**: a tartalomból kinyerhető ~19 400 XP (újraszámolandó) → kb. 96% teljesítés → 47–49. szint.
 
 ---
 

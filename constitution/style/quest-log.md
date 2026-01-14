@@ -16,7 +16,8 @@ Célja, hogy egységes, RPG/MMO hangulatú, mégis jól áttekinthető **modul-/
 * konzisztens ikon-, szín- és tipográfiai rendszer,
 * jól használható görgetés és sorkiemelés.
 
-A leírás technológiától független, konkrét szín- és betűtípus döntéseket a `style-const.md` + skin leírások tartalmazzák.
+A leírás technológiától független, konkrét szín- és betűtípus döntéseket
+a `style/colors-and-themes.md` és a `style/typography-and-icons.md` tartalmaz.
 
 ---
 
@@ -240,7 +241,8 @@ A Quest Log vizuális terve az alábbi dokumentumokra épül:
 * `structure/module-lifecycle.md` – definiálja a modul/quest státuszokat,
   amelyeket a Quest Log vizuálisan megjelenít.
 * `style/app-shell.md` – rögzíti, hogyan viselkedik a Quest Log a felső fejléc és a fő tartalom mellett.
-* `style-const.md` + skin dokumentumok – színeket, ikonstílusokat, tipográfiát adnak a fenti szerkezeti szabályokhoz.
+* `style/colors-and-themes.md` + `style/typography-and-icons.md` – színeket, ikonstílusokat,
+  tipográfiát adnak a fenti szerkezeti szabályokhoz.
 
 ---
 

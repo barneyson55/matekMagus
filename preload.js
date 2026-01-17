@@ -18,7 +18,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getSettings: () => ipcRenderer.invoke('get-settings'),
   // Persist XP earned from practice sessions. Accepts an object with
   // topicId and xp amount and forwards it to the main process.
-  savePracticeXp: ({ topicId, xp }) => ipcRenderer.send('save-practice-xp', { topicId, xp }),
+  savePracticeXp: ({ topicId, xp }) => ipcRenderer.invoke('save-practice-xp', { topicId, xp }),
   // Save quest state to the main process.
   saveQuestState: (questState) => ipcRenderer.send('save-quest-state', questState),
 });

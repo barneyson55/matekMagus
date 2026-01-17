@@ -64,7 +64,7 @@
         <div class="xp-progress">
             <div class="xp-progress-fill" id="results-xp-progress"></div>
         </div>
-        <p id="results-xp-text">0 / 200 XP a kovetkezo szintig</p>
+        <p id="results-xp-text">0 / 50 XP a kovetkezo szintig</p>
     </div>
     <div id="results-container"></div>
 
@@ -91,6 +91,22 @@
         const resultsXpProgress = document.getElementById('results-xp-progress');
         const resultsXpText = document.getElementById('results-xp-text');
 
+        function getTopicLabel(topicId) {
+            if (!topicId) return '';
+            try {
+                const link = window.parent && window.parent.document
+                    ? window.parent.document.querySelector(`[data-topic-id="${topicId}"]`)
+                    : null;
+                if (link) {
+                    const textNode = Array.from(link.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.nodeValue.trim());
+                    return textNode ? textNode.nodeValue.trim() : link.textContent.trim();
+                }
+            } catch (error) {
+                // ignore cross-context access issues
+            }
+            return topicId.replace(/_/g, ' ');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             container.innerHTML = `<div class="no-results"><p>Eredmények betöltése...</p></div>`;
             window.parent.postMessage({ type: 'get-all-results' }, '*');
@@ -109,7 +125,8 @@
                         const resultItem = document.createElement('div');
                         resultItem.className = 'result-item';
                         const date = new Date(result.timestamp).toLocaleString('hu-HU', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-                        resultItem.innerHTML = `<div class="grade-badge grade-${result.grade}">${result.grade}</div> <div class="result-details"> <h3>${result.topicName}</h3> <p><b>Nehézség:</b> ${result.difficulty} | <b>Eredmény:</b> ${result.percentage}% | <b>Dátum:</b> ${date}</p> </div> <div class="result-actions"><button>Részletek</button></div>`;
+                        const topicTitle = result.topicName || getTopicLabel(result.topicId);
+                        resultItem.innerHTML = `<div class="grade-badge grade-${result.grade}">${result.grade}</div> <div class="result-details"> <h3>${topicTitle || 'Ismeretlen'}</h3> <p><b>Nehézség:</b> ${result.difficulty} | <b>Eredmény:</b> ${result.percentage}% | <b>Dátum:</b> ${date}</p> </div> <div class="result-actions"><button>Részletek</button></div>`;
                         const detailsBtn = resultItem.querySelector('button');
                         detailsBtn.addEventListener('click', () => showDetails(result));
                         container.appendChild(resultItem);
@@ -126,15 +143,19 @@
             const totalXp = summary.xp || 0;
             resultsLevel.textContent = summary.level.level;
             resultsTotalXp.textContent = `${totalXp} XP`;
-            const required = summary.level.xpForNext || 200;
-            const current = summary.level.xpIntoLevel || 0;
-            const percent = Math.min(100, Math.round((current / required) * 100));
+            const current = Number.isFinite(summary.level.xpIntoLevel) ? summary.level.xpIntoLevel : 0;
+            const required = Number.isFinite(summary.level.xpForNext) ? summary.level.xpForNext : 0;
+            const isMaxLevel = required <= 0;
+            const safeRequired = isMaxLevel ? Math.max(1, current) : required;
+            const percent = Math.min(100, Math.round((current / safeRequired) * 100));
             resultsXpProgress.style.width = `${percent}%`;
-            resultsXpText.textContent = `${current} / ${required} XP a kovetkezo szintig`;
+            resultsXpText.textContent = isMaxLevel
+                ? `Max szint`
+                : `${current} / ${required} XP a kovetkezo szintig`;
         }
-
         function showDetails(result) {
-            let detailsHTML = `<h2>${result.topicName} - Kiértékelés</h2>`;
+            const topicTitle = result.topicName || getTopicLabel(result.topicId);
+            let detailsHTML = `<h2>${topicTitle || 'Ismeretlen'} - Kiértékelés</h2>`;
             result.questions.forEach((q, index) => {
                 const isCorrect = q.userAnswer === q.correctAnswer;
                 const userAnswerText = q.options ? q.options[q.userAnswer] : q.userAnswer;

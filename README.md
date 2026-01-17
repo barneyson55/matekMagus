@@ -5,7 +5,7 @@ Interaktív, moduláris matematikaoktató alkalmazás, amely a magyar emelt szin
 ## Célok és jelenlegi képességek
 
 - **Electron shell + webes modulok:** a bal oldali hierarchikus navigáció több tucat tematikus blokkot listáz, a tényleges tartalmak külön HTML-modulokban töltődnek be egy iframe-be.
-- **Státuszkörök és tooltip-ek:** minden témához tartozik egy `data-topic-id`, ehhez rendeli hozzá a rendszer a legjobb elért jegyet, és tooltipben bontja ki a könnyű / közepes / nehéz eredményeket.
+- **Státuszkörök és tooltip-ek:** minden témához tartozik egy `data-topic-id`, ehhez rendeli hozzá a rendszer a legjobb elért jegyet, és tooltipben bontja ki a könnyű / normál / nehéz eredményeket.
 - **Halmazműveletek modul (kész):** KaTeX-szel formázott magyarázatok, interaktív Venn-diagram, azonnali gyakorló feladatok és 10 kérdéses teszt három nehézségi szinten; a teszt eredménye részletesen mentésre kerül.
 - **Lineáris függvények modul (prototípus):** Chart.js grafikon, csúszkákkal állítható egyenes és teszt mód váltó. A teszt mód UI működik, de még nem generál feladatokat és nem küld részletes eredményobjektumot.
 - **Eredmények nézet:** a `modules/results.html` modul az Electron főfolyamathoz fordulva kilistázza a lokálisan mentett teszteredményeket, modális ablakban részletes kérdésenkénti visszanézési lehetőséggel.
@@ -79,7 +79,7 @@ matekMagus/
    ```js
    window.parent.postMessage({ type: 'testResult', result }, '*');
    ```
-   ahol a `result` objektum mezői: `topicId`, `topicName`, `difficulty` (`'könnyű' | 'közepes' | 'nehéz'`), `grade` (1-5), `percentage` (0-100), `timestamp` (ISO string), `questions` (kérdés leírás, opciók, helyes / felhasználói válasz).
+   ahol a `result` objektum mezői: `topicId`, `topicName`, `difficulty` (`'könnyű' | 'normál' | 'nehéz'`), `grade` (1-5), `percentage` (0-100), `timestamp` (ISO string), `questions` (kérdés leírás, opciók, helyes / felhasználói válasz).
 2. A főablak menti az eredményt és frissíti a státusz jelzőket (a legjobb elért jegyet veszi figyelembe tematikus bontásban).
 3. A `modules/results.html` modul `DOMContentLoaded`-kor `type: 'get-all-results'` üzenetet küld; a főablak IPC-n keresztül beolvassa a `progress.json`-t, majd visszaküldi az iframe-nek `type: 'all-results-response'` payload-dal.
 

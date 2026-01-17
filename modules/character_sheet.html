@@ -212,6 +212,17 @@
         }
         .achievement-item h4 { margin: 0; font-size: 1rem; }
         .achievement-item p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+        .achievement-item.is-locked {
+            opacity: 0.65;
+            border-style: dashed;
+        }
+        .achievement-item.is-unlocked {
+            border-color: var(--success);
+        }
+        .achievement-meta {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
 
         @media (max-width: 960px) {
             .sheet {
@@ -256,7 +267,7 @@
 
             <div class="xp-block">
                 <div class="xp-meta">
-                    <span id="xp-progress-text">0 / 200 XP</span>
+                    <span id="xp-progress-text">0 / 50 XP</span>
                     <span id="xp-percent-text">0%</span>
                 </div>
                 <div class="xp-bar">
@@ -321,6 +332,53 @@
         let summaryData = null;
         let resultsData = [];
         const topicLabelCache = {};
+        const ACHIEVEMENT_FALLBACK = [
+            {
+                id: 'first_test',
+                title: 'Elso teszteredmeny',
+                description: 'Elso sikeres teszt (jegy >= 2).'
+            },
+            {
+                id: 'hard_first',
+                title: 'Nehez harcos',
+                description: 'Elso nehez teszt sikeresen teljesitve.'
+            },
+            {
+                id: 'hard_perfect',
+                title: 'Tokeletes vizsga',
+                description: '5-os jegy nehez teszten.'
+            },
+            {
+                id: 'streak_5',
+                title: 'Sorozatgyoztes',
+                description: '5 egymas utani jo eredmeny.'
+            },
+            {
+                id: 'subtopic_master',
+                title: 'Altema zaro',
+                description: 'Egy altema kimaxolasa.'
+            },
+            {
+                id: 'main_topic_master',
+                title: 'Fotema mester',
+                description: 'Egy fotema kimaxolasa.'
+            },
+            {
+                id: 'emelt_bajnok',
+                title: 'Emelt bajnok',
+                description: 'Emelt modulzaro sikeres teljesitese.'
+            },
+            {
+                id: 'xp_collector_1000',
+                title: 'XP gyujto',
+                description: 'Osszegyujtottel 1000 XP-t.'
+            },
+            {
+                id: 'level_up',
+                title: 'Szintlepo',
+                description: 'Elertel egy uj szintet.'
+            }
+        ];
 
         function parseHexColor(hex) {
             const match = (hex || '').trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
@@ -425,11 +483,32 @@
             }
         }
 
-        function getQuestTopics(status) {
-            const quests = summaryData && summaryData.quests && summaryData.quests.topics ? summaryData.quests.topics : {};
-            return Object.entries(quests)
-                .filter(([, value]) => value === status)
-                .map(([topicId]) => topicId);
+        function getQuestEntries() {
+            const quests = summaryData && summaryData.quests ? summaryData.quests : {};
+            const entries = [];
+            const mainTopics = quests.mainTopics && typeof quests.mainTopics === 'object' ? quests.mainTopics : {};
+            const subtopics = quests.subtopics && typeof quests.subtopics === 'object' ? quests.subtopics : {};
+            const topics = quests.topics && typeof quests.topics === 'object' ? quests.topics : {};
+            Object.entries(mainTopics).forEach(([topicId, status]) => {
+                entries.push({ topicId, status, scope: 'main' });
+            });
+            Object.entries(subtopics).forEach(([topicId, status]) => {
+                entries.push({ topicId, status, scope: 'sub' });
+            });
+            Object.entries(topics).forEach(([topicId, status]) => {
+                entries.push({ topicId, status, scope: 'topic' });
+            });
+            return entries;
+        }
+
+        function getQuestEntriesByStatus(status) {
+            return getQuestEntries().filter(entry => entry.status === status);
+        }
+
+        function getScopeLabel(scope) {
+            if (scope === 'main') return 'Fotema';
+            if (scope === 'sub') return 'Altema';
+            return 'Temakor';
         }
 
         function getBestGrade(topicData) {
@@ -455,30 +534,33 @@
         }
 
         function renderActiveQuests() {
-            const activeTopics = getQuestTopics('ACTIVE');
-            renderList(dom.activeList, dom.activeEmpty, activeTopics, (topicId) => {
+            const activeEntries = getQuestEntriesByStatus('ACTIVE');
+            renderList(dom.activeList, dom.activeEmpty, activeEntries, (entry) => {
                 const li = document.createElement('li');
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.className = 'list-item';
-                button.innerHTML = `<span class="item-title">${getTopicLabel(topicId)}</span><span class="item-meta">Aktiv</span>`;
-                button.addEventListener('click', () => navigateToTopic(topicId));
+                const scopeLabel = getScopeLabel(entry.scope);
+                button.innerHTML = `<span class="item-title">${getTopicLabel(entry.topicId)}</span><span class="item-meta">Aktiv · ${scopeLabel}</span>`;
+                button.addEventListener('click', () => navigateToTopic(entry.topicId));
                 li.appendChild(button);
                 return li;
             });
         }
 
         function renderCompletedQuests() {
-            const completedTopics = getQuestTopics('COMPLETED');
-            renderList(dom.completedList, dom.completedEmpty, completedTopics, (topicId) => {
+            const completedEntries = getQuestEntriesByStatus('COMPLETED');
+            renderList(dom.completedList, dom.completedEmpty, completedEntries, (entry) => {
                 const li = document.createElement('li');
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.className = 'list-item';
-                const bestGrade = getBestGrade(summaryData && summaryData.completions ? summaryData.completions[topicId] : null);
-                const metaText = bestGrade ? `Legjobb jegy: ${bestGrade}` : 'Kimaxolt';
-                button.innerHTML = `<span class="item-title">${getTopicLabel(topicId)}</span><span class="item-meta">${metaText}</span>`;
-                button.addEventListener('click', () => navigateToTopic(topicId));
+                const bestGrade = getBestGrade(summaryData && summaryData.completions ? summaryData.completions[entry.topicId] : null);
+                const scopeLabel = getScopeLabel(entry.scope);
+                const gradeText = bestGrade ? `Legjobb jegy: ${bestGrade}` : 'Kimaxolt';
+                const metaText = `${gradeText} · ${scopeLabel}`;
+                button.innerHTML = `<span class="item-title">${getTopicLabel(entry.topicId)}</span><span class="item-meta">${metaText}</span>`;
+                button.addEventListener('click', () => navigateToTopic(entry.topicId));
                 li.appendChild(button);
                 return li;
             });
@@ -502,8 +584,9 @@
         }
 
         function renderStats() {
-            const activeCount = getQuestTopics('ACTIVE').length;
-            const completedCount = getQuestTopics('COMPLETED').length;
+            const entries = getQuestEntries();
+            const activeCount = entries.filter(entry => entry.status === 'ACTIVE').length;
+            const completedCount = entries.filter(entry => entry.status === 'COMPLETED').length;
             const testsCount = resultsData ? resultsData.length : 0;
             const practiceXp = summaryData && summaryData.practiceXp
                 ? Object.values(summaryData.practiceXp).reduce((sum, value) => sum + Number(value || 0), 0)
@@ -515,31 +598,31 @@
         }
 
         function renderAchievements() {
-            const achievements = [];
-            const completedCount = getQuestTopics('COMPLETED').length;
-            const xpTotal = summaryData ? summaryData.xp || 0 : 0;
-            if (resultsData && resultsData.length > 0) {
-                achievements.push({ title: 'Elso teszt', detail: 'Az elso teszted teljesitve.' });
-            }
-            if (completedCount > 0) {
-                achievements.push({ title: 'Elso kimaxolt modul', detail: 'Kimaxoltal egy teljes modult.' });
-            }
-            if (xpTotal >= 100) {
-                achievements.push({ title: '100 XP', detail: 'Elerted a 100 ossz-XP szintet.' });
-            }
-            if (xpTotal >= 500) {
-                achievements.push({ title: '500 XP', detail: 'Felig az ut a mesterszintig.' });
-            }
+            const catalog = Array.isArray(summaryData && summaryData.achievementCatalog)
+                ? summaryData.achievementCatalog
+                : ACHIEVEMENT_FALLBACK;
+            const states = summaryData && summaryData.achievements ? summaryData.achievements : {};
             dom.achievementList.innerHTML = '';
-            if (!achievements.length) {
+            if (!catalog.length) {
                 dom.achievementEmpty.style.display = 'block';
                 return;
             }
             dom.achievementEmpty.style.display = 'none';
-            achievements.forEach(item => {
+            catalog.forEach((achievement) => {
+                const state = states[achievement.id] || {};
+                const isUnlocked = Boolean(state.isUnlocked);
                 const card = document.createElement('div');
-                card.className = 'achievement-item';
-                card.innerHTML = `<h4>${item.title}</h4><p>${item.detail}</p>`;
+                card.className = `achievement-item ${isUnlocked ? 'is-unlocked' : 'is-locked'}`;
+                card.dataset.achievementId = achievement.id;
+                const description = achievement.description || '';
+                let metaText = isUnlocked ? 'Megszerezve' : 'Meg nem szerzett';
+                if (state.unlockedAt) {
+                    const date = new Date(state.unlockedAt);
+                    if (!Number.isNaN(date.getTime())) {
+                        metaText = `Megszerezve: ${date.toLocaleDateString('hu-HU')}`;
+                    }
+                }
+                card.innerHTML = `<h4>${achievement.title || achievement.id}</h4><p>${description}</p><span class="achievement-meta">${metaText}</span>`;
                 dom.achievementList.appendChild(card);
             });
         }
@@ -547,20 +630,25 @@
         function renderProfile() {
             if (!summaryData || !summaryData.level) return;
             const level = summaryData.level.level || 1;
-            const levelName = summaryData.level.levelName || '';
+            const levelName = summaryData.level.levelName || "";
             const xpTotal = summaryData.xp || 0;
-            const xpForNext = summaryData.level.xpForNext || 200;
-            const xpInto = summaryData.level.xpIntoLevel || 0;
-            const xpToNext = summaryData.level.xpToNext || (xpForNext - xpInto);
-            const percent = xpForNext ? Math.min(100, Math.round((xpInto / xpForNext) * 100)) : 0;
-            dom.profileLevel.textContent = levelName ? `Lv. ${level} – ${levelName}` : `Lv. ${level}`;
+            const xpForNext = Number.isFinite(summaryData.level.xpForNext) ? summaryData.level.xpForNext : 0;
+            const xpInto = Number.isFinite(summaryData.level.xpIntoLevel) ? summaryData.level.xpIntoLevel : 0;
+            const xpToNext = Number.isFinite(summaryData.level.xpToNext)
+                ? summaryData.level.xpToNext
+                : Math.max(0, xpForNext - xpInto);
+            const isMaxLevel = xpForNext <= 0;
+            const safeRequired = isMaxLevel ? Math.max(1, xpInto) : xpForNext;
+            const percent = Math.min(100, Math.round((xpInto / safeRequired) * 100));
+            dom.profileLevel.textContent = levelName ? `Lv. ${level} - ${levelName}` : `Lv. ${level}`;
             dom.profileXp.textContent = `Osszes XP: ${xpTotal}`;
-            dom.profileNext.textContent = `Kovetkezo szint: ${xpToNext} XP`;
-            dom.xpText.textContent = `${xpInto} / ${xpForNext} XP`;
+            dom.profileNext.textContent = isMaxLevel
+                ? "Kovetkezo szint: Max"
+                : `Kovetkezo szint: ${xpToNext} XP`;
+            dom.xpText.textContent = isMaxLevel ? `${xpInto} XP` : `${xpInto} / ${xpForNext} XP`;
             dom.xpPercent.textContent = `${percent}%`;
             dom.xpBarFill.style.width = `${percent}%`;
         }
-
         function renderAll() {
             renderProfile();
             renderActiveQuests();

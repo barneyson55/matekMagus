@@ -558,7 +558,7 @@
                 <span class="meta-label">Nehézség:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="könnyű" type="button">Könnyű</button>
-                    <button class="btn btn-secondary difficulty-btn" data-difficulty="közepes" type="button">Közepes</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="normál" type="button">Normál</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="nehéz" type="button">Nehéz</button>
                 </div>
             </div>
@@ -588,7 +588,7 @@
 
     <div id="gyakorlas" class="tab-content card" role="tabpanel">
         <h2>Gyakorlás</h2>
-        <p class="practice-info">Végtelenített gyakorlás. XP jutalom: könnyű = 1 XP, közepes = 2 XP, nehéz = 3 XP.</p>
+        <p class="practice-info">Végtelenített gyakorlás. XP jutalom: könnyű = 1 XP, normál = 2 XP, nehéz = 3 XP.</p>
         <div class="learning-hint" data-role="practice-help">
             <h3>Gyakorlási tipp</h3>
             <ul>
@@ -603,7 +603,7 @@
         <div class="practice-controls">
             <span class="meta-label">Nehézségek:</span>
             <label><input type="checkbox" class="practice-difficulty" value="könnyű" checked> Könnyű</label>
-            <label><input type="checkbox" class="practice-difficulty" value="közepes"> Közepes</label>
+            <label><input type="checkbox" class="practice-difficulty" value="normál"> Normál</label>
             <label><input type="checkbox" class="practice-difficulty" value="nehéz"> Nehéz</label>
             <button id="start-practice-btn" class="btn btn-primary" type="button">Gyakorlás indítása</button>
         </div>
@@ -628,19 +628,19 @@
         };
         const DIFFICULTY_LABELS = {
             'könnyű': 'Könnyű',
-            'közepes': 'Közepes',
+            'normál': 'Normál',
             'nehéz': 'Nehéz'
         };
         const TEST_QUESTION_COUNT = 10;
         const QUESTION_TYPES = ['value-from-equation', 'slope-from-points', 'intercept-from-point', 'x-intercept'];
         const DIFFICULTY_CONFIGS = {
             'könnyű': { m: { min: -3, max: 3, step: 1 }, b: { min: -6, max: 6, step: 1 }, x: { min: -5, max: 5, step: 1 } },
-            'közepes': { m: { min: -5, max: 5, step: 0.5 }, b: { min: -8, max: 8, step: 0.5 }, x: { min: -8, max: 8, step: 1 } },
+            'normál': { m: { min: -5, max: 5, step: 0.5 }, b: { min: -8, max: 8, step: 0.5 }, x: { min: -8, max: 8, step: 1 } },
             'nehéz': { m: { min: -8, max: 8, step: 0.5 }, b: { min: -10, max: 10, step: 0.5 }, x: { min: -10, max: 10, step: 1 } }
         };
         const PRACTICE_XP_REWARDS = {
             'könnyű': 1,
-            'közepes': 2,
+            'normál': 2,
             'nehéz': 3
         };
 
@@ -686,6 +686,9 @@
         let correctAnswers = 0;
         let isTestRunning = false;
         let practiceActive = false;
+        const PRACTICE_HISTORY_LIMIT = 6;
+        const PRACTICE_RETRY_LIMIT = 12;
+        const practiceHistory = [];
 
         const ctx = document.getElementById('functionChart').getContext('2d');
         const chart = new Chart(ctx, {
@@ -1059,9 +1062,28 @@
             return list[index];
         }
 
-        function buildPracticeQuestion(difficulty) {
-            const index = randomInt(0, QUESTION_TYPES.length - 1);
-            return buildQuestionByType(difficulty, QUESTION_TYPES[index]);
+        function makePracticeSignature(difficulty, item) {
+            return [difficulty, item.kind || '', item.question || '', item.answer || ''].join('|');
+        }
+
+        function pushPracticeHistory(entry) {
+            practiceHistory.push(entry);
+            if (practiceHistory.length > PRACTICE_HISTORY_LIMIT) {
+                practiceHistory.shift();
+            }
+        }
+
+        function buildPracticeQuestion(difficulty, options = {}) {
+            const avoidKind = options.avoidKind || '';
+            let pool = QUESTION_TYPES;
+            if (avoidKind && QUESTION_TYPES.length > 1) {
+                pool = QUESTION_TYPES.filter(type => type !== avoidKind);
+                if (!pool.length) {
+                    pool = QUESTION_TYPES;
+                }
+            }
+            const index = randomInt(0, pool.length - 1);
+            return buildQuestionByType(difficulty, pool[index]);
         }
 
         function nextPracticeQuestion() {
@@ -1074,10 +1096,27 @@
             currentPracticeDifficulty = pickRandomDifficulty(enabled);
             window.currentPracticeDifficulty = currentPracticeDifficulty;
             const label = DIFFICULTY_LABELS[currentPracticeDifficulty] || currentPracticeDifficulty;
-            const practiceItem = buildPracticeQuestion(currentPracticeDifficulty);
+            const lastKind = practiceHistory.length ? practiceHistory[practiceHistory.length - 1].kind : '';
+            let attempts = 0;
+            let practiceItem = null;
+            let signature = '';
+            while (attempts < PRACTICE_RETRY_LIMIT) {
+                practiceItem = buildPracticeQuestion(currentPracticeDifficulty, { avoidKind: lastKind });
+                signature = makePracticeSignature(currentPracticeDifficulty, practiceItem);
+                if (!practiceHistory.some(entry => entry.signature === signature)) {
+                    break;
+                }
+                attempts += 1;
+            }
+            if (!practiceItem) {
+                practiceItem = buildPracticeQuestion(currentPracticeDifficulty, { avoidKind: lastKind });
+                signature = makePracticeSignature(currentPracticeDifficulty, practiceItem);
+            }
             currentPracticeAnswer = practiceItem.answer;
             window.currentPracticeAnswer = currentPracticeAnswer;
-            window.currentPracticeKind = practiceItem.kind || '';
+            const practiceKind = practiceItem.kind || '';
+            window.currentPracticeKind = practiceKind;
+            pushPracticeHistory({ signature, kind: practiceKind });
             practiceQuestion.textContent = `${label} feladat: ${practiceItem.question}`;
             practiceInput.value = '';
             practiceFeedback.textContent = '';
@@ -1165,6 +1204,7 @@
                     return;
                 }
                 practiceActive = true;
+                practiceHistory.length = 0;
                 practiceArea.classList.remove('is-hidden');
                 nextPracticeQuestion();
             });

@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logikai szita formula</title>
+    <title>Pr&#237;mt&#233;nyez&#337;s felbont&#225;s</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
@@ -95,10 +95,6 @@
             }
         }
 
-        .theory-section + .theory-section {
-            margin-top: 16px;
-        }
-
         .card {
             background-color: var(--bg-card, rgba(255, 255, 255, var(--module-card-opacity, 1)));
             border-radius: 12px;
@@ -169,16 +165,19 @@
             margin: 14px 0;
             color: var(--text-dark);
         }
+
         .learning-hint h3 {
             margin: 0 0 8px 0;
             font-size: 1.05em;
             color: var(--brand-primary);
         }
+
         .learning-hint ul {
             margin: 0;
             padding-left: 20px;
             color: var(--text-light);
         }
+
         .learning-hint li { margin-bottom: 6px; }
 
         .formula-line {
@@ -186,7 +185,7 @@
             background-color: var(--bg-main);
             border: 1px dashed var(--border-color);
             border-radius: 10px;
-            padding: 10px 12px;
+            padding: 8px 10px;
             color: var(--text-dark);
             display: inline-block;
         }
@@ -235,15 +234,6 @@
             font-size: 1em;
         }
 
-        .formula-box {
-            background-color: var(--bg-card);
-            border: 1px dashed var(--border-color);
-            border-radius: 10px;
-            padding: 12px;
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--text-dark);
-        }
-
         .result-list {
             display: flex;
             flex-direction: column;
@@ -258,44 +248,25 @@
             border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
         }
 
-        .example-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .example-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 8px;
-        }
-
-        .example-card {
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 8px;
-            background-color: var(--bg-card);
-            cursor: pointer;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .example-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(74, 85, 162, 0.15);
-        }
-
-        .example-card strong {
-            color: var(--brand-primary);
-        }
-
-        .example-actions {
+        .factor-list {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
+        }
+
+        .factor-chip {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background-color: rgba(74, 85, 162, 0.12);
+            color: var(--brand-primary);
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .step-list {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-dark);
         }
 
         .test-meta {
@@ -527,142 +498,76 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>Logikai szita formula - alapok</h2>
-        <p>A logikai szita formula (inkl&#250;zi&#243;-exkl&#250;zi&#243;) akkor hasznos, ha t&#246;bb felt&#233;tel k&#246;z&#252;l legal&#225;bb az egyiket teljes&#237;t&#337; elemek sz&#225;m&#225;t keress&#252;k. K&#233;t halmaz eset&#233;n a metszetet egyszer levonjuk, mert a k&#246;z&#246;s elemeket k&#233;tszer sz&#225;moltuk.</p>
+        <h2>Pr&#237;mt&#233;nyez&#337;s felbont&#225;s</h2>
+        <p>A pr&#237;mt&#233;nyez&#337;s felbont&#225;s megmutatja, hogyan &#225;ll el&#337; egy sz&#225;m pr&#237;mek szorzatak&#233;nt. Ez seg&#237;t LNKO, LKKT &#233;s oszthat&#243;s&#225;gi feladatokban is.</p>
+        <div class="learning-hint">
+            <h3>Alapfogalmak</h3>
+            <ul>
+                <li>A <b>pr&#237;msz&#225;m</b> csak 1-gyel &#233;s &#246;nmag&#225;val oszthat&#243;.</li>
+                <li>Minden 1-n&#233;l nagyobb sz&#225;m felbonthat&#243; pr&#237;mek szorzat&#225;ra.</li>
+                <li>A felbont&#225;s egy&#233;rtelm&#369; (a sorrend mindegy).</li>
+            </ul>
+        </div>
         <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>K&#233;t halmaz szit&#225;ja</h3>
-                <p>Alap k&#233;plet:</p>
-                <p class="formula-line">|A&#8746;B| = |A| + |B| - |A&#8745;B|</p>
+            <div class="theory-section">
+                <h3>Hogyan bontunk?</h3>
                 <ul>
-                    <li>|A| &#233;s |B|: k&#252;l&#246;n-k&#252;l&#246;n elemsz&#225;m.</li>
-                    <li>|A&#8745;B|: a k&#246;z&#246;s elemek sz&#225;ma.</li>
-                    <li>Ha a metszetet nem vonod le, a k&#246;z&#246;s elemeket k&#233;tszer sz&#225;molod.</li>
+                    <li>Oszd el a sz&#225;mot a legkisebb pr&#237;mmel (2, 3, 5...).</li>
+                    <li>Ha oszthat&#243;, folytasd addig, am&#237;g marad&#233;k n&#233;lk&#252;l nem megy.</li>
+                    <li>Ezut&#225;n l&#233;pj a k&#246;vetkez&#337; pr&#237;mre.</li>
                 </ul>
             </div>
-            <div class="learning-hint">
-                <h3>H&#225;rom halmaz (kitekint&#233;s)</h3>
-                <p>Ha A, B, C is van:</p>
-                <p class="formula-line">|A&#8746;B&#8746;C| = |A| + |B| + |C| - |A&#8745;B| - |A&#8745;C| - |B&#8745;C| + |A&#8745;B&#8745;C|</p>
-                <p class="muted">A logika ugyanaz: egyszer sz&#225;molunk, majd a t&#246;bbsz&#246;r&#246;s besz&#225;m&#237;t&#225;st korrig&#225;ljuk.</p>
+            <div class="theory-section">
+                <h3>Jel&#246;l&#233;s</h3>
+                <ul>
+                    <li>P&#233;lda: <span class="formula-line">360 = 2^3 * 3^2 * 5</span></li>
+                    <li>Ugyanez: <span class="formula-line">2 * 2 * 2 * 3 * 3 * 5</span></li>
+                </ul>
             </div>
         </div>
         <div class="theory-section">
-            <h3>Oszthat&#243;s&#225;gi szita</h3>
-            <p>1-t&#337;l N-ig a-val vagy b-vel oszthat&#243; sz&#225;mok sz&#225;ma:</p>
-            <ul>
-                <li>|A| = floor(N / a)</li>
-                <li>|B| = floor(N / b)</li>
-                <li>|A&#8745;B| = floor(N / lkkt(a, b))</li>
-            </ul>
-            <p>A v&#233;geredm&#233;ny: |A&#8746;B| = |A| + |B| - |A&#8745;B|.</p>
-        </div>
-        <div class="theory-section">
-            <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre</h3>
-            <ol>
-                <li>&#205;rd fel, mi az A &#233;s B halmaz (vagy a felt&#233;telek).</li>
-                <li>Sz&#225;mold ki |A| &#233;s |B| elemsz&#225;m&#225;t.</li>
-                <li>Sz&#225;mold ki a metszetet: |A&#8745;B|.</li>
-                <li>Alkalmazd a szita formul&#225;t: |A&#8746;B| = |A| + |B| - |A&#8745;B|.</li>
-            </ol>
-        </div>
-        <div class="learning-hint">
-            <h3>Gyakori hib&#225;k</h3>
-            <ul>
-                <li>A metszetet elfelejted levonni.</li>
-                <li>Az LKKT helyett szorzatot haszn&#225;lsz (ez csak akkor j&#243;, ha a &#233;s b relat&#237;v pr&#237;mek).</li>
-                <li>Nem ellen&#337;rz&#246;d, hogy a metszet nem nagyobb, mint |A| vagy |B|.</li>
-            </ul>
-        </div>
-        <div class="theory-section">
-            <h3>Mini-ellen&#337;rz&#233;s</h3>
-            <ul>
-                <li>|A| = 12, |B| = 9, |A&#8745;B| = 4. Mennyi |A&#8746;B|? (17)</li>
-                <li>1..30 k&#246;z&#246;tt h&#225;ny sz&#225;m oszthat&#243; 2-vel vagy 5-tel? (21)</li>
-                <li>Ha |A&#8746;B| = 18, |A| = 11, |B| = 10, akkor |A&#8745;B| = ? (3)</li>
-            </ul>
+            <h3>Gyakorlat</h3>
+            <p>A feladatokban t&#246;rekedj arra, hogy mindig pr&#237;m t&#233;nyez&#337;k szerepeljenek. A sorrend mindegy.</p>
         </div>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
+        <h2>Vizu&#225;lis modell</h2>
+        <p>Add meg a sz&#225;mot, &#233;s l&#225;sd a pr&#237;mt&#233;nyez&#337;s felbont&#225;st.</p>
         <div class="model-container">
             <div class="model-card">
-                <h2>Szita kalkul&#225;tor</h2>
-                <p class="muted">Add meg |A|, |B| &#233;s a metszetet. A rendszer kisz&#225;m&#237;tja az uni&#243;t &#233;s a csak A/B elemek sz&#225;m&#225;t.</p>
+                <h3>Sz&#225;m</h3>
                 <div class="input-grid">
                     <div class="input-group">
-                        <label for="set-size-a">|A| elemsz&#225;m</label>
-                        <input type="number" id="set-size-a" min="0" max="40" value="12" step="1">
-                    </div>
-                    <div class="input-group">
-                        <label for="set-size-b">|B| elemsz&#225;m</label>
-                        <input type="number" id="set-size-b" min="0" max="40" value="9" step="1">
-                    </div>
-                    <div class="input-group">
-                        <label for="set-intersection">|A&#8745;B| metszet</label>
-                        <input type="number" id="set-intersection" min="0" max="12" value="4" step="1">
+                        <label for="factor-number">Vizsg&#225;lt sz&#225;m</label>
+                        <input type="number" id="factor-number" min="2" max="2000" value="360">
                     </div>
                 </div>
-                <div class="formula-box" id="set-formula"></div>
                 <div class="result-list">
-                    <div class="result-row"><span>|A&#8745;B| (metszet)</span><strong id="set-intersection-value">0</strong></div>
-                    <div class="result-row"><span>Csak A</span><strong id="set-only-a">0</strong></div>
-                    <div class="result-row"><span>Csak B</span><strong id="set-only-b">0</strong></div>
-                    <div class="result-row"><span>|A&#8746;B| (uni&#243;)</span><strong id="set-union-value">0</strong></div>
+                    <div class="result-row"><span>Pr&#237;mt&#233;nyez&#337;s alak</span><strong id="factor-string">-</strong></div>
+                    <div class="result-row"><span>Pr&#237;msz&#225;m?</span><strong id="prime-flag">-</strong></div>
                 </div>
-                <div class="example-panel">
-                    <h3>Gyors p&#233;ld&#225;k</h3>
-                    <p class="muted">Kattints egy p&#233;ld&#225;ra, vagy k&#233;rj &#250;j k&#233;szletet a gyorsabb gyakorl&#225;shoz.</p>
-                    <div class="example-grid" id="set-example-grid"></div>
-                    <div class="example-actions">
-                        <button id="random-set-btn" class="btn btn-secondary" type="button">V&#233;letlen p&#233;lda</button>
-                        <button id="regen-set-btn" class="btn btn-secondary" type="button">&#218;j p&#233;ld&#225;k</button>
-                    </div>
-                </div>
+                <div class="factor-list" id="factor-list"></div>
             </div>
             <div class="model-card">
-                <h2>Oszthat&#243;s&#225;gi szita</h2>
-                <p class="muted">Sz&#225;mold meg, h&#225;ny sz&#225;m oszthat&#243; a-val vagy b-vel 1..N k&#246;z&#246;tt. A metszet az LKKT-vel oszthat&#243; sz&#225;mok sz&#225;ma.</p>
-                <div class="input-grid">
-                    <div class="input-group">
-                        <label for="range-n">N (fels&#337; hat&#225;r)</label>
-                        <input type="number" id="range-n" min="10" max="150" value="50" step="1">
-                    </div>
-                    <div class="input-group">
-                        <label for="range-a">a oszt&#243;</label>
-                        <input type="number" id="range-a" min="2" max="20" value="4" step="1">
-                    </div>
-                    <div class="input-group">
-                        <label for="range-b">b oszt&#243;</label>
-                        <input type="number" id="range-b" min="2" max="20" value="6" step="1">
-                    </div>
-                </div>
-                <div class="formula-box" id="range-formula"></div>
-                <div class="result-list">
-                    <div class="result-row"><span>floor(N / a)</span><strong id="range-count-a">0</strong></div>
-                    <div class="result-row"><span>floor(N / b)</span><strong id="range-count-b">0</strong></div>
-                    <div class="result-row"><span>floor(N / lkkt(a,b))</span><strong id="range-count-both">0</strong></div>
-                    <div class="result-row"><span>Uni&#243; (A&#8746;B)</span><strong id="range-count-union">0</strong></div>
-                </div>
-                <div class="example-actions">
-                    <button id="random-range-btn" class="btn btn-secondary" type="button">V&#233;letlen p&#233;lda</button>
-                </div>
+                <h3>Oszt&#225;si l&#233;p&#233;sek</h3>
+                <p class="muted">A folyamatos oszt&#225;ssal kapott t&#233;nyez&#337;k.</p>
+                <ol id="factor-steps" class="step-list"></ol>
             </div>
         </div>
     </div>
 
     <div id="teszt" class="tab-content card" role="tabpanel">
         <h2>Teszt</h2>
-        <p>R&#246;vid teszt, ami ellen&#337;rzi a szita formula haszn&#225;lat&#225;t halmazokra &#233;s oszthat&#243;s&#225;gi feladatokra. V&#225;lassz neh&#233;zs&#233;get, majd oldd meg a k&#233;rd&#233;seket.</p>
+        <p>Bontsd fel a sz&#225;mokat pr&#237;mt&#233;nyez&#337;kre. V&#225;lassz neh&#233;zs&#233;get, majd oldd meg a k&#233;rd&#233;seket.</p>
         <div class="learning-hint" data-role="test-help">
             <h3>Megold&#225;si l&#233;p&#233;sek</h3>
             <ul>
-                <li>Haszn&#225;ld a k&#233;pletet: |A&#8746;B| = |A| + |B| - |A&#8745;B|.</li>
-                <li>Oszthat&#243;s&#225;gn&#225;l: |A| = floor(N / a), |B| = floor(N / b), |A&#8745;B| = floor(N / lkkt(a,b)).</li>
-                <li>A metszetet mindig egyszer vonjuk le.</li>
-                <li>Ha eg&#233;sz sz&#225;m j&#246;n ki, eg&#233;sz sz&#225;mot &#237;rj be.</li>
+                <li>Haszn&#225;ld a kis pr&#237;meket: 2, 3, 5, 7, 11...</li>
+                <li>Elfogadott form&#225;k: <b>2^3 * 3^2 * 5</b> vagy <b>2 * 2 * 2 * 3 * 3 * 5</b>.</li>
+                <li>Csak pr&#237;meket &#237;rj a t&#233;nyez&#337;k k&#246;z&#233;.</li>
             </ul>
-            <div class="input-help">Enterrel is bek&#252;ldheted a v&#225;laszt.</div>
+            <div class="input-help">Enterrel is tov&#225;bbl&#233;phetsz.</div>
         </div>
         <div class="test-meta">
             <div class="meta-row">
@@ -692,6 +597,7 @@
             <div class="question-box">
                 <div id="test-question" class="test-question"></div>
                 <input type="text" id="test-answer" class="module-input" placeholder="V&#225;lasz...">
+                <div class="input-help">Pr&#237;mt&#233;nyez&#337;s alakot adj meg.</div>
             </div>
             <button id="finish-test-btn" class="btn btn-primary" type="button" style="width: 100%;">Teszt befejez&#233;se &#233;s &#233;rt&#233;kel&#233;s</button>
         </div>
@@ -703,9 +609,8 @@
         <div class="learning-hint" data-role="practice-help">
             <h3>Gyakorl&#225;si tipp</h3>
             <ul>
-                <li>V&#225;lassz legal&#225;bb egy neh&#233;zs&#233;get a feladatokhoz.</li>
-                <li>Haszn&#225;ld a szita formul&#225;t: |A&#8746;B| = |A| + |B| - |A&#8745;B|.</li>
-                <li>Oszthat&#243;s&#225;gn&#225;l el&#337;sz&#246;r sz&#225;mold ki a floor(N / a) &#233;rt&#233;keket.</li>
+                <li>El&#337;sz&#246;r a 2-vel val&#243; oszthat&#243;s&#225;got ellen&#337;rizd.</li>
+                <li>Ha marad&#233;k n&#233;lk&#252;l oszthat&#243;, oszd addig, am&#237;g lehet.</li>
                 <li>Helyes v&#225;lasz ut&#225;n automatikusan j&#246;n a k&#246;vetkez&#337; k&#233;rd&#233;s.</li>
             </ul>
         </div>
@@ -727,8 +632,8 @@
     <div class="result-popup" id="resultPopup"></div>
 
     <script>
-        const TOPIC_ID = 'logikai_szita';
-        const TOPIC_NAME = 'Logikai szita formula';
+        const TOPIC_ID = 'primtenyezok';
+        const TOPIC_NAME = 'Pr\u00edmt\u00e9nyez\u0151s felbont\u00e1s';
         const TAB_LABELS = {
             elmelet: 'Elm\u00e9let',
             vizualis: 'Vizu\u00e1lis modell',
@@ -744,28 +649,21 @@
             [DIFF_HARD]: 'Neh\u00e9z'
         };
         const TEST_QUESTION_COUNT = 10;
-        const QUESTION_TYPES_BY_DIFFICULTY = {
-            [DIFF_EASY]: ['set-union', 'set-intersection'],
-            [DIFF_NORMAL]: ['set-union', 'set-intersection', 'multiples-union'],
-            [DIFF_HARD]: ['set-union', 'set-intersection', 'multiples-union', 'multiples-intersection']
-        };
         const PRACTICE_XP_REWARDS = {
             [DIFF_EASY]: 1,
             [DIFF_NORMAL]: 2,
             [DIFF_HARD]: 3
         };
-        const SET_RANGES = {
-            [DIFF_EASY]: { min: 4, max: 14 },
-            [DIFF_NORMAL]: { min: 8, max: 24 },
-            [DIFF_HARD]: { min: 12, max: 34 }
+        const NUMBER_RANGES = {
+            [DIFF_EASY]: { min: 20, max: 150, minFactors: 2, maxFactors: 3 },
+            [DIFF_NORMAL]: { min: 60, max: 400, minFactors: 3, maxFactors: 4 },
+            [DIFF_HARD]: { min: 150, max: 1200, minFactors: 4, maxFactors: 5 }
         };
-        const MULTIPLES_RANGES = {
-            [DIFF_EASY]: { nMin: 30, nMax: 60, divisorMin: 2, divisorMax: 6 },
-            [DIFF_NORMAL]: { nMin: 40, nMax: 80, divisorMin: 2, divisorMax: 10 },
-            [DIFF_HARD]: { nMin: 60, nMax: 120, divisorMin: 3, divisorMax: 12 }
+        const PRIMES_BY_DIFFICULTY = {
+            [DIFF_EASY]: [2, 3, 5, 7, 11],
+            [DIFF_NORMAL]: [2, 3, 5, 7, 11, 13, 17],
+            [DIFF_HARD]: [2, 3, 5, 7, 11, 13, 17, 19, 23]
         };
-        const unionSymbol = '\u222a';
-        const intersectionSymbol = '\u2229';
 
         const tabButtons = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
@@ -788,27 +686,11 @@
         const practiceFeedback = document.getElementById('practice-feedback');
         const practiceDifficultyInputs = document.querySelectorAll('.practice-difficulty');
 
-        const setSizeA = document.getElementById('set-size-a');
-        const setSizeB = document.getElementById('set-size-b');
-        const setIntersectionInput = document.getElementById('set-intersection');
-        const setFormulaText = document.getElementById('set-formula');
-        const setUnionValue = document.getElementById('set-union-value');
-        const setIntersectionValue = document.getElementById('set-intersection-value');
-        const setOnlyA = document.getElementById('set-only-a');
-        const setOnlyB = document.getElementById('set-only-b');
-        const setExampleGrid = document.getElementById('set-example-grid');
-        const randomSetBtn = document.getElementById('random-set-btn');
-        const regenSetBtn = document.getElementById('regen-set-btn');
-
-        const rangeN = document.getElementById('range-n');
-        const rangeA = document.getElementById('range-a');
-        const rangeB = document.getElementById('range-b');
-        const rangeFormula = document.getElementById('range-formula');
-        const rangeCountA = document.getElementById('range-count-a');
-        const rangeCountB = document.getElementById('range-count-b');
-        const rangeCountBoth = document.getElementById('range-count-both');
-        const rangeCountUnion = document.getElementById('range-count-union');
-        const randomRangeBtn = document.getElementById('random-range-btn');
+        const factorNumberInput = document.getElementById('factor-number');
+        const factorStringEl = document.getElementById('factor-string');
+        const primeFlagEl = document.getElementById('prime-flag');
+        const factorListEl = document.getElementById('factor-list');
+        const factorStepsEl = document.getElementById('factor-steps');
 
         let activeTab = 'elmelet';
         let testQuestions = [];
@@ -819,10 +701,11 @@
         let isTestRunning = false;
 
         let currentPracticeAnswer = '';
+        let currentPracticeExpected = null;
         let currentPracticeDifficulty = DIFF_EASY;
         let practiceActive = false;
-        const PRACTICE_HISTORY_LIMIT = 6;
-        const PRACTICE_RETRY_LIMIT = 12;
+        const PRACTICE_HISTORY_LIMIT = 8;
+        const PRACTICE_RETRY_LIMIT = 16;
         const practiceHistory = [];
 
         function announceActiveTab(tabName) {
@@ -852,214 +735,6 @@
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        function clamp(value, min, max) {
-            return Math.min(Math.max(value, min), max);
-        }
-
-        function readInt(input, fallback) {
-            const value = Number.parseInt(input.value, 10);
-            return Number.isFinite(value) ? value : fallback;
-        }
-
-        function gcd(a, b) {
-            let x = Math.abs(a);
-            let y = Math.abs(b);
-            while (y !== 0) {
-                const temp = y;
-                y = x % y;
-                x = temp;
-            }
-            return x;
-        }
-
-        function lcm(a, b) {
-            if (a === 0 || b === 0) return 0;
-            return Math.abs(a * b) / gcd(a, b);
-        }
-
-        function formatNumber(value) {
-            if (!Number.isFinite(value)) return '';
-            const rounded = Math.round(value * 100) / 100;
-            return Number.isInteger(rounded) ? String(rounded) : String(rounded);
-        }
-
-        function parseNumberInput(value) {
-            const normalized = value.trim().replace(',', '.');
-            if (normalized.length === 0) return null;
-            const parsed = Number.parseFloat(normalized);
-            return Number.isFinite(parsed) ? parsed : null;
-        }
-
-        function isClose(a, b) {
-            return Math.abs(a - b) < 0.0001;
-        }
-
-        function buildSetExample(range) {
-            const a = randomInt(range.min, range.max);
-            const b = randomInt(range.min, range.max);
-            const intersection = randomInt(0, Math.min(a, b));
-            const union = a + b - intersection;
-            return { a, b, intersection, union };
-        }
-
-        function buildRangeExample(range) {
-            const n = randomInt(range.nMin, range.nMax);
-            let a = randomInt(range.divisorMin, range.divisorMax);
-            let b = randomInt(range.divisorMin, range.divisorMax);
-            if (a === b) {
-                b = a === range.divisorMax ? a - 1 : a + 1;
-            }
-            return { n, a, b };
-        }
-
-        function applySetExample(example) {
-            setSizeA.value = String(example.a);
-            setSizeB.value = String(example.b);
-            setIntersectionInput.value = String(example.intersection);
-            updateSetModel();
-        }
-
-        function applyRangeExample(example) {
-            rangeN.value = String(example.n);
-            rangeA.value = String(example.a);
-            rangeB.value = String(example.b);
-            updateRangeModel();
-        }
-
-        function generateSetExamples(count = 6) {
-            const range = SET_RANGES[DIFF_NORMAL];
-            const examples = [];
-            for (let i = 0; i < count; i += 1) {
-                examples.push(buildSetExample(range));
-            }
-            return examples;
-        }
-
-        function renderSetExamples(examples) {
-            if (!setExampleGrid) return;
-            setExampleGrid.innerHTML = '';
-            examples.forEach(example => {
-                const card = document.createElement('button');
-                card.type = 'button';
-                card.className = 'example-card';
-                const line1 = document.createElement('strong');
-                line1.textContent = `|A|=${example.a}`;
-                const line2 = document.createElement('span');
-                line2.textContent = `|B|=${example.b}`;
-                const line3 = document.createElement('span');
-                line3.textContent = `|A${intersectionSymbol}B|=${example.intersection}`;
-                card.append(line1, line2, line3);
-                card.addEventListener('click', () => applySetExample(example));
-                setExampleGrid.appendChild(card);
-            });
-        }
-
-        function updateSetModel() {
-            const a = readInt(setSizeA, 12);
-            const b = readInt(setSizeB, 9);
-            const maxIntersection = Math.min(a, b);
-            let intersection = readInt(setIntersectionInput, 4);
-            intersection = clamp(intersection, 0, maxIntersection);
-            setIntersectionInput.max = String(maxIntersection);
-            if (setIntersectionInput.value !== String(intersection)) {
-                setIntersectionInput.value = String(intersection);
-            }
-            const union = a + b - intersection;
-            const onlyA = a - intersection;
-            const onlyB = b - intersection;
-
-            setFormulaText.textContent = `|A${unionSymbol}B| = |A| + |B| - |A${intersectionSymbol}B| = ${a} + ${b} - ${intersection} = ${union}`;
-            setUnionValue.textContent = String(union);
-            setIntersectionValue.textContent = String(intersection);
-            setOnlyA.textContent = String(onlyA);
-            setOnlyB.textContent = String(onlyB);
-        }
-
-        function updateRangeModel() {
-            const n = readInt(rangeN, 50);
-            const a = clamp(readInt(rangeA, 4), 1, 999);
-            const b = clamp(readInt(rangeB, 6), 1, 999);
-            if (rangeA.value !== String(a)) {
-                rangeA.value = String(a);
-            }
-            if (rangeB.value !== String(b)) {
-                rangeB.value = String(b);
-            }
-            const lcmValue = lcm(a, b);
-            const countA = Math.floor(n / a);
-            const countB = Math.floor(n / b);
-            const countBoth = lcmValue === 0 ? 0 : Math.floor(n / lcmValue);
-            const union = countA + countB - countBoth;
-
-            rangeFormula.textContent = `|A${unionSymbol}B| = floor(N / a) + floor(N / b) - floor(N / lkkt(a,b)) = ${countA} + ${countB} - ${countBoth} = ${union}`;
-            rangeCountA.textContent = String(countA);
-            rangeCountB.textContent = String(countB);
-            rangeCountBoth.textContent = String(countBoth);
-            rangeCountUnion.textContent = String(union);
-        }
-
-        function buildSetUnionQuestion(difficulty) {
-            const range = SET_RANGES[difficulty] || SET_RANGES[DIFF_EASY];
-            const data = buildSetExample(range);
-            return {
-                question: `Adott: |A| = ${data.a}, |B| = ${data.b}, |A${intersectionSymbol}B| = ${data.intersection}. Sz\u00e1m\u00edtsd ki |A${unionSymbol}B|-t!`,
-                answer: data.union,
-                kind: 'set-union'
-            };
-        }
-
-        function buildSetIntersectionQuestion(difficulty) {
-            const range = SET_RANGES[difficulty] || SET_RANGES[DIFF_EASY];
-            const data = buildSetExample(range);
-            return {
-                question: `Adott: |A| = ${data.a}, |B| = ${data.b}, |A${unionSymbol}B| = ${data.union}. Mennyi |A${intersectionSymbol}B|?`,
-                answer: data.intersection,
-                kind: 'set-intersection'
-            };
-        }
-
-        function buildMultiplesUnionQuestion(difficulty) {
-            const range = MULTIPLES_RANGES[difficulty] || MULTIPLES_RANGES[DIFF_NORMAL];
-            const example = buildRangeExample(range);
-            const lcmValue = lcm(example.a, example.b);
-            const countA = Math.floor(example.n / example.a);
-            const countB = Math.floor(example.n / example.b);
-            const countBoth = Math.floor(example.n / lcmValue);
-            const union = countA + countB - countBoth;
-            return {
-                question: `H\u00e1ny 1..${example.n} k\u00f6z\u00f6tti sz\u00e1m oszthat\u00f3 ${example.a}-val vagy ${example.b}-vel?`,
-                answer: union,
-                kind: 'multiples-union'
-            };
-        }
-
-        function buildMultiplesIntersectionQuestion(difficulty) {
-            const range = MULTIPLES_RANGES[difficulty] || MULTIPLES_RANGES[DIFF_HARD];
-            const example = buildRangeExample(range);
-            const lcmValue = lcm(example.a, example.b);
-            const countBoth = Math.floor(example.n / lcmValue);
-            return {
-                question: `H\u00e1ny 1..${example.n} k\u00f6z\u00f6tti sz\u00e1m oszthat\u00f3 egyszerre ${example.a}-val \u00e9s ${example.b}-vel?`,
-                answer: countBoth,
-                kind: 'multiples-intersection'
-            };
-        }
-
-        function buildQuestionByType(difficulty, type) {
-            switch (type) {
-                case 'set-union':
-                    return buildSetUnionQuestion(difficulty);
-                case 'set-intersection':
-                    return buildSetIntersectionQuestion(difficulty);
-                case 'multiples-union':
-                    return buildMultiplesUnionQuestion(difficulty);
-                case 'multiples-intersection':
-                    return buildMultiplesIntersectionQuestion(difficulty);
-                default:
-                    return buildSetUnionQuestion(difficulty);
-            }
-        }
-
         function shuffle(list) {
             const arr = [...list];
             for (let i = arr.length - 1; i > 0; i -= 1) {
@@ -1069,19 +744,130 @@
             return arr;
         }
 
-        function buildTestQuestions(difficulty) {
-            const allowed = QUESTION_TYPES_BY_DIFFICULTY[difficulty] || QUESTION_TYPES_BY_DIFFICULTY[DIFF_EASY];
-            const questions = [];
-            if (allowed.length >= 2) {
-                const shuffledTypes = shuffle(allowed);
-                questions.push(buildQuestionByType(difficulty, shuffledTypes[0]));
-                questions.push(buildQuestionByType(difficulty, shuffledTypes[1]));
-            } else if (allowed.length === 1) {
-                questions.push(buildQuestionByType(difficulty, allowed[0]));
+        function isPrime(value) {
+            const n = Math.abs(value);
+            if (n < 2) return false;
+            if (n === 2) return true;
+            if (n % 2 === 0) return false;
+            for (let i = 3; i * i <= n; i += 2) {
+                if (n % i === 0) return false;
             }
+            return true;
+        }
+
+        function factorizeNumber(value) {
+            let n = Math.abs(value);
+            const factors = [];
+            const steps = [];
+            if (!Number.isFinite(n) || n < 2) {
+                return { factors, steps };
+            }
+            let divisor = 2;
+            while (n >= divisor * divisor) {
+                if (n % divisor === 0) {
+                    const quotient = n / divisor;
+                    steps.push(`${n} = ${divisor} * ${quotient}`);
+                    factors.push(divisor);
+                    n = quotient;
+                } else {
+                    divisor = divisor === 2 ? 3 : divisor + 2;
+                }
+            }
+            if (n > 1) {
+                factors.push(n);
+                if (!steps.length) {
+                    steps.push(`${n} pr\u00edm`);
+                }
+            }
+            return { factors, steps };
+        }
+
+        function buildFactorMap(factors) {
+            return factors.reduce((acc, prime) => {
+                const key = String(prime);
+                acc[key] = (acc[key] || 0) + 1;
+                return acc;
+            }, {});
+        }
+
+        function buildFactorString(map) {
+            const keys = Object.keys(map).map(Number).sort((a, b) => a - b);
+            return keys.map((prime) => {
+                const exp = map[String(prime)];
+                return exp > 1 ? `${prime}^${exp}` : String(prime);
+            }).join(' * ');
+        }
+
+        function parseFactorization(input) {
+            const text = input.trim();
+            if (!text) return null;
+            const map = {};
+            const re = /(\d+)(?:\s*\^\s*(\d+))?/g;
+            let match = null;
+            let found = false;
+            while ((match = re.exec(text)) !== null) {
+                found = true;
+                const base = Number(match[1]);
+                const exp = match[2] ? Number(match[2]) : 1;
+                if (!Number.isFinite(base) || base < 2) return null;
+                if (!Number.isFinite(exp) || !Number.isInteger(exp) || exp < 1) return null;
+                if (!isPrime(base)) return null;
+                const key = String(base);
+                map[key] = (map[key] || 0) + exp;
+            }
+            if (!found) return null;
+            return map;
+        }
+
+        function mapsEqual(a, b) {
+            if (!a || !b) return false;
+            const aKeys = Object.keys(a);
+            const bKeys = Object.keys(b);
+            if (aKeys.length !== bKeys.length) return false;
+            return aKeys.every(key => Number(a[key]) === Number(b[key]));
+        }
+
+        function buildComposite(difficulty) {
+            const range = NUMBER_RANGES[difficulty] || NUMBER_RANGES[DIFF_EASY];
+            const primes = PRIMES_BY_DIFFICULTY[difficulty] || PRIMES_BY_DIFFICULTY[DIFF_EASY];
+            let attempts = 0;
+            while (attempts < 60) {
+                const count = randomInt(range.minFactors, range.maxFactors);
+                let value = 1;
+                for (let i = 0; i < count; i += 1) {
+                    value *= primes[randomInt(0, primes.length - 1)];
+                }
+                if (value >= range.min && value <= range.max) {
+                    return value;
+                }
+                attempts += 1;
+            }
+            return range.min;
+        }
+
+        function buildQuestion(difficulty) {
+            const number = buildComposite(difficulty);
+            const factorResult = factorizeNumber(number);
+            const map = buildFactorMap(factorResult.factors);
+            const answerString = buildFactorString(map);
+            return {
+                number,
+                question: `Bontsd pr\u00edmt\u00e9nyez\u0151kre: ${number}`,
+                answerMap: map,
+                answerString,
+                kind: 'factorization'
+            };
+        }
+
+        function buildTestQuestions(difficulty) {
+            const questions = [];
+            const used = new Set();
             while (questions.length < TEST_QUESTION_COUNT) {
-                const type = allowed[randomInt(0, allowed.length - 1)];
-                questions.push(buildQuestionByType(difficulty, type));
+                const candidate = buildQuestion(difficulty);
+                if (!used.has(candidate.number)) {
+                    used.add(candidate.number);
+                    questions.push(candidate);
+                }
             }
             return shuffle(questions).slice(0, TEST_QUESTION_COUNT);
         }
@@ -1111,7 +897,7 @@
             const current = testQuestions[currentTestIndex];
             if (!current) return;
             testQuestion.textContent = current.question;
-            currentTestAnswer = current.answer;
+            currentTestAnswer = current.answerString;
             window.currentTestAnswer = currentTestAnswer;
             window.currentTestKind = current.kind || '';
             testAnswerInput.value = current.userAnswer || '';
@@ -1154,10 +940,10 @@
             const total = testQuestions.length || 1;
             correctAnswers = 0;
             testQuestions.forEach((q) => {
-                const parsed = parseNumberInput(q.userAnswer || '');
-                const isCorrect = parsed !== null && isClose(parsed, q.answer);
-                q.correctAnswer = formatNumber(q.answer);
-                q.isCorrect = isCorrect;
+                const parsed = parseFactorization(q.userAnswer || '');
+                const isCorrect = parsed && mapsEqual(parsed, q.answerMap);
+                q.correctAnswer = q.answerString;
+                q.isCorrect = Boolean(isCorrect);
                 if (isCorrect) correctAnswers += 1;
             });
             const percentage = Math.round((correctAnswers / total) * 100);
@@ -1182,7 +968,7 @@
                 questions: testQuestions.map((q) => ({
                     question: q.question,
                     userAnswer: q.userAnswer || '',
-                    correctAnswer: q.correctAnswer || formatNumber(q.answer)
+                    correctAnswer: q.correctAnswer || q.answerString
                 }))
             };
             if (window.parent) {
@@ -1217,7 +1003,7 @@
         }
 
         function makePracticeSignature(difficulty, item) {
-            return [difficulty, item.kind || '', item.question || '', item.answer || ''].join('|');
+            return [difficulty, item.number, item.answerString].join('|');
         }
 
         function pushPracticeHistory(entry) {
@@ -1228,61 +1014,63 @@
         }
 
         function buildPracticeQuestion(difficulty, options = {}) {
-            const allowed = QUESTION_TYPES_BY_DIFFICULTY[difficulty] || QUESTION_TYPES_BY_DIFFICULTY[DIFF_EASY];
-            const avoidKind = options.avoidKind || '';
-            let pool = allowed;
-            if (avoidKind && allowed.length > 1) {
-                pool = allowed.filter(type => type !== avoidKind);
-                if (!pool.length) {
-                    pool = allowed;
-                }
-            }
-            const index = randomInt(0, pool.length - 1);
-            return buildQuestionByType(difficulty, pool[index]);
-        }
-
-        function nextPracticeQuestion() {
-            const enabled = getEnabledPracticeDifficulties();
-            if (!enabled.length) {
-                practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
-                practiceFeedback.style.color = '#f04747';
-                return;
-            }
-            currentPracticeDifficulty = pickRandomDifficulty(enabled);
-            window.currentPracticeDifficulty = currentPracticeDifficulty;
-            const label = DIFFICULTY_LABELS[currentPracticeDifficulty] || currentPracticeDifficulty;
-            const lastKind = practiceHistory.length ? practiceHistory[practiceHistory.length - 1].kind : '';
+            const avoidNumber = options.avoidNumber;
+            let candidate = null;
             let attempts = 0;
-            let practiceItem = null;
-            let signature = '';
-            while (attempts < PRACTICE_RETRY_LIMIT) {
-                practiceItem = buildPracticeQuestion(currentPracticeDifficulty, { avoidKind: lastKind });
-                signature = makePracticeSignature(currentPracticeDifficulty, practiceItem);
-                if (!practiceHistory.some(entry => entry.signature === signature)) {
+            while (attempts < 30) {
+                const next = buildQuestion(difficulty);
+                if (!avoidNumber || next.number !== avoidNumber) {
+                    candidate = next;
                     break;
                 }
                 attempts += 1;
             }
-            if (!practiceItem) {
-                practiceItem = buildPracticeQuestion(currentPracticeDifficulty, { avoidKind: lastKind });
-                signature = makePracticeSignature(currentPracticeDifficulty, practiceItem);
+            return candidate || buildQuestion(difficulty);
+        }
+
+        function nextPracticeQuestion() {
+            const enabled = getEnabledPracticeDifficulties();
+            if (!enabled.length) return;
+            const difficulty = pickRandomDifficulty(enabled);
+            const lastNumber = practiceHistory.length ? practiceHistory[practiceHistory.length - 1].number : null;
+            let attempts = 0;
+            let nextQuestion = null;
+
+            while (attempts < PRACTICE_RETRY_LIMIT) {
+                const candidate = buildPracticeQuestion(difficulty, { avoidNumber: lastNumber });
+                const signature = makePracticeSignature(difficulty, candidate);
+                if (!practiceHistory.some(entry => entry.signature === signature)) {
+                    candidate.signature = signature;
+                    nextQuestion = candidate;
+                    break;
+                }
+                attempts += 1;
             }
-            currentPracticeAnswer = practiceItem.answer;
+
+            if (!nextQuestion) {
+                nextQuestion = buildPracticeQuestion(difficulty);
+                nextQuestion.signature = makePracticeSignature(difficulty, nextQuestion);
+            }
+
+            currentPracticeDifficulty = difficulty;
+            currentPracticeAnswer = nextQuestion.answerString;
+            currentPracticeExpected = nextQuestion.answerMap;
             window.currentPracticeAnswer = currentPracticeAnswer;
-            const practiceKind = practiceItem.kind || '';
-            window.currentPracticeKind = practiceKind;
-            pushPracticeHistory({ signature, kind: practiceKind });
-            practiceQuestion.textContent = `${label} feladat: ${practiceItem.question}`;
+            window.currentPracticeKind = nextQuestion.kind || '';
+            practiceQuestion.textContent = nextQuestion.question;
             practiceInput.value = '';
             practiceFeedback.textContent = '';
-            practiceFeedback.style.color = '#2c3e50';
+            practiceFeedback.style.color = '';
+            pushPracticeHistory({
+                signature: nextQuestion.signature,
+                number: nextQuestion.number
+            });
         }
 
         function checkPracticeAnswer() {
             if (!practiceActive) return;
-            const rawInput = practiceInput.value.trim();
-            const parsed = parseNumberInput(rawInput);
-            if (parsed !== null && isClose(parsed, currentPracticeAnswer)) {
+            const parsed = parseFactorization(practiceInput.value || '');
+            if (parsed && mapsEqual(parsed, currentPracticeExpected)) {
                 const xpReward = PRACTICE_XP_REWARDS[currentPracticeDifficulty] || 1;
                 practiceFeedback.textContent = `Helyes! (+${xpReward} XP)`;
                 practiceFeedback.style.color = '#43b581';
@@ -1298,6 +1086,45 @@
                 practiceFeedback.textContent = 'Pr\u00f3b\u00e1ld \u00fajra!';
                 practiceFeedback.style.color = '#f04747';
             }
+        }
+
+        function updateModel() {
+            const value = Number.parseInt(factorNumberInput.value, 10);
+            if (!Number.isFinite(value) || value < 2) {
+                factorStringEl.textContent = '-';
+                primeFlagEl.textContent = '-';
+                factorListEl.innerHTML = '';
+                factorStepsEl.innerHTML = '';
+                return;
+            }
+            const result = factorizeNumber(value);
+            const map = buildFactorMap(result.factors);
+            const factorString = buildFactorString(map);
+            const isPrimeValue = result.factors.length === 1 && result.factors[0] === value;
+
+            factorStringEl.textContent = factorString || '-';
+            primeFlagEl.textContent = isPrimeValue ? 'Igen' : 'Nem';
+            factorListEl.innerHTML = '';
+            Object.keys(map).map(Number).sort((a, b) => a - b).forEach((prime) => {
+                const exp = map[String(prime)];
+                const chip = document.createElement('span');
+                chip.className = 'factor-chip';
+                chip.textContent = exp > 1 ? `${prime}^${exp}` : String(prime);
+                factorListEl.appendChild(chip);
+            });
+
+            factorStepsEl.innerHTML = '';
+            if (!result.steps.length) {
+                const li = document.createElement('li');
+                li.textContent = 'Nincs l\u00e9p\u00e9s.';
+                factorStepsEl.appendChild(li);
+                return;
+            }
+            result.steps.forEach((step) => {
+                const li = document.createElement('li');
+                li.textContent = step;
+                factorStepsEl.appendChild(li);
+            });
         }
 
         tabButtons.forEach(button => {
@@ -1320,7 +1147,6 @@
             });
         });
 
-        if (testStartBtn) testStartBtn.addEventListener('click', startTest);
         if (prevTestBtn) {
             prevTestBtn.addEventListener('click', () => {
                 saveTestAnswer();
@@ -1374,29 +1200,8 @@
             });
         }
 
-        if (setSizeA) setSizeA.addEventListener('input', updateSetModel);
-        if (setSizeB) setSizeB.addEventListener('input', updateSetModel);
-        if (setIntersectionInput) setIntersectionInput.addEventListener('input', updateSetModel);
-        if (rangeN) rangeN.addEventListener('input', updateRangeModel);
-        if (rangeA) rangeA.addEventListener('input', updateRangeModel);
-        if (rangeB) rangeB.addEventListener('input', updateRangeModel);
-
-        if (randomSetBtn) {
-            randomSetBtn.addEventListener('click', () => {
-                const example = buildSetExample(SET_RANGES[DIFF_NORMAL]);
-                applySetExample(example);
-            });
-        }
-        if (regenSetBtn) {
-            regenSetBtn.addEventListener('click', () => {
-                renderSetExamples(generateSetExamples());
-            });
-        }
-        if (randomRangeBtn) {
-            randomRangeBtn.addEventListener('click', () => {
-                const example = buildRangeExample(MULTIPLES_RANGES[DIFF_NORMAL]);
-                applyRangeExample(example);
-            });
+        if (factorNumberInput) {
+            factorNumberInput.addEventListener('input', updateModel);
         }
 
         const initialDifficulty = Array.from(difficultyButtons)
@@ -1405,10 +1210,8 @@
             currentTestDifficulty = initialDifficulty;
         }
 
-        renderSetExamples(generateSetExamples());
-        updateSetModel();
-        updateRangeModel();
-        setActiveTab('elmelet');
+        updateModel();
+        announceActiveTab(activeTab);
     </script>
 </body>
 </html>

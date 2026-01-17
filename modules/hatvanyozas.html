@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hatv&#225;nyoz&#225;s azonoss&#225;gai</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+        :root {
+            --brand-primary: #4A55A2;
+            --brand-secondary: #7895CB;
+            --brand-light: #A0BFE0;
+            --brand-background: #C5DFF8;
+            --text-dark: #2C3333;
+            --text-light: #393E46;
+            --bg-main: #FBFBFF;
+            --bg-card: #FFFFFF;
+            --border-color: #EAEFF2;
+            --success: #2ECC71;
+            --danger: #E74C3C;
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Cinzel', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-light);
+            padding: 40px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            font-weight: 400;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: var(--brand-primary);
+            border-bottom: 2px solid var(--brand-background);
+            padding-bottom: 10px;
+            margin: 30px 0 16px 0;
+            font-weight: 600;
+            font-family: var(--font-heading), var(--font-main);
+        }
+
+        h3 {
+            font-size: 1.2em;
+            color: var(--text-dark);
+            margin: 16px 0 8px 0;
+            font-weight: 600;
+        }
+
+        p,
+        li {
+            font-size: 1.05em;
+            line-height: 1.7;
+            max-width: 80ch;
+        }
+
+        ul,
+        ol {
+            padding-left: 24px;
+        }
+
+        b,
+        strong {
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+
+        .muted {
+            color: var(--text-light);
+            font-size: 0.95em;
+        }
+
+        .theory-grid {
+            display: grid;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        @media (min-width: 900px) {
+            .theory-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .card {
+            background-color: var(--bg-card, rgba(255, 255, 255, var(--module-card-opacity, 1)));
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-light);
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--brand-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: var(--brand-primary);
+        }
+
+        .tab-button.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .learning-hint {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--brand-primary);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 14px 0;
+            color: var(--text-dark);
+        }
+
+        .learning-hint h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.05em;
+            color: var(--brand-primary);
+        }
+
+        .learning-hint ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-light);
+        }
+
+        .learning-hint li { margin-bottom: 6px; }
+
+        .formula-line {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-main);
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 8px 10px;
+            color: var(--text-dark);
+            display: inline-block;
+        }
+
+        .model-container {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .model-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .model-card {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group input {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            font-size: 1em;
+        }
+
+        .operation-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .operation-btn.active {
+            background-color: var(--brand-primary);
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(74, 85, 162, 0.25);
+        }
+
+        .result-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .result-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .test-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .difficulty-btn.active {
+            background-color: var(--brand-primary);
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(74, 85, 162, 0.25);
+        }
+
+        .test-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .test-area,
+        .practice-area {
+            margin-top: 16px;
+        }
+
+        .test-area.is-hidden,
+        .practice-area.is-hidden {
+            display: none;
+        }
+
+        .test-navigation {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #pagination-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            background-color: var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dot.answered {
+            background-color: var(--success);
+        }
+
+        .dot.current {
+            box-shadow: 0 0 0 4px var(--brand-light);
+            transform: scale(1.15);
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 46px;
+            height: 46px;
+            cursor: pointer;
+            color: var(--brand-primary);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--brand-primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(74, 85, 162, 0.2);
+        }
+
+        .nav-btn:disabled {
+            background-color: var(--bg-main);
+            color: var(--border-color);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .question-box {
+            padding: 24px;
+            border-radius: 12px;
+            background-color: var(--bg-main);
+            min-height: 160px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .test-question,
+        .practice-question {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--brand-primary);
+            outline-offset: 2px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: default;
+            box-shadow: none;
+        }
+
+        .btn-primary {
+            background-color: var(--brand-primary);
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(74, 85, 162, 0.25);
+        }
+
+        .btn-primary:hover { transform: translateY(-1px); }
+
+        .btn-secondary,
+        .secondary {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+
+        .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+        .module-input {
+            width: min(320px, 100%);
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            font-size: 1em;
+        }
+
+        .module-input:focus {
+            outline: 2px solid var(--brand-primary);
+            border-color: var(--brand-primary);
+        }
+
+        .input-help {
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: var(--text-light);
+        }
+
+        .practice-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .practice-controls label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95em;
+        }
+
+        .practice-info {
+            margin-top: -10px;
+        }
+
+        .result-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 30px 50px;
+            border-radius: 15px;
+            font-size: 2em;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .result-popup.show { opacity: 1; }
+    </style>
+</head>
+<body>
+    <div class="tab-buttons" role="tablist">
+        <button class="tab-button active" data-tab="elmelet" type="button" role="tab" aria-selected="true">Elm&#233;let</button>
+        <button class="tab-button" data-tab="vizualis" type="button" role="tab" aria-selected="false">Vizu&#225;lis modell</button>
+        <button class="tab-button" data-tab="teszt" type="button" role="tab" aria-selected="false">Teszt</button>
+        <button class="tab-button" data-tab="gyakorlas" type="button" role="tab" aria-selected="false">Gyakorl&#225;s</button>
+    </div>
+
+    <div id="elmelet" class="tab-content card active" role="tabpanel">
+        <h2>Hatv&#225;nyoz&#225;s azonoss&#225;gai</h2>
+        <p>A hatv&#225;nyoz&#225;s ism&#233;telt szorz&#225;st jelent, a szab&#225;lyok pedig seg&#237;tenek az azonos alap&#250; hatv&#225;nyok gyors egyszer&#369;s&#237;t&#233;s&#233;ben.</p>
+        <div class="learning-hint">
+            <h3>Alapszab&#225;lyok</h3>
+            <ul>
+                <li><span class="formula-line">a<sup>m</sup> &#215; a<sup>n</sup> = a<sup>m+n</sup></span></li>
+                <li><span class="formula-line">a<sup>m</sup> / a<sup>n</sup> = a<sup>m-n</sup> (a &#8800; 0)</span></li>
+                <li><span class="formula-line">(a<sup>m</sup>)<sup>n</sup> = a<sup>m&#183;n</sup></span></li>
+                <li><span class="formula-line">(ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup></span></li>
+                <li><span class="formula-line">a<sup>0</sup> = 1 (a &#8800; 0)</span></li>
+                <li><span class="formula-line">a<sup>-n</sup> = 1 / a<sup>n</sup></span></li>
+            </ul>
+        </div>
+        <div class="theory-grid">
+            <div class="learning-hint">
+                <h3>P&#233;ld&#225;k szorz&#225;sra</h3>
+                <ul>
+                    <li><span class="formula-line">2<sup>3</sup> &#215; 2<sup>4</sup> = 2<sup>7</sup> = 128</span></li>
+                    <li><span class="formula-line">5<sup>2</sup> &#215; 5<sup>1</sup> = 5<sup>3</sup> = 125</span></li>
+                </ul>
+            </div>
+            <div class="learning-hint">
+                <h3>P&#233;ld&#225;k oszt&#225;sra &#233;s hatv&#225;ny hatv&#225;ny&#225;ra</h3>
+                <ul>
+                    <li><span class="formula-line">3<sup>5</sup> / 3<sup>2</sup> = 3<sup>3</sup> = 27</span></li>
+                    <li><span class="formula-line">(2<sup>3</sup>)<sup>2</sup> = 2<sup>6</sup> = 64</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="learning-hint">
+            <h3>Tippek</h3>
+            <ul>
+                <li>El&#337;sz&#246;r mindig hozd azonos alapra a hatv&#225;nyokat.</li>
+                <li>Oszt&#225;sn&#225;l csak a kitev&#337;k kivon&#225;s&#225;t kell elv&#233;gezni.</li>
+                <li>Ha az alap k&#246;z&#246;s, a szab&#225;lyok gyors&#237;tj&#225;k a sz&#225;mol&#225;st.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="vizualis" class="tab-content card" role="tabpanel">
+        <h2>Vizu&#225;lis modell</h2>
+        <p>Pr&#243;b&#225;ld ki a hatv&#225;nyok sz&#225;m&#237;t&#225;s&#225;t &#233;s az azonoss&#225;gokat k&#252;l&#246;nb&#246;z&#337; param&#233;terekkel.</p>
+        <div class="model-container">
+            <div class="model-card">
+                <h3>Hatv&#225;ny &#233;rt&#233;ke</h3>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="pow-base">Alap</label>
+                        <input type="number" id="pow-base" min="1" value="3">
+                    </div>
+                    <div class="input-group">
+                        <label for="pow-exp">Kitev&#337;</label>
+                        <input type="number" id="pow-exp" min="0" value="4">
+                    </div>
+                </div>
+                <div class="result-list">
+                    <div class="result-row"><span>Eredm&#233;ny</span><strong id="pow-output">-</strong></div>
+                    <div class="result-row"><span>Sz&#225;mol&#225;s</span><strong id="pow-formula">-</strong></div>
+                </div>
+                <div class="input-help" id="pow-error"></div>
+            </div>
+            <div class="model-card">
+                <h3>Hatv&#225;nyazonoss&#225;gok</h3>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="rule-base">Alap</label>
+                        <input type="number" id="rule-base" min="1" value="2">
+                    </div>
+                    <div class="input-group">
+                        <label for="rule-exp-a">m</label>
+                        <input type="number" id="rule-exp-a" min="0" value="3">
+                    </div>
+                    <div class="input-group">
+                        <label for="rule-exp-b">n</label>
+                        <input type="number" id="rule-exp-b" min="0" value="4">
+                    </div>
+                </div>
+                <div class="operation-buttons" role="group" aria-label="Azonoss&#225;g v&#225;laszt&#225;sa">
+                    <button class="btn btn-secondary operation-btn active" type="button" data-op="mul">a<sup>m</sup> &#215; a<sup>n</sup></button>
+                    <button class="btn btn-secondary operation-btn" type="button" data-op="div">a<sup>m</sup> / a<sup>n</sup></button>
+                    <button class="btn btn-secondary operation-btn" type="button" data-op="pow">(a<sup>m</sup>)<sup>n</sup></button>
+                </div>
+                <div class="result-list">
+                    <div class="result-row"><span>Egyszer&#369;s&#237;tett alak</span><strong id="rule-exponent">-</strong></div>
+                    <div class="result-row"><span>Eredm&#233;ny</span><strong id="rule-output">-</strong></div>
+                    <div class="result-row"><span>Levezet&#233;s</span><strong id="rule-formula">-</strong></div>
+                </div>
+                <div class="input-help" id="rule-error"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="teszt" class="tab-content card" role="tabpanel">
+        <h2>Teszt</h2>
+        <p>Hatv&#225;nyoz&#225;si azonoss&#225;gok gyakorl&#225;sa: k&#246;z&#246;s alap, kitev&#337;k sz&#225;m&#237;t&#225;sa &#233;s egyszer&#369;s&#237;t&#233;s.</p>
+        <div class="learning-hint" data-role="test-help">
+            <h3>Megold&#225;si l&#233;p&#233;sek</h3>
+            <ul>
+                <li>Keresd meg az azonos alapot, majd alkalmazd a megfelel&#337; szab&#225;lyt.</li>
+                <li>Szorz&#225;sn&#225;l kitev&#337;k &#246;sszead&#225;sa, oszt&#225;sn&#225;l kivon&#225;sa.</li>
+                <li>Hatv&#225;ny hatv&#225;ny&#225;n&#225;l szorozd &#246;ssze a kitev&#337;ket.</li>
+            </ul>
+            <div class="input-help">Enterrel is tov&#225;bbl&#233;phetsz.</div>
+        </div>
+        <div class="test-meta">
+            <div class="meta-row">
+                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <div class="difficulty-buttons">
+                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="neh&#233;z" type="button">Neh&#233;z</button>
+                </div>
+            </div>
+        </div>
+        <div class="test-controls">
+            <button id="start-test-btn" class="btn btn-secondary" type="button" hidden>&#218;j teszt</button>
+        </div>
+        <div id="test-area" class="test-area is-hidden">
+            <div class="test-navigation">
+                <button id="prev-q" class="nav-btn" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg></button>
+                <div id="pagination-dots"></div>
+                <button id="next-q" class="nav-btn" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg></button>
+            </div>
+            <div class="question-box">
+                <div id="test-question" class="test-question"></div>
+                <input type="text" id="test-answer" class="module-input" placeholder="V&#225;lasz...">
+                <div class="input-help">Eg&#233;sz sz&#225;mk&#233;nt add meg a v&#225;laszt.</div>
+            </div>
+            <button id="finish-test-btn" class="btn btn-primary" type="button" style="width: 100%;">Teszt befejez&#233;se &#233;s &#233;rt&#233;kel&#233;s</button>
+        </div>
+    </div>
+
+    <div id="gyakorlas" class="tab-content card" role="tabpanel">
+        <h2>Gyakorl&#225;s</h2>
+        <p class="practice-info">V&#233;gtelen&#237;tett gyakorl&#225;s. XP jutalom: k&#246;nny&#369; = 1 XP, norm&#225;l = 2 XP, neh&#233;z = 3 XP.</p>
+        <div class="learning-hint" data-role="practice-help">
+            <h3>Gyakorl&#225;si tipp</h3>
+            <ul>
+                <li>Ha kell, el&#337;bb egyszer&#369;s&#237;tsd a kitev&#337;ket, majd sz&#225;mold ki az &#233;rt&#233;ket.</li>
+                <li>Kis alapn&#225;l gyorsan ellen&#337;rizhet&#337; a v&#225;lasz.</li>
+                <li>Helyes v&#225;lasz ut&#225;n automatikusan j&#246;n a k&#246;vetkez&#337; feladat.</li>
+            </ul>
+        </div>
+        <div class="practice-controls">
+            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
+            <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
+            <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>
+            <button id="start-practice-btn" class="btn btn-secondary" type="button">Gyakorl&#225;s ind&#237;t&#225;sa</button>
+        </div>
+        <div id="practice-area" class="practice-area is-hidden">
+            <div class="question-box">
+                <div id="practice-question" class="practice-question"></div>
+                <input type="text" id="practice-input" class="module-input" placeholder="V&#225;lasz...">
+                <button id="check-practice-btn" class="btn btn-primary" type="button">V&#225;lasz elk&#252;ld&#233;se</button>
+                <div id="practice-feedback" class="input-help"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="result-popup" id="resultPopup"></div>
+
+    <script src="hatvanyozas.js"></script>
+</body>
+</html>

@@ -7,6 +7,7 @@
 const { app, BrowserWindow, session, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const { LEVEL_TYPES, DEFAULT_BASE_XP, TOPIC_CONFIG } = require('./xp_config');
 
 const customUserDataDir = process.env.MATEK_MESTER_USER_DATA;
 if (customUserDataDir) {
@@ -17,16 +18,41 @@ if (customUserDataDir) {
 const progressFilePath = path.join(app.getPath('userData'), 'progress.json');
 const settingsFilePath = path.join(app.getPath('userData'), 'settings.json');
 
-// XP rewards for test completions by difficulty
-const XP_REWARDS = { konnyu: 120, kozepes: 200, nehez: 320 };
-// Labels for human‑readable difficulty names
-const DIFFICULTY_LABELS = { konnyu: 'könnyű', kozepes: 'közepes', nehez: 'nehéz' };
-// Bonus XP for certain types of topics
-const TOPIC_BONUSES = [
-  { match: /modulzaro/i, bonus: 150, label: 'Modulzáró' },
-  { match: /temazaro/i, bonus: 220, label: 'Témazáró' },
-  { match: /emelt_/i, bonus: 250, label: 'Emelt modul' }
-];
+const PROGRESS_VERSION = 2;
+const QUEST_VERSION = 2;
+const DEFAULT_DIFFICULTY = 'normal';
+
+// XP rewards fallback (legacy behavior) for test completions by difficulty
+const XP_REWARDS_FALLBACK = { konnyu: 120, normal: 200, nehez: 320 };
+// Labels for human-readable difficulty names
+const GRADE_MULTIPLIERS = { 1: 0, 2: 1.0, 3: 1.1, 4: 1.2, 5: 1.3 };
+const DIFFICULTY_MULTIPLIERS = { konnyu: 0.7, normal: 1.0, nehez: 1.4 };
+const TIER_MULTIPLIERS = {
+  [LEVEL_TYPES.FOTEMA]: 1.5,
+  [LEVEL_TYPES.ALTEMA]: 1.2,
+  [LEVEL_TYPES.TEMAKOR]: 1.0,
+};
+
+const LEVEL_BASE_XP = 50;
+const LEVEL_GROWTH = 1.07;
+const MAX_LEVEL = 50;
+
+function buildLevelTable() {
+  const table = [];
+  let xpStart = 0;
+  for (let level = 1; level <= MAX_LEVEL; level += 1) {
+    const xpToNext = (level < MAX_LEVEL)
+      ? Math.round(LEVEL_BASE_XP * Math.pow(LEVEL_GROWTH, level - 1))
+      : 0;
+    const xpEnd = xpStart + xpToNext;
+    table.push({ level, xpStart, xpEnd, xpToNext });
+    xpStart = xpEnd;
+  }
+  return table;
+}
+
+const LEVEL_TABLE = buildLevelTable();
+
 // Level names from constitution/xp/xp_roadmap.md
 const LEVEL_NAMES = [
   'Kezdő Diák',
@@ -81,6 +107,72 @@ const LEVEL_NAMES = [
   'Matematikai Nagymester'
 ];
 
+const ACHIEVEMENT_CATALOG = [
+  {
+    id: 'first_test',
+    title: 'Elso teszteredmeny',
+    description: 'Elso sikeres teszt (jegy >= 2).',
+    xpReward: 0,
+    category: 'performance',
+  },
+  {
+    id: 'hard_first',
+    title: 'Nehez harcos',
+    description: 'Elso nehez teszt sikeresen teljesitve.',
+    xpReward: 0,
+    category: 'difficulty',
+  },
+  {
+    id: 'hard_perfect',
+    title: 'Tokeletes vizsga',
+    description: '5-os jegy nehez teszten.',
+    xpReward: 0,
+    category: 'performance',
+  },
+  {
+    id: 'streak_5',
+    title: 'Sorozatgyoztes',
+    description: '5 egymas utani jo eredmeny.',
+    xpReward: 0,
+    category: 'performance',
+  },
+  {
+    id: 'subtopic_master',
+    title: 'Altema zaro',
+    description: 'Egy altema kimaxolasa.',
+    xpReward: 0,
+    category: 'structure',
+  },
+  {
+    id: 'main_topic_master',
+    title: 'Fotema mester',
+    description: 'Egy fotema kimaxolasa.',
+    xpReward: 0,
+    category: 'structure',
+  },
+  {
+    id: 'emelt_bajnok',
+    title: 'Emelt bajnok',
+    description: 'Emelt modulzaro sikeres teljesitese.',
+    xpReward: 0,
+    category: 'difficulty',
+  },
+  {
+    id: 'xp_collector_1000',
+    title: 'XP gyujto',
+    description: 'Osszegyujtottel 1000 XP-t.',
+    xpReward: 0,
+    category: 'special',
+  },
+  {
+    id: 'level_up',
+    title: 'Szintlepo',
+    description: 'Elertel egy uj szintet.',
+    xpReward: 0,
+    category: 'special',
+  },
+];
+
 // Read the progress.json file if it exists, otherwise return an empty object
 function readProgress() {
   try {
@@ -112,7 +204,7 @@ function saveSettings(data) {
 }
 
 function coerceQuestState(raw) {
-  const normalized = { version: 1, topics: {} };
+  const normalized = { version: QUEST_VERSION, mainTopics: {}, subtopics: {}, topics: {} };
   if (!raw || typeof raw !== 'object') {
     return normalized;
   }
@@ -120,92 +212,752 @@ function coerceQuestState(raw) {
   if (Number.isFinite(versionNumber) && versionNumber > 0) {
     normalized.version = versionNumber;
   }
+  if (raw.mainTopics && typeof raw.mainTopics === 'object') {
+    normalized.mainTopics = { ...raw.mainTopics };
+  }
+  if (raw.subtopics && typeof raw.subtopics === 'object') {
+    normalized.subtopics = { ...raw.subtopics };
+  }
   if (raw.topics && typeof raw.topics === 'object') {
     normalized.topics = { ...raw.topics };
   }
   return normalized;
 }
 
-// Ensure the progress object has the expected shape
-function ensureProgressShape(progress) {
-  if (!progress.tests) progress.tests = [];
-  if (typeof progress.xp !== 'number') progress.xp = 0;
-  if (!progress.completions) progress.completions = {};
-  // Track practice XP separately per topic
-  if (!progress.practiceXp) progress.practiceXp = {};
-  progress.quests = coerceQuestState(progress.quests);
-  return progress;
+function createDifficultyEntry() {
+  return {
+    bestGrade: null,
+    bestXp: 0,
+    bestTimestamp: null,
+    attempts: [],
+  };
 }
 
-// Normalize accented Hungarian difficulty names to keys used in XP_REWARDS
+function createTopicResultsEntry() {
+  return { difficulties: {} };
+}
+
+function createMainResultsEntry() {
+  return {
+    bestGrade: null,
+    bestXp: 0,
+    bestTimestamp: null,
+    attempts: [],
+  };
+}
+
+function createPracticeEntry() {
+  return {
+    xpEarned: 0,
+    correctCount: 0,
+    totalCount: 0,
+    lastPracticedAt: null,
+    difficulties: {
+      konnyu: { correctCount: 0, totalCount: 0 },
+      normal: { correctCount: 0, totalCount: 0 },
+      nehez: { correctCount: 0, totalCount: 0 },
+    },
+  };
+}
+
+function createEmptyProgress() {
+  return {
+    version: PROGRESS_VERSION,
+    totalXp: 0,
+    tests: [],
+    results: {
+      topics: {},
+      subtopics: {},
+      mainTopics: {},
+    },
+    practice: {
+      statsByTopic: {},
+    },
+    achievements: {},
+    quests: coerceQuestState(null),
+  };
+}
+
+function normalizeResultsBucket(bucket, expectsDifficulty) {
+  const normalized = {};
+  let changed = false;
+  if (!bucket || typeof bucket !== 'object') {
+    return { normalized, changed: true };
+  }
+  Object.entries(bucket).forEach(([topicId, entry]) => {
+    if (!entry || typeof entry !== 'object') {
+      changed = true;
+      return;
+    }
+    if (expectsDifficulty) {
+      const normalizedEntry = createTopicResultsEntry();
+      const difficulties = entry.difficulties && typeof entry.difficulties === 'object'
+        ? entry.difficulties
+        : {};
+      Object.entries(difficulties).forEach(([difficultyKey, difficultyEntry]) => {
+        const normalizedDifficulty = createDifficultyEntry();
+        if (difficultyEntry && typeof difficultyEntry === 'object') {
+          if (typeof difficultyEntry.bestGrade === 'number') {
+            normalizedDifficulty.bestGrade = difficultyEntry.bestGrade;
+          }
+          if (typeof difficultyEntry.bestXp === 'number') {
+            normalizedDifficulty.bestXp = difficultyEntry.bestXp;
+          }
+          if (typeof difficultyEntry.bestTimestamp === 'string') {
+            normalizedDifficulty.bestTimestamp = difficultyEntry.bestTimestamp;
+          }
+          if (Array.isArray(difficultyEntry.attempts)) {
+            normalizedDifficulty.attempts = difficultyEntry.attempts;
+          }
+        } else {
+          changed = true;
+        }
+        normalizedEntry.difficulties[difficultyKey] = normalizedDifficulty;
+      });
+      normalized[topicId] = normalizedEntry;
+      if (!entry.difficulties) {
+        changed = true;
+      }
+    } else {
+      const normalizedEntry = createMainResultsEntry();
+      if (typeof entry.bestGrade === 'number') {
+        normalizedEntry.bestGrade = entry.bestGrade;
+      }
+      if (typeof entry.bestXp === 'number') {
+        normalizedEntry.bestXp = entry.bestXp;
+      }
+      if (typeof entry.bestTimestamp === 'string') {
+        normalizedEntry.bestTimestamp = entry.bestTimestamp;
+      }
+      if (Array.isArray(entry.attempts)) {
+        normalizedEntry.attempts = entry.attempts;
+      }
+      normalized[topicId] = normalizedEntry;
+    }
+  });
+  return { normalized, changed };
+}
+
+function normalizeResults(rawResults) {
+  const normalized = { topics: {}, subtopics: {}, mainTopics: {} };
+  let changed = false;
+  const topics = normalizeResultsBucket(rawResults && rawResults.topics, true);
+  normalized.topics = topics.normalized;
+  changed = changed || topics.changed;
+  const subtopics = normalizeResultsBucket(rawResults && rawResults.subtopics, true);
+  normalized.subtopics = subtopics.normalized;
+  changed = changed || subtopics.changed;
+  const mainTopics = normalizeResultsBucket(rawResults && rawResults.mainTopics, false);
+  normalized.mainTopics = mainTopics.normalized;
+  changed = changed || mainTopics.changed;
+  return { normalized, changed };
+}
+
+function normalizePracticeEntry(rawEntry) {
+  const entry = createPracticeEntry();
+  if (!rawEntry || typeof rawEntry !== 'object') return entry;
+  if (typeof rawEntry.xpEarned === 'number') entry.xpEarned = rawEntry.xpEarned;
+  if (typeof rawEntry.correctCount === 'number') entry.correctCount = rawEntry.correctCount;
+  if (typeof rawEntry.totalCount === 'number') entry.totalCount = rawEntry.totalCount;
+  if (typeof rawEntry.lastPracticedAt === 'string') entry.lastPracticedAt = rawEntry.lastPracticedAt;
+  if (rawEntry.difficulties && typeof rawEntry.difficulties === 'object') {
+    Object.keys(entry.difficulties).forEach((key) => {
+      const diff = rawEntry.difficulties[key];
+      if (!diff || typeof diff !== 'object') return;
+      if (typeof diff.correctCount === 'number') entry.difficulties[key].correctCount = diff.correctCount;
+      if (typeof diff.totalCount === 'number') entry.difficulties[key].totalCount = diff.totalCount;
+    });
+  }
+  return entry;
+}
+
+function normalizePractice(rawPractice, legacyPracticeXp) {
+  const practice = { statsByTopic: {} };
+  if (rawPractice && typeof rawPractice === 'object') {
+    const stats = rawPractice.statsByTopic && typeof rawPractice.statsByTopic === 'object'
+      ? rawPractice.statsByTopic
+      : {};
+    Object.entries(stats).forEach(([topicId, entry]) => {
+      practice.statsByTopic[topicId] = normalizePracticeEntry(entry);
+    });
+  }
+  if (legacyPracticeXp && typeof legacyPracticeXp === 'object') {
+    Object.entries(legacyPracticeXp).forEach(([topicId, xpValue]) => {
+      const amount = Number(xpValue || 0);
+      if (!Number.isFinite(amount) || amount <= 0) return;
+      if (!practice.statsByTopic[topicId]) {
+        practice.statsByTopic[topicId] = createPracticeEntry();
+      }
+      practice.statsByTopic[topicId].xpEarned += amount;
+    });
+  }
+  return practice;
+}
+
+function shouldUpdateBestGrade(nextGrade, currentGrade) {
+  if (typeof nextGrade !== 'number') return false;
+  if (currentGrade === null || typeof currentGrade !== 'number') return true;
+  return nextGrade > currentGrade;
+}
+
+function buildAttempt(result, difficultyKey, xpAwarded) {
+  const timestamp = typeof result.timestamp === 'string'
+    ? result.timestamp
+    : new Date().toISOString();
+  const attempt = {
+    timestamp,
+    grade: typeof result.grade === 'number' ? result.grade : null,
+  };
+  if (typeof result.percentage === 'number') {
+    attempt.percentage = result.percentage;
+  }
+  if (difficultyKey) {
+    attempt.difficulty = difficultyKey;
+  }
+  if (typeof xpAwarded === 'number') {
+    attempt.xpAwarded = xpAwarded;
+  }
+  return attempt;
+}
+
+function applyTestResultToResults(results, result) {
+  const topicId = result && result.topicId ? result.topicId : null;
+  if (!topicId) return null;
+  const config = getTopicConfig(topicId);
+  const levelType = config ? config.levelType : LEVEL_TYPES.TEMAKOR;
+  const bucket = levelType === LEVEL_TYPES.FOTEMA
+    ? results.mainTopics
+    : (levelType === LEVEL_TYPES.ALTEMA ? results.subtopics : results.topics);
+  if (!bucket[topicId]) {
+    bucket[topicId] = (levelType === LEVEL_TYPES.FOTEMA)
+      ? createMainResultsEntry()
+      : createTopicResultsEntry();
+  }
+  if (levelType === LEVEL_TYPES.FOTEMA) {
+    const entry = bucket[topicId];
+    const previousBestGrade = entry.bestGrade;
+    const previousBestXp = entry.bestXp || 0;
+    const newXp = calculateTestXp({
+      topicId,
+      grade: result.grade,
+      normalizedDifficulty: null,
+    });
+    if (!Array.isArray(entry.attempts)) entry.attempts = [];
+    const attempt = buildAttempt(result, null, newXp);
+    entry.attempts.unshift(attempt);
+    if (shouldUpdateBestGrade(result.grade, entry.bestGrade)) {
+      entry.bestGrade = result.grade;
+      entry.bestXp = newXp;
+      entry.bestTimestamp = attempt.timestamp;
+    }
+    return { levelType, previousBestGrade, previousBestXp, newBestXp: newXp, difficulty: null };
+  }
+  const difficultyKey = normalizeDifficulty(result.difficulty) || DEFAULT_DIFFICULTY;
+  const entry = bucket[topicId];
+  if (!entry.difficulties || typeof entry.difficulties !== 'object') {
+    entry.difficulties = {};
+  }
+  if (!entry.difficulties[difficultyKey]) {
+    entry.difficulties[difficultyKey] = createDifficultyEntry();
+  }
+  const diffEntry = entry.difficulties[difficultyKey];
+  const previousBestGrade = diffEntry.bestGrade;
+  const previousBestXp = diffEntry.bestXp || 0;
+  const newXp = calculateTestXp({
+    topicId,
+    grade: result.grade,
+    normalizedDifficulty: difficultyKey,
+  });
+  if (!Array.isArray(diffEntry.attempts)) diffEntry.attempts = [];
+  const attempt = buildAttempt(result, difficultyKey, newXp);
+  diffEntry.attempts.unshift(attempt);
+  if (shouldUpdateBestGrade(result.grade, diffEntry.bestGrade)) {
+    diffEntry.bestGrade = result.grade;
+    diffEntry.bestXp = newXp;
+    diffEntry.bestTimestamp = attempt.timestamp;
+  }
+  return { levelType, previousBestGrade, previousBestXp, newBestXp: newXp, difficulty: difficultyKey };
+}
+
+function mergeCompletionEntry(results, topicId, difficultyKey, entry) {
+  const config = getTopicConfig(topicId);
+  const levelType = config ? config.levelType : LEVEL_TYPES.TEMAKOR;
+  const bucket = levelType === LEVEL_TYPES.FOTEMA
+    ? results.mainTopics
+    : (levelType === LEVEL_TYPES.ALTEMA ? results.subtopics : results.topics);
+  if (!bucket[topicId]) {
+    bucket[topicId] = (levelType === LEVEL_TYPES.FOTEMA)
+      ? createMainResultsEntry()
+      : createTopicResultsEntry();
+  }
+  const gradeValue = typeof entry === 'number'
+    ? entry
+    : (entry && typeof entry.grade === 'number' ? entry.grade : null);
+  if (gradeValue === null) return;
+  const timestamp = entry && typeof entry.timestamp === 'string' ? entry.timestamp : null;
+  const xpValue = entry && typeof entry.xp === 'number'
+    ? entry.xp
+    : calculateTestXp({
+      topicId,
+      grade: gradeValue,
+      normalizedDifficulty: levelType === LEVEL_TYPES.FOTEMA ? null : difficultyKey,
+    });
+  if (levelType === LEVEL_TYPES.FOTEMA) {
+    const existing = bucket[topicId];
+    if (shouldUpdateBestGrade(gradeValue, existing.bestGrade)) {
+      existing.bestGrade = gradeValue;
+      existing.bestXp = xpValue;
+      existing.bestTimestamp = timestamp;
+    }
+    return;
+  }
+  const entryBucket = bucket[topicId];
+  if (!entryBucket.difficulties || typeof entryBucket.difficulties !== 'object') {
+    entryBucket.difficulties = {};
+  }
+  const key = difficultyKey || DEFAULT_DIFFICULTY;
+  if (!entryBucket.difficulties[key]) {
+    entryBucket.difficulties[key] = createDifficultyEntry();
+  }
+  const diffEntry = entryBucket.difficulties[key];
+  if (shouldUpdateBestGrade(gradeValue, diffEntry.bestGrade)) {
+    diffEntry.bestGrade = gradeValue;
+    diffEntry.bestXp = xpValue;
+    diffEntry.bestTimestamp = timestamp;
+  }
+}
+
+function mergeCompletionsIntoResults(results, completions) {
+  if (!completions || typeof completions !== 'object') return;
+  Object.entries(completions).forEach(([topicId, difficulties]) => {
+    if (!difficulties || typeof difficulties !== 'object') return;
+    Object.entries(difficulties).forEach(([difficultyKey, entry]) => {
+      const normalizedKey = normalizeDifficulty(difficultyKey) || (difficultyKey === 'osszesito' ? null : difficultyKey);
+      mergeCompletionEntry(results, topicId, normalizedKey, entry);
+    });
+  });
+}
+
+function buildResultsFromSource(source) {
+  const results = { topics: {}, subtopics: {}, mainTopics: {} };
+  let migrated = false;
+  const sourceVersion = Number(source && source.version);
+  const hasCanonicalResults = source && source.results
+    && typeof source.results === 'object'
+    && Number.isFinite(sourceVersion)
+    && sourceVersion >= PROGRESS_VERSION;
+
+  if (hasCanonicalResults) {
+    const normalized = normalizeResults(source.results);
+    results.topics = normalized.normalized.topics;
+    results.subtopics = normalized.normalized.subtopics;
+    results.mainTopics = normalized.normalized.mainTopics;
+    migrated = normalized.changed;
+    return { results, migrated };
+  }
+
+  if (!source || !source.results || typeof source.results !== 'object') {
+    migrated = true;
+  }
+
+  if (source && source.results && typeof source.results === 'object') {
+    const normalized = normalizeResults(source.results);
+    results.topics = normalized.normalized.topics;
+    results.subtopics = normalized.normalized.subtopics;
+    results.mainTopics = normalized.normalized.mainTopics;
+    migrated = true;
+  }
+
+  if (source && Array.isArray(source.tests)) {
+    source.tests.forEach((result) => {
+      if (!result || !result.topicId) return;
+      applyTestResultToResults(results, result);
+    });
+    migrated = true;
+  }
+
+  if (source && source.completions && typeof source.completions === 'object') {
+    mergeCompletionsIntoResults(results, source.completions);
+    migrated = true;
+  }
+
+  return { results, migrated };
+}
+
+function normalizeAchievements(raw) {
+  if (!raw || typeof raw !== 'object') return {};
+  const normalized = {};
+  Object.entries(raw).forEach(([key, value]) => {
+    if (!value || typeof value !== 'object') return;
+    normalized[key] = {
+      isUnlocked: Boolean(value.isUnlocked),
+      unlockedAt: typeof value.unlockedAt === 'string' ? value.unlockedAt : null,
+    };
+    if (typeof value.grantedXp === 'number') {
+      normalized[key].grantedXp = value.grantedXp;
+    }
+  });
+  return normalized;
+}
+
+function getTestHistory(progress) {
+  return Array.isArray(progress && progress.tests) ? progress.tests : [];
+}
+
+function getQuestStatusBucket(progress, bucketName) {
+  const quests = progress && progress.quests ? progress.quests : null;
+  const bucket = quests && quests[bucketName] ? quests[bucketName] : {};
+  return bucket && typeof bucket === 'object' ? bucket : {};
+}
+
+function hasCompletedQuest(progress, bucketName) {
+  const bucket = getQuestStatusBucket(progress, bucketName);
+  return Object.values(bucket).some(status => status === 'COMPLETED');
+}
+
+function hasSuccessfulTest(progress, minGrade = 2) {
+  return getTestHistory(progress).some((result) => {
+    const grade = Number(result && result.grade);
+    return Number.isFinite(grade) && grade >= minGrade;
+  });
+}
+
+function hasHardTest(progress, minGrade = 2) {
+  return getTestHistory(progress).some((result) => {
+    const grade = Number(result && result.grade);
+    if (!Number.isFinite(grade) || grade < minGrade) return false;
+    const diffKey = normalizeDifficulty(result.difficulty);
+    return diffKey === 'nehez';
+  });
+}
+
+function hasPerfectHardTest(progress) {
+  return getTestHistory(progress).some((result) => {
+    const grade = Number(result && result.grade);
+    if (grade !== 5) return false;
+    const diffKey = normalizeDifficulty(result.difficulty);
+    return diffKey === 'nehez';
+  });
+}
+
+function hasStreak(progress, minGrade, length) {
+  let streak = 0;
+  for (const result of getTestHistory(progress)) {
+    const grade = Number(result && result.grade);
+    if (Number.isFinite(grade) && grade >= minGrade) {
+      streak += 1;
+    } else {
+      break;
+    }
+  }
+  return streak >= length;
+}
+
+function hasMainTopicSuccess(progress, topicId, minGrade = 2) {
+  if (!progress || !progress.results || !progress.results.mainTopics) return false;
+  const entry = progress.results.mainTopics[topicId];
+  const bestGrade = entry && typeof entry.bestGrade === 'number' ? entry.bestGrade : null;
+  if (bestGrade !== null && bestGrade >= minGrade) return true;
+  return getTestHistory(progress).some((result) => {
+    if (!result || result.topicId !== topicId) return false;
+    const grade = Number(result.grade);
+    return Number.isFinite(grade) && grade >= minGrade;
+  });
+}
+
+function unlockAchievement(progress, achievement, timestamp) {
+  if (!progress.achievements || typeof progress.achievements !== 'object') {
+    progress.achievements = {};
+  }
+  const existing = progress.achievements[achievement.id];
+  if (existing && existing.isUnlocked) {
+    return false;
+  }
+  const unlockedAt = typeof timestamp === 'string' ? timestamp : new Date().toISOString();
+  const entry = { isUnlocked: true, unlockedAt };
+  const reward = Number(achievement.xpReward);
+  if (Number.isFinite(reward) && reward > 0) {
+    entry.grantedXp = reward;
+    progress.totalXp += reward;
+  }
+  progress.achievements[achievement.id] = entry;
+  return true;
+}
+
+function updateAchievements(progress) {
+  let updated = false;
+  let changed = true;
+  while (changed) {
+    changed = false;
+    ACHIEVEMENT_CATALOG.forEach((achievement) => {
+      if (progress.achievements && progress.achievements[achievement.id]?.isUnlocked) {
+        return;
+      }
+      let shouldUnlock = false;
+      switch (achievement.id) {
+        case 'first_test':
+          shouldUnlock = hasSuccessfulTest(progress, 2);
+          break;
+        case 'hard_first':
+          shouldUnlock = hasHardTest(progress, 2);
+          break;
+        case 'hard_perfect':
+          shouldUnlock = hasPerfectHardTest(progress);
+          break;
+        case 'streak_5':
+          shouldUnlock = hasStreak(progress, 4, 5);
+          break;
+        case 'subtopic_master':
+          shouldUnlock = hasCompletedQuest(progress, 'subtopics');
+          break;
+        case 'main_topic_master':
+          shouldUnlock = hasCompletedQuest(progress, 'mainTopics');
+          break;
+        case 'emelt_bajnok':
+          shouldUnlock = hasMainTopicSuccess(progress, 'emelt_modulzaro', 2);
+          break;
+        case 'xp_collector_1000':
+          shouldUnlock = Number(progress.totalXp || 0) >= 1000;
+          break;
+        case 'level_up':
+          shouldUnlock = calculateLevelStats(progress.totalXp).level >= 2;
+          break;
+        default:
+          break;
+      }
+      if (!shouldUnlock) return;
+      if (unlockAchievement(progress, achievement)) {
+        updated = true;
+        changed = true;
+      }
+    });
+  }
+  return updated;
+}
+
+function normalizeProgress(raw) {
+  const source = raw && typeof raw === 'object' ? raw : {};
+  const progress = createEmptyProgress();
+  let migrated = false;
+
+  const version = Number(source.version);
+  if (Number.isFinite(version) && version >= PROGRESS_VERSION) {
+    progress.version = version;
+  } else {
+    migrated = true;
+  }
+
+  if (typeof source.totalXp === 'number') {
+    progress.totalXp = source.totalXp;
+  } else if (typeof source.xp === 'number') {
+    progress.totalXp = source.xp;
+    migrated = true;
+  }
+
+  if (Array.isArray(source.tests)) {
+    progress.tests = source.tests;
+  }
+
+  const resultsPayload = buildResultsFromSource(source);
+  progress.results = resultsPayload.results;
+  migrated = migrated || resultsPayload.migrated;
+
+  progress.practice = normalizePractice(source.practice, source.practiceXp);
+  if (source.practiceXp) migrated = true;
+
+  if (source.achievements && typeof source.achievements === 'object') {
+    progress.achievements = normalizeAchievements(source.achievements);
+  }
+
+  progress.quests = coerceQuestState(source.quests);
+  if (!source.quests || typeof source.quests !== 'object') {
+    migrated = true;
+  } else if (!source.quests.mainTopics || !source.quests.subtopics || !source.quests.topics) {
+    migrated = true;
+  }
+
+  return { progress, migrated };
+}
+
+// Normalize accented Hungarian difficulty names to XP keys
 function normalizeDifficulty(label = '') {
   const base = label
     .toString()
     .toLowerCase()
-    .replace(/ő|ö/g, 'o')
-    .replace(/ű|ü/g, 'u')
-    .replace(/á/g, 'a')
-    .replace(/é/g, 'e')
-    .replace(/í/g, 'i')
-    .replace(/ó/g, 'o');
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z]/g, '');
   if (base.includes('konny')) return 'konnyu';
-  if (base.includes('kozep')) return 'kozepes';
+  if (base.includes('kozep')) return 'normal';
+  if (base.includes('normal')) return 'normal';
   if (base.includes('nehez')) return 'nehez';
   return null;
 }
 
-// Calculate base XP plus any bonus depending on topic type
-function calculateXpReward(topicId, normalizedDifficulty) {
-  const base = XP_REWARDS[normalizedDifficulty] || 100;
-  let bonus = 0;
-  TOPIC_BONUSES.forEach((rule) => {
-    if (rule.match.test(topicId || '')) {
-      bonus = Math.max(bonus, rule.bonus);
-    }
-  });
-  return base + bonus;
+// XP calculation helpers (constitution/xp/xp_formula.md)
+function getTopicConfig(topicId) {
+  if (!topicId) return null;
+  return TOPIC_CONFIG[topicId] || null;
 }
 
-// Grant XP for a completed test result if it hasn't been awarded already
-function grantXpForResult(progress, result) {
-  const normalizedDifficulty = normalizeDifficulty(result.difficulty);
-  const difficultyLabel = normalizedDifficulty ? DIFFICULTY_LABELS[normalizedDifficulty] : result.difficulty;
-  if (!normalizedDifficulty || !difficultyLabel) return 0;
-  if (result.grade < 2) return 0; // XP csak legalább elégségesnél
-  if (!progress.completions[result.topicId]) {
-    progress.completions[result.topicId] = {};
+function calculateTestXp({ topicId, grade, normalizedDifficulty }) {
+  const gradeMultiplier = GRADE_MULTIPLIERS[grade] ?? 0;
+  if (!gradeMultiplier) return 0;
+  const config = getTopicConfig(topicId);
+  if (!config) {
+    const base = XP_REWARDS_FALLBACK[normalizedDifficulty] || 100;
+    return Math.round(base * gradeMultiplier);
   }
-  if (progress.completions[result.topicId][difficultyLabel]) {
+  const baseXp = (typeof config.baseXP === "number")
+    ? config.baseXP
+    : DEFAULT_BASE_XP[config.levelType];
+  if (!baseXp) {
+    const base = XP_REWARDS_FALLBACK[normalizedDifficulty] || 100;
+    return Math.round(base * gradeMultiplier);
+  }
+  const tierMult = TIER_MULTIPLIERS[config.levelType] || 1.0;
+  let diffMult = 1.0;
+  if (config.levelType !== LEVEL_TYPES.FOTEMA) {
+    const diffKey = normalizedDifficulty || "normal";
+    diffMult = DIFFICULTY_MULTIPLIERS[diffKey] || 1.0;
+  }
+  return Math.round(baseXp * config.topicWeight * tierMult * gradeMultiplier * diffMult);
+}
+
+// Grant XP for a completed test result based on best grade delta
+function grantXpForResult(progress, result) {
+  if (!progress || !progress.results || !result) return 0;
+  const update = applyTestResultToResults(progress.results, result);
+  if (!update) return 0;
+  const gradeValue = typeof result.grade === 'number' ? result.grade : null;
+  if (gradeValue === null || gradeValue < 2) return 0;
+  if (update.previousBestGrade !== null && gradeValue <= update.previousBestGrade) {
     return 0;
   }
-  const xpGain = calculateXpReward(result.topicId, normalizedDifficulty);
-  progress.xp += xpGain;
-  progress.completions[result.topicId][difficultyLabel] = {
-    grade: result.grade,
-    timestamp: result.timestamp,
-    xp: xpGain,
-  };
+  const xpGain = Math.max(0, (update.newBestXp || 0) - (update.previousBestXp || 0));
+  if (xpGain > 0) {
+    progress.totalXp += xpGain;
+  }
   return xpGain;
 }
 
 // Calculate the current level and XP needed to reach the next level
 function calculateLevelStats(totalXp = 0) {
-  let level = 1;
-  let xpForNext = 200;
-  let xpIntoLevel = totalXp;
-  while (xpIntoLevel >= xpForNext) {
-    xpIntoLevel -= xpForNext;
-    level += 1;
-    xpForNext = 200 + (level - 1) * 80;
+  const xpTotal = Math.max(0, Math.floor(totalXp));
+  let current = LEVEL_TABLE[0];
+  for (let i = 0; i < LEVEL_TABLE.length; i += 1) {
+    const entry = LEVEL_TABLE[i];
+    if (xpTotal < entry.xpEnd || i === LEVEL_TABLE.length - 1) {
+      current = entry;
+      break;
+    }
   }
-  const levelName = LEVEL_NAMES[level - 1] || `Szint ${level}`;
+  const levelName = LEVEL_NAMES[current.level - 1] || `Szint ${current.level}`;
+  const xpIntoLevel = xpTotal - current.xpStart;
+  const xpForNext = current.xpToNext;
+  const xpToNext = Math.max(0, current.xpEnd - xpTotal);
   return {
-    level,
+    level: current.level,
     levelName,
     xpIntoLevel,
     xpForNext,
-    xpToNext: xpForNext - xpIntoLevel,
+    xpToNext,
   };
+}
+
+function buildCompletionSummary(progress) {
+  const completions = {};
+  if (!progress || !progress.results) return completions;
+
+  const addCompletion = (topicId, key, entry) => {
+    if (!entry || typeof entry.bestGrade !== 'number') return;
+    if (!completions[topicId]) completions[topicId] = {};
+    completions[topicId][key] = {
+      grade: entry.bestGrade,
+      timestamp: entry.bestTimestamp || null,
+      xp: entry.bestXp || 0,
+    };
+  };
+
+  const addDifficultyEntries = (bucket) => {
+    Object.entries(bucket || {}).forEach(([topicId, topicEntry]) => {
+      const difficulties = topicEntry && topicEntry.difficulties ? topicEntry.difficulties : {};
+      Object.entries(difficulties).forEach(([difficultyKey, diffEntry]) => {
+        addCompletion(topicId, difficultyKey, diffEntry);
+      });
+    });
+  };
+
+  addDifficultyEntries(progress.results.topics);
+  addDifficultyEntries(progress.results.subtopics);
+  Object.entries(progress.results.mainTopics || {}).forEach(([topicId, entry]) => {
+    addCompletion(topicId, 'osszesito', entry);
+  });
+
+  return completions;
+}
+
+function buildPracticeXpSummary(progress) {
+  const practiceXp = {};
+  const stats = progress && progress.practice && progress.practice.statsByTopic
+    ? progress.practice.statsByTopic
+    : {};
+  Object.entries(stats || {}).forEach(([topicId, entry]) => {
+    const xpEarned = Number(entry && entry.xpEarned ? entry.xpEarned : 0);
+    if (!Number.isFinite(xpEarned) || xpEarned <= 0) return;
+    practiceXp[topicId] = xpEarned;
+  });
+  return practiceXp;
+}
+
+function mergeQuestState(existing, incoming) {
+  const base = coerceQuestState(existing);
+  const next = coerceQuestState(incoming);
+  const mergedVersion = Math.max(base.version || QUEST_VERSION, next.version || QUEST_VERSION);
+  return {
+    version: mergedVersion,
+    mainTopics: { ...base.mainTopics, ...next.mainTopics },
+    subtopics: { ...base.subtopics, ...next.subtopics },
+    topics: { ...base.topics, ...next.topics },
+  };
+}
+
+function inferDifficultyFromXp(xpValue) {
+  const xp = Number(xpValue);
+  if (!Number.isFinite(xp)) return null;
+  if (xp >= 3) return 'nehez';
+  if (xp >= 2) return 'normal';
+  if (xp >= 1) return 'konnyu';
+  return null;
+}
+
+function recordPracticeXp(progress, payload) {
+  if (!progress || !payload) return;
+  const topicId = payload.topicId;
+  const amount = Number(payload.xp);
+  if (!topicId || !Number.isFinite(amount) || amount <= 0) return;
+  if (!progress.practice || typeof progress.practice !== 'object') {
+    progress.practice = { statsByTopic: {} };
+  }
+  if (!progress.practice.statsByTopic || typeof progress.practice.statsByTopic !== 'object') {
+    progress.practice.statsByTopic = {};
+  }
+  if (!progress.practice.statsByTopic[topicId]) {
+    progress.practice.statsByTopic[topicId] = createPracticeEntry();
+  }
+  const entry = progress.practice.statsByTopic[topicId];
+  entry.xpEarned += amount;
+  entry.correctCount += 1;
+  entry.totalCount += 1;
+  entry.lastPracticedAt = new Date().toISOString();
+
+  const difficultyKey = inferDifficultyFromXp(amount);
+  if (difficultyKey && entry.difficulties && entry.difficulties[difficultyKey]) {
+    entry.difficulties[difficultyKey].correctCount += 1;
+    entry.difficulties[difficultyKey].totalCount += 1;
+  }
+
+  progress.totalXp += amount;
 }
 
 // Create the main application window
@@ -252,27 +1004,36 @@ app.on('window-all-closed', () => {
 
 // IPC: save test result and award XP accordingly
 ipcMain.on('save-test-result', (event, result) => {
-  const progress = ensureProgressShape(readProgress());
+  const { progress } = normalizeProgress(readProgress());
+  if (!Array.isArray(progress.tests)) progress.tests = [];
   progress.tests.unshift(result);
   grantXpForResult(progress, result);
+  updateAchievements(progress);
   saveProgress(progress);
 });
 
 // IPC: return all test results
 ipcMain.handle('get-all-results', async () => {
-  const progress = ensureProgressShape(readProgress());
+  const { progress, migrated } = normalizeProgress(readProgress());
+  if (migrated) saveProgress(progress);
   return progress.tests || [];
 });
 
 // IPC: return a summary of progress, completions and level stats
 ipcMain.handle('get-progress-summary', async () => {
-  const progress = ensureProgressShape(readProgress());
+  const { progress, migrated } = normalizeProgress(readProgress());
+  const achievementsUpdated = updateAchievements(progress);
+  if (migrated || achievementsUpdated) saveProgress(progress);
   return {
-    xp: progress.xp,
-    completions: progress.completions,
-    practiceXp: progress.practiceXp,
+    xp: progress.totalXp,
+    completions: buildCompletionSummary(progress),
+    practiceXp: buildPracticeXpSummary(progress),
     quests: progress.quests,
-    level: calculateLevelStats(progress.xp),
+    level: calculateLevelStats(progress.totalXp),
+    results: progress.results,
+    practice: progress.practice,
+    achievements: progress.achievements,
+    achievementCatalog: ACHIEVEMENT_CATALOG,
   };
 });
 
@@ -294,28 +1055,28 @@ ipcMain.on('save-settings', (event, settings) => {
 });
 
 // IPC: save XP earned from practice sessions
-ipcMain.on('save-practice-xp', (event, { topicId, xp }) => {
+ipcMain.handle('save-practice-xp', async (event, { topicId, xp }) => {
   try {
-    const progress = ensureProgressShape(readProgress());
-    // Increase total XP by the amount earned in practice
-    progress.xp += xp;
-    // Track practice XP per topic for transparency (optional)
-    if (!progress.practiceXp) progress.practiceXp = {};
-    progress.practiceXp[topicId] = (progress.practiceXp[topicId] || 0) + xp;
+    const { progress } = normalizeProgress(readProgress());
+    recordPracticeXp(progress, { topicId, xp });
+    updateAchievements(progress);
     saveProgress(progress);
+    return { ok: true };
   } catch (error) {
-    console.error('Hiba a practice XP mentése közben:', error);
+    console.error('Hiba a practice XP mentese kozben:', error);
+    return { ok: false };
   }
 });
 
 // IPC: save quest state
 ipcMain.on('save-quest-state', (event, questState) => {
   try {
-    const progress = ensureProgressShape(readProgress());
-    progress.quests = coerceQuestState(questState);
+    const { progress } = normalizeProgress(readProgress());
+    progress.quests = mergeQuestState(progress.quests, questState);
     saveProgress(progress);
   } catch (error) {
     console.error('Hiba a quest allapot mentese kozben:', error);
   }
 });
+
 

@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skatulya-elv, p&#225;ros&#237;t&#225;sok</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+        :root {
+            --brand-primary: #4A55A2;
+            --brand-secondary: #7895CB;
+            --brand-light: #A0BFE0;
+            --brand-background: #C5DFF8;
+            --text-dark: #2C3333;
+            --text-light: #393E46;
+            --bg-main: #FBFBFF;
+            --bg-card: rgba(255, 255, 255, var(--module-card-opacity, 1));
+            --border-color: #EAEFF2;
+            --success: #2ECC71;
+            --danger: #E74C3C;
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Cinzel', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-light);
+            padding: 40px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            font-weight: 400;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: var(--brand-primary);
+            border-bottom: 2px solid var(--brand-background);
+            padding-bottom: 10px;
+            margin: 30px 0 16px 0;
+            font-weight: 600;
+            font-family: var(--font-heading), var(--font-main);
+        }
+
+        h3 {
+            font-size: 1.2em;
+            color: var(--text-dark);
+            margin: 16px 0 8px 0;
+            font-weight: 600;
+        }
+
+        p,
+        li {
+            font-size: 1.05em;
+            line-height: 1.7;
+            max-width: 80ch;
+        }
+
+        ul,
+        ol {
+            padding-left: 24px;
+        }
+
+        b,
+        strong {
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+
+        .muted {
+            color: var(--text-light);
+            font-size: 0.95em;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-light);
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--brand-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: var(--brand-primary);
+        }
+
+        .tab-button.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .learning-hint {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--brand-primary);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 14px 0;
+            color: var(--text-dark);
+        }
+
+        .learning-hint h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.05em;
+            color: var(--brand-primary);
+        }
+
+        .learning-hint ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-light);
+        }
+
+        .learning-hint li {
+            margin-bottom: 6px;
+        }
+
+        .formula-line {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-main);
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 10px 12px;
+            color: var(--text-dark);
+            display: inline-block;
+        }
+
+        .theory-grid {
+            display: grid;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        @media (min-width: 900px) {
+            .theory-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .model-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        @media (min-width: 900px) {
+            .model-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .model-card {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .module-input {
+            width: min(320px, 100%);
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            font-size: 1em;
+        }
+
+        .module-input:focus {
+            outline: 2px solid var(--brand-primary);
+            border-color: var(--brand-primary);
+        }
+
+        .stat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .box-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            gap: 8px;
+        }
+
+        .box-cell {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 10px;
+            background-color: var(--bg-card);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: center;
+        }
+
+        .box-cell span {
+            font-size: 0.85em;
+            color: var(--text-light);
+        }
+
+        .test-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .difficulty-btn.active {
+            background-color: var(--brand-primary);
+            color: #fff;
+            border-color: var(--brand-primary);
+        }
+
+        .test-area,
+        .practice-area {
+            margin-top: 16px;
+        }
+
+        .test-area.is-hidden,
+        .practice-area.is-hidden {
+            display: none;
+        }
+
+        .test-navigation {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #pagination-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            background-color: var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dot.answered {
+            background-color: var(--success);
+        }
+
+        .dot.current {
+            box-shadow: 0 0 0 4px var(--brand-light);
+            transform: scale(1.15);
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 46px;
+            height: 46px;
+            cursor: pointer;
+            color: var(--brand-primary);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--brand-primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(74, 85, 162, 0.2);
+        }
+
+        .nav-btn:disabled {
+            background-color: var(--bg-main);
+            color: var(--border-color);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .question-box {
+            padding: 24px;
+            border-radius: 12px;
+            background-color: var(--bg-main);
+            min-height: 160px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .test-question,
+        .practice-question {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .input-help {
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: var(--text-light);
+        }
+
+        .btn {
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--brand-primary);
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background-color: var(--brand-primary);
+            color: white;
+            border-color: var(--brand-primary);
+        }
+
+        .btn-primary:hover { transform: translateY(-1px); }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+
+        .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+        .practice-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .practice-controls label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95em;
+        }
+
+        .practice-info {
+            margin-top: -10px;
+        }
+
+        .result-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 30px 50px;
+            border-radius: 15px;
+            font-size: 2em;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .result-popup.show { opacity: 1; }
+    </style>
+</head>
+<body>
+    <div class="tab-buttons" role="tablist">
+        <button class="tab-button active" data-tab="elmelet" type="button" role="tab" aria-selected="true">Elm&#233;let</button>
+        <button class="tab-button" data-tab="vizualis" type="button" role="tab" aria-selected="false">Vizu&#225;lis modell</button>
+        <button class="tab-button" data-tab="teszt" type="button" role="tab" aria-selected="false">Teszt</button>
+        <button class="tab-button" data-tab="gyakorlas" type="button" role="tab" aria-selected="false">Gyakorl&#225;s</button>
+    </div>
+
+    <div id="elmelet" class="tab-content card active" role="tabpanel">
+        <h2>Skatulya-elv &ndash; alapok</h2>
+        <p>A skatuly&#225;z&#225;s (pigeonhole) l&#233;nyege: ha <strong>N</strong> elemet <strong>k</strong> skatuly&#225;ba osztunk, akkor biztosan van olyan skatulya, amelyben legal&#225;bb <strong>&lceil;N / k&rceil;</strong> elem tal&#225;lhat&#243;.</p>
+        <div class="theory-grid">
+            <div class="learning-hint">
+                <h3>Alap k&#233;plet</h3>
+                <p class="formula-line">&lceil;N / k&rceil;</p>
+                <ul>
+                    <li>N: elemek sz&#225;ma.</li>
+                    <li>k: skatuly&#225;k (kateg&#243;ri&#225;k) sz&#225;ma.</li>
+                    <li>A minimum garant&#225;lt darabsz&#225;mot adja.</li>
+                </ul>
+            </div>
+            <div class="learning-hint">
+                <h3>P&#225;ros&#237;t&#225;s &#233;s garant&#225;lt egyez&#233;s</h3>
+                <p>Ha <strong>c</strong> k&#252;l&#246;nb&#246;z&#337; kateg&#243;ria van, akkor <strong>c + 1</strong> elem kiv&#225;laszt&#225;s&#225;val biztosan kapsz egy p&#225;rt (azonos kateg&#243;ri&#225;t).</p>
+                <p class="muted">Ez ugyanaz a skatuly&#225;z&#225;s, csak a "skatuly&#225;k" a sz&#237;nek, napok vagy t&#237;pusok.</p>
+            </div>
+        </div>
+        <div class="theory-section">
+            <h3>L&#233;p&#233;sek</h3>
+            <ol>
+                <li>Hat&#225;rozd meg, mi a skatulya (kateg&#243;ria).</li>
+                <li>Sz&#225;molj N elemmel, k skatuly&#225;val.</li>
+                <li>Haszn&#225;ld a &lceil;N / k&rceil; vagy a (m-1) * k + 1 formul&#225;t.</li>
+                <li>Ellen&#337;rizd, hogy garant&#225;lt minimumot k&#233;rdeznek.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Mini-ellen&#337;rz&#233;s</h3>
+            <ul>
+                <li>13 ember 12 h&#243;napban: biztosan van legal&#225;bb 2 azonos h&#243;nap (&#225;prilis, stb.).</li>
+                <li>5 sz&#237;n&#369; zoknib&#243;l h&#225;nyat kell kih&#250;zni, hogy legyen p&#225;r? (6)</li>
+                <li>10 elemet 3 skatuly&#225;ba osztunk: minimum egy skatuly&#225;ban? (&lceil;10 / 3&rceil; = 4)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="vizualis" class="tab-content card" role="tabpanel">
+        <div class="model-grid">
+            <div class="model-card">
+                <h2>Skatulya kalkul&#225;tor</h2>
+                <p class="muted">Add meg az elemek (N) &#233;s a skatuly&#225;k (k) sz&#225;m&#225;t. Megmutatjuk a garant&#225;lt minimumot &#233;s egy kiegyenl&#237;tett eloszt&#225;si mint&#225;t.</p>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="pigeon-items">Elemek sz&#225;ma (N)</label>
+                        <input type="number" id="pigeon-items" min="1" max="200" value="13">
+                    </div>
+                    <div class="input-group">
+                        <label for="pigeon-boxes">Skatuly&#225;k sz&#225;ma (k)</label>
+                        <input type="number" id="pigeon-boxes" min="1" max="40" value="12">
+                    </div>
+                </div>
+                <div class="stat-list">
+                    <div class="stat-row"><span>Garant&#225;lt minimum</span><strong id="pigeon-min">0</strong></div>
+                    <div class="stat-row"><span>Eloszt&#225;si minta</span><strong id="pigeon-max">0</strong></div>
+                </div>
+                <div class="box-grid" id="pigeon-grid"></div>
+            </div>
+            <div class="model-card">
+                <h2>P&#225;ros&#237;t&#225;s kalkul&#225;tor</h2>
+                <p class="muted">Sz&#237;nek, napok, kateg&#243;ri&#225;k: ha legal&#225;bb <strong>m</strong> azonos elemet szeretn&#233;l garant&#225;lni, haszn&#225;ld a (m-1) * k + 1 formul&#225;t.</p>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="pair-colors">Kateg&#243;ri&#225;k sz&#225;ma (k)</label>
+                        <input type="number" id="pair-colors" min="2" max="20" value="5">
+                    </div>
+                    <div class="input-group">
+                        <label for="pair-needed">C&#233;l (legal&#225;bb ennyi azonos)</label>
+                        <input type="number" id="pair-needed" min="2" max="10" value="2">
+                    </div>
+                </div>
+                <div class="stat-list">
+                    <div class="stat-row"><span>Minimum v&#225;laszt&#225;s</span><strong id="pair-min">0</strong></div>
+                    <div class="stat-row"><span>Formula</span><strong id="pair-formula">0</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="teszt" class="tab-content card" role="tabpanel">
+        <h2>Teszt &ndash; Skatulya-elv</h2>
+        <p class="muted">A teszt 10 k&#233;rd&#233;sb&#337;l &#225;ll, minden neh&#233;zs&#233;gi szinten k&#252;l&#246;n feladatsor fut.</p>
+        <div class="learning-hint">
+            <h3>R&#246;vid eml&#233;keztet&#337;</h3>
+            <ul>
+                <li>Garancia: &lceil;N / k&rceil; vagy (m-1) * k + 1.</li>
+                <li>El&#337;sz&#246;r mindig a kateg&#243;ri&#225;k sz&#225;m&#225;t keresd.</li>
+                <li>A v&#225;lasz mindig minimum garant&#225;lt darabsz&#225;m.</li>
+            </ul>
+        </div>
+        <div class="test-meta">
+            <div class="meta-row">
+                <span class="meta-label">Neh&#233;zs&#233;g</span>
+                <div class="difficulty-buttons">
+                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;">K&#246;nny&#369;</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l">Norm&#225;l</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="neh&#233;z">Neh&#233;z</button>
+                </div>
+            </div>
+            <div class="meta-row">
+                <span class="meta-label">Ind&#237;t&#225;s</span>
+                <button class="btn btn-primary" id="start-test-btn" type="button">Teszt ind&#237;t&#225;sa</button>
+            </div>
+        </div>
+        <div class="test-area is-hidden" id="test-area">
+            <div class="test-navigation">
+                <button id="prev-test-btn" class="nav-btn" type="button" aria-label="El&#337;z&#337; k&#233;rd&#233;s">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <div id="pagination-dots"></div>
+                <button id="next-test-btn" class="nav-btn" type="button" aria-label="K&#246;vetkez&#337; k&#233;rd&#233;s">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+            <div class="question-box">
+                <div id="test-question" class="test-question"></div>
+                <input id="test-answer" class="module-input" type="text" inputmode="numeric" placeholder="V&#225;lasz" autocomplete="off">
+                <div class="input-help">V&#225;laszolj eg&#233;sz sz&#225;mmal. Enterrel is tov&#225;bbl&#233;phetsz.</div>
+            </div>
+            <button id="finish-test-btn" class="btn btn-primary" type="button">Teszt befejez&#233;se</button>
+        </div>
+    </div>
+
+    <div id="gyakorlas" class="tab-content card" role="tabpanel">
+        <h2>Gyakorl&#225;s</h2>
+        <p class="practice-info">V&#233;gtelen&#237;tett gyakorl&#225;s. XP jutalom: k&#246;nny&#369; = 1 XP, norm&#225;l = 2 XP, neh&#233;z = 3 XP.</p>
+        <div class="learning-hint" data-role="practice-help">
+            <h3>Hogyan &#233;rdemes?</h3>
+            <ul>
+                <li>Azonos&#237;tsd a skatuly&#225;kat &#233;s az elemeket.</li>
+                <li>Mindig minimum garant&#225;lt &#233;rt&#233;ket adj meg.</li>
+                <li>Helyes v&#225;lasz ut&#225;n XP-t kapsz, majd j&#246;n a k&#246;vetkez&#337; feladat.</li>
+            </ul>
+        </div>
+        <div class="practice-controls">
+            <span class="meta-label">Neh&#233;zs&#233;gek:</span>
+            <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
+            <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
+            <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>
+            <button id="start-practice-btn" class="btn btn-primary" type="button">Gyakorl&#225;s ind&#237;t&#225;sa</button>
+        </div>
+        <div class="practice-area is-hidden" id="practice-area">
+            <div id="practice-question" class="practice-question"></div>
+            <input id="practice-input" class="module-input" type="text" inputmode="numeric" placeholder="V&#225;lasz..." autocomplete="off">
+            <button id="practice-check" class="btn btn-primary" type="button">Ellen&#337;rz&#233;s</button>
+            <p id="practice-feedback"></p>
+        </div>
+    </div>
+
+    <div class="result-popup" id="result-popup"></div>
+    <script>
+        const TOPIC_ID = 'skatulya_elv';
+        const TOPIC_NAME = 'Skatulya-elv, p\u00e1ros\u00edt\u00e1sok';
+        const TEST_QUESTION_COUNT = 10;
+        const PRACTICE_HISTORY_LIMIT = 12;
+        const PRACTICE_RETRY_LIMIT = 8;
+
+        const DIFF_EASY = 'k\u00f6nny\u0171';
+        const DIFF_NORMAL = 'norm\u00e1l';
+        const DIFF_HARD = 'neh\u00e9z';
+
+        const DIFFICULTY_LABELS = {
+            [DIFF_EASY]: 'K\u00f6nny\u0171',
+            [DIFF_NORMAL]: 'Norm\u00e1l',
+            [DIFF_HARD]: 'Neh\u00e9z'
+        };
+
+        const QUESTION_TYPES_BY_DIFFICULTY = {
+            [DIFF_EASY]: ['min-per-box', 'pair-guarantee'],
+            [DIFF_NORMAL]: ['min-per-box', 'pair-guarantee', 'k-of-same', 'remainder'],
+            [DIFF_HARD]: ['min-per-box', 'pair-guarantee', 'k-of-same', 'remainder']
+        };
+
+        const PRACTICE_XP_REWARDS = {
+            [DIFF_EASY]: 1,
+            [DIFF_NORMAL]: 2,
+            [DIFF_HARD]: 3
+        };
+
+        const MIN_PER_BOX_RANGES = {
+            [DIFF_EASY]: { boxesMin: 3, boxesMax: 6, itemsMin: 12, itemsMax: 28 },
+            [DIFF_NORMAL]: { boxesMin: 4, boxesMax: 10, itemsMin: 25, itemsMax: 60 },
+            [DIFF_HARD]: { boxesMin: 5, boxesMax: 12, itemsMin: 50, itemsMax: 120 }
+        };
+
+        const PAIR_RANGES = {
+            [DIFF_EASY]: { min: 3, max: 6 },
+            [DIFF_NORMAL]: { min: 5, max: 9 },
+            [DIFF_HARD]: { min: 8, max: 12 }
+        };
+
+        const K_SAME_RANGES = {
+            [DIFF_EASY]: { boxesMin: 4, boxesMax: 6, kMin: 3, kMax: 3 },
+            [DIFF_NORMAL]: { boxesMin: 5, boxesMax: 9, kMin: 3, kMax: 4 },
+            [DIFF_HARD]: { boxesMin: 6, boxesMax: 12, kMin: 4, kMax: 6 }
+        };
+
+        const REMAINDER_RANGES = {
+            [DIFF_EASY]: { modMin: 3, modMax: 6 },
+            [DIFF_NORMAL]: { modMin: 5, modMax: 9 },
+            [DIFF_HARD]: { modMin: 7, modMax: 12 }
+        };
+
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        const pigeonItemsInput = document.getElementById('pigeon-items');
+        const pigeonBoxesInput = document.getElementById('pigeon-boxes');
+        const pigeonMinOutput = document.getElementById('pigeon-min');
+        const pigeonMaxOutput = document.getElementById('pigeon-max');
+        const pigeonGrid = document.getElementById('pigeon-grid');
+
+        const pairColorsInput = document.getElementById('pair-colors');
+        const pairNeededInput = document.getElementById('pair-needed');
+        const pairMinOutput = document.getElementById('pair-min');
+        const pairFormulaOutput = document.getElementById('pair-formula');
+
+        const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+        const testArea = document.getElementById('test-area');
+        const testQuestion = document.getElementById('test-question');
+        const testAnswerInput = document.getElementById('test-answer');
+        const testStartBtn = document.getElementById('start-test-btn');
+        const prevTestBtn = document.getElementById('prev-test-btn');
+        const nextTestBtn = document.getElementById('next-test-btn');
+        const finishTestBtn = document.getElementById('finish-test-btn');
+        const paginationDots = document.getElementById('pagination-dots');
+        const resultPopup = document.getElementById('result-popup');
+
+        const practiceDifficultyInputs = document.querySelectorAll('.practice-difficulty');
+        const practiceArea = document.getElementById('practice-area');
+        const practiceQuestion = document.getElementById('practice-question');
+        const practiceInput = document.getElementById('practice-input');
+        const practiceFeedback = document.getElementById('practice-feedback');
+        const practiceStartBtn = document.getElementById('start-practice-btn');
+        const practiceCheckBtn = document.getElementById('practice-check');
+
+        let activeTab = 'elmelet';
+        let currentTestDifficulty = DIFF_EASY;
+        let testQuestions = [];
+        let currentTestIndex = 0;
+        let isTestRunning = false;
+        let currentTestAnswer = null;
+
+        let practiceActive = false;
+        let practiceHistory = [];
+        let currentPracticeAnswer = null;
+        let currentPracticeDifficulty = DIFF_EASY;
+
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function clamp(value, min, max) {
+            return Math.max(min, Math.min(max, value));
+        }
+
+        function shuffle(list) {
+            const arr = [...list];
+            for (let i = arr.length - 1; i > 0; i -= 1) {
+                const j = randomInt(0, i);
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function parseNumberInput(value) {
+            if (!value) return null;
+            const cleaned = value.replace(/,/g, '.').replace(/\s+/g, '');
+            if (!cleaned.length) return null;
+            const num = Number(cleaned);
+            return Number.isFinite(num) ? num : null;
+        }
+
+        function isClose(a, b, epsilon = 1e-6) {
+            return Math.abs(a - b) <= epsilon;
+        }
+
+        function formatNumber(value) {
+            if (Number.isInteger(value)) return String(value);
+            return String(value.toFixed(2)).replace(/\.00$/, '');
+        }
+
+        function setActiveTab(tabId) {
+            activeTab = tabId;
+            tabContents.forEach(content => {
+                content.classList.toggle('active', content.id === tabId);
+            });
+            tabButtons.forEach(button => {
+                const isActive = button.dataset.tab === tabId;
+                button.classList.toggle('active', isActive);
+                button.setAttribute('aria-selected', String(isActive));
+            });
+        }
+
+        function readInt(input, fallback) {
+            const parsed = Number.parseInt(input.value, 10);
+            return Number.isFinite(parsed) ? parsed : fallback;
+        }
+
+        function updatePigeonholeModel() {
+            if (!pigeonItemsInput || !pigeonBoxesInput) return;
+            const items = clamp(readInt(pigeonItemsInput, 1), 1, 200);
+            const boxes = clamp(readInt(pigeonBoxesInput, 1), 1, 40);
+            pigeonItemsInput.value = String(items);
+            pigeonBoxesInput.value = String(boxes);
+
+            const minPerBox = Math.ceil(items / boxes);
+            const base = Math.floor(items / boxes);
+            const extra = items % boxes;
+            pigeonMinOutput.textContent = String(minPerBox);
+            pigeonMaxOutput.textContent = `${base} + ${extra} extra`;
+
+            pigeonGrid.innerHTML = '';
+            for (let i = 0; i < boxes; i += 1) {
+                const count = base + (i < extra ? 1 : 0);
+                const cell = document.createElement('div');
+                cell.className = 'box-cell';
+                cell.innerHTML = `<span>#${i + 1}</span><strong>${count}</strong>`;
+                pigeonGrid.appendChild(cell);
+            }
+        }
+
+        function updatePairModel() {
+            if (!pairColorsInput || !pairNeededInput) return;
+            const colors = clamp(readInt(pairColorsInput, 2), 2, 20);
+            const needed = clamp(readInt(pairNeededInput, 2), 2, 10);
+            pairColorsInput.value = String(colors);
+            pairNeededInput.value = String(needed);
+            const minPick = (needed - 1) * colors + 1;
+            pairMinOutput.textContent = String(minPick);
+            pairFormulaOutput.textContent = `(${needed} - 1) * ${colors} + 1 = ${minPick}`;
+        }
+
+        function buildMinPerBoxQuestion(difficulty) {
+            const range = MIN_PER_BOX_RANGES[difficulty] || MIN_PER_BOX_RANGES[DIFF_EASY];
+            const boxes = randomInt(range.boxesMin, range.boxesMax);
+            const items = randomInt(range.itemsMin, range.itemsMax);
+            const answer = Math.ceil(items / boxes);
+            return {
+                question: `Egy gy\u0171jtem\u00e9nyben ${items} elemet ${boxes} skatuly\u00e1ba osztunk el. Minimum h\u00e1ny elem lesz biztosan valamelyik skatuly\u00e1ban?`,
+                answer,
+                kind: 'min-per-box'
+            };
+        }
+
+        function buildPairGuaranteeQuestion(difficulty) {
+            const range = PAIR_RANGES[difficulty] || PAIR_RANGES[DIFF_EASY];
+            const colors = randomInt(range.min, range.max);
+            const answer = colors + 1;
+            return {
+                question: `Egy fi\u00f3kban ${colors} k\u00fcl\u00f6nb\u00f6z\u0151 sz\u00edn\u0171 zokni van. H\u00e1nyat kell kih\u00fazni, hogy biztosan legyen egy p\u00e1r azonos sz\u00edn\u0171?`,
+                answer,
+                kind: 'pair-guarantee'
+            };
+        }
+
+        function buildKOfSameQuestion(difficulty) {
+            const range = K_SAME_RANGES[difficulty] || K_SAME_RANGES[DIFF_NORMAL];
+            const boxes = randomInt(range.boxesMin, range.boxesMax);
+            const needed = randomInt(range.kMin, range.kMax);
+            const answer = (needed - 1) * boxes + 1;
+            return {
+                question: `Egy k\u00e9szletben ${boxes} kateg\u00f3ria van. H\u00e1ny elemet kell kiv\u00e1lasztani, hogy biztosan legyen legal\u00e1bb ${needed} azonos kateg\u00f3ri\u00e1b\u00f3l?`,
+                answer,
+                kind: 'k-of-same'
+            };
+        }
+
+        function buildRemainderQuestion(difficulty) {
+            const range = REMAINDER_RANGES[difficulty] || REMAINDER_RANGES[DIFF_NORMAL];
+            const mod = randomInt(range.modMin, range.modMax);
+            const upper = randomInt(mod + 20, mod + 80);
+            const answer = mod + 1;
+            return {
+                question: `H\u00e1ny eg\u00e9sz sz\u00e1mot kell kiv\u00e1lasztani az 1..${upper} intervallumb\u00f3l, hogy biztosan legyen k\u00e9t sz\u00e1m, amely ${mod}-mel osztva azonos marad\u00e9kot ad?`,
+                answer,
+                kind: 'remainder'
+            };
+        }
+
+        function buildQuestionByType(difficulty, type) {
+            switch (type) {
+                case 'min-per-box':
+                    return buildMinPerBoxQuestion(difficulty);
+                case 'pair-guarantee':
+                    return buildPairGuaranteeQuestion(difficulty);
+                case 'k-of-same':
+                    return buildKOfSameQuestion(difficulty);
+                case 'remainder':
+                    return buildRemainderQuestion(difficulty);
+                default:
+                    return buildMinPerBoxQuestion(difficulty);
+            }
+        }
+
+        function buildTestQuestions(difficulty) {
+            const allowed = QUESTION_TYPES_BY_DIFFICULTY[difficulty] || QUESTION_TYPES_BY_DIFFICULTY[DIFF_EASY];
+            const questions = [];
+            const shuffled = shuffle(allowed);
+            if (shuffled.length >= 2) {
+                questions.push(buildQuestionByType(difficulty, shuffled[0]));
+                questions.push(buildQuestionByType(difficulty, shuffled[1]));
+            } else if (shuffled.length === 1) {
+                questions.push(buildQuestionByType(difficulty, shuffled[0]));
+            }
+            while (questions.length < TEST_QUESTION_COUNT) {
+                const type = allowed[randomInt(0, allowed.length - 1)];
+                questions.push(buildQuestionByType(difficulty, type));
+            }
+            return shuffle(questions).slice(0, TEST_QUESTION_COUNT);
+        }
+
+        function renderPagination() {
+            if (!paginationDots) return;
+            paginationDots.innerHTML = '';
+            testQuestions.forEach((q, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (index === currentTestIndex) dot.classList.add('current');
+                if (q.userAnswer && q.userAnswer.trim().length > 0) dot.classList.add('answered');
+                dot.addEventListener('click', () => {
+                    saveTestAnswer();
+                    goToTestQuestion(index);
+                });
+                paginationDots.appendChild(dot);
+            });
+        }
+
+        function saveTestAnswer() {
+            if (!testQuestions[currentTestIndex] || !testAnswerInput) return;
+            testQuestions[currentTestIndex].userAnswer = testAnswerInput.value.trim();
+        }
+
+        function renderTestQuestion() {
+            const current = testQuestions[currentTestIndex];
+            if (!current) return;
+            testQuestion.textContent = current.question;
+            currentTestAnswer = current.answer;
+            window.currentTestAnswer = currentTestAnswer;
+            window.currentTestKind = current.kind || '';
+            testAnswerInput.value = current.userAnswer || '';
+            renderPagination();
+            if (prevTestBtn) prevTestBtn.disabled = currentTestIndex === 0;
+            if (nextTestBtn) nextTestBtn.disabled = currentTestIndex >= testQuestions.length - 1;
+        }
+
+        function goToTestQuestion(index) {
+            if (index < 0 || index >= testQuestions.length) return;
+            currentTestIndex = index;
+            renderTestQuestion();
+        }
+
+        function startTest() {
+            testQuestions = buildTestQuestions(currentTestDifficulty);
+            currentTestIndex = 0;
+            isTestRunning = true;
+            testArea.classList.remove('is-hidden');
+            window.currentTestQuestionCount = testQuestions.length;
+            window.currentTestDifficulty = currentTestDifficulty;
+            if (testStartBtn) {
+                testStartBtn.disabled = true;
+                testStartBtn.hidden = true;
+            }
+            renderTestQuestion();
+        }
+
+        function showResultPopup(message) {
+            resultPopup.textContent = message;
+            resultPopup.classList.add('show');
+            setTimeout(() => {
+                resultPopup.classList.remove('show');
+            }, 3000);
+        }
+
+        function finishTest() {
+            saveTestAnswer();
+            const total = testQuestions.length || 1;
+            let correctAnswers = 0;
+            testQuestions.forEach((q) => {
+                const parsed = parseNumberInput(q.userAnswer || '');
+                const isCorrect = parsed !== null && isClose(parsed, q.answer);
+                q.correctAnswer = formatNumber(q.answer);
+                q.isCorrect = isCorrect;
+                if (isCorrect) correctAnswers += 1;
+            });
+            const percentage = Math.round((correctAnswers / total) * 100);
+            let grade = 0;
+            let feedback = '';
+
+            if (percentage < 40) { grade = 1; feedback = 'El\u00e9gtelen (1)'; }
+            else if (percentage < 55) { grade = 2; feedback = 'El\u00e9gs\u00e9ges (2)'; }
+            else if (percentage < 70) { grade = 3; feedback = 'K\u00f6zepes (3)'; }
+            else if (percentage < 85) { grade = 4; feedback = 'J\u00f3 (4)'; }
+            else { grade = 5; feedback = 'Jeles (5)'; }
+
+            showResultPopup(`Eredm\u00e9ny: ${percentage}% - ${feedback}`);
+
+            const result = {
+                topicId: TOPIC_ID,
+                topicName: TOPIC_NAME,
+                difficulty: currentTestDifficulty,
+                grade,
+                percentage,
+                timestamp: new Date().toISOString(),
+                questions: testQuestions.map((q) => ({
+                    question: q.question,
+                    userAnswer: q.userAnswer || '',
+                    correctAnswer: q.correctAnswer || formatNumber(q.answer)
+                }))
+            };
+
+            if (window.parent) {
+                window.parent.postMessage({ type: 'testResult', result }, '*');
+            }
+
+            isTestRunning = false;
+            if (testStartBtn) {
+                testStartBtn.disabled = false;
+                testStartBtn.hidden = false;
+                testStartBtn.innerHTML = '&#218;j teszt';
+            }
+            testAnswerInput.value = '';
+            currentTestAnswer = null;
+            window.currentTestAnswer = null;
+            window.currentTestKind = '';
+            if (testArea) {
+                testArea.classList.add('is-hidden');
+            }
+        }
+
+        function getEnabledPracticeDifficulties() {
+            return Array.from(practiceDifficultyInputs)
+                .filter(input => input.checked)
+                .map(input => input.value);
+        }
+
+        function pickRandomDifficulty(list) {
+            if (!list.length) return DIFF_EASY;
+            const index = randomInt(0, list.length - 1);
+            return list[index];
+        }
+
+        function makePracticeSignature(difficulty, item) {
+            return [difficulty, item.kind || '', item.question || '', item.answer || ''].join('|');
+        }
+
+        function pushPracticeHistory(entry) {
+            practiceHistory.push(entry);
+            if (practiceHistory.length > PRACTICE_HISTORY_LIMIT) {
+                practiceHistory.shift();
+            }
+        }
+
+        function buildPracticeQuestion(difficulty, options = {}) {
+            const allowed = QUESTION_TYPES_BY_DIFFICULTY[difficulty] || QUESTION_TYPES_BY_DIFFICULTY[DIFF_EASY];
+            const avoidKind = options.avoidKind || '';
+            let pool = allowed;
+            if (avoidKind && allowed.length > 1) {
+                pool = allowed.filter(type => type !== avoidKind);
+                if (!pool.length) {
+                    pool = allowed;
+                }
+            }
+            const index = randomInt(0, pool.length - 1);
+            return buildQuestionByType(difficulty, pool[index]);
+        }
+
+        function nextPracticeQuestion() {
+            const enabled = getEnabledPracticeDifficulties();
+            if (!enabled.length) {
+                practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
+                practiceFeedback.style.color = '#f04747';
+                return;
+            }
+            currentPracticeDifficulty = pickRandomDifficulty(enabled);
+            window.currentPracticeDifficulty = currentPracticeDifficulty;
+            const label = DIFFICULTY_LABELS[currentPracticeDifficulty] || currentPracticeDifficulty;
+            const lastKind = practiceHistory.length ? practiceHistory[practiceHistory.length - 1].kind : '';
+            let attempts = 0;
+            let practiceItem = null;
+            let signature = '';
+            while (attempts < PRACTICE_RETRY_LIMIT) {
+                practiceItem = buildPracticeQuestion(currentPracticeDifficulty, { avoidKind: lastKind });
+                signature = makePracticeSignature(currentPracticeDifficulty, practiceItem);
+                if (!practiceHistory.some(entry => entry.signature === signature)) {
+                    break;
+                }
+                attempts += 1;
+            }
+            if (!practiceItem) {
+                practiceItem = buildPracticeQuestion(currentPracticeDifficulty, { avoidKind: lastKind });
+                signature = makePracticeSignature(currentPracticeDifficulty, practiceItem);
+            }
+            currentPracticeAnswer = practiceItem.answer;
+            window.currentPracticeAnswer = currentPracticeAnswer;
+            const practiceKind = practiceItem.kind || '';
+            window.currentPracticeKind = practiceKind;
+            pushPracticeHistory({ signature, kind: practiceKind });
+            practiceQuestion.textContent = `${label} feladat: ${practiceItem.question}`;
+            practiceInput.value = '';
+            practiceFeedback.textContent = '';
+            practiceFeedback.style.color = '#2c3e50';
+        }
+
+        function checkPracticeAnswer() {
+            if (!practiceActive) return;
+            const rawInput = practiceInput.value.trim();
+            const parsed = parseNumberInput(rawInput);
+            if (parsed !== null && isClose(parsed, currentPracticeAnswer)) {
+                const xpReward = PRACTICE_XP_REWARDS[currentPracticeDifficulty] || 1;
+                practiceFeedback.textContent = `Helyes! (+${xpReward} XP)`;
+                practiceFeedback.style.color = '#43b581';
+                if (window.parent) {
+                    window.parent.postMessage({ type: 'practiceXp', xp: xpReward, topicId: TOPIC_ID }, '*');
+                }
+                setTimeout(() => {
+                    if (practiceActive) {
+                        nextPracticeQuestion();
+                    }
+                }, 2000);
+            } else {
+                practiceFeedback.textContent = 'Pr\u00f3b\u00e1ld \u00fajra!';
+                practiceFeedback.style.color = '#f04747';
+            }
+        }
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                setActiveTab(button.dataset.tab);
+            });
+        });
+
+        difficultyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const nextDifficulty = button.dataset.difficulty;
+                if (!nextDifficulty) return;
+                currentTestDifficulty = nextDifficulty;
+                difficultyButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.difficulty === currentTestDifficulty);
+                });
+                if (isTestRunning) {
+                    startTest();
+                }
+            });
+        });
+
+        if (testStartBtn) testStartBtn.addEventListener('click', startTest);
+        if (prevTestBtn) {
+            prevTestBtn.addEventListener('click', () => {
+                saveTestAnswer();
+                goToTestQuestion(currentTestIndex - 1);
+            });
+        }
+        if (nextTestBtn) {
+            nextTestBtn.addEventListener('click', () => {
+                saveTestAnswer();
+                goToTestQuestion(currentTestIndex + 1);
+            });
+        }
+        if (finishTestBtn) finishTestBtn.addEventListener('click', finishTest);
+        if (testAnswerInput) {
+            testAnswerInput.addEventListener('input', () => {
+                saveTestAnswer();
+                renderPagination();
+            });
+            testAnswerInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    saveTestAnswer();
+                    if (currentTestIndex < testQuestions.length - 1) {
+                        goToTestQuestion(currentTestIndex + 1);
+                    }
+                }
+            });
+        }
+
+        if (practiceStartBtn) {
+            practiceStartBtn.addEventListener('click', () => {
+                const enabled = getEnabledPracticeDifficulties();
+                if (!enabled.length) {
+                    practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
+                    practiceFeedback.style.color = '#f04747';
+                    return;
+                }
+                practiceActive = true;
+                practiceHistory = [];
+                practiceArea.classList.remove('is-hidden');
+                nextPracticeQuestion();
+            });
+        }
+
+        if (practiceCheckBtn) practiceCheckBtn.addEventListener('click', checkPracticeAnswer);
+        if (practiceInput) {
+            practiceInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    checkPracticeAnswer();
+                }
+            });
+        }
+
+        if (pigeonItemsInput) pigeonItemsInput.addEventListener('input', updatePigeonholeModel);
+        if (pigeonBoxesInput) pigeonBoxesInput.addEventListener('input', updatePigeonholeModel);
+        if (pairColorsInput) pairColorsInput.addEventListener('input', updatePairModel);
+        if (pairNeededInput) pairNeededInput.addEventListener('input', updatePairModel);
+
+        updatePigeonholeModel();
+        updatePairModel();
+        setActiveTab('elmelet');
+    </script>
+</body>
+</html>

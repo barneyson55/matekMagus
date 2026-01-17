@@ -46,7 +46,7 @@
                 <div class="header-bottom">
                     <div class="xp-bar" id="xp-bar" tabindex="0" aria-label="XP sáv">
                         <div class="xp-bar-fill" id="xp-bar-fill"></div>
-                        <div class="xp-tooltip" id="xp-progress-text">0 / 200 XP a következő szintig</div>
+                        <div class="xp-tooltip" id="xp-progress-text">0 / 50 XP a kovetkezo szintig</div>
                     </div>
                 </div>
             </div>
@@ -704,6 +704,8 @@
         const settingFontScale = document.getElementById('setting-font-scale');
         const settingReduceMotion = document.getElementById('setting-reduce-motion');
         const QUEST_STORAGE_KEY = 'matek-mester-quests-v1';
+        const QUEST_VERSION = 2;
+        const QUEST_LEVELS = { MAIN: 'mainTopics', SUB: 'subtopics', TOPIC: 'topics' };
         const QUEST_STATUS = {
             NOT_ACCEPTED: 'NOT_ACCEPTED',
             ACTIVE: 'ACTIVE',
@@ -715,6 +717,8 @@
             COMPLETED: 2
         };
         const QUEST_EXCLUDED_TOPICS = new Set(['settings', 'xp_guide']);
+        const QUEST_HIERARCHY = buildQuestHierarchy();
+        const QUEST_INDEX = QUEST_HIERARCHY.index;
         const SHEET_BANNER_MAP = {
             'modules/character_sheet.html': {
                 title: 'Karakterlap',
@@ -1122,26 +1126,136 @@
                 iframe.src = 'modules/character_sheet.html';
             }
         }
+
+        function createQuestState() {
+            return { version: QUEST_VERSION, mainTopics: {}, subtopics: {}, topics: {} };
+        }
+
+        function coerceQuestState(raw) {
+            const normalized = createQuestState();
+            if (!raw || typeof raw !== 'object') {
+                return normalized;
+            }
+            const versionNumber = Number(raw.version);
+            if (Number.isFinite(versionNumber) && versionNumber > 0) {
+                normalized.version = versionNumber;
+            }
+            if (raw.mainTopics && typeof raw.mainTopics === 'object') {
+                normalized.mainTopics = { ...raw.mainTopics };
+            }
+            if (raw.subtopics && typeof raw.subtopics === 'object') {
+                normalized.subtopics = { ...raw.subtopics };
+            }
+            if (raw.topics && typeof raw.topics === 'object') {
+                normalized.topics = { ...raw.topics };
+            }
+            return normalized;
+        }
+
+        function buildQuestHierarchy() {
+            const hierarchy = { mainTopics: {} };
+            const index = {
+                mainIds: new Set(),
+                subIds: new Set(),
+                topicIds: new Set(),
+                topicToSub: {},
+                subToMain: {}
+            };
+            const mainDetails = document.querySelectorAll('.module-list > details');
+            mainDetails.forEach((mainDetail) => {
+                const mainLink = mainDetail.querySelector(':scope > summary a[data-topic-id]');
+                if (!mainLink) return;
+                const mainId = mainLink.getAttribute('data-topic-id');
+                if (!mainId) return;
+                index.mainIds.add(mainId);
+                const subtopics = {};
+                const subDetails = mainDetail.querySelectorAll(':scope > details');
+                subDetails.forEach((subDetail) => {
+                    const subLink = subDetail.querySelector(':scope > summary a[data-topic-id]');
+                    if (!subLink) return;
+                    const subId = subLink.getAttribute('data-topic-id');
+                    if (!subId) return;
+                    index.subIds.add(subId);
+                    index.subToMain[subId] = mainId;
+                    const topicLinks = subDetail.querySelectorAll(':scope > ul > li > a[data-topic-id]');
+                    const topics = Array.from(topicLinks)
+                        .map(link => link.getAttribute('data-topic-id'))
+                        .filter(Boolean);
+                    topics.forEach((topicId) => {
+                        index.topicIds.add(topicId);
+                        index.topicToSub[topicId] = subId;
+                    });
+                    subtopics[subId] = { topics };
+                });
+                hierarchy.mainTopics[mainId] = { subtopics };
+            });
+
+            const allLinks = document.querySelectorAll('.module-link[data-topic-id]');
+            allLinks.forEach((link) => {
+                const id = link.getAttribute('data-topic-id');
+                if (!id) return;
+                if (index.mainIds.has(id) || index.subIds.has(id) || index.topicIds.has(id)) return;
+                index.topicIds.add(id);
+            });
+
+            return { hierarchy, index };
+        }
+
+        function getQuestType(topicId) {
+            if (!topicId) return QUEST_LEVELS.TOPIC;
+            if (QUEST_INDEX.mainIds.has(topicId)) return QUEST_LEVELS.MAIN;
+            if (QUEST_INDEX.subIds.has(topicId)) return QUEST_LEVELS.SUB;
+            if (QUEST_INDEX.topicIds.has(topicId)) return QUEST_LEVELS.TOPIC;
+            return QUEST_LEVELS.TOPIC;
+        }
+
+        function getQuestMap(type) {
+            if (!questState || typeof questState !== 'object') {
+                questState = createQuestState();
+            }
+            if (!questState[type] || typeof questState[type] !== 'object') {
+                questState[type] = {};
+            }
+            return questState[type];
+        }
+
+        function mergeQuestMaps(target, source) {
+            const result = { ...target };
+            Object.entries(source || {}).forEach(([id, status]) => {
+                if (!isQuestableTopic(id)) return;
+                const current = result[id];
+                if (!current || QUEST_STATUS_ORDER[status] > QUEST_STATUS_ORDER[current]) {
+                    result[id] = status;
+                }
+            });
+            return result;
+        }
+
+        function mergeQuestState(base, incoming) {
+            const normalizedBase = coerceQuestState(base);
+            const normalizedIncoming = coerceQuestState(incoming);
+            return {
+                version: Math.max(normalizedBase.version || QUEST_VERSION, normalizedIncoming.version || QUEST_VERSION),
+                mainTopics: mergeQuestMaps(normalizedBase.mainTopics, normalizedIncoming.mainTopics),
+                subtopics: mergeQuestMaps(normalizedBase.subtopics, normalizedIncoming.subtopics),
+                topics: mergeQuestMaps(normalizedBase.topics, normalizedIncoming.topics)
+            };
+        }
         function loadQuestState() {
             try {
                 const raw = localStorage.getItem(QUEST_STORAGE_KEY);
                 if (!raw) {
-                    return { version: 1, topics: {} };
+                    return createQuestState();
                 }
                 const parsed = JSON.parse(raw);
-                if (!parsed || typeof parsed !== 'object') {
-                    return { version: 1, topics: {} };
-                }
-                if (!parsed.topics || typeof parsed.topics !== 'object') {
-                    parsed.topics = {};
-                }
-                return parsed;
+                return coerceQuestState(parsed);
             } catch (error) {
-                return { version: 1, topics: {} };
+                return createQuestState();
             }
         }
 
         function saveQuestState() {
+            questState = coerceQuestState(questState);
             try {
                 localStorage.setItem(QUEST_STORAGE_KEY, JSON.stringify(questState));
             } catch (error) {
@@ -1160,21 +1274,27 @@
             return Boolean(topicId && !QUEST_EXCLUDED_TOPICS.has(topicId));
         }
 
-        function getQuestStatus(topicId) {
-            const status = questState && questState.topics ? questState.topics[topicId] : null;
+        function getQuestStatus(topicId, questType) {
+            const type = questType || getQuestType(topicId);
+            const map = getQuestMap(type);
+            const status = map ? map[topicId] : null;
             if (status === QUEST_STATUS.ACTIVE || status === QUEST_STATUS.COMPLETED || status === QUEST_STATUS.NOT_ACCEPTED) {
                 return status;
             }
             return QUEST_STATUS.NOT_ACCEPTED;
         }
 
-        function setQuestStatus(topicId, nextStatus) {
+        function setQuestStatus(topicId, nextStatus, options = {}) {
             if (!isQuestableTopic(topicId)) return;
-            const current = getQuestStatus(topicId);
+            const questType = options.type || getQuestType(topicId);
+            const current = getQuestStatus(topicId, questType);
             if (QUEST_STATUS_ORDER[nextStatus] < QUEST_STATUS_ORDER[current]) return;
             if (current === nextStatus) return;
-            questState.topics[topicId] = nextStatus;
-            saveQuestState();
+            const map = getQuestMap(questType);
+            map[topicId] = nextStatus;
+            if (options.persist !== false) {
+                saveQuestState();
+            }
             const link = document.querySelector(`[data-topic-id="${topicId}"]`);
             if (link) {
                 applyQuestStatusToLink(link);
@@ -1197,7 +1317,7 @@
                 }
                 return;
             }
-            const status = getQuestStatus(topicId);
+            const status = getQuestStatus(topicId, getQuestType(topicId));
             link.setAttribute('data-quest-status', status);
             if (statusCircle) {
                 statusCircle.setAttribute('data-quest-status', status);
@@ -1205,20 +1325,29 @@
         }
 
         function ensureQuestDefaults() {
-            if (!questState || typeof questState !== 'object') {
-                questState = { version: 1, topics: {} };
-            }
-            if (!questState.topics || typeof questState.topics !== 'object') {
-                questState.topics = {};
-            }
-            contentLinks.forEach(link => {
-                const topicId = link.getAttribute('data-topic-id');
+            questState = coerceQuestState(questState);
+            QUEST_INDEX.mainIds.forEach((topicId) => {
                 if (!isQuestableTopic(topicId)) return;
-                if (!questState.topics[topicId]) {
-                    questState.topics[topicId] = QUEST_STATUS.NOT_ACCEPTED;
+                const map = getQuestMap(QUEST_LEVELS.MAIN);
+                if (!map[topicId]) {
+                    map[topicId] = QUEST_STATUS.NOT_ACCEPTED;
                 }
-                applyQuestStatusToLink(link);
             });
+            QUEST_INDEX.subIds.forEach((topicId) => {
+                if (!isQuestableTopic(topicId)) return;
+                const map = getQuestMap(QUEST_LEVELS.SUB);
+                if (!map[topicId]) {
+                    map[topicId] = QUEST_STATUS.NOT_ACCEPTED;
+                }
+            });
+            QUEST_INDEX.topicIds.forEach((topicId) => {
+                if (!isQuestableTopic(topicId)) return;
+                const map = getQuestMap(QUEST_LEVELS.TOPIC);
+                if (!map[topicId]) {
+                    map[topicId] = QUEST_STATUS.NOT_ACCEPTED;
+                }
+            });
+            contentLinks.forEach(link => applyQuestStatusToLink(link));
             saveQuestState();
         }
 
@@ -1303,7 +1432,7 @@
             const sheetSubtitle = moduleSheetSubtitles[topicId] || '';
             setModuleBannerText(getLinkLabel(link), sheetSubtitle);
             moduleBanner.hidden = false;
-            const status = getQuestStatus(topicId);
+            const status = getQuestStatus(topicId, getQuestType(topicId));
             questAcceptBtn.hidden = status !== QUEST_STATUS.NOT_ACCEPTED;
             questAcceptBtn.disabled = status !== QUEST_STATUS.NOT_ACCEPTED;
         }
@@ -1329,7 +1458,7 @@
 
         function maybeUnlockContent(topicId) {
             if (!topicId) return;
-            const status = getQuestStatus(topicId);
+            const status = getQuestStatus(topicId, getQuestType(topicId));
             if (status === QUEST_STATUS.NOT_ACCEPTED) return;
             if (currentTopicId === topicId) {
                 unlockModule(true);
@@ -1338,10 +1467,15 @@
 
         function normalizeDifficultyKey(key) {
             if (!key) return '';
-            return key.toString().toLowerCase()
+            const normalized = key.toString().toLowerCase()
                 .normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')
                 .replace(/[^a-z]/g, '');
+            if (normalized.startsWith('konny')) return 'konnyu';
+            if (normalized.startsWith('kozep')) return 'normal';
+            if (normalized.startsWith('normal')) return 'normal';
+            if (normalized.startsWith('nehez')) return 'nehez';
+            return normalized;
         }
 
         function getGradeValue(value) {
@@ -1372,7 +1506,7 @@
             const topicData = progressData[topicId];
             if (!topicData) return false;
             const { normalized } = getTopicGradeSummary(topicData);
-            const difficultyKeys = ['konnyu', 'kozepes', 'nehez'];
+            const difficultyKeys = ['konnyu', 'normal', 'nehez'];
             const hasDifficultyGrades = difficultyKeys.some(key => normalized[key] !== undefined);
             if (hasDifficultyGrades) {
                 return difficultyKeys.every(key => (normalized[key] || 0) >= 5);
@@ -1380,29 +1514,106 @@
             return Object.values(normalized).some(grade => grade >= 5);
         }
 
-        function syncQuestStatusFromProgress(topicId) {
-            if (!isQuestableTopic(topicId)) return;
+        function hasAnyGrade(topicId) {
             const topicData = progressData[topicId];
-            if (!topicData) return;
-            const summary = getTopicGradeSummary(topicData);
-            if (!summary.hasAnyGrade) return;
-            if (getQuestStatus(topicId) === QUEST_STATUS.NOT_ACCEPTED) {
-                setQuestStatus(topicId, QUEST_STATUS.ACTIVE);
+            if (!topicData) return false;
+            return getTopicGradeSummary(topicData).hasAnyGrade;
+        }
+
+        function computeTopicStatus(topicId) {
+            const baseStatus = getQuestStatus(topicId, QUEST_LEVELS.TOPIC);
+            let nextStatus = baseStatus;
+            if (baseStatus === QUEST_STATUS.NOT_ACCEPTED && hasAnyGrade(topicId)) {
+                nextStatus = QUEST_STATUS.ACTIVE;
             }
             if (isTopicCompleted(topicId)) {
-                setQuestStatus(topicId, QUEST_STATUS.COMPLETED);
+                nextStatus = QUEST_STATUS.COMPLETED;
             }
+            return nextStatus;
+        }
+
+        function computeSubtopicStatus(subtopicId, topicIds) {
+            const baseStatus = getQuestStatus(subtopicId, QUEST_LEVELS.SUB);
+            let nextStatus = baseStatus;
+            const hasTest = hasAnyGrade(subtopicId);
+            const hasActiveChild = (topicIds || []).some((topicId) => {
+                const status = getQuestStatus(topicId, QUEST_LEVELS.TOPIC);
+                return status === QUEST_STATUS.ACTIVE || status === QUEST_STATUS.COMPLETED;
+            });
+            if (baseStatus === QUEST_STATUS.NOT_ACCEPTED && (hasTest || hasActiveChild)) {
+                nextStatus = QUEST_STATUS.ACTIVE;
+            }
+            const completedByGrade = isTopicCompleted(subtopicId);
+            const allChildrenCompleted = (topicIds || []).length === 0
+                ? true
+                : topicIds.every((topicId) => getQuestStatus(topicId, QUEST_LEVELS.TOPIC) === QUEST_STATUS.COMPLETED);
+            if (completedByGrade && allChildrenCompleted) {
+                nextStatus = QUEST_STATUS.COMPLETED;
+            }
+            return nextStatus;
+        }
+
+        function computeMainTopicStatus(mainTopicId, subtopicIds) {
+            const baseStatus = getQuestStatus(mainTopicId, QUEST_LEVELS.MAIN);
+            let nextStatus = baseStatus;
+            const hasTest = hasAnyGrade(mainTopicId);
+            const hasActiveChild = (subtopicIds || []).some((subId) => {
+                const status = getQuestStatus(subId, QUEST_LEVELS.SUB);
+                return status === QUEST_STATUS.ACTIVE || status === QUEST_STATUS.COMPLETED;
+            });
+            if (baseStatus === QUEST_STATUS.NOT_ACCEPTED && (hasTest || hasActiveChild)) {
+                nextStatus = QUEST_STATUS.ACTIVE;
+            }
+            const completedByGrade = isTopicCompleted(mainTopicId);
+            const allSubtopicsCompleted = (subtopicIds || []).length === 0
+                ? true
+                : subtopicIds.every((subId) => getQuestStatus(subId, QUEST_LEVELS.SUB) === QUEST_STATUS.COMPLETED);
+            if (completedByGrade && allSubtopicsCompleted) {
+                nextStatus = QUEST_STATUS.COMPLETED;
+            }
+            return nextStatus;
+        }
+
+        function syncQuestHierarchyFromProgress() {
+            if (!questState || typeof questState !== 'object') {
+                questState = createQuestState();
+            }
+            QUEST_INDEX.topicIds.forEach((topicId) => {
+                if (!isQuestableTopic(topicId)) return;
+                const nextStatus = computeTopicStatus(topicId);
+                setQuestStatus(topicId, nextStatus, { type: QUEST_LEVELS.TOPIC, persist: false });
+            });
+            Object.entries(QUEST_HIERARCHY.hierarchy.mainTopics || {}).forEach(([mainId, mainEntry]) => {
+                const subtopics = mainEntry.subtopics || {};
+                Object.entries(subtopics).forEach(([subId, subEntry]) => {
+                    const topics = subEntry.topics || [];
+                    const nextStatus = computeSubtopicStatus(subId, topics);
+                    setQuestStatus(subId, nextStatus, { type: QUEST_LEVELS.SUB, persist: false });
+                });
+            });
+            Object.entries(QUEST_HIERARCHY.hierarchy.mainTopics || {}).forEach(([mainId, mainEntry]) => {
+                const subtopicIds = Object.keys(mainEntry.subtopics || {});
+                const nextStatus = computeMainTopicStatus(mainId, subtopicIds);
+                setQuestStatus(mainId, nextStatus, { type: QUEST_LEVELS.MAIN, persist: false });
+            });
+            saveQuestState();
+        }
+
+        function syncQuestStatusFromProgress(topicId) {
+            if (!isQuestableTopic(topicId)) return;
+            syncQuestHierarchyFromProgress();
         }
 
         function syncQuestStatusesFromProgress() {
-            Object.keys(progressData || {}).forEach(topicId => {
-                syncQuestStatusFromProgress(topicId);
-            });
+            syncQuestHierarchyFromProgress();
         }
 
         function countQuestTopics(state) {
-            if (!state || !state.topics) return 0;
-            return Object.keys(state.topics).length;
+            if (!state || typeof state !== 'object') return 0;
+            const mainCount = state.mainTopics ? Object.keys(state.mainTopics).length : 0;
+            const subCount = state.subtopics ? Object.keys(state.subtopics).length : 0;
+            const topicCount = state.topics ? Object.keys(state.topics).length : 0;
+            return mainCount + subCount + topicCount;
         }
 
         function syncQuestStateFromSummary(summaryQuests) {
@@ -1410,14 +1621,11 @@
                 ensureQuestDefaults();
                 return;
             }
-            const incoming = {
-                version: Number(summaryQuests.version) || 1,
-                topics: (summaryQuests.topics && typeof summaryQuests.topics === 'object') ? summaryQuests.topics : {}
-            };
+            const incoming = coerceQuestState(summaryQuests);
             const incomingCount = countQuestTopics(incoming);
             const localCount = countQuestTopics(questState);
             if (incomingCount > 0 || localCount === 0) {
-                questState = incoming;
+                questState = mergeQuestState(questState, incoming);
                 ensureQuestDefaults();
                 maybeUnlockContent(currentTopicId);
                 return;
@@ -1652,6 +1860,7 @@
             questAcceptBtn.addEventListener('click', () => {
                 if (!currentTopicId) return;
                 setQuestStatus(currentTopicId, QUEST_STATUS.ACTIVE);
+                syncQuestHierarchyFromProgress();
             });
         }
 
@@ -1674,7 +1883,7 @@
                 }
                 setActiveLink(link);
                 updateModuleBanner(link);
-                if (isQuestableTopic(topicId) && getQuestStatus(topicId) === QUEST_STATUS.NOT_ACCEPTED) {
+                if (isQuestableTopic(topicId) && getQuestStatus(topicId, getQuestType(topicId)) === QUEST_STATUS.NOT_ACCEPTED) {
                     lockModule(link);
                     return;
                 }
@@ -1777,27 +1986,28 @@
             xpLevelLabel.textContent = `Lv. ${summary.level.level}`;
             if (xpLevelName) {
                 const name = summary.level.levelName || '';
-                xpLevelName.textContent = name ? `– ${name}` : '';
+                xpLevelName.textContent = name ? `- ${name}` : '';
             }
             xpTotalLabel.textContent = `${totalXp} XP`;
-            const required = summary.level.xpForNext || 200;
-            const current = summary.level.xpIntoLevel || 0;
-            const percentage = Math.min(100, Math.round((current / required) * 100));
+            const current = Number.isFinite(summary.level.xpIntoLevel) ? summary.level.xpIntoLevel : 0;
+            const required = Number.isFinite(summary.level.xpForNext) ? summary.level.xpForNext : 0;
+            const isMaxLevel = required <= 0;
+            const safeRequired = isMaxLevel ? Math.max(1, current) : required;
+            const percentage = Math.min(100, Math.round((current / safeRequired) * 100));
             xpBarFill.style.width = `${percentage}%`;
-            xpProgressText.textContent = `${current} / ${required} XP a következő szintig`;
+            xpProgressText.textContent = isMaxLevel
+                ? `Max szint`
+                : `${current} / ${required} XP a kovetkezo szintig`;
             if (xpBar) {
-                xpBar.setAttribute('title', `${current} / ${required} XP`);
+                xpBar.setAttribute('title', isMaxLevel ? 'Max szint' : `${current} / ${required} XP`);
             }
         }
 
-        function formatDifficultyTooltip(topicData, key, label) {
-            const entry = topicData[key];
-            if (!entry) return `${label}: N/A`;
-            const grade = typeof entry === 'number' ? entry : entry.grade;
+        function formatDifficultyTooltip(normalized, key, label) {
+            const grade = normalized[key];
             if (!grade) return `${label}: N/A`;
             return `${label}: Jegy: ${grade}`;
         }
-
         function hydrateProgressData(completions) {
             progressData = {};
             Object.entries(completions || {}).forEach(([topicId, difficulties]) => {
@@ -1829,10 +2039,11 @@
                 const topicData = progressData[topicId];
                 let tooltipContent = "M&#233;g nincsenek eredm&#233;nyek.";
                 if (topicData) {
+                    const summary = getTopicGradeSummary(topicData);
                     tooltipContent = `<b>Eredm&#233;nyek (${topicId}):</b><br>
-                        ${formatDifficultyTooltip(topicData, 'k&#246;nny&#369;', 'K&#246;nny&#369;')}<br>
-                        ${formatDifficultyTooltip(topicData, 'k&#246;zepes', 'K&#246;zepes')}<br>
-                        ${formatDifficultyTooltip(topicData, 'neh&#233;z', 'Neh&#233;z')}`;
+                        ${formatDifficultyTooltip(summary.normalized, 'konnyu', 'K&#246;nny&#369;')}<br>
+                        ${formatDifficultyTooltip(summary.normalized, 'normal', 'Norm&#225;l')}<br>
+                        ${formatDifficultyTooltip(summary.normalized, 'nehez', 'Neh&#233;z')}`;
                 }
                 tooltip.innerHTML = tooltipContent;
                 tooltip.style.display = 'block';

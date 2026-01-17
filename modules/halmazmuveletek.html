@@ -272,7 +272,11 @@
             font-size: 1em;
         }
 
-        #test-area {
+        .test-area {
+            margin-top: 16px;
+        }
+
+        .test-area.is-hidden {
             display: none;
         }
 
@@ -284,8 +288,8 @@
         }
 
         .dot {
-            width: 15px;
-            height: 15px;
+            width: 14px;
+            height: 14px;
             background-color: var(--border-color);
             border-radius: 50%;
             cursor: pointer;
@@ -423,11 +427,11 @@
         }
 
         .nav-btn {
-            background-color: white;
+            background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 46px;
+            height: 46px;
             cursor: pointer;
             color: var(--brand-primary);
             transition: all 0.2s ease;
@@ -617,19 +621,19 @@
             <div class="difficulty-selector">
                 <b>Nehézség:</b>
                 <button class="difficulty-btn active" data-difficulty="könnyű">Könnyű</button>
-                <button class="difficulty-btn" data-difficulty="közepes">Közepes</button>
+                <button class="difficulty-btn" data-difficulty="normál">Normál</button>
                 <button class="difficulty-btn" data-difficulty="nehéz">Nehéz</button>
             </div>
             <button id="start-test-btn" class="btn btn-secondary" type="button" hidden>&Uacute;j teszt</button>
         </div>
-        <div id="test-area">
+        <div id="test-area" class="test-area is-hidden">
             <div class="test-navigation">
-                <button id="prev-q" class="nav-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <button id="prev-q" class="nav-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="15 18 9 12 15 6"></polyline>
                     </svg></button>
                 <div id="pagination-dots"></div>
-                <button id="next-q" class="nav-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <button id="next-q" class="nav-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg></button>
@@ -648,7 +652,7 @@
         <h2>Gyakorolj!</h2>
         <!-- XP reward explanation for practice questions -->
         <p class="practice-info" style="margin-top:-10px;">
-            <strong>XP Jutalom:</strong> Könnyű kérdésért 1 XP, Közepes kérdésért 2 XP,
+            <strong>XP Jutalom:</strong> Könnyű kérdésért 1 XP, Normál kérdésért 2 XP,
             Nehéz kérdésért 3 XP. Válassz több nehézséget egyszerre, hogy nagyobb
             jutalmat szerezz!
         </p>
@@ -663,7 +667,7 @@
         <div class="practice-controls">
             <span><b>Nehézségek:</b></span>
             <label><input type="checkbox" class="practice-difficulty" value="könnyű" checked> Könnyű</label>
-            <label><input type="checkbox" class="practice-difficulty" value="közepes"> Közepes</label>
+            <label><input type="checkbox" class="practice-difficulty" value="normál"> Normál</label>
             <label><input type="checkbox" class="practice-difficulty" value="nehéz"> Nehéz</label>
             <button id="start-practice-btn" class="btn btn-primary">Gyakorlás indítása</button>
         </div>
@@ -711,7 +715,7 @@
                 { type: 'mc', q: "Mi az $A \\setminus A$ művelet eredménye?", o: ["$A$", "$U$", "$\\emptyset$"], a: 2 },
                 { type: 'mc', q: "Ha $A \\cap B = \\emptyset$, akkor a két halmaz...", o: ["egyenlő", "diszjunkt", "részhalmazai egymásnak"], a: 1 },
             ],
-            közepes: [
+            normál: [
                 { type: 'input', q: "$U = \\{1,2,3,4,5\\}, A = \\{1,3\\}$. Mi az $\\bar{A}$?", a: "2,4,5" },
                 { type: 'mc', q: "Hány részhalmaza van egy 3 elemű halmaznak?", o: ["6", "8", "9"], a: 1 },
                 { type: 'input', q: "$A=\\{1,2\\}, B=\\{3,4\\}$. Mi $(A \\cup B) \\cap A$?", a: "1,2" },
@@ -912,7 +916,7 @@
                 dom.startTestBtn.hidden = true;
                 dom.startTestBtn.style.display = 'none';
             }
-            dom.testArea.style.display = 'block';
+            dom.testArea.classList.remove('is-hidden');
             renderPagination();
             renderQuestion();
         }
@@ -1036,7 +1040,7 @@
             };
             window.parent.postMessage({ type: 'testResult', result: resultObject }, '*');
             isTestActive = false;
-            dom.testArea.style.display = 'none';
+            dom.testArea.classList.add('is-hidden');
             if (dom.startTestBtn) {
                 dom.startTestBtn.hidden = false;
                 dom.startTestBtn.style.display = 'inline-block';
@@ -1054,11 +1058,24 @@
 
         // ----------------- Practice Functionality -----------------------
         // XP rewards by difficulty for practice questions
-        const practiceXpRewards = { 'könnyű': 1, 'közepes': 2, 'nehéz': 3 };
+        const practiceXpRewards = { 'könnyű': 1, 'normál': 2, 'nehéz': 3 };
         let practiceActive = false;
         let currentPracticeAnswer = '';
         let currentPracticeDifficulty = '';
+        let currentPracticeKind = '';
+        const PRACTICE_HISTORY_LIMIT = 6;
+        const PRACTICE_RETRY_LIMIT = 12;
+        const practiceHistory = [];
         let practiceTimeout;
+        function makePracticeSignature(difficulty, item) {
+            return [difficulty, item.kind || '', item.question || '', item.answer || ''].join('|');
+        }
+        function pushPracticeHistory(entry) {
+            practiceHistory.push(entry);
+            if (practiceHistory.length > PRACTICE_HISTORY_LIMIT) {
+                practiceHistory.shift();
+            }
+        }
         function getSelectedPracticeDifficulties() {
             return Array.from(document.querySelectorAll('.practice-difficulty:checked')).map(cb => cb.value);
         }
@@ -1069,6 +1086,8 @@
                 return;
             }
             practiceActive = true;
+            practiceHistory.length = 0;
+            currentPracticeKind = '';
             dom.practiceArea.style.display = 'block';
             nextPracticeQuestion();
         });
@@ -1101,16 +1120,36 @@
             const diff = selectedDiffs[Math.floor(Math.random() * selectedDiffs.length)];
             // Save difficulty so XP reward can be determined later
             currentPracticeDifficulty = diff;
-            const { question, answer, hint } = generatePracticeQuestion(diff);
-            currentPracticeAnswer = answer;
-            dom.practiceQuestion.innerHTML = `<p>${question}</p>`;
-            dom.practiceHint.innerHTML = hint;
+            window.currentPracticeDifficulty = diff;
+            const lastKind = practiceHistory.length ? practiceHistory[practiceHistory.length - 1].kind : '';
+            let attempts = 0;
+            let practiceItem = null;
+            let signature = '';
+            while (attempts < PRACTICE_RETRY_LIMIT) {
+                practiceItem = generatePracticeQuestion(diff, lastKind);
+                signature = makePracticeSignature(diff, practiceItem);
+                if (!practiceHistory.some(entry => entry.signature === signature)) {
+                    break;
+                }
+                attempts += 1;
+            }
+            if (!practiceItem) {
+                practiceItem = generatePracticeQuestion(diff, lastKind);
+                signature = makePracticeSignature(diff, practiceItem);
+            }
+            currentPracticeAnswer = practiceItem.answer;
+            currentPracticeKind = practiceItem.kind || '';
+            window.currentPracticeAnswer = currentPracticeAnswer;
+            window.currentPracticeKind = currentPracticeKind;
+            pushPracticeHistory({ signature, kind: currentPracticeKind });
+            dom.practiceQuestion.innerHTML = `<p>${practiceItem.question}</p>`;
+            dom.practiceHint.innerHTML = practiceItem.hint;
             dom.practiceInput.value = '';
             dom.practiceFeedback.textContent = '';
             renderMathInElement(dom.practiceQuestion, { delimiters: [ {left: '$', right: '$', display: false} ] });
             renderMathInElement(dom.practiceHint, { delimiters: [ {left: '$', right: '$', display: false} ] });
         }
-        function generatePracticeQuestion(diff) {
+        function generatePracticeQuestion(diff, avoidOp = '') {
             // Vary the universal set size, set sizes and available operations by difficulty
             let U;
             let minSize;
@@ -1121,7 +1160,7 @@
                 minSize = 2;
                 maxSize = 3;
                 ops = ['union', 'intersection'];
-            } else if (diff === 'közepes') {
+            } else if (diff === 'normál') {
                 U = Array.from({ length: 8 }, (_, i) => i + 1);
                 minSize = 3;
                 maxSize = 4;
@@ -1140,7 +1179,10 @@
             }
             let A = getRandomSet();
             let B = getRandomSet();
-            let op = ops[Math.floor(Math.random() * ops.length)];
+            const availableOps = (avoidOp && ops.length > 1)
+                ? ops.filter(item => item !== avoidOp)
+                : ops;
+            let op = availableOps[Math.floor(Math.random() * availableOps.length)];
             let question = '';
             let answer = '';
             let hint = '';
@@ -1186,7 +1228,7 @@
                 // Wrap the symmetric difference operator in a math environment so KaTeX can render it properly
                 hint = '<p><b>Szimmetrikus differencia ($A \\triangle B$):</b> Azok az elemek, amelyek pontosan az egyik halmazban vannak, de nem mindkettőben.</p>';
             }
-            return { question, answer, hint };
+            return { question, answer, hint, kind: op };
         }
         // ------------------ End Practice ---------------------------
         openTab('miert');

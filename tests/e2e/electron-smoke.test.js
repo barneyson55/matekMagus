@@ -4288,8 +4288,1688 @@ test('hatvany temazaro visual model updates outputs', async () => {
   }
 });
 
-test('hatvanyozas module runs a test flow', async () => {
+test('algebrai kifejezesek temazaro module runs a test flow', async () => {
   const { app, page } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+    await page.evaluate(() => {
+      try {
+        questState = { version: 1, subtopics: { algebrai_kif_temazaro: 'ACTIVE' } };
+        localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+        if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+          window.electronAPI.saveQuestState(questState);
+        }
+        if (typeof saveQuestState === 'function') {
+          saveQuestState();
+        }
+        if (typeof ensureQuestDefaults === 'function') {
+          ensureQuestDefaults();
+        }
+      } catch (error) {
+        // Ignore localStorage failures in test setup.
+      }
+    });
+
+    await page.evaluate(() => {
+      const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+      if (outer) outer.open = true;
+      const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+      if (inner) inner.open = true;
+    });
+
+    await page.click('[data-topic-id="algebrai_kif_temazaro"]');
+    await waitForIframeSrc(page, 'modules/algebrai_kif_temazaro.html');
+
+    const frameLocator = page.frameLocator('#content-frame');
+    await frameLocator.locator('.tab-button', { hasText: 'Teszt' }).click();
+    await frameLocator.locator('[data-role="test-help"]').waitFor();
+    const difficultyButtons = frameLocator.locator('.difficulty-btn');
+    assert.equal(await difficultyButtons.count(), 3);
+    await frameLocator.locator('.difficulty-btn[data-difficulty="norm\u00e1l"]').click();
+    await frameLocator.locator('#start-test-btn').click();
+    await frameLocator.locator('#test-area').waitFor({ state: 'visible' });
+
+    const frame = page.frame({ url: /modules\/algebrai_kif_temazaro\.html/ });
+    if (!frame) {
+      throw new Error('Algebrai kifejezesek temazaro module frame not found');
+    }
+
+    const totalQuestions = await frame.evaluate(() => window.currentTestQuestionCount || 0);
+    assert.equal(totalQuestions, 10);
+    const dots = frameLocator.locator('#pagination-dots .dot');
+    await frameLocator.locator('#pagination-dots').waitFor();
+    assert.equal(await dots.count(), totalQuestions);
+    const navLayout = await frame.evaluate(() => {
+      const nav = document.querySelector('.test-navigation');
+      if (!nav) return null;
+      return {
+        display: getComputedStyle(nav).display,
+        ids: Array.from(nav.children).map(child => child.id || ''),
+        prevDisabled: document.getElementById('prev-q')?.disabled ?? null,
+        nextDisabled: document.getElementById('next-q')?.disabled ?? null,
+      };
+    });
+    assert.ok(navLayout);
+    assert.equal(navLayout.display, 'flex');
+    assert.deepEqual(navLayout.ids, ['prev-q', 'pagination-dots', 'next-q']);
+    assert.equal(navLayout.prevDisabled, true);
+
+    const seenKinds = new Set();
+    for (let i = 0; i < totalQuestions; i += 1) {
+      await frame.waitForFunction(() => typeof window.currentTestAnswer === 'string' && window.currentTestAnswer.length > 0);
+      const payload = await frame.evaluate(() => ({
+        answerText: window.currentTestAnswer,
+        kind: window.currentTestKind,
+      }));
+      if (payload.kind) {
+        seenKinds.add(payload.kind);
+      }
+      await frameLocator.locator('#test-answer').fill(String(payload.answerText));
+      if (i < totalQuestions - 1) {
+        await frameLocator.locator('#next-q').click();
+        if (i === 0) {
+          await frame.waitForFunction(() => {
+            const prev = document.getElementById('prev-q');
+            return prev && !prev.disabled;
+          });
+        }
+      }
+    }
+    assert.ok(seenKinds.size >= 1);
+
+    await frameLocator.locator('#finish-test-btn').click();
+
+    await frame.waitForFunction(() => {
+      const popup = document.getElementById('resultPopup');
+      return popup && popup.classList.contains('show');
+    });
+
+    await page.waitForFunction(() => {
+      const circle = document.querySelector('.status[data-grade-for="algebrai_kif_temazaro"]');
+      return circle && circle.classList.contains('grade-5');
+    });
+
+    const generatorCheck = await frame.evaluate(() => {
+      const difficulties = Object.keys(QUESTION_TYPES_BY_DIFFICULTY || {});
+      return difficulties.map((difficulty) => {
+        const questions = buildTestQuestions(difficulty);
+        return {
+          difficulty,
+          total: questions.length,
+          hasText: questions.every(q => typeof q.question === 'string' && q.question.length > 0),
+          answersOk: questions.every(q => typeof q.answerString === 'string' && q.answerString.length > 0),
+          checkOk: questions.every(q => checkAnswer(q.answerString, q))
+        };
+      });
+    });
+    generatorCheck.forEach((entry) => {
+      assert.equal(entry.total, 10);
+      assert.ok(entry.hasText);
+      assert.ok(entry.answersOk);
+      assert.ok(entry.checkOk);
+    });
+  } finally {
+    await app.close();
+  }
+});
+
+test('algebrai kifejezesek temazaro module practice grants xp', async () => {
+  const { app, page } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+    await page.evaluate(() => {
+      try {
+        questState = { version: 1, subtopics: { algebrai_kif_temazaro: 'ACTIVE' } };
+        localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+        if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+          window.electronAPI.saveQuestState(questState);
+        }
+        if (typeof saveQuestState === 'function') {
+          saveQuestState();
+        }
+        if (typeof ensureQuestDefaults === 'function') {
+          ensureQuestDefaults();
+        }
+      } catch (error) {
+        // Ignore localStorage failures in test setup.
+      }
+    });
+
+    await page.evaluate(() => {
+      const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+      if (outer) outer.open = true;
+      const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+      if (inner) inner.open = true;
+    });
+
+    await page.click('[data-topic-id="algebrai_kif_temazaro"]');
+    await waitForIframeSrc(page, 'modules/algebrai_kif_temazaro.html');
+
+    const frameLocator = page.frameLocator('#content-frame');
+    await frameLocator.locator('.tab-button', { hasText: 'Gyakorl\u00e1s' }).click();
+    await frameLocator.locator('[data-role="practice-help"]').waitFor();
+    const practiceDifficulties = frameLocator.locator('.practice-difficulty');
+    assert.equal(await practiceDifficulties.count(), 3);
+    await frameLocator.locator('input.practice-difficulty[value="k\u00f6nny\u0171"]').setChecked(false);
+    await frameLocator.locator('input.practice-difficulty[value="norm\u00e1l"]').setChecked(false);
+    await frameLocator.locator('input.practice-difficulty[value="neh\u00e9z"]').setChecked(true);
+    await frameLocator.locator('#start-practice-btn').click();
+
+    const frame = page.frame({ url: /modules\/algebrai_kif_temazaro\.html/ });
+    if (!frame) {
+      throw new Error('Algebrai kifejezesek temazaro module frame not found');
+    }
+
+    await frame.waitForFunction(() => typeof window.currentPracticeAnswer === 'string' && window.currentPracticeAnswer.length > 0);
+    const practicePayload = await frame.evaluate(() => ({
+      answerText: window.currentPracticeAnswer,
+      kind: window.currentPracticeKind,
+    }));
+    assert.ok(practicePayload.kind);
+    await frameLocator.locator('#practice-input').fill(String(practicePayload.answerText));
+    await frameLocator.locator('#practice-input').press('Enter');
+
+    await frame.waitForFunction(() => {
+      const feedback = document.getElementById('practice-feedback');
+      return feedback && feedback.textContent.includes('Helyes') && feedback.textContent.includes('+3 XP');
+    });
+
+    await page.waitForFunction(() => {
+      const label = document.getElementById('xp-total-label');
+      if (!label) return false;
+      const match = label.textContent.match(/(\d+)/);
+      return match && Number(match[1]) > 0;
+    });
+  } finally {
+    await app.close();
+  }
+});
+
+test('algebrai kifejezesek temazaro visual model updates outputs', async () => {
+  const { app, page } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+    await page.evaluate(() => {
+      try {
+        questState = { version: 1, subtopics: { algebrai_kif_temazaro: 'ACTIVE' } };
+        localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+        if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+          window.electronAPI.saveQuestState(questState);
+        }
+        if (typeof saveQuestState === 'function') {
+          saveQuestState();
+        }
+        if (typeof ensureQuestDefaults === 'function') {
+          ensureQuestDefaults();
+        }
+      } catch (error) {
+        // Ignore localStorage failures in test setup.
+      }
+    });
+
+    await page.evaluate(() => {
+      const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+      if (outer) outer.open = true;
+      const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+      if (inner) inner.open = true;
+    });
+
+    await page.click('[data-topic-id="algebrai_kif_temazaro"]');
+    await waitForIframeSrc(page, 'modules/algebrai_kif_temazaro.html');
+
+    const frameLocator = page.frameLocator('#content-frame');
+    await frameLocator.locator('.tab-button', { hasText: 'Vizu\u00e1lis modell' }).click();
+
+    const frame = page.frame({ url: /modules\/algebrai_kif_temazaro\.html/ });
+    if (!frame) {
+      throw new Error('Algebrai kifejezesek temazaro module frame not found');
+    }
+
+    await frame.waitForFunction(() => document.getElementById('poly-a'));
+    await frame.evaluate(() => {
+      const polyA = document.getElementById('poly-a');
+      const polyB = document.getElementById('poly-b');
+      const polyC = document.getElementById('poly-c');
+      const polyX = document.getElementById('poly-x');
+      const idA = document.getElementById('id-a');
+      const idB = document.getElementById('id-b');
+      const op = document.querySelector('.operation-btn[data-op="square-plus"]');
+      if (!polyA || !polyB || !polyC || !polyX || !idA || !idB) return;
+      polyA.value = '2';
+      polyB.value = '-3';
+      polyC.value = '4';
+      polyX.value = '2';
+      idA.value = '3';
+      idB.value = '2';
+      polyA.dispatchEvent(new Event('input', { bubbles: true }));
+      polyB.dispatchEvent(new Event('input', { bubbles: true }));
+      polyC.dispatchEvent(new Event('input', { bubbles: true }));
+      polyX.dispatchEvent(new Event('input', { bubbles: true }));
+      idA.dispatchEvent(new Event('input', { bubbles: true }));
+      idB.dispatchEvent(new Event('input', { bubbles: true }));
+      if (op) op.click();
+    });
+
+    await frame.waitForFunction(() => {
+      const value = document.getElementById('poly-output')?.textContent || '';
+      return value.trim() === '6';
+    });
+    await frame.waitForFunction(() => {
+      const value = document.getElementById('id-output')?.textContent || '';
+      return value.trim() === '25';
+    });
+  } finally {
+    await app.close();
+  }
+});
+
+test('polinomok module runs a test flow', async () => {
+  const { app, page } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+    await page.evaluate(() => {
+      try {
+        questState = { version: 1, topics: { polinomok: 'ACTIVE' } };
+        localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+        if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+          window.electronAPI.saveQuestState(questState);
+        }
+        if (typeof saveQuestState === 'function') {
+          saveQuestState();
+        }
+        if (typeof ensureQuestDefaults === 'function') {
+          ensureQuestDefaults();
+        }
+      } catch (error) {
+        // Ignore localStorage failures in test setup.
+      }
+    });
+
+    await page.evaluate(() => {
+      const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+      if (outer) outer.open = true;
+      const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+      if (inner) inner.open = true;
+    });
+
+    await page.click('[data-topic-id="polinomok"]');
+    await waitForIframeSrc(page, 'modules/polinomok.html');
+
+    const frameLocator = page.frameLocator('#content-frame');
+    await frameLocator.locator('.tab-button', { hasText: 'Teszt' }).click();
+    await frameLocator.locator('[data-role="test-help"]').waitFor();
+    const difficultyButtons = frameLocator.locator('.difficulty-btn');
+    assert.equal(await difficultyButtons.count(), 3);
+    await frameLocator.locator('.difficulty-btn[data-difficulty="norm\u00e1l"]').click();
+    await frameLocator.locator('#test-area').waitFor({ state: 'visible' });
+
+    const frame = page.frame({ url: /modules\/polinomok\.html/ });
+    if (!frame) {
+      throw new Error('Polinomok module frame not found');
+    }
+
+    const totalQuestions = await frame.evaluate(() => window.currentTestQuestionCount || 0);
+    assert.equal(totalQuestions, 10);
+    const dots = frameLocator.locator('#pagination-dots .dot');
+    await frameLocator.locator('#pagination-dots').waitFor();
+    assert.equal(await dots.count(), totalQuestions);
+    const navLayout = await frame.evaluate(() => {
+      const nav = document.querySelector('.test-navigation');
+      if (!nav) return null;
+      return {
+        display: getComputedStyle(nav).display,
+        ids: Array.from(nav.children).map(child => child.id || ''),
+        prevDisabled: document.getElementById('prev-q')?.disabled ?? null,
+        nextDisabled: document.getElementById('next-q')?.disabled ?? null,
+      };
+    });
+    assert.ok(navLayout);
+    assert.equal(navLayout.display, 'flex');
+    assert.deepEqual(navLayout.ids, ['prev-q', 'pagination-dots', 'next-q']);
+    assert.equal(navLayout.prevDisabled, true);
+
+    const seenKinds = new Set();
+    for (let i = 0; i < totalQuestions; i += 1) {
+      await frame.waitForFunction(() => typeof window.currentTestAnswer === 'string' && window.currentTestAnswer.length > 0);
+      const payload = await frame.evaluate(() => ({
+        answerText: window.currentTestAnswer,
+        kind: window.currentTestKind,
+      }));
+      if (payload.kind) {
+        seenKinds.add(payload.kind);
+      }
+      await frameLocator.locator('#test-answer').fill(String(payload.answerText));
+      if (i < totalQuestions - 1) {
+        await frameLocator.locator('#next-q').click();
+        if (i === 0) {
+          await frame.waitForFunction(() => {
+            const prev = document.getElementById('prev-q');
+            return prev && !prev.disabled;
+          });
+        }
+      }
+    }
+    assert.ok(seenKinds.size >= 1);
+
+    await frameLocator.locator('#finish-test-btn').click();
+
+    await frame.waitForFunction(() => {
+      const popup = document.getElementById('resultPopup');
+      return popup && popup.classList.contains('show');
+    });
+
+    await page.waitForFunction(() => {
+      const circle = document.querySelector('.status[data-grade-for="polinomok"]');
+      return circle && circle.classList.contains('grade-5');
+    });
+
+    const generatorCheck = await frame.evaluate(() => {
+      const difficulties = Object.keys(QUESTION_TYPES_BY_DIFFICULTY || {});
+      return difficulties.map((difficulty) => {
+        const questions = buildTestQuestions(difficulty);
+        return {
+          difficulty,
+          total: questions.length,
+          hasText: questions.every(q => typeof q.question === 'string' && q.question.length > 0),
+          answersOk: questions.every(q => typeof q.answerString === 'string' && q.answerString.length > 0),
+          checkOk: questions.every(q => checkAnswer(q.answerString, q))
+        };
+      });
+    });
+    generatorCheck.forEach((entry) => {
+      assert.equal(entry.total, 10);
+      assert.ok(entry.hasText);
+      assert.ok(entry.answersOk);
+      assert.ok(entry.checkOk);
+    });
+  } finally {
+    await app.close();
+  }
+});
+
+test('polinomok module practice grants xp', async () => {
+  const { app, page } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+    await page.evaluate(() => {
+      try {
+        questState = { version: 1, topics: { polinomok: 'ACTIVE' } };
+        localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+        if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+          window.electronAPI.saveQuestState(questState);
+        }
+        if (typeof saveQuestState === 'function') {
+          saveQuestState();
+        }
+        if (typeof ensureQuestDefaults === 'function') {
+          ensureQuestDefaults();
+        }
+      } catch (error) {
+        // Ignore localStorage failures in test setup.
+      }
+    });
+
+    await page.evaluate(() => {
+      const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+      if (outer) outer.open = true;
+      const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+      if (inner) inner.open = true;
+    });
+
+    await page.click('[data-topic-id="polinomok"]');
+    await waitForIframeSrc(page, 'modules/polinomok.html');
+
+    const frameLocator = page.frameLocator('#content-frame');
+    await frameLocator.locator('.tab-button', { hasText: 'Gyakorl\u00e1s' }).click();
+    await frameLocator.locator('[data-role="practice-help"]').waitFor();
+    const practiceDifficulties = frameLocator.locator('.practice-difficulty');
+    assert.equal(await practiceDifficulties.count(), 3);
+    await frameLocator.locator('input.practice-difficulty[value="k\u00f6nny\u0171"]').setChecked(false);
+    await frameLocator.locator('input.practice-difficulty[value="norm\u00e1l"]').setChecked(false);
+    await frameLocator.locator('input.practice-difficulty[value="neh\u00e9z"]').setChecked(true);
+    await frameLocator.locator('#start-practice-btn').click();
+
+    const frame = page.frame({ url: /modules\/polinomok\.html/ });
+    if (!frame) {
+      throw new Error('Polinomok module frame not found');
+    }
+
+    await frame.waitForFunction(() => typeof window.currentPracticeAnswer === 'string' && window.currentPracticeAnswer.length > 0);
+    const practicePayload = await frame.evaluate(() => ({
+      answerText: window.currentPracticeAnswer,
+      kind: window.currentPracticeKind,
+    }));
+    assert.ok(practicePayload.kind);
+    await frameLocator.locator('#practice-input').fill(String(practicePayload.answerText));
+    await frameLocator.locator('#practice-input').press('Enter');
+
+    await frame.waitForFunction(() => {
+      const feedback = document.getElementById('practice-feedback');
+      return feedback && feedback.textContent.includes('Helyes') && feedback.textContent.includes('+3 XP');
+    });
+
+    await page.waitForFunction(() => {
+      const label = document.getElementById('xp-total-label');
+      if (!label) return false;
+      const match = label.textContent.match(/(\d+)/);
+      return match && Number(match[1]) > 0;
+    });
+  } finally {
+    await app.close();
+  }
+});
+
+  test('polinomok visual model updates outputs', async () => {
+    const { app, page } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+    await page.evaluate(() => {
+      try {
+        questState = { version: 1, topics: { polinomok: 'ACTIVE' } };
+        localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+        if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+          window.electronAPI.saveQuestState(questState);
+        }
+        if (typeof saveQuestState === 'function') {
+          saveQuestState();
+        }
+        if (typeof ensureQuestDefaults === 'function') {
+          ensureQuestDefaults();
+        }
+      } catch (error) {
+        // Ignore localStorage failures in test setup.
+      }
+    });
+
+    await page.evaluate(() => {
+      const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+      if (outer) outer.open = true;
+      const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+      if (inner) inner.open = true;
+    });
+
+    await page.click('[data-topic-id="polinomok"]');
+    await waitForIframeSrc(page, 'modules/polinomok.html');
+
+    const frameLocator = page.frameLocator('#content-frame');
+    await frameLocator.locator('.tab-button', { hasText: 'Vizu\u00e1lis modell' }).click();
+
+    const frame = page.frame({ url: /modules\/polinomok\.html/ });
+    if (!frame) {
+      throw new Error('Polinomok module frame not found');
+    }
+
+    await frame.waitForFunction(() => document.getElementById('poly-a'));
+    await frame.evaluate(() => {
+      const polyA = document.getElementById('poly-a');
+      const polyB = document.getElementById('poly-b');
+      const polyC = document.getElementById('poly-c');
+      const polyX = document.getElementById('poly-x');
+      const opA = document.getElementById('op-a');
+      const opB = document.getElementById('op-b');
+      const opC = document.getElementById('op-c');
+      const opD = document.getElementById('op-d');
+      const opE = document.getElementById('op-e');
+      const opF = document.getElementById('op-f');
+      const opX = document.getElementById('op-x');
+      const opAdd = document.querySelector('.operation-btn[data-op=\"add\"]');
+      if (!polyA || !polyB || !polyC || !polyX) return;
+      polyA.value = '2';
+      polyB.value = '-3';
+      polyC.value = '1';
+      polyX.value = '2';
+      if (opA && opB && opC && opD && opE && opF && opX) {
+        opA.value = '1';
+        opB.value = '2';
+        opC.value = '-1';
+        opD.value = '-2';
+        opE.value = '1';
+        opF.value = '3';
+        opX.value = '2';
+      }
+      polyA.dispatchEvent(new Event('input', { bubbles: true }));
+      polyB.dispatchEvent(new Event('input', { bubbles: true }));
+      polyC.dispatchEvent(new Event('input', { bubbles: true }));
+      polyX.dispatchEvent(new Event('input', { bubbles: true }));
+      if (opA) opA.dispatchEvent(new Event('input', { bubbles: true }));
+      if (opB) opB.dispatchEvent(new Event('input', { bubbles: true }));
+      if (opC) opC.dispatchEvent(new Event('input', { bubbles: true }));
+      if (opD) opD.dispatchEvent(new Event('input', { bubbles: true }));
+      if (opE) opE.dispatchEvent(new Event('input', { bubbles: true }));
+      if (opF) opF.dispatchEvent(new Event('input', { bubbles: true }));
+      if (opX) opX.dispatchEvent(new Event('input', { bubbles: true }));
+      if (opAdd) opAdd.click();
+    });
+
+    await frame.waitForFunction(() => {
+      const value = document.getElementById('poly-output')?.textContent || '';
+      return value.trim() === '3';
+    });
+    await frame.waitForFunction(() => {
+      const value = document.getElementById('op-result')?.textContent || '';
+      return value.trim() === '4';
+    });
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('nevezetes azonossagok module runs a test flow', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+  
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, topics: { nevezetes_azonossagok: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+  
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+  
+      await page.click('[data-topic-id="nevezetes_azonossagok"]');
+      await waitForIframeSrc(page, 'modules/nevezetes_azonossagok.html');
+  
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Teszt' }).click();
+      await frameLocator.locator('[data-role="test-help"]').waitFor();
+      const difficultyButtons = frameLocator.locator('.difficulty-btn');
+      assert.equal(await difficultyButtons.count(), 3);
+      await frameLocator.locator('.difficulty-btn[data-difficulty="norm\u00e1l"]').click();
+      await frameLocator.locator('#test-area').waitFor({ state: 'visible' });
+  
+      const frame = page.frame({ url: /modules\/nevezetes_azonossagok\.html/ });
+      if (!frame) {
+        throw new Error('Nevezetes azonossagok module frame not found');
+      }
+  
+      const totalQuestions = await frame.evaluate(() => window.currentTestQuestionCount || 0);
+      assert.equal(totalQuestions, 10);
+      const dots = frameLocator.locator('#pagination-dots .dot');
+      await frameLocator.locator('#pagination-dots').waitFor();
+      assert.equal(await dots.count(), totalQuestions);
+      const navLayout = await frame.evaluate(() => {
+        const nav = document.querySelector('.test-navigation');
+        if (!nav) return null;
+        return {
+          display: getComputedStyle(nav).display,
+          ids: Array.from(nav.children).map(child => child.id || ''),
+          prevDisabled: document.getElementById('prev-q')?.disabled ?? null,
+          nextDisabled: document.getElementById('next-q')?.disabled ?? null,
+        };
+      });
+      assert.ok(navLayout);
+      assert.equal(navLayout.display, 'flex');
+      assert.deepEqual(navLayout.ids, ['prev-q', 'pagination-dots', 'next-q']);
+      assert.equal(navLayout.prevDisabled, true);
+  
+      const seenKinds = new Set();
+      for (let i = 0; i < totalQuestions; i += 1) {
+        await frame.waitForFunction(() => typeof window.currentTestAnswer === 'string' && window.currentTestAnswer.length > 0);
+        const payload = await frame.evaluate(() => ({
+          answerText: window.currentTestAnswer,
+          kind: window.currentTestKind,
+        }));
+        if (payload.kind) {
+          seenKinds.add(payload.kind);
+        }
+        await frameLocator.locator('#test-answer').fill(String(payload.answerText));
+        if (i < totalQuestions - 1) {
+          await frameLocator.locator('#next-q').click();
+          if (i === 0) {
+            await frame.waitForFunction(() => {
+              const prev = document.getElementById('prev-q');
+              return prev && !prev.disabled;
+            });
+          }
+        }
+      }
+      assert.ok(seenKinds.size >= 1);
+  
+      await frameLocator.locator('#finish-test-btn').click();
+  
+      await frame.waitForFunction(() => {
+        const popup = document.getElementById('resultPopup');
+        return popup && popup.classList.contains('show');
+      });
+  
+      await page.waitForFunction(() => {
+        const circle = document.querySelector('.status[data-grade-for="nevezetes_azonossagok"]');
+        return circle && circle.classList.contains('grade-5');
+      });
+  
+      const generatorCheck = await frame.evaluate(() => {
+        const difficulties = Object.keys(QUESTION_TYPES_BY_DIFFICULTY || {});
+        return difficulties.map((difficulty) => {
+          const questions = buildTestQuestions(difficulty);
+          return {
+            difficulty,
+            total: questions.length,
+            hasText: questions.every(q => typeof q.question === 'string' && q.question.length > 0),
+            answersOk: questions.every(q => typeof q.answerString === 'string' && q.answerString.length > 0),
+            checkOk: questions.every(q => checkAnswer(q.answerString, q))
+          };
+        });
+      });
+      generatorCheck.forEach((entry) => {
+        assert.equal(entry.total, 10);
+        assert.ok(entry.hasText);
+        assert.ok(entry.answersOk);
+        assert.ok(entry.checkOk);
+      });
+    } finally {
+      await app.close();
+    }
+  });
+  
+  test('nevezetes azonossagok module practice grants xp', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+  
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, topics: { nevezetes_azonossagok: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+  
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+  
+      await page.click('[data-topic-id="nevezetes_azonossagok"]');
+      await waitForIframeSrc(page, 'modules/nevezetes_azonossagok.html');
+  
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Gyakorl\u00e1s' }).click();
+      await frameLocator.locator('[data-role="practice-help"]').waitFor();
+      const practiceDifficulties = frameLocator.locator('.practice-difficulty');
+      assert.equal(await practiceDifficulties.count(), 3);
+      await frameLocator.locator('input.practice-difficulty[value="k\u00f6nny\u0171"]').setChecked(false);
+      await frameLocator.locator('input.practice-difficulty[value="norm\u00e1l"]').setChecked(false);
+      await frameLocator.locator('input.practice-difficulty[value="neh\u00e9z"]').setChecked(true);
+      await frameLocator.locator('#start-practice-btn').click();
+  
+      const frame = page.frame({ url: /modules\/nevezetes_azonossagok\.html/ });
+      if (!frame) {
+        throw new Error('Nevezetes azonossagok module frame not found');
+      }
+  
+      await frame.waitForFunction(() => typeof window.currentPracticeAnswer === 'string' && window.currentPracticeAnswer.length > 0);
+      const practicePayload = await frame.evaluate(() => ({
+        answerText: window.currentPracticeAnswer,
+        kind: window.currentPracticeKind,
+      }));
+      assert.ok(practicePayload.kind);
+      await frameLocator.locator('#practice-input').fill(String(practicePayload.answerText));
+      await frameLocator.locator('#practice-input').press('Enter');
+  
+      await frame.waitForFunction(() => {
+        const feedback = document.getElementById('practice-feedback');
+        return feedback && feedback.textContent.includes('Helyes') && feedback.textContent.includes('+3 XP');
+      });
+  
+      await page.waitForFunction(() => {
+        const label = document.getElementById('xp-total-label');
+        if (!label) return false;
+        const match = label.textContent.match(/(\d+)/);
+        return match && Number(match[1]) > 0;
+      });
+    } finally {
+      await app.close();
+    }
+  });
+  
+  test('nevezetes azonossagok visual model updates outputs', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+  
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, topics: { nevezetes_azonossagok: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+  
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+  
+      await page.click('[data-topic-id="nevezetes_azonossagok"]');
+      await waitForIframeSrc(page, 'modules/nevezetes_azonossagok.html');
+  
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Vizu\u00e1lis modell' }).click();
+  
+      const frame = page.frame({ url: /modules\/nevezetes_azonossagok\.html/ });
+      if (!frame) {
+        throw new Error('Nevezetes azonossagok module frame not found');
+      }
+  
+      await frame.waitForFunction(() => document.getElementById('id-a'));
+      await frame.evaluate(() => {
+        const idA = document.getElementById('id-a');
+        const idB = document.getElementById('id-b');
+        const axA = document.getElementById('ax-a');
+        const axB = document.getElementById('ax-b');
+        const axX = document.getElementById('ax-x');
+        const op = document.querySelector('.operation-btn[data-op=\"square-plus\"]');
+        if (!idA || !idB || !axA || !axB || !axX) return;
+        idA.value = '3';
+        idB.value = '2';
+        axA.value = '2';
+        axB.value = '1';
+        axX.value = '3';
+        idA.dispatchEvent(new Event('input', { bubbles: true }));
+        idB.dispatchEvent(new Event('input', { bubbles: true }));
+        axA.dispatchEvent(new Event('input', { bubbles: true }));
+        axB.dispatchEvent(new Event('input', { bubbles: true }));
+        axX.dispatchEvent(new Event('input', { bubbles: true }));
+        if (op) op.click();
+      });
+  
+      await frame.waitForFunction(() => {
+        const value = document.getElementById('id-output')?.textContent || '';
+        return value.trim() === '25';
+      });
+      await frame.waitForFunction(() => {
+        const value = document.getElementById('ax-output')?.textContent || '';
+        return value.trim() === '49';
+      });
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('algebrai tortek module runs a test flow', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, topics: { algebrai_tortek: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+
+      await page.click('[data-topic-id="algebrai_tortek"]');
+      await waitForIframeSrc(page, 'modules/algebrai_tortek.html');
+
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Teszt' }).click();
+      await frameLocator.locator('[data-role="test-help"]').waitFor();
+      const difficultyButtons = frameLocator.locator('.difficulty-btn');
+      assert.equal(await difficultyButtons.count(), 3);
+      await frameLocator.locator('.difficulty-btn[data-difficulty="norm\u00e1l"]').click();
+      await frameLocator.locator('#test-area').waitFor({ state: 'visible' });
+
+      const frame = page.frame({ url: /modules\/algebrai_tortek\.html/ });
+      if (!frame) {
+        throw new Error('Algebrai tortek module frame not found');
+      }
+
+      const totalQuestions = await frame.evaluate(() => window.currentTestQuestionCount || 0);
+      assert.equal(totalQuestions, 10);
+      const dots = frameLocator.locator('#pagination-dots .dot');
+      await frameLocator.locator('#pagination-dots').waitFor();
+      assert.equal(await dots.count(), totalQuestions);
+      const navLayout = await frame.evaluate(() => {
+        const nav = document.querySelector('.test-navigation');
+        if (!nav) return null;
+        return {
+          display: getComputedStyle(nav).display,
+          ids: Array.from(nav.children).map(child => child.id || ''),
+          prevDisabled: document.getElementById('prev-q')?.disabled ?? null,
+          nextDisabled: document.getElementById('next-q')?.disabled ?? null,
+        };
+      });
+      assert.ok(navLayout);
+      assert.equal(navLayout.display, 'flex');
+      assert.deepEqual(navLayout.ids, ['prev-q', 'pagination-dots', 'next-q']);
+      assert.equal(navLayout.prevDisabled, true);
+
+      const seenKinds = new Set();
+      for (let i = 0; i < totalQuestions; i += 1) {
+        await frame.waitForFunction(() => typeof window.currentTestAnswer === 'string' && window.currentTestAnswer.length > 0);
+        const payload = await frame.evaluate(() => ({
+          answerText: window.currentTestAnswer,
+          kind: window.currentTestKind,
+        }));
+        if (payload.kind) {
+          seenKinds.add(payload.kind);
+        }
+        await frameLocator.locator('#test-answer').fill(String(payload.answerText));
+        if (i < totalQuestions - 1) {
+          await frameLocator.locator('#next-q').click();
+          if (i === 0) {
+            await frame.waitForFunction(() => {
+              const prev = document.getElementById('prev-q');
+              return prev && !prev.disabled;
+            });
+          }
+        }
+      }
+      assert.ok(seenKinds.size >= 1);
+
+      await frameLocator.locator('#finish-test-btn').click();
+
+      await frame.waitForFunction(() => {
+        const popup = document.getElementById('resultPopup');
+        return popup && popup.classList.contains('show');
+      });
+
+      await page.waitForFunction(() => {
+        const circle = document.querySelector('.status[data-grade-for="algebrai_tortek"]');
+        return circle && circle.classList.contains('grade-5');
+      });
+
+      const generatorCheck = await frame.evaluate(() => {
+        const difficulties = Object.keys(QUESTION_TYPES_BY_DIFFICULTY || {});
+        return difficulties.map((difficulty) => {
+          const questions = buildTestQuestions(difficulty);
+          return {
+            difficulty,
+            total: questions.length,
+            hasText: questions.every(q => typeof q.question === 'string' && q.question.length > 0),
+            answersOk: questions.every(q => typeof q.answerString === 'string' && q.answerString.length > 0),
+            checkOk: questions.every(q => checkAnswer(q.answerString, q))
+          };
+        });
+      });
+      generatorCheck.forEach((entry) => {
+        assert.equal(entry.total, 10);
+        assert.ok(entry.hasText);
+        assert.ok(entry.answersOk);
+        assert.ok(entry.checkOk);
+      });
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('algebrai tortek module practice grants xp', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, topics: { algebrai_tortek: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+
+      await page.click('[data-topic-id="algebrai_tortek"]');
+      await waitForIframeSrc(page, 'modules/algebrai_tortek.html');
+
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Gyakorl\u00e1s' }).click();
+      await frameLocator.locator('[data-role="practice-help"]').waitFor();
+      const practiceDifficulties = frameLocator.locator('.practice-difficulty');
+      assert.equal(await practiceDifficulties.count(), 3);
+      await frameLocator.locator('input.practice-difficulty[value="k\u00f6nny\u0171"]').setChecked(false);
+      await frameLocator.locator('input.practice-difficulty[value="norm\u00e1l"]').setChecked(false);
+      await frameLocator.locator('input.practice-difficulty[value="neh\u00e9z"]').setChecked(true);
+      await frameLocator.locator('#start-practice-btn').click();
+
+      const frame = page.frame({ url: /modules\/algebrai_tortek\.html/ });
+      if (!frame) {
+        throw new Error('Algebrai tortek module frame not found');
+      }
+
+      await frame.waitForFunction(() => typeof window.currentPracticeAnswer === 'string' && window.currentPracticeAnswer.length > 0);
+      const practicePayload = await frame.evaluate(() => ({
+        answerText: window.currentPracticeAnswer,
+        kind: window.currentPracticeKind,
+      }));
+      assert.ok(practicePayload.kind);
+      await frameLocator.locator('#practice-input').fill(String(practicePayload.answerText));
+      await frameLocator.locator('#practice-input').press('Enter');
+
+      await frame.waitForFunction(() => {
+        const feedback = document.getElementById('practice-feedback');
+        return feedback && feedback.textContent.includes('Helyes') && feedback.textContent.includes('+3 XP');
+      });
+
+      await page.waitForFunction(() => {
+        const label = document.getElementById('xp-total-label');
+        if (!label) return false;
+        const match = label.textContent.match(/(\d+)/);
+        return match && Number(match[1]) > 0;
+      });
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('algebrai tortek visual model updates outputs', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, topics: { algebrai_tortek: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="algebrai_kif_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+
+      await page.click('[data-topic-id="algebrai_tortek"]');
+      await waitForIframeSrc(page, 'modules/algebrai_tortek.html');
+
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Vizu\u00e1lis modell' }).click();
+
+      const frame = page.frame({ url: /modules\/algebrai_tortek\.html/ });
+      if (!frame) {
+        throw new Error('Algebrai tortek module frame not found');
+      }
+
+      await frame.waitForFunction(() => document.getElementById('frac-a'));
+      await frame.evaluate(() => {
+        const a = document.getElementById('frac-a');
+        const b = document.getElementById('frac-b');
+        const c = document.getElementById('frac-c');
+        const d = document.getElementById('frac-d');
+        const x = document.getElementById('frac-x');
+        if (!a || !b || !c || !d || !x) return;
+        a.value = '2';
+        b.value = '1';
+        c.value = '1';
+        d.value = '1';
+        x.value = '1';
+        a.dispatchEvent(new Event('input', { bubbles: true }));
+        b.dispatchEvent(new Event('input', { bubbles: true }));
+        c.dispatchEvent(new Event('input', { bubbles: true }));
+        d.dispatchEvent(new Event('input', { bubbles: true }));
+        x.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+
+      await frame.waitForFunction(() => {
+        const simplified = document.getElementById('fraction-simplified')?.textContent || '';
+        const value = document.getElementById('fraction-value')?.textContent || '';
+        const numerator = document.getElementById('numerator-value')?.textContent || '';
+        const denominator = document.getElementById('denominator-value')?.textContent || '';
+        const excluded = document.getElementById('excluded-x')?.textContent || '';
+        return simplified.trim() === '3/2'
+          && value.trim() === '1.5'
+          && numerator.trim() === '3'
+          && denominator.trim() === '2'
+          && excluded.trim() === 'x != -1';
+      });
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('linearis egyenletek module runs a test flow', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, topics: { linearis_egyenletek: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="egyenletek_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+
+      await page.click('[data-topic-id="linearis_egyenletek"]');
+      await waitForIframeSrc(page, 'modules/linearis_egyenletek.html');
+
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Teszt' }).click();
+      await frameLocator.locator('[data-role="test-help"]').waitFor();
+      const difficultyButtons = frameLocator.locator('.difficulty-btn');
+      assert.equal(await difficultyButtons.count(), 3);
+      await frameLocator.locator('.difficulty-btn[data-difficulty="norm\u00e1l"]').click();
+      await frameLocator.locator('#test-area').waitFor({ state: 'visible' });
+
+      const frame = page.frame({ url: /modules\/linearis_egyenletek\.html/ });
+      if (!frame) {
+        throw new Error('Linearis egyenletek module frame not found');
+      }
+
+      const totalQuestions = await frame.evaluate(() => window.currentTestQuestionCount || 0);
+      assert.equal(totalQuestions, 10);
+      const dots = frameLocator.locator('#pagination-dots .dot');
+      await frameLocator.locator('#pagination-dots').waitFor();
+      assert.equal(await dots.count(), totalQuestions);
+      const navLayout = await frame.evaluate(() => {
+        const nav = document.querySelector('.test-navigation');
+        if (!nav) return null;
+        return {
+          display: getComputedStyle(nav).display,
+          ids: Array.from(nav.children).map(child => child.id || ''),
+          prevDisabled: document.getElementById('prev-q')?.disabled ?? null,
+          nextDisabled: document.getElementById('next-q')?.disabled ?? null,
+        };
+      });
+      assert.ok(navLayout);
+      assert.equal(navLayout.display, 'flex');
+      assert.deepEqual(navLayout.ids, ['prev-q', 'pagination-dots', 'next-q']);
+      assert.equal(navLayout.prevDisabled, true);
+
+      const seenKinds = new Set();
+      for (let i = 0; i < totalQuestions; i += 1) {
+        await frame.waitForFunction(() => typeof window.currentTestAnswer === 'string' && window.currentTestAnswer.length > 0);
+        const payload = await frame.evaluate(() => ({
+          answerText: window.currentTestAnswer,
+          kind: window.currentTestKind,
+        }));
+        if (payload.kind) {
+          seenKinds.add(payload.kind);
+        }
+        await frameLocator.locator('#test-answer').fill(String(payload.answerText));
+        if (i < totalQuestions - 1) {
+          await frameLocator.locator('#next-q').click();
+          if (i === 0) {
+            await frame.waitForFunction(() => {
+              const prev = document.getElementById('prev-q');
+              return prev && !prev.disabled;
+            });
+          }
+        }
+      }
+      assert.ok(seenKinds.size >= 1);
+
+      await frameLocator.locator('#finish-test-btn').click();
+
+      await frame.waitForFunction(() => {
+        const popup = document.getElementById('resultPopup');
+        return popup && popup.classList.contains('show');
+      });
+
+      await page.waitForFunction(() => {
+        const circle = document.querySelector('.status[data-grade-for="linearis_egyenletek"]');
+        return circle && circle.classList.contains('grade-5');
+      });
+
+      const generatorCheck = await frame.evaluate(() => {
+        const difficulties = Object.keys(QUESTION_TYPES_BY_DIFFICULTY || {});
+        return difficulties.map((difficulty) => {
+          const questions = buildTestQuestions(difficulty);
+          return {
+            difficulty,
+            total: questions.length,
+            hasText: questions.every(q => typeof q.question === 'string' && q.question.length > 0),
+            answersOk: questions.every(q => typeof q.answerString === 'string' && q.answerString.length > 0),
+            checkOk: questions.every(q => checkAnswer(q.answerString, q))
+          };
+        });
+      });
+      generatorCheck.forEach((entry) => {
+        assert.equal(entry.total, 10);
+        assert.ok(entry.hasText);
+        assert.ok(entry.answersOk);
+        assert.ok(entry.checkOk);
+      });
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('linearis egyenletek module practice grants xp', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, topics: { linearis_egyenletek: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="egyenletek_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+
+      await page.click('[data-topic-id="linearis_egyenletek"]');
+      await waitForIframeSrc(page, 'modules/linearis_egyenletek.html');
+
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Gyakorl\u00e1s' }).click();
+      await frameLocator.locator('[data-role="practice-help"]').waitFor();
+      const practiceDifficulties = frameLocator.locator('.practice-difficulty');
+      assert.equal(await practiceDifficulties.count(), 3);
+      await frameLocator.locator('input.practice-difficulty[value="k\u00f6nny\u0171"]').setChecked(false);
+      await frameLocator.locator('input.practice-difficulty[value="norm\u00e1l"]').setChecked(false);
+      await frameLocator.locator('input.practice-difficulty[value="neh\u00e9z"]').setChecked(true);
+      await frameLocator.locator('#start-practice-btn').click();
+
+      const frame = page.frame({ url: /modules\/linearis_egyenletek\.html/ });
+      if (!frame) {
+        throw new Error('Linearis egyenletek module frame not found');
+      }
+
+      await frame.waitForFunction(() => typeof window.currentPracticeAnswer === 'string' && window.currentPracticeAnswer.length > 0);
+      const practicePayload = await frame.evaluate(() => ({
+        answerText: window.currentPracticeAnswer,
+        kind: window.currentPracticeKind,
+      }));
+      assert.ok(practicePayload.kind);
+      await frameLocator.locator('#practice-input').fill(String(practicePayload.answerText));
+      await frameLocator.locator('#practice-input').press('Enter');
+
+      await frame.waitForFunction(() => {
+        const feedback = document.getElementById('practice-feedback');
+        return feedback && feedback.textContent.includes('Helyes') && feedback.textContent.includes('+3 XP');
+      });
+
+      await page.waitForFunction(() => {
+        const label = document.getElementById('xp-total-label');
+        if (!label) return false;
+        const match = label.textContent.match(/(\d+)/);
+        return match && Number(match[1]) > 0;
+      });
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('linearis egyenletek visual model updates outputs', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, topics: { linearis_egyenletek: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="egyenletek_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+
+      await page.click('[data-topic-id="linearis_egyenletek"]');
+      await waitForIframeSrc(page, 'modules/linearis_egyenletek.html');
+
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Vizu\u00e1lis modell' }).click();
+
+      const frame = page.frame({ url: /modules\/linearis_egyenletek\.html/ });
+      if (!frame) {
+        throw new Error('Linearis egyenletek module frame not found');
+      }
+
+      await frame.waitForFunction(() => document.getElementById('eq-a'));
+      await frame.evaluate(() => {
+        const a = document.getElementById('eq-a');
+        const b = document.getElementById('eq-b');
+        const c = document.getElementById('eq-c');
+        if (!a || !b || !c) return;
+        a.value = '2';
+        b.value = '4';
+        c.value = '10';
+        a.dispatchEvent(new Event('input', { bubbles: true }));
+        b.dispatchEvent(new Event('input', { bubbles: true }));
+        c.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+
+      await frame.waitForFunction(() => {
+        const formula = document.getElementById('equation-formula')?.textContent || '';
+        const solution = document.getElementById('solution-value')?.textContent || '';
+        const left = document.getElementById('left-value')?.textContent || '';
+        const right = document.getElementById('right-value')?.textContent || '';
+        return formula.trim() === '2x + 4 = 10'
+          && solution.trim() === '3'
+          && left.trim() === '10'
+          && right.trim() === '10';
+      });
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('egyenletek temazaro module runs a test flow', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, subtopics: { egyenletek_temazaro: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="egyenletek_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+
+      await page.click('[data-topic-id="egyenletek_temazaro"]');
+      await waitForIframeSrc(page, 'modules/egyenletek_temazaro.html');
+
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Teszt' }).click();
+      await frameLocator.locator('[data-role="test-help"]').waitFor();
+      const difficultyButtons = frameLocator.locator('.difficulty-btn');
+      assert.equal(await difficultyButtons.count(), 3);
+      await frameLocator.locator('.difficulty-btn[data-difficulty="norm\u00e1l"]').click();
+      await frameLocator.locator('#start-test-btn').click();
+      await frameLocator.locator('#test-area').waitFor({ state: 'visible' });
+
+      const frame = page.frame({ url: /modules\/egyenletek_temazaro\.html/ });
+      if (!frame) {
+        throw new Error('Egyenletek temazaro module frame not found');
+      }
+
+      const totalQuestions = await frame.evaluate(() => window.currentTestQuestionCount || 0);
+      assert.equal(totalQuestions, 10);
+      const dots = frameLocator.locator('#pagination-dots .dot');
+      await frameLocator.locator('#pagination-dots').waitFor();
+      assert.equal(await dots.count(), totalQuestions);
+      const navLayout = await frame.evaluate(() => {
+        const nav = document.querySelector('.test-navigation');
+        if (!nav) return null;
+        return {
+          display: getComputedStyle(nav).display,
+          ids: Array.from(nav.children).map(child => child.id || ''),
+          prevDisabled: document.getElementById('prev-q')?.disabled ?? null,
+          nextDisabled: document.getElementById('next-q')?.disabled ?? null,
+        };
+      });
+      assert.ok(navLayout);
+      assert.equal(navLayout.display, 'flex');
+      assert.deepEqual(navLayout.ids, ['prev-q', 'pagination-dots', 'next-q']);
+      assert.equal(navLayout.prevDisabled, true);
+
+      const seenKinds = new Set();
+      for (let i = 0; i < totalQuestions; i += 1) {
+        await frame.waitForFunction(() => typeof window.currentTestAnswer === 'string' && window.currentTestAnswer.length > 0);
+        const payload = await frame.evaluate(() => ({
+          answerText: window.currentTestAnswer,
+          kind: window.currentTestKind,
+        }));
+        if (payload.kind) {
+          seenKinds.add(payload.kind);
+        }
+        await frameLocator.locator('#test-answer').fill(String(payload.answerText));
+        if (i < totalQuestions - 1) {
+          await frameLocator.locator('#next-q').click();
+          if (i === 0) {
+            await frame.waitForFunction(() => {
+              const prev = document.getElementById('prev-q');
+              return prev && !prev.disabled;
+            });
+          }
+        }
+      }
+      assert.ok(seenKinds.size >= 1);
+
+      await frameLocator.locator('#finish-test-btn').click();
+
+      await frame.waitForFunction(() => {
+        const popup = document.getElementById('resultPopup');
+        return popup && popup.classList.contains('show');
+      });
+
+      await page.waitForFunction(() => {
+        const circle = document.querySelector('.status[data-grade-for="egyenletek_temazaro"]');
+        return circle && circle.classList.contains('grade-5');
+      });
+
+      const generatorCheck = await frame.evaluate(() => {
+        const difficulties = Object.keys(QUESTION_TYPES_BY_DIFFICULTY || {});
+        return difficulties.map((difficulty) => {
+          const questions = buildTestQuestions(difficulty);
+          return {
+            difficulty,
+            total: questions.length,
+            hasText: questions.every(q => typeof q.question === 'string' && q.question.length > 0),
+            answersOk: questions.every(q => typeof q.answerString === 'string' && q.answerString.length > 0),
+            checkOk: questions.every(q => checkAnswer(q.answerString, q))
+          };
+        });
+      });
+      generatorCheck.forEach((entry) => {
+        assert.equal(entry.total, 10);
+        assert.ok(entry.hasText);
+        assert.ok(entry.answersOk);
+        assert.ok(entry.checkOk);
+      });
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('egyenletek temazaro module practice grants xp', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, subtopics: { egyenletek_temazaro: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="egyenletek_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+
+      await page.click('[data-topic-id="egyenletek_temazaro"]');
+      await waitForIframeSrc(page, 'modules/egyenletek_temazaro.html');
+
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Gyakorl\u00e1s' }).click();
+      await frameLocator.locator('[data-role="practice-help"]').waitFor();
+      const practiceDifficulties = frameLocator.locator('.practice-difficulty');
+      assert.equal(await practiceDifficulties.count(), 3);
+      await frameLocator.locator('input.practice-difficulty[value="k\u00f6nny\u0171"]').setChecked(false);
+      await frameLocator.locator('input.practice-difficulty[value="norm\u00e1l"]').setChecked(false);
+      await frameLocator.locator('input.practice-difficulty[value="neh\u00e9z"]').setChecked(true);
+      await frameLocator.locator('#start-practice-btn').click();
+
+      const frame = page.frame({ url: /modules\/egyenletek_temazaro\.html/ });
+      if (!frame) {
+        throw new Error('Egyenletek temazaro module frame not found');
+      }
+
+      await frame.waitForFunction(() => typeof window.currentPracticeAnswer === 'string' && window.currentPracticeAnswer.length > 0);
+      const practicePayload = await frame.evaluate(() => ({
+        answerText: window.currentPracticeAnswer,
+        kind: window.currentPracticeKind,
+      }));
+      assert.ok(practicePayload.kind);
+      await frameLocator.locator('#practice-input').fill(String(practicePayload.answerText));
+      await frameLocator.locator('#practice-input').press('Enter');
+
+      await frame.waitForFunction(() => {
+        const feedback = document.getElementById('practice-feedback');
+        return feedback && feedback.textContent.includes('Helyes') && feedback.textContent.includes('+3 XP');
+      });
+
+      await page.waitForFunction(() => {
+        const label = document.getElementById('xp-total-label');
+        if (!label) return false;
+        const match = label.textContent.match(/(\d+)/);
+        return match && Number(match[1]) > 0;
+      });
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('egyenletek temazaro visual model updates outputs', async () => {
+    const { app, page } = await launchApp();
+    try {
+      await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+      await page.evaluate(() => {
+        try {
+          questState = { version: 1, subtopics: { egyenletek_temazaro: 'ACTIVE' } };
+          localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+          if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+            window.electronAPI.saveQuestState(questState);
+          }
+          if (typeof saveQuestState === 'function') {
+            saveQuestState();
+          }
+          if (typeof ensureQuestDefaults === 'function') {
+            ensureQuestDefaults();
+          }
+        } catch (error) {
+          // Ignore localStorage failures in test setup.
+        }
+      });
+
+      await page.evaluate(() => {
+        const outer = document.querySelector('[data-topic-id="algebra_modulzaro"]')?.closest('details');
+        if (outer) outer.open = true;
+        const inner = document.querySelector('[data-topic-id="egyenletek_temazaro"]')?.closest('details');
+        if (inner) inner.open = true;
+      });
+
+      await page.click('[data-topic-id="egyenletek_temazaro"]');
+      await waitForIframeSrc(page, 'modules/egyenletek_temazaro.html');
+
+      const frameLocator = page.frameLocator('#content-frame');
+      await frameLocator.locator('.tab-button', { hasText: 'Vizu\u00e1lis modell' }).click();
+
+      const frame = page.frame({ url: /modules\/egyenletek_temazaro\.html/ });
+      if (!frame) {
+        throw new Error('Egyenletek temazaro module frame not found');
+      }
+
+      await frame.waitForFunction(() => document.getElementById('eq-a'));
+      await frame.evaluate(() => {
+        const a = document.getElementById('eq-a');
+        const b = document.getElementById('eq-b');
+        const c = document.getElementById('eq-c');
+        if (!a || !b || !c) return;
+        a.value = '2';
+        b.value = '4';
+        c.value = '10';
+        a.dispatchEvent(new Event('input', { bubbles: true }));
+        b.dispatchEvent(new Event('input', { bubbles: true }));
+        c.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+
+      await frame.waitForFunction(() => {
+        const formula = document.getElementById('equation-formula')?.textContent || '';
+        const solution = document.getElementById('solution-value')?.textContent || '';
+        const left = document.getElementById('left-value')?.textContent || '';
+        const right = document.getElementById('right-value')?.textContent || '';
+        return formula.trim() === '2x + 4 = 10'
+          && solution.trim() === '3'
+          && left.trim() === '10'
+          && right.trim() === '10';
+      });
+
+      await frame.evaluate(() => {
+        const a = document.getElementById('quad-a');
+        const b = document.getElementById('quad-b');
+        const c = document.getElementById('quad-c');
+        if (!a || !b || !c) return;
+        a.value = '1';
+        b.value = '-5';
+        c.value = '6';
+        a.dispatchEvent(new Event('input', { bubbles: true }));
+        b.dispatchEvent(new Event('input', { bubbles: true }));
+        c.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+
+      await frame.waitForFunction(() => {
+        const disc = document.getElementById('discriminant-value')?.textContent || '';
+        const root1 = document.getElementById('root-1')?.textContent || '';
+        const root2 = document.getElementById('root-2')?.textContent || '';
+        const roots = [root1.trim(), root2.trim()].sort().join(',');
+        return disc.trim() === '1' && roots === '2,3';
+      });
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('hatvanyozas module runs a test flow', async () => {
+    const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
 
@@ -4882,6 +6562,297 @@ test('gyokvonas visual model updates outputs', async () => {
     assert.equal(snapshot.root.trim(), '3');
     assert.equal(snapshot.radicand.trim(), '729');
     assert.equal(snapshot.result.trim(), '27');
+  } finally {
+    await app.close();
+  }
+});
+
+test('logaritmus module runs a test flow', async () => {
+  const { app, page } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+    await page.evaluate(() => {
+      try {
+        questState = { version: 1, topics: { logaritmus: 'ACTIVE' } };
+        localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+        if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+          window.electronAPI.saveQuestState(questState);
+        }
+        if (typeof saveQuestState === 'function') {
+          saveQuestState();
+        }
+        if (typeof ensureQuestDefaults === 'function') {
+          ensureQuestDefaults();
+        }
+      } catch (error) {
+        // Ignore localStorage failures in test setup.
+      }
+    });
+
+    await page.evaluate(() => {
+      const outer = document.querySelector('[data-topic-id="alapozo_modulzaro"]')?.closest('details');
+      if (outer) outer.open = true;
+      const inner = document.querySelector('[data-topic-id="hatvany_temazaro"]')?.closest('details');
+      if (inner) inner.open = true;
+    });
+
+    await page.click('[data-topic-id="logaritmus"]');
+    await waitForIframeSrc(page, 'modules/logaritmus.html');
+
+    const frameLocator = page.frameLocator('#content-frame');
+    await frameLocator.locator('.tab-button', { hasText: 'Teszt' }).click();
+    await frameLocator.locator('[data-role="test-help"]').waitFor();
+    const difficultyButtons = frameLocator.locator('.difficulty-btn');
+    assert.equal(await difficultyButtons.count(), 3);
+    await frameLocator.locator('.difficulty-btn[data-difficulty="norm\u00e1l"]').click();
+    await frameLocator.locator('#test-area').waitFor({ state: 'visible' });
+
+    const frame = page.frame({ url: /modules\/logaritmus\.html/ });
+    if (!frame) {
+      throw new Error('Logaritmus module frame not found');
+    }
+
+    const totalQuestions = await frame.evaluate(() => window.currentTestQuestionCount || 0);
+    assert.equal(totalQuestions, 10);
+    const dots = frameLocator.locator('#pagination-dots .dot');
+    await frameLocator.locator('#pagination-dots').waitFor();
+    assert.equal(await dots.count(), totalQuestions);
+    const navLayout = await frame.evaluate(() => {
+      const nav = document.querySelector('.test-navigation');
+      if (!nav) return null;
+      return {
+        display: getComputedStyle(nav).display,
+        ids: Array.from(nav.children).map(child => child.id || ''),
+        prevDisabled: document.getElementById('prev-q')?.disabled ?? null,
+        nextDisabled: document.getElementById('next-q')?.disabled ?? null,
+      };
+    });
+    assert.ok(navLayout);
+    assert.equal(navLayout.display, 'flex');
+    assert.deepEqual(navLayout.ids, ['prev-q', 'pagination-dots', 'next-q']);
+    assert.equal(navLayout.prevDisabled, true);
+
+    const seenKinds = new Set();
+    for (let i = 0; i < totalQuestions; i += 1) {
+      await frame.waitForFunction(() => typeof window.currentTestAnswer === 'string' && window.currentTestAnswer.length > 0);
+      const payload = await frame.evaluate(() => ({
+        answerText: window.currentTestAnswer,
+        kind: window.currentTestKind,
+      }));
+      if (payload.kind) {
+        seenKinds.add(payload.kind);
+      }
+      await frameLocator.locator('#test-answer').fill(String(payload.answerText));
+      if (i < totalQuestions - 1) {
+        await frameLocator.locator('#next-q').click();
+        if (i === 0) {
+          await frame.waitForFunction(() => {
+            const prev = document.getElementById('prev-q');
+            return prev && !prev.disabled;
+          });
+        }
+      }
+    }
+    assert.ok(seenKinds.size >= 1);
+
+    await frameLocator.locator('#finish-test-btn').click();
+
+    await frame.waitForFunction(() => {
+      const popup = document.getElementById('resultPopup');
+      return popup && popup.classList.contains('show');
+    });
+
+    await page.waitForFunction(() => {
+      const circle = document.querySelector('.status[data-grade-for="logaritmus"]');
+      return circle && circle.classList.contains('grade-5');
+    });
+
+    const generatorCheck = await frame.evaluate(() => {
+      const difficulties = Object.keys(QUESTION_TYPES_BY_DIFFICULTY || {});
+      return difficulties.map((difficulty) => {
+        const questions = buildTestQuestions(difficulty);
+        return {
+          difficulty,
+          total: questions.length,
+          hasText: questions.every(q => typeof q.question === 'string' && q.question.length > 0),
+          answersOk: questions.every(q => typeof q.answerString === 'string' && q.answerString.length > 0),
+          checkOk: questions.every(q => checkAnswer(q.answerType, q.answerString, q))
+        };
+      });
+    });
+    generatorCheck.forEach((entry) => {
+      assert.equal(entry.total, 10);
+      assert.ok(entry.hasText);
+      assert.ok(entry.answersOk);
+      assert.ok(entry.checkOk);
+    });
+  } finally {
+    await app.close();
+  }
+});
+
+test('logaritmus module practice grants xp', async () => {
+  const { app, page } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+    await page.evaluate(() => {
+      try {
+        questState = { version: 1, topics: { logaritmus: 'ACTIVE' } };
+        localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+        if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+          window.electronAPI.saveQuestState(questState);
+        }
+        if (typeof saveQuestState === 'function') {
+          saveQuestState();
+        }
+        if (typeof ensureQuestDefaults === 'function') {
+          ensureQuestDefaults();
+        }
+      } catch (error) {
+        // Ignore localStorage failures in test setup.
+      }
+    });
+
+    await page.evaluate(() => {
+      const outer = document.querySelector('[data-topic-id="alapozo_modulzaro"]')?.closest('details');
+      if (outer) outer.open = true;
+      const inner = document.querySelector('[data-topic-id="hatvany_temazaro"]')?.closest('details');
+      if (inner) inner.open = true;
+    });
+
+    await page.click('[data-topic-id="logaritmus"]');
+    await waitForIframeSrc(page, 'modules/logaritmus.html');
+
+    const frameLocator = page.frameLocator('#content-frame');
+    await frameLocator.locator('.tab-button', { hasText: 'Gyakorl\u00e1s' }).click();
+    await frameLocator.locator('[data-role="practice-help"]').waitFor();
+    const practiceDifficulties = frameLocator.locator('.practice-difficulty');
+    assert.equal(await practiceDifficulties.count(), 3);
+    await frameLocator.locator('input.practice-difficulty[value="k\u00f6nny\u0171"]').setChecked(false);
+    await frameLocator.locator('input.practice-difficulty[value="norm\u00e1l"]').setChecked(false);
+    await frameLocator.locator('input.practice-difficulty[value="neh\u00e9z"]').setChecked(true);
+    await frameLocator.locator('#start-practice-btn').click();
+
+    const frame = page.frame({ url: /modules\/logaritmus\.html/ });
+    if (!frame) {
+      throw new Error('Logaritmus module frame not found');
+    }
+
+    await frame.waitForFunction(() => typeof window.currentPracticeAnswer === 'string' && window.currentPracticeAnswer.length > 0);
+    const practicePayload = await frame.evaluate(() => ({
+      answerText: window.currentPracticeExpected?.answerString || window.currentPracticeAnswer,
+      kind: window.currentPracticeKind,
+      difficulty: window.currentPracticeDifficulty,
+    }));
+    assert.ok(practicePayload.kind);
+    assert.equal(practicePayload.difficulty, 'neh\u00e9z');
+    await frameLocator.locator('#practice-input').fill(String(practicePayload.answerText));
+    await frameLocator.locator('#check-practice-btn').click();
+    await frame.evaluate(() => {
+      if (typeof checkPracticeAnswer === 'function') {
+        checkPracticeAnswer();
+      }
+    });
+
+    await frame.waitForTimeout(200);
+    const debugState = await frame.evaluate(() => ({
+      feedbackExists: Boolean(document.getElementById('practice-feedback')),
+      feedbackText: document.getElementById('practice-feedback')?.textContent || '',
+      checkPracticeType: typeof checkPracticeAnswer,
+      practiceActiveType: typeof practiceActive,
+      practiceActiveValue: typeof practiceActive !== 'undefined' ? practiceActive : null
+    }));
+    assert.ok(debugState.feedbackExists, `Feedback element missing: ${JSON.stringify(debugState)}`);
+    assert.ok(debugState.feedbackText.trim().length > 0, `No feedback: ${JSON.stringify(debugState)}`);
+    const feedbackText = debugState.feedbackText;
+    assert.ok(feedbackText.includes('Helyes'), `Unexpected feedback: ${feedbackText}`);
+    assert.ok(feedbackText.includes('+3 XP'), `Unexpected feedback: ${feedbackText}`);
+
+    await page.waitForFunction(async () => {
+      const summary = await window.electronAPI.getProgressSummary();
+      return summary && summary.xp > 0;
+    });
+  } finally {
+    await app.close();
+  }
+});
+
+test('logaritmus visual model updates outputs', async () => {
+  const { app, page } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+    await page.evaluate(() => {
+      try {
+        questState = { version: 1, topics: { logaritmus: 'ACTIVE' } };
+        localStorage.setItem('matek-mester-quests-v1', JSON.stringify(questState));
+        if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
+          window.electronAPI.saveQuestState(questState);
+        }
+        if (typeof saveQuestState === 'function') {
+          saveQuestState();
+        }
+        if (typeof ensureQuestDefaults === 'function') {
+          ensureQuestDefaults();
+        }
+      } catch (error) {
+        // Ignore localStorage failures in test setup.
+      }
+    });
+
+    await page.evaluate(() => {
+      const outer = document.querySelector('[data-topic-id="alapozo_modulzaro"]')?.closest('details');
+      if (outer) outer.open = true;
+      const inner = document.querySelector('[data-topic-id="hatvany_temazaro"]')?.closest('details');
+      if (inner) inner.open = true;
+    });
+
+    await page.click('[data-topic-id="logaritmus"]');
+    await waitForIframeSrc(page, 'modules/logaritmus.html');
+
+    const frameLocator = page.frameLocator('#content-frame');
+    await frameLocator.locator('.tab-button', { hasText: 'Vizu\u00e1lis modell' }).click();
+
+    const frame = page.frame({ url: /modules\/logaritmus\.html/ });
+    if (!frame) {
+      throw new Error('Logaritmus module frame not found');
+    }
+
+    await frame.waitForFunction(() => document.getElementById('log-base'));
+    await frame.evaluate(() => {
+      const logBase = document.getElementById('log-base');
+      const logValue = document.getElementById('log-value');
+      const linkBase = document.getElementById('link-base');
+      const linkExp = document.getElementById('link-exp');
+      if (!logBase || !logValue || !linkBase || !linkExp) return;
+      logBase.value = '2';
+      logValue.value = '32';
+      linkBase.value = '3';
+      linkExp.value = '4';
+      logBase.dispatchEvent(new Event('input', { bubbles: true }));
+      logValue.dispatchEvent(new Event('input', { bubbles: true }));
+      linkBase.dispatchEvent(new Event('input', { bubbles: true }));
+      linkExp.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    await frame.waitForFunction(() => {
+      const value = document.getElementById('log-output')?.textContent || '';
+      return value.trim() === '5';
+    });
+
+    await frame.waitForFunction(() => {
+      const value = document.getElementById('link-value')?.textContent || '';
+      return value.trim() === '81';
+    });
+
+    const snapshot = await frame.evaluate(() => ({
+      logValue: document.getElementById('log-output')?.textContent || '',
+      linkValue: document.getElementById('link-value')?.textContent || ''
+    }));
+    assert.equal(snapshot.logValue.trim(), '5');
+    assert.equal(snapshot.linkValue.trim(), '81');
   } finally {
     await app.close();
   }

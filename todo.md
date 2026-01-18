@@ -86,6 +86,20 @@
    - DONE: Add automated tests for Hatvanyozas test, practice, and visual model.
    - DONE: Implement `modules/gyokvonas.html` (Alapozo -> Hatvany, Gyok, Logaritmus).
    - DONE: Add automated tests for Gyokvonas test, practice, and visual model.
+   - DONE: Implement `modules/logaritmus.html` (Alapozo -> Hatvany, Gyok, Logaritmus).
+   - DONE: Add automated tests for Logaritmus test, practice, and visual model.
+   - DONE: Implement `modules/algebrai_kif_temazaro.html` (Algebra -> Algebrai kifejezesek).
+   - DONE: Add automated tests for Algebrai kifejezesek temazaro test, practice, and visual model.
+   - DONE: Implement `modules/polinomok.html` (Algebra -> Algebrai kifejezesek).
+   - DONE: Add automated tests for Polinomok test, practice, and visual model.
+   - DONE: Implement `modules/nevezetes_azonossagok.html` (Algebra -> Algebrai kifejezesek).
+   - DONE: Add automated tests for Nevezetes azonossagok test, practice, and visual model.
+   - DONE: Implement `modules/algebrai_tortek.html` (Algebra -> Algebrai kifejezesek).
+   - DONE: Add automated tests for Algebrai tortek test, practice, and visual model.
+   - DONE: Implement `modules/linearis_egyenletek.html` (Algebra -> Egyenletek, egyenlotlensegek).
+   - DONE: Add automated tests for Linearis egyenletek test, practice, and visual model.
+   - DONE: Implement `modules/egyenletek_temazaro.html` + `modules/egyenletek_temazaro.js` (Algebra -> Egyenletek, egyenlotlensegek).
+   - DONE: Add automated tests for Egyenletek temazaro test, practice, and visual model.
    - Keep module structure consistent with spec and existing templates.
 
 10. Cleanup and deprecation

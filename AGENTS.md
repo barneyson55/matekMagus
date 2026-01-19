@@ -28,3 +28,32 @@ Required pre-checks by change type:
 - Character sheet/results: structure/character-sheet.md.
 
 Rule of precedence: if code conflicts with constitution, update code to match the constitution.
+
+---
+
+# Autopilot Workflow
+
+## Project Goal
+Matek Mester is an Electron-based, modular math learning app for Hungarian students.
+It delivers theory, visual models, tests, and practice in topic modules.
+
+## Non-negotiables
+- Keep changes small and incremental.
+- Prefer minimal dependencies; ask before adding new ones.
+- Always update `docs/status.md` and `docs/ai_todo.md` at end of each task.
+- Never commit secrets; only `.env.example` if needed.
+
+## Quality Gates
+- Tests: `npm run test` (or `npm run test:e2e`)
+- Lint: TBD (no lint script found)
+- Format: TBD (no format script found)
+- Build: TBD (no build script found)
+- Minimum verify when needed: `npm install` then `npm run test`
+
+## Task Protocol
+1) Read `docs/SPEC.md` + `docs/ACCEPTANCE.md` + `docs/critical_todo.md`
+2) Pick top unchecked item from `docs/ai_todo.md`
+3) Implement
+4) Run quality gates
+5) Update `docs/status.md` + `docs/ai_todo.md` + `docs/critical_todo.md`
+6) If user decision needed: write into `docs/user_todo.md` and STOP

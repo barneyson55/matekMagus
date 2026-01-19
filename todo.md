@@ -98,8 +98,24 @@
    - DONE: Add automated tests for Algebrai tortek test, practice, and visual model.
    - DONE: Implement `modules/linearis_egyenletek.html` (Algebra -> Egyenletek, egyenlotlensegek).
    - DONE: Add automated tests for Linearis egyenletek test, practice, and visual model.
+   - DONE: Implement `modules/masodfoku_egyenlet.html` (Algebra -> Egyenletek, egyenlotlensegek).
+   - DONE: Add automated tests for Masodfoku egyenlet test, practice, and visual model.
+   - DONE: Implement `modules/viete_formulak.html` (Algebra -> Egyenletek, egyenlotlensegek).
+   - DONE: Add automated tests for Viete formulak test, practice, and visual model.
+   - DONE: Implement `modules/parameteres_masodfoku.html` (Algebra -> Egyenletek, egyenlotlensegek).
+   - DONE: Add automated tests for Parameteres masodfoku test, practice, and visual model.
+   - DONE: Implement `modules/specialis_egyenletek.html` + `modules/specialis_egyenletek.js` (Algebra -> Egyenletek, egyenlotlensegek).
+   - DONE: Add automated tests for Specialis egyenletek test, practice, and visual model.
    - DONE: Implement `modules/egyenletek_temazaro.html` + `modules/egyenletek_temazaro.js` (Algebra -> Egyenletek, egyenlotlensegek).
    - DONE: Add automated tests for Egyenletek temazaro test, practice, and visual model.
+   - DONE: Implement `modules/fuggvenyek_alt_temazaro.html` + `modules/fuggvenyek_alt_temazaro.js` (Algebra -> Fuggvenyek altalanos tulajdonsagai).
+   - DONE: Add automated tests for Fuggvenyek alt temazaro test, practice, and visual model.
+   - DONE: Implement `modules/fuggveny_alapok.html` + `modules/fuggveny_alapok.js` (Algebra -> Fuggvenyek altalanos tulajdonsagai).
+   - DONE: Add automated tests for Fuggveny alapok test, practice, and visual model.
+   - DONE: Implement `modules/fuggveny_jellemzes.html` + `modules/fuggveny_jellemzes.js` (Algebra -> Fuggvenyek altalanos tulajdonsagai).
+   - DONE: Add automated tests for Fuggveny jellemzes test, practice, and visual model.
+   - DONE: Implement `modules/paritas.html` + `modules/paritas.js` (Algebra -> Fuggvenyek altalanos tulajdonsagai).
+   - DONE: Add automated tests for Paritas test, practice, and visual model.
    - Keep module structure consistent with spec and existing templates.
 
 10. Cleanup and deprecation

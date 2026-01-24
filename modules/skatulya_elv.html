@@ -464,7 +464,13 @@
         }
 
         .result-popup.show { opacity: 1; }
-    </style>
+    
+        /* Touch targets */
+        button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+</style>
 </head>
 <body>
     <div class="tab-buttons" role="tablist">
@@ -600,7 +606,7 @@
                 <input id="test-answer" class="module-input" type="text" inputmode="numeric" placeholder="V&#225;lasz" autocomplete="off">
                 <div class="input-help">V&#225;laszolj eg&#233;sz sz&#225;mmal. Enterrel is tov&#225;bbl&#233;phetsz.</div>
             </div>
-            <button id="finish-test-btn" class="btn btn-primary" type="button">Teszt befejez&#233;se</button>
+                <button id="finish-test-btn" class="btn btn-primary" type="button">Teszt befejez&#233;se &#233;s &#233;rt&#233;kel&#233;s</button>
         </div>
     </div>
 

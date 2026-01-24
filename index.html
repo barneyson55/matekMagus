@@ -18,7 +18,7 @@
     <div class="app-shell">
         <header class="app-header">
             <div class="header-hamburger">
-                <button class="icon-button" id="quest-toggle" type="button" aria-label="Quest Log" aria-expanded="true">
+                <button class="icon-button" id="quest-toggle" type="button" aria-label="Küldetésnapló" aria-expanded="true">
                     <svg class="burger-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
                         <path class="burger-frame" d="M32 4 L54 16 V48 L32 60 L10 48 V16 Z"></path>
                         <path class="burger-bar" d="M20 24 H44"></path>
@@ -52,6 +52,7 @@
             </div>
         </header>
         <div class="app-container">
+        <div class="quest-drawer-backdrop" id="quest-drawer-backdrop" aria-hidden="true"></div>
         <nav class="sidebar">
             <div>
                 <a href="#" class="module-link results-btn" id="results-btn">Eredm&#233;nyeim</a>
@@ -507,7 +508,11 @@
             </div>
             <div class="module-stage">
                 <div class="module-lock is-hidden" id="module-lock">
-                    <button class="quest-accept-btn" id="quest-accept-btn" type="button">Küldetés elfogadása</button>
+                    <div class="module-lock-content">
+                        <p class="module-lock-title">Még nem elfogadott küldetés.</p>
+                        <p class="module-lock-text">A folytatáshoz fogadd el a küldetést.</p>
+                        <button class="quest-accept-btn" id="quest-accept-btn" type="button">Küldetés elfogadása</button>
+                    </div>
                 </div>
                 <iframe id="content-frame" src="modules/placeholder.html" frameborder="0"></iframe>
             </div>
@@ -552,7 +557,7 @@
                                 <p>Letisztult, neon jelleg.</p>
                             </button>
                             <button class="theme-card" type="button" data-theme="dark" role="listitem">
-                                <h4>Dark / Night</h4>
+                                <h4>Sötét / Éjszakai</h4>
                                 <p>Alacsony fény, fókuszált tanulás.</p>
                             </button>
                             <button class="theme-card" type="button" data-theme="custom" role="listitem">
@@ -572,23 +577,23 @@
                                 <input type="color" id="setting-content-bg" value="#f6f7fb">
                             </div>
                             <div class="settings-field">
-                                <label for="setting-button-bg">Primary gomb</label>
+                                <label for="setting-button-bg">Elsődleges gomb</label>
                                 <input type="color" id="setting-button-bg" value="#5865f2">
                             </div>
                             <div class="settings-field">
-                                <label for="setting-button-text">Primary szöveg</label>
+                                <label for="setting-button-text">Elsődleges szöveg</label>
                                 <input type="color" id="setting-button-text" value="#ffffff">
                             </div>
                             <div class="settings-field">
-                                <label for="setting-link-color">Link szín</label>
+                                <label for="setting-link-color">Hivatkozás színe</label>
                                 <input type="color" id="setting-link-color" value="#b9bbbe">
                             </div>
                             <div class="settings-field">
-                                <label for="setting-content-overlay">Tartalom overlay</label>
+                                <label for="setting-content-overlay">Tartalom fedőréteg</label>
                                 <input type="text" id="setting-content-overlay" value="rgba(255, 255, 255, 0.8)" placeholder="rgba(255, 255, 255, 0.8)">
                             </div>
                             <div class="settings-field">
-                                <label for="setting-content-overlay-alpha">H&aacute;tt&eacute;r overlay er&#337;ss&eacute;g</label>
+                                <label for="setting-content-overlay-alpha">Háttér fedőréteg erőssége</label>
                                 <div class="settings-range">
                                     <input type="range" id="setting-content-overlay-alpha" min="0.35" max="0.9" step="0.05" value="0.8">
                                     <span class="range-value" id="setting-content-overlay-alpha-value">0.80</span>
@@ -609,7 +614,7 @@
                                 <label for="setting-avatar-file">Avatar feltöltése</label>
                                 <input type="file" id="setting-avatar-file" accept="image/*">
                             </div>
-                            <div class="avatar-preview" id="setting-avatar-preview">Nincs avatar</div>
+                            <div class="avatar-preview" id="setting-avatar-preview">Nincs avatar kiválasztva.</div>
                         </div>
 
                         <div class="settings-group">
@@ -618,8 +623,8 @@
                                 <label for="setting-bg-file">Saját háttérkép feltöltése</label>
                                 <input type="file" id="setting-bg-file" accept="image/*">
                             </div>
-                            <div class="bg-preview" id="setting-bg-preview">Nincs kép kiválasztva</div>
-                            <p class="settings-hint">A háttér mindig kap egy minimális overlayt az olvashatóságért.</p>
+                            <div class="bg-preview" id="setting-bg-preview">Nincs háttérkép kiválasztva.</div>
+                            <p class="settings-hint">A háttér mindig kap egy minimális fedőréteget az olvashatóságért.</p>
                         </div>
                     </section>
 
@@ -672,8 +677,10 @@
         const xpBar = document.getElementById('xp-bar');
         const xpBarFill = document.getElementById('xp-bar-fill');
         const xpProgressText = document.getElementById('xp-progress-text');
+        const NUMBER_FORMATTER = new Intl.NumberFormat('hu-HU', { maximumFractionDigits: 2 });
         const playerAvatar = document.getElementById('player-avatar');
         const questToggle = document.getElementById('quest-toggle');
+        const questBackdrop = document.getElementById('quest-drawer-backdrop');
         const moduleBanner = document.getElementById('module-banner');
         const moduleTitleText = document.getElementById('module-title-text');
         const moduleSubtitle = document.getElementById('module-subtitle');
@@ -712,6 +719,11 @@
             ACTIVE: 'ACTIVE',
             COMPLETED: 'COMPLETED'
         };
+        const QUEST_STATUS_LABELS = {
+            NOT_ACCEPTED: 'Még nem elfogadott küldetés',
+            ACTIVE: 'Aktív küldetés',
+            COMPLETED: 'Kimaxolt küldetés'
+        };
         const QUEST_STATUS_ORDER = {
             NOT_ACCEPTED: 0,
             ACTIVE: 1,
@@ -733,6 +745,72 @@
         const moduleSheetSubtitles = {};
         const SETTINGS_MIN_OVERLAY_ALPHA = 0.35;
         const SETTINGS_MAX_OVERLAY_ALPHA = 0.9;
+        const RNG_SEED_STORAGE_KEY = 'matek-mester-rng-seed';
+        let seededRandomSeed = null;
+
+        function createSeededRandom(seed) {
+            let t = seed >>> 0;
+            return () => {
+                t += 0x6D2B79F5;
+                let r = Math.imul(t ^ (t >>> 15), 1 | t);
+                r ^= r + Math.imul(r ^ (r >>> 7), 61 | r);
+                return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+            };
+        }
+
+        function readSeedFromStorage() {
+            try {
+                const stored = localStorage.getItem(RNG_SEED_STORAGE_KEY);
+                if (!stored) return null;
+                const value = Number(stored);
+                return Number.isFinite(value) ? value : null;
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function getSeedValue() {
+            if (Number.isFinite(seededRandomSeed)) return seededRandomSeed;
+            return readSeedFromStorage();
+        }
+
+        function applySeededRandom(targetWindow) {
+            const seed = getSeedValue();
+            if (!targetWindow || seed === null) return;
+            if (targetWindow.__matekSeededRandomSeed !== seed) {
+                targetWindow.__matekSeededRandomSeed = seed;
+                targetWindow.__matekSeededRandom = createSeededRandom(seed);
+            }
+            targetWindow.Math.random = targetWindow.__matekSeededRandom;
+        }
+
+        function setSeededRandom(seed) {
+            const value = Number(seed);
+            if (!Number.isFinite(value)) return;
+            seededRandomSeed = value;
+            try {
+                localStorage.setItem(RNG_SEED_STORAGE_KEY, String(value));
+            } catch (error) {
+                // Ignore storage failures (e.g. blocked localStorage).
+            }
+            applySeededRandom(window);
+            if (iframe && iframe.contentWindow) {
+                applySeededRandom(iframe.contentWindow);
+            }
+        }
+
+        const storedSeed = readSeedFromStorage();
+        if (storedSeed !== null) {
+            seededRandomSeed = storedSeed;
+            applySeededRandom(window);
+        }
+        window.__setMatekSeed = setSeededRandom;
+
+        function formatNumber(value, fallback = '0') {
+            if (value === null || value === undefined || value === '') return fallback;
+            const num = Number(value);
+            return Number.isFinite(num) ? NUMBER_FORMATTER.format(num) : fallback;
+        }
         const THEME_TOKENS = {
             pergamen: {
                 themeId: 'pergamen',
@@ -1023,6 +1101,133 @@
                 doc.body.style.backgroundImage = 'none';
                 doc.body.classList.toggle('reduce-motion', Boolean(normalized.reduceMotion));
             }
+            ensureModuleResponsiveStyles(doc);
+        }
+
+        const MODULE_RESPONSIVE_STYLE_ID = 'module-responsive-overrides';
+
+        function ensureModuleResponsiveStyles(doc) {
+            if (!doc) return;
+            const existing = doc.getElementById(MODULE_RESPONSIVE_STYLE_ID);
+            if (existing) return;
+            const style = doc.createElement('style');
+            style.id = MODULE_RESPONSIVE_STYLE_ID;
+            style.textContent = `
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+img,
+svg,
+canvas,
+video {
+    max-width: 100%;
+    height: auto;
+}
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+}
+pre,
+code,
+.katex-display {
+    max-width: 100%;
+    overflow-x: auto;
+}
+input,
+textarea,
+select,
+button {
+    max-width: 100%;
+}
+@media (max-width: 767px) {
+    body {
+        padding: 28px 20px;
+        overflow-x: hidden;
+    }
+    .card,
+    .module-card,
+    .model-card,
+    .result-item,
+    .xp-summary,
+    .modal-content {
+        padding: 20px;
+    }
+    .tab-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 6px;
+    }
+    .tab-button {
+        flex: 1 1 auto;
+        min-width: 0;
+        padding: 10px 14px;
+        font-size: 0.95rem;
+    }
+    .model-container,
+    .theory-grid,
+    .stats-grid,
+    .sheet,
+    .tabs {
+        grid-template-columns: 1fr;
+    }
+    .result-item {
+        grid-template-columns: 1fr;
+        align-items: start;
+    }
+    .result-actions {
+        justify-self: start;
+    }
+}
+@media (max-width: 480px) {
+    body {
+        padding: 22px 16px;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    h3 {
+        font-size: 1.05em;
+    }
+    p,
+    li,
+    label {
+        font-size: 1rem;
+    }
+    .card,
+    .module-card,
+    .model-card,
+    .result-item,
+    .xp-summary,
+    .modal-content {
+        padding: 18px;
+    }
+    .tab-button {
+        min-width: 110px;
+        padding: 9px 12px;
+        font-size: 0.9rem;
+    }
+    .grade-badge {
+        width: 48px;
+        height: 48px;
+        font-size: 1.4em;
+    }
+    .result-details h3 {
+        font-size: 1.05em;
+    }
+}
+            `.trim();
+            const target = doc.head || doc.body;
+            if (target) {
+                target.appendChild(style);
+            }
         }
 
         function broadcastSettings(settings) {
@@ -1068,7 +1273,7 @@
                     settingAvatarPreview.textContent = '';
                 } else {
                     settingAvatarPreview.style.backgroundImage = 'none';
-                    settingAvatarPreview.textContent = 'Nincs avatar';
+                    settingAvatarPreview.textContent = 'Nincs avatar kiválasztva.';
                 }
             }
             if (settingBgPreview) {
@@ -1077,7 +1282,7 @@
                     settingBgPreview.textContent = '';
                 } else {
                     settingBgPreview.style.backgroundImage = 'none';
-                    settingBgPreview.textContent = 'Nincs kép kiválasztva';
+                    settingBgPreview.textContent = 'Nincs háttérkép kiválasztva.';
                 }
             }
         }
@@ -1285,6 +1490,10 @@
             return QUEST_STATUS.NOT_ACCEPTED;
         }
 
+        function getQuestStatusLabel(status) {
+            return QUEST_STATUS_LABELS[status] || '';
+        }
+
         function setQuestStatus(topicId, nextStatus, options = {}) {
             if (!isQuestableTopic(topicId)) return;
             const questType = options.type || getQuestType(topicId);
@@ -1313,13 +1522,25 @@
                 : null;
             if (!isQuestableTopic(topicId)) {
                 link.removeAttribute('data-quest-status');
+                link.removeAttribute('data-quest-status-label');
+                link.removeAttribute('title');
+                link.removeAttribute('aria-label');
                 if (statusCircle) {
                     statusCircle.removeAttribute('data-quest-status');
                 }
                 return;
             }
             const status = getQuestStatus(topicId, getQuestType(topicId));
+            const statusLabel = getQuestStatusLabel(status);
             link.setAttribute('data-quest-status', status);
+            link.setAttribute('data-quest-status-label', statusLabel);
+            if (statusLabel) {
+                link.setAttribute('title', statusLabel);
+                link.setAttribute('aria-label', `${getLinkLabel(link)} - ${statusLabel}`);
+            } else {
+                link.removeAttribute('title');
+                link.removeAttribute('aria-label');
+            }
             if (statusCircle) {
                 statusCircle.setAttribute('data-quest-status', status);
             }
@@ -1648,15 +1869,31 @@
         if (iframe) {
             iframe.classList.remove('is-hidden');
             iframe.addEventListener('load', () => {
+                applySeededRandom(iframe.contentWindow);
                 syncSheetHeaderInBanner();
                 applySettingsToIframe(activeSettings || getDefaultSettings());
             });
         }
 
+        function setQuestCollapsed(collapsed) {
+            document.body.classList.toggle('quest-collapsed', collapsed);
+            if (questToggle) {
+                questToggle.setAttribute('aria-expanded', String(!collapsed));
+            }
+        }
+
         if (questToggle) {
             questToggle.addEventListener('click', () => {
-                const isCollapsed = document.body.classList.toggle('quest-collapsed');
-                questToggle.setAttribute('aria-expanded', String(!isCollapsed));
+                const nextCollapsed = !document.body.classList.contains('quest-collapsed');
+                setQuestCollapsed(nextCollapsed);
+            });
+        }
+
+        if (questBackdrop) {
+            questBackdrop.addEventListener('click', () => {
+                if (!document.body.classList.contains('quest-collapsed')) {
+                    setQuestCollapsed(true);
+                }
             });
         }
 
@@ -1984,12 +2221,12 @@
         function updateXpWidget(summary) {
             if (!summary || !summary.level) return;
             const totalXp = summary.xp || 0;
-            xpLevelLabel.textContent = `Lv. ${summary.level.level}`;
+            xpLevelLabel.textContent = `Lv. ${formatNumber(summary.level.level, '1')}`;
             if (xpLevelName) {
                 const name = summary.level.levelName || '';
                 xpLevelName.textContent = name ? `- ${name}` : '';
             }
-            xpTotalLabel.textContent = `${totalXp} XP`;
+            xpTotalLabel.textContent = `${formatNumber(totalXp, '0')} XP`;
             const current = Number.isFinite(summary.level.xpIntoLevel) ? summary.level.xpIntoLevel : 0;
             const required = Number.isFinite(summary.level.xpForNext) ? summary.level.xpForNext : 0;
             const isMaxLevel = required <= 0;
@@ -1998,9 +2235,9 @@
             xpBarFill.style.width = `${percentage}%`;
             xpProgressText.textContent = isMaxLevel
                 ? `Max szint`
-                : `${current} / ${required} XP a kovetkezo szintig`;
+                : `${formatNumber(current, '0')} / ${formatNumber(required, '0')} XP a kovetkezo szintig`;
             if (xpBar) {
-                xpBar.setAttribute('title', isMaxLevel ? 'Max szint' : `${current} / ${required} XP`);
+                xpBar.setAttribute('title', isMaxLevel ? 'Max szint' : `${formatNumber(current, '0')} / ${formatNumber(required, '0')} XP`);
             }
         }
 
@@ -2189,14 +2426,12 @@
       }
     }
   });
+  if (contentLinks && contentLinks.length) {
+    contentLinks.forEach(link => applyQuestStatusToLink(link));
+  }
 });
     </script>
 </body>
 </html>
 
 ]
-
-
-
-
-

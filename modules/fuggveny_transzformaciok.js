@@ -362,7 +362,7 @@ function updateTransformModel() {
     transPoint2.textContent = '-';
     transPoint3.textContent = '-';
     if (transNote) {
-      transNote.textContent = 'Adj meg helyes sz\u00e1mokat, b \u2260 0.';
+      transNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat, b \u2260 0.';
       transNote.style.color = '#f04747';
     }
     return;

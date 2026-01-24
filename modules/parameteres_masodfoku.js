@@ -635,7 +635,7 @@ function updateParameterModel() {
     paramRootOne.textContent = '-';
     paramRootTwo.textContent = '-';
     paramStatus.textContent = '-';
-    paramNote.textContent = 'Adj meg helyes m \u00e9rt\u00e9ket.';
+    paramNote.textContent = 'Adj meg \u00e9rv\u00e9nyes m \u00e9rt\u00e9ket.';
     paramNote.style.color = '#f04747';
     return;
   }
@@ -681,7 +681,7 @@ function updateRootParameterModel() {
   if (root === null) {
     rootMOutput.textContent = '-';
     rootCheck.textContent = '-';
-    rootNote.textContent = 'Adj meg helyes gy\u00f6k\u00f6t.';
+    rootNote.textContent = 'Adj meg \u00e9rv\u00e9nyes gy\u00f6k\u00f6t.';
     rootNote.style.color = '#f04747';
     return;
   }

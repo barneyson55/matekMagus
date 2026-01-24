@@ -471,7 +471,7 @@ function updatePowerModel() {
   if (base === null || !Number.isFinite(exp) || base <= 0 || exp < 0) {
     powOutput.textContent = '-';
     powFormula.textContent = '-';
-    powError.textContent = 'Adj meg helyes alapot \u00e9s kitev\u0151t.';
+    powError.textContent = 'Adj meg \u00e9rv\u00e9nyes alapot \u00e9s kitev\u0151t.';
     powError.style.color = '#f04747';
     return;
   }
@@ -488,7 +488,7 @@ function updateRootModel() {
   if (value === null || value < 0 || !Number.isFinite(index) || index < 2) {
     rootOutput.textContent = '-';
     rootCheck.textContent = '-';
-    rootError.textContent = 'Adj meg helyes gy\u00f6k alatti sz\u00e1mot.';
+    rootError.textContent = 'Adj meg \u00e9rv\u00e9nyes gy\u00f6k alatti sz\u00e1mot.';
     rootError.style.color = '#f04747';
     return;
   }
@@ -505,7 +505,7 @@ function updateLogModel() {
   if (base === null || value === null || base <= 0 || base === 1 || value <= 0) {
     logOutput.textContent = '-';
     logCheck.textContent = '-';
-    logError.textContent = 'Adj meg helyes alapot \u00e9s argumentumot.';
+    logError.textContent = 'Adj meg \u00e9rv\u00e9nyes alapot \u00e9s argumentumot.';
     logError.style.color = '#f04747';
     return;
   }

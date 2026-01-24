@@ -683,7 +683,7 @@ function updateRootModel() {
     rootDomain.textContent = '-';
     rootRange.textContent = '-';
     rootBoundary.textContent = '-';
-    rootNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    rootNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     rootNote.style.color = '#f04747';
     return;
   }
@@ -705,7 +705,7 @@ function updateRationalModel() {
     ratDomain.textContent = '-';
     ratRange.textContent = '-';
     ratAsymptotes.textContent = '-';
-    ratNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    ratNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     ratNote.style.color = '#f04747';
     return;
   }

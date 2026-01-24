@@ -631,7 +631,7 @@ function updatePolynomialModel() {
   if (a === null || b === null || c === null || x === null) {
     polyFormula.textContent = '-';
     polyOutput.textContent = '-';
-    polyError.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    polyError.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     polyError.style.color = '#f04747';
     return;
   }
@@ -653,7 +653,7 @@ function updateIdentityModel() {
   if (a === null || b === null) {
     idFormula.textContent = '-';
     idOutput.textContent = '-';
-    idError.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    idError.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     idError.style.color = '#f04747';
     return;
   }

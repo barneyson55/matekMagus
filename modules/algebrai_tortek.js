@@ -616,7 +616,7 @@ function updateFractionModel() {
     numeratorValue.textContent = '-';
     denominatorValue.textContent = '-';
     excludedX.textContent = '-';
-    fractionError.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    fractionError.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     fractionError.style.color = '#f04747';
     domainNote.textContent = '';
     return;

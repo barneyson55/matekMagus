@@ -1,5 +1,5 @@
 const TOPIC_ID = 'fuggveny_jellemzes';
-const TOPIC_NAME = 'Monotonitas, szelsoertekek';
+const TOPIC_NAME = 'Monotonit\u00e1s, sz\u00e9ls\u0151\u00e9rt\u00e9kek';
 const DIFF_EASY = 'k\u00f6nny\u0171';
 const DIFF_NORMAL = 'norm\u00e1l';
 const DIFF_HARD = 'neh\u00e9z';
@@ -293,7 +293,7 @@ function buildMonotoneLinear(difficulty) {
   if (a < 0) monotone = 'csokkeno';
   if (a === 0) monotone = 'allando';
   return {
-    question: `Add meg a f(x) = ${formatLinearExpression(a, b)} fuggveny monotonitasat (novekvo/csokkeno/allando).`,
+    question: `Add meg a f(x) = ${formatLinearExpression(a, b)} f\u00fcggv\u00e9ny monotonit\u00e1s\u00e1t (n\u00f6vekv\u0151/cs\u00f6kken\u0151/\u00e1lland\u00f3).`,
     answerString: monotone,
     answerType: 'text',
     expectedText: monotone
@@ -314,7 +314,7 @@ function buildExtremumTypeParabola(difficulty) {
 function buildExtremumXParabola(difficulty) {
   const params = pickParabolaParams(difficulty);
   return {
-    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabolanak mennyi a csucsanak x koordinataja?`,
+    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabol\u00e1nak mennyi a cs\u00facs\u00e1nak x koordin\u00e1t\u00e1ja?`,
     answerString: formatNumber(params.h, 3),
     answerType: 'number',
     expectedValue: params.h
@@ -324,7 +324,7 @@ function buildExtremumXParabola(difficulty) {
 function buildExtremumValueParabola(difficulty) {
   const params = pickParabolaParams(difficulty);
   return {
-    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabolanak mi a szelsoerteke?`,
+    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabol\u00e1nak mi a sz\u00e9ls\u0151\u00e9rt\u00e9ke?`,
     answerString: formatNumber(params.k, 3),
     answerType: 'number',
     expectedValue: params.k
@@ -342,7 +342,7 @@ function buildMonoIntervalParabola(difficulty) {
     : formatIntervalRight(params.h);
   const monotone = side === 'left' ? monotoneLeft : monotoneRight;
   return {
-    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} fuggveny milyen a ${interval} intervallumon? (novekvo/csokkeno)`,
+    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} f\u00fcggv\u00e9ny milyen a ${interval} intervallumon? (n\u00f6vekv\u0151/cs\u00f6kken\u0151)`,
     answerString: monotone,
     answerType: 'text',
     expectedText: monotone
@@ -353,7 +353,7 @@ function buildExtremumTypeAbs(difficulty) {
   const params = pickAbsParams(difficulty);
   const extremum = params.a > 0 ? 'minimum' : 'maximum';
   return {
-    question: `A f(x) = ${formatAbsExpression(params.a, params.h, params.k)} fuggveny minimum vagy maximum? (minimum/maximum)`,
+    question: `A f(x) = ${formatAbsExpression(params.a, params.h, params.k)} f\u00fcggv\u00e9ny minimum vagy maximum? (minimum/maximum)`,
     answerString: extremum,
     answerType: 'text',
     expectedText: extremum
@@ -371,7 +371,7 @@ function buildMonoAbsInterval(difficulty) {
     : formatIntervalRight(params.h);
   const monotone = side === 'left' ? monotoneLeft : monotoneRight;
   return {
-    question: `A f(x) = ${formatAbsExpression(params.a, params.h, params.k)} fuggveny milyen a ${interval} intervallumon? (novekvo/csokkeno)`,
+    question: `A f(x) = ${formatAbsExpression(params.a, params.h, params.k)} f\u00fcggv\u00e9ny milyen a ${interval} intervallumon? (n\u00f6vekv\u0151/cs\u00f6kken\u0151)`,
     answerString: monotone,
     answerType: 'text',
     expectedText: monotone
@@ -689,7 +689,7 @@ function updateParabolaModel() {
     paraExtremum.textContent = '-';
     paraLeft.textContent = '-';
     paraRight.textContent = '-';
-    paraNote.textContent = 'Adj meg helyes szamokat.';
+    paraNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     paraNote.style.color = '#f04747';
     return;
   }
@@ -728,7 +728,7 @@ function updateAbsModel() {
     absExtremum.textContent = '-';
     absLeft.textContent = '-';
     absRight.textContent = '-';
-    absNote.textContent = 'Adj meg helyes szamokat.';
+    absNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     absNote.style.color = '#f04747';
     return;
   }
@@ -737,9 +737,9 @@ function updateAbsModel() {
   const intervalRight = formatIntervalRight(h);
   if (Math.abs(a) < 1e-9) {
     absEquation.textContent = `f(x) = ${formatNumber(k, 3)}`;
-    absExtremum.textContent = `Allando: ${formatNumber(k, 3)}`;
-    absLeft.textContent = `${intervalLeft}: Allando`;
-    absRight.textContent = `${intervalRight}: Allando`;
+    absExtremum.textContent = `\u00c1lland\u00f3: ${formatNumber(k, 3)}`;
+    absLeft.textContent = `${intervalLeft}: \u00c1lland\u00f3`;
+    absRight.textContent = `${intervalRight}: \u00c1lland\u00f3`;
     absNote.textContent = '';
     absNote.style.color = '';
     return;
@@ -816,7 +816,7 @@ if (practiceStartBtn) {
   practiceStartBtn.addEventListener('click', () => {
     const enabled = getEnabledPracticeDifficulties();
     if (!enabled.length) {
-      practiceFeedback.textContent = 'Valassz legalabb egy nehezseget.';
+      practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
       practiceFeedback.style.color = '#f04747';
       return;
     }

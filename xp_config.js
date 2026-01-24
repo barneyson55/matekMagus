@@ -72,7 +72,8 @@ const TOPIC_CONFIG = {
   hatvanyfuggvenyek: { levelType: LEVEL_TYPES.TEMAKOR, topicWeight: 1.2, baseXP: 60 },
   exp_log_fuggveny: { levelType: LEVEL_TYPES.TEMAKOR, topicWeight: 1.3, baseXP: 65 },
   trigonometrikus_fuggvenyek: { levelType: LEVEL_TYPES.TEMAKOR, topicWeight: 1.4, baseXP: 70 },
-  abszolut_ertek_fuggveny: { levelType: LEVEL_TYPES.TEMAKOR, topicWeight: 1.2, baseXP: 60 },
+  specialis_fuggvenyek: { levelType: LEVEL_TYPES.TEMAKOR, topicWeight: 1.2, baseXP: 60 },
+  abszolut_ertek_fuggveny: { levelType: LEVEL_TYPES.TEMAKOR, topicWeight: 1.2, baseXP: 60 }, // legacy alias
 
   // Temakorok - Geometria
   nevezetes_vonalak: { levelType: LEVEL_TYPES.TEMAKOR, topicWeight: 1.2, baseXP: 60 },

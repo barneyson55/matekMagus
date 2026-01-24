@@ -600,7 +600,7 @@ function updateRootsModel() {
     coeffBOutput.textContent = '-';
     coeffCOutput.textContent = '-';
     equationOutput.textContent = '-';
-    rootsNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    rootsNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     rootsNote.style.color = '#f04747';
     return;
   }
@@ -636,7 +636,7 @@ function updateCoefficientsModel() {
   if (a === null || b === null || c === null) {
     vietaSumOutput.textContent = '-';
     vietaProductOutput.textContent = '-';
-    coeffNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    coeffNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     coeffNote.style.color = '#f04747';
     return;
   }

@@ -20,6 +20,7 @@ const settingsFilePath = path.join(app.getPath('userData'), 'settings.json');
 
 const PROGRESS_VERSION = 2;
 const QUEST_VERSION = 2;
+const QUEST_STATUS_ORDER = { NOT_ACCEPTED: 0, ACTIVE: 1, COMPLETED: 2 };
 const DEFAULT_DIFFICULTY = 'normal';
 
 // XP rewards fallback (legacy behavior) for test completions by difficulty
@@ -31,6 +32,11 @@ const TIER_MULTIPLIERS = {
   [LEVEL_TYPES.FOTEMA]: 1.5,
   [LEVEL_TYPES.ALTEMA]: 1.2,
   [LEVEL_TYPES.TEMAKOR]: 1.0,
+};
+
+// Legacy topicId aliases used when normalizing progress.json.
+const TOPIC_ID_ALIASES = {
+  abszolut_ertek_fuggveny: 'specialis_fuggvenyek',
 };
 
 const LEVEL_BASE_XP = 50;
@@ -203,25 +209,61 @@ function saveSettings(data) {
   }
 }
 
+function normalizeTopicId(topicId) {
+  if (!topicId || typeof topicId !== 'string') return topicId;
+  return TOPIC_ID_ALIASES[topicId] || topicId;
+}
+
+function normalizeResultTopicId(result) {
+  if (!result || typeof result !== 'object') return result;
+  const normalized = normalizeTopicId(result.topicId);
+  if (!normalized || normalized === result.topicId) return result;
+  return { ...result, topicId: normalized };
+}
+
+function mergeQuestStatus(current, incoming) {
+  const currentScore = QUEST_STATUS_ORDER[current] ?? -1;
+  const incomingScore = QUEST_STATUS_ORDER[incoming] ?? -1;
+  return incomingScore > currentScore ? incoming : current;
+}
+
 function coerceQuestState(raw) {
   const normalized = { version: QUEST_VERSION, mainTopics: {}, subtopics: {}, topics: {} };
+  let changed = false;
   if (!raw || typeof raw !== 'object') {
-    return normalized;
+    return { state: normalized, changed: true };
   }
   const versionNumber = Number(raw.version);
   if (Number.isFinite(versionNumber) && versionNumber > 0) {
     normalized.version = versionNumber;
+  } else {
+    changed = true;
   }
   if (raw.mainTopics && typeof raw.mainTopics === 'object') {
-    normalized.mainTopics = { ...raw.mainTopics };
+    Object.entries(raw.mainTopics).forEach(([topicId, status]) => {
+      const normalizedId = normalizeTopicId(topicId);
+      if (normalizedId !== topicId) changed = true;
+      const current = normalized.mainTopics[normalizedId];
+      normalized.mainTopics[normalizedId] = mergeQuestStatus(current, status);
+    });
   }
   if (raw.subtopics && typeof raw.subtopics === 'object') {
-    normalized.subtopics = { ...raw.subtopics };
+    Object.entries(raw.subtopics).forEach(([topicId, status]) => {
+      const normalizedId = normalizeTopicId(topicId);
+      if (normalizedId !== topicId) changed = true;
+      const current = normalized.subtopics[normalizedId];
+      normalized.subtopics[normalizedId] = mergeQuestStatus(current, status);
+    });
   }
   if (raw.topics && typeof raw.topics === 'object') {
-    normalized.topics = { ...raw.topics };
+    Object.entries(raw.topics).forEach(([topicId, status]) => {
+      const normalizedId = normalizeTopicId(topicId);
+      if (normalizedId !== topicId) changed = true;
+      const current = normalized.topics[normalizedId];
+      normalized.topics[normalizedId] = mergeQuestStatus(current, status);
+    });
   }
-  return normalized;
+  return { state: normalized, changed };
 }
 
 function createDifficultyEntry() {
@@ -260,6 +302,90 @@ function createPracticeEntry() {
   };
 }
 
+function mergeAttemptLists(primary, secondary) {
+  const base = Array.isArray(primary) ? primary : [];
+  const incoming = Array.isArray(secondary) ? secondary : [];
+  if (!base.length) return incoming;
+  if (!incoming.length) return base;
+  return base.concat(incoming);
+}
+
+function mergeDifficultyEntry(target, incoming) {
+  const merged = createDifficultyEntry();
+  if (target && typeof target === 'object') {
+    if (typeof target.bestGrade === 'number') merged.bestGrade = target.bestGrade;
+    if (typeof target.bestXp === 'number') merged.bestXp = target.bestXp;
+    if (typeof target.bestTimestamp === 'string') merged.bestTimestamp = target.bestTimestamp;
+    merged.attempts = mergeAttemptLists(target.attempts, []);
+  }
+  if (incoming && typeof incoming === 'object') {
+    if (typeof incoming.bestGrade === 'number' && shouldUpdateBestGrade(incoming.bestGrade, merged.bestGrade)) {
+      merged.bestGrade = incoming.bestGrade;
+      if (typeof incoming.bestXp === 'number') merged.bestXp = incoming.bestXp;
+      if (typeof incoming.bestTimestamp === 'string') merged.bestTimestamp = incoming.bestTimestamp;
+    }
+    merged.attempts = mergeAttemptLists(merged.attempts, incoming.attempts);
+  }
+  return merged;
+}
+
+function mergeTopicResultsEntry(target, incoming) {
+  const merged = createTopicResultsEntry();
+  const baseDiffs = target && target.difficulties ? target.difficulties : {};
+  const incomingDiffs = incoming && incoming.difficulties ? incoming.difficulties : {};
+  Object.entries(baseDiffs).forEach(([key, entry]) => {
+    merged.difficulties[key] = mergeDifficultyEntry(entry, null);
+  });
+  Object.entries(incomingDiffs).forEach(([key, entry]) => {
+    const existing = merged.difficulties[key] || createDifficultyEntry();
+    merged.difficulties[key] = mergeDifficultyEntry(existing, entry);
+  });
+  return merged;
+}
+
+function mergeMainResultsEntry(target, incoming) {
+  const merged = createMainResultsEntry();
+  if (target && typeof target === 'object') {
+    if (typeof target.bestGrade === 'number') merged.bestGrade = target.bestGrade;
+    if (typeof target.bestXp === 'number') merged.bestXp = target.bestXp;
+    if (typeof target.bestTimestamp === 'string') merged.bestTimestamp = target.bestTimestamp;
+    merged.attempts = mergeAttemptLists(target.attempts, []);
+  }
+  if (incoming && typeof incoming === 'object') {
+    if (typeof incoming.bestGrade === 'number' && shouldUpdateBestGrade(incoming.bestGrade, merged.bestGrade)) {
+      merged.bestGrade = incoming.bestGrade;
+      if (typeof incoming.bestXp === 'number') merged.bestXp = incoming.bestXp;
+      if (typeof incoming.bestTimestamp === 'string') merged.bestTimestamp = incoming.bestTimestamp;
+    }
+    merged.attempts = mergeAttemptLists(merged.attempts, incoming.attempts);
+  }
+  return merged;
+}
+
+function pickLatestTimestamp(first, second) {
+  if (!first && !second) return null;
+  if (!first) return second;
+  if (!second) return first;
+  return new Date(first) >= new Date(second) ? first : second;
+}
+
+function mergePracticeEntry(target, incoming) {
+  const merged = createPracticeEntry();
+  const base = target && typeof target === 'object' ? target : {};
+  const next = incoming && typeof incoming === 'object' ? incoming : {};
+  merged.xpEarned = Number(base.xpEarned || 0) + Number(next.xpEarned || 0);
+  merged.correctCount = Number(base.correctCount || 0) + Number(next.correctCount || 0);
+  merged.totalCount = Number(base.totalCount || 0) + Number(next.totalCount || 0);
+  merged.lastPracticedAt = pickLatestTimestamp(base.lastPracticedAt, next.lastPracticedAt);
+  Object.keys(merged.difficulties).forEach((key) => {
+    const baseDiff = base.difficulties && base.difficulties[key] ? base.difficulties[key] : {};
+    const nextDiff = next.difficulties && next.difficulties[key] ? next.difficulties[key] : {};
+    merged.difficulties[key].correctCount = Number(baseDiff.correctCount || 0) + Number(nextDiff.correctCount || 0);
+    merged.difficulties[key].totalCount = Number(baseDiff.totalCount || 0) + Number(nextDiff.totalCount || 0);
+  });
+  return merged;
+}
+
 function createEmptyProgress() {
   return {
     version: PROGRESS_VERSION,
@@ -274,7 +400,7 @@ function createEmptyProgress() {
       statsByTopic: {},
     },
     achievements: {},
-    quests: coerceQuestState(null),
+    quests: coerceQuestState(null).state,
   };
 }
 
@@ -288,6 +414,10 @@ function normalizeResultsBucket(bucket, expectsDifficulty) {
     if (!entry || typeof entry !== 'object') {
       changed = true;
       return;
+    }
+    const normalizedTopicId = normalizeTopicId(topicId);
+    if (normalizedTopicId !== topicId) {
+      changed = true;
     }
     if (expectsDifficulty) {
       const normalizedEntry = createTopicResultsEntry();
@@ -314,7 +444,12 @@ function normalizeResultsBucket(bucket, expectsDifficulty) {
         }
         normalizedEntry.difficulties[difficultyKey] = normalizedDifficulty;
       });
-      normalized[topicId] = normalizedEntry;
+      if (normalized[normalizedTopicId]) {
+        normalized[normalizedTopicId] = mergeTopicResultsEntry(normalized[normalizedTopicId], normalizedEntry);
+        changed = true;
+      } else {
+        normalized[normalizedTopicId] = normalizedEntry;
+      }
       if (!entry.difficulties) {
         changed = true;
       }
@@ -332,7 +467,12 @@ function normalizeResultsBucket(bucket, expectsDifficulty) {
       if (Array.isArray(entry.attempts)) {
         normalizedEntry.attempts = entry.attempts;
       }
-      normalized[topicId] = normalizedEntry;
+      if (normalized[normalizedTopicId]) {
+        normalized[normalizedTopicId] = mergeMainResultsEntry(normalized[normalizedTopicId], normalizedEntry);
+        changed = true;
+      } else {
+        normalized[normalizedTopicId] = normalizedEntry;
+      }
     }
   });
   return { normalized, changed };
@@ -373,25 +513,37 @@ function normalizePracticeEntry(rawEntry) {
 
 function normalizePractice(rawPractice, legacyPracticeXp) {
   const practice = { statsByTopic: {} };
+  let changed = false;
   if (rawPractice && typeof rawPractice === 'object') {
     const stats = rawPractice.statsByTopic && typeof rawPractice.statsByTopic === 'object'
       ? rawPractice.statsByTopic
       : {};
     Object.entries(stats).forEach(([topicId, entry]) => {
-      practice.statsByTopic[topicId] = normalizePracticeEntry(entry);
+      const normalizedId = normalizeTopicId(topicId);
+      if (normalizedId !== topicId) changed = true;
+      const normalizedEntry = normalizePracticeEntry(entry);
+      if (practice.statsByTopic[normalizedId]) {
+        practice.statsByTopic[normalizedId] = mergePracticeEntry(practice.statsByTopic[normalizedId], normalizedEntry);
+        changed = true;
+      } else {
+        practice.statsByTopic[normalizedId] = normalizedEntry;
+      }
     });
   }
   if (legacyPracticeXp && typeof legacyPracticeXp === 'object') {
     Object.entries(legacyPracticeXp).forEach(([topicId, xpValue]) => {
+      const normalizedId = normalizeTopicId(topicId);
+      if (normalizedId !== topicId) changed = true;
       const amount = Number(xpValue || 0);
       if (!Number.isFinite(amount) || amount <= 0) return;
-      if (!practice.statsByTopic[topicId]) {
-        practice.statsByTopic[topicId] = createPracticeEntry();
+      if (!practice.statsByTopic[normalizedId]) {
+        practice.statsByTopic[normalizedId] = createPracticeEntry();
       }
-      practice.statsByTopic[topicId].xpEarned += amount;
+      practice.statsByTopic[normalizedId].xpEarned += amount;
     });
+    changed = true;
   }
-  return practice;
+  return { practice, changed };
 }
 
 function shouldUpdateBestGrade(nextGrade, currentGrade) {
@@ -421,7 +573,8 @@ function buildAttempt(result, difficultyKey, xpAwarded) {
 }
 
 function applyTestResultToResults(results, result) {
-  const topicId = result && result.topicId ? result.topicId : null;
+  const rawTopicId = result && result.topicId ? result.topicId : null;
+  const topicId = normalizeTopicId(rawTopicId);
   if (!topicId) return null;
   const config = getTopicConfig(topicId);
   const levelType = config ? config.levelType : LEVEL_TYPES.TEMAKOR;
@@ -480,13 +633,15 @@ function applyTestResultToResults(results, result) {
 }
 
 function mergeCompletionEntry(results, topicId, difficultyKey, entry) {
-  const config = getTopicConfig(topicId);
+  const normalizedTopicId = normalizeTopicId(topicId);
+  if (!normalizedTopicId) return;
+  const config = getTopicConfig(normalizedTopicId);
   const levelType = config ? config.levelType : LEVEL_TYPES.TEMAKOR;
   const bucket = levelType === LEVEL_TYPES.FOTEMA
     ? results.mainTopics
     : (levelType === LEVEL_TYPES.ALTEMA ? results.subtopics : results.topics);
-  if (!bucket[topicId]) {
-    bucket[topicId] = (levelType === LEVEL_TYPES.FOTEMA)
+  if (!bucket[normalizedTopicId]) {
+    bucket[normalizedTopicId] = (levelType === LEVEL_TYPES.FOTEMA)
       ? createMainResultsEntry()
       : createTopicResultsEntry();
   }
@@ -498,12 +653,12 @@ function mergeCompletionEntry(results, topicId, difficultyKey, entry) {
   const xpValue = entry && typeof entry.xp === 'number'
     ? entry.xp
     : calculateTestXp({
-      topicId,
+      topicId: normalizedTopicId,
       grade: gradeValue,
       normalizedDifficulty: levelType === LEVEL_TYPES.FOTEMA ? null : difficultyKey,
     });
   if (levelType === LEVEL_TYPES.FOTEMA) {
-    const existing = bucket[topicId];
+    const existing = bucket[normalizedTopicId];
     if (shouldUpdateBestGrade(gradeValue, existing.bestGrade)) {
       existing.bestGrade = gradeValue;
       existing.bestXp = xpValue;
@@ -511,7 +666,7 @@ function mergeCompletionEntry(results, topicId, difficultyKey, entry) {
     }
     return;
   }
-  const entryBucket = bucket[topicId];
+  const entryBucket = bucket[normalizedTopicId];
   if (!entryBucket.difficulties || typeof entryBucket.difficulties !== 'object') {
     entryBucket.difficulties = {};
   }
@@ -598,6 +753,17 @@ function normalizeAchievements(raw) {
     }
   });
   return normalized;
+}
+
+function normalizeTestHistory(rawTests) {
+  if (!Array.isArray(rawTests)) return { tests: [], changed: true };
+  let changed = false;
+  const tests = rawTests.map((result) => {
+    const normalized = normalizeResultTopicId(result);
+    if (normalized !== result) changed = true;
+    return normalized;
+  });
+  return { tests, changed };
 }
 
 function getTestHistory(progress) {
@@ -755,21 +921,26 @@ function normalizeProgress(raw) {
   }
 
   if (Array.isArray(source.tests)) {
-    progress.tests = source.tests;
+    const normalizedTests = normalizeTestHistory(source.tests);
+    progress.tests = normalizedTests.tests;
+    migrated = migrated || normalizedTests.changed;
   }
 
   const resultsPayload = buildResultsFromSource(source);
   progress.results = resultsPayload.results;
   migrated = migrated || resultsPayload.migrated;
 
-  progress.practice = normalizePractice(source.practice, source.practiceXp);
-  if (source.practiceXp) migrated = true;
+  const practicePayload = normalizePractice(source.practice, source.practiceXp);
+  progress.practice = practicePayload.practice;
+  migrated = migrated || practicePayload.changed;
 
   if (source.achievements && typeof source.achievements === 'object') {
     progress.achievements = normalizeAchievements(source.achievements);
   }
 
-  progress.quests = coerceQuestState(source.quests);
+  const questPayload = coerceQuestState(source.quests);
+  progress.quests = questPayload.state;
+  migrated = migrated || questPayload.changed;
   if (!source.quests || typeof source.quests !== 'object') {
     migrated = true;
   } else if (!source.quests.mainTopics || !source.quests.subtopics || !source.quests.topics) {
@@ -796,8 +967,9 @@ function normalizeDifficulty(label = '') {
 
 // XP calculation helpers (constitution/xp/xp_formula.md)
 function getTopicConfig(topicId) {
-  if (!topicId) return null;
-  return TOPIC_CONFIG[topicId] || null;
+  const normalized = normalizeTopicId(topicId);
+  if (!normalized) return null;
+  return TOPIC_CONFIG[normalized] || null;
 }
 
 function calculateTestXp({ topicId, grade, normalizedDifficulty }) {
@@ -911,8 +1083,8 @@ function buildPracticeXpSummary(progress) {
 }
 
 function mergeQuestState(existing, incoming) {
-  const base = coerceQuestState(existing);
-  const next = coerceQuestState(incoming);
+  const base = coerceQuestState(existing).state;
+  const next = coerceQuestState(incoming).state;
   const mergedVersion = Math.max(base.version || QUEST_VERSION, next.version || QUEST_VERSION);
   return {
     version: mergedVersion,
@@ -933,7 +1105,7 @@ function inferDifficultyFromXp(xpValue) {
 
 function recordPracticeXp(progress, payload) {
   if (!progress || !payload) return;
-  const topicId = payload.topicId;
+  const topicId = normalizeTopicId(payload.topicId);
   const amount = Number(payload.xp);
   if (!topicId || !Number.isFinite(amount) || amount <= 0) return;
   if (!progress.practice || typeof progress.practice !== 'object') {
@@ -1006,8 +1178,9 @@ app.on('window-all-closed', () => {
 ipcMain.on('save-test-result', (event, result) => {
   const { progress } = normalizeProgress(readProgress());
   if (!Array.isArray(progress.tests)) progress.tests = [];
-  progress.tests.unshift(result);
-  grantXpForResult(progress, result);
+  const normalizedResult = normalizeResultTopicId(result);
+  progress.tests.unshift(normalizedResult);
+  grantXpForResult(progress, normalizedResult);
   updateAchievements(progress);
   saveProgress(progress);
 });
@@ -1078,5 +1251,3 @@ ipcMain.on('save-quest-state', (event, questState) => {
     console.error('Hiba a quest allapot mentese kozben:', error);
   }
 });
-
-

@@ -433,7 +433,13 @@
             opacity: 0; transition: opacity 0.5s; pointer-events: none; z-index: 100;
         }
         .result-popup.show { opacity: 1; }
-    </style>
+    
+        /* Touch targets */
+        button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+</style>
 </head>
 <body>
     <div class="tab-buttons" role="tablist">
@@ -539,7 +545,7 @@
 
     <div id="teszt" class="tab-content card" role="tabpanel">
         <h2>Teszt</h2>
-        <p>Rövid teszt, ami ellenőrzi a meredekség, tengelymetszet és értékek számolását. Válassz nehézséget, majd oldd meg a kérdéseket.</p>
+        <p>Rövid teszt, ami ellenőrzi a meredekség, tengelymetszet és értékek számolását. Válassz nehézségi szintet, majd oldd meg a kérdéseket.</p>
         <div class="learning-hint" data-role="test-help">
             <h3>Megoldási lépések</h3>
             <ul>
@@ -548,7 +554,7 @@
                 <li>Két pontból: m = (y2 - y1) / (x2 - x1).</li>
                 <li>Pont és meredekség alapján: b = y0 - m * x0.</li>
                 <li>X-tengelymetszet: x = -b / m (ha m ≠ 0).</li>
-                <li>A nehézség a m, b és x tartományt szabja meg.</li>
+                <li>A nehézségi szint a m, b és x tartományt szabja meg.</li>
                 <li>Tizedes válasz is lehet; tizedespont vagy tizedesvessző is jó.</li>
             </ul>
             <div class="input-help">Enterrel is beküldheted a választ.</div>
@@ -592,7 +598,7 @@
         <div class="learning-hint" data-role="practice-help">
             <h3>Gyakorlási tipp</h3>
             <ul>
-                <li>Válassz legalább egy nehézséget a feladatokhoz.</li>
+                <li>Válassz legalább egy nehézségi szintet a feladatokhoz.</li>
                 <li>A válasz f(x) = m * x + b alapján adható meg.</li>
                 <li>Két pontból: m = (y2 - y1) / (x2 - x1).</li>
                 <li>Pontból b: b = y0 - m * x0.</li>
@@ -610,7 +616,7 @@
         <div id="practice-area" class="practice-area is-hidden">
             <div id="practice-question" class="practice-question"></div>
             <input type="text" id="practice-input" class="module-input" placeholder="Válasz...">
-            <button id="practice-check" class="btn btn-primary" type="button">Ellenőrzés</button>
+            <button id="practice-check" class="btn btn-primary" type="button">Válasz elküldése</button>
             <p id="practice-feedback"></p>
         </div>
     </div>
@@ -1131,7 +1137,7 @@
         function nextPracticeQuestion() {
             const enabled = getEnabledPracticeDifficulties();
             if (!enabled.length) {
-                practiceFeedback.textContent = 'Válassz legalább egy nehézséget.';
+                practiceFeedback.textContent = 'Válassz legalább egy nehézségi szintet.';
                 practiceFeedback.style.color = '#f04747';
                 return;
             }
@@ -1171,7 +1177,7 @@
             const parsed = parseNumberInput(rawInput);
             if (parsed !== null && isClose(parsed, currentPracticeAnswer)) {
                 const xpReward = PRACTICE_XP_REWARDS[currentPracticeDifficulty] || 1;
-                practiceFeedback.textContent = `Helyes! ✅ (+${xpReward} XP)`;
+                practiceFeedback.textContent = `Helyes! (+${xpReward} XP)`;
                 practiceFeedback.style.color = '#43b581';
                 if (window.parent) {
                     window.parent.postMessage({ type: 'practiceXp', xp: xpReward, topicId: TOPIC_ID }, '*');
@@ -1241,7 +1247,7 @@
             practiceStartBtn.addEventListener('click', () => {
                 const enabled = getEnabledPracticeDifficulties();
                 if (!enabled.length) {
-                    practiceFeedback.textContent = 'Válassz legalább egy nehézséget.';
+                    practiceFeedback.textContent = 'Válassz legalább egy nehézségi szintet.';
                     practiceFeedback.style.color = '#f04747';
                     return;
                 }
@@ -1288,6 +1294,5 @@
     </script>
 </body>
 </html>
-
 
 

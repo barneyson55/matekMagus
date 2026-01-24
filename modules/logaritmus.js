@@ -494,7 +494,7 @@ function updateLogModel() {
   if (!Number.isFinite(base) || !Number.isFinite(value) || base <= 0 || base === 1 || value <= 0) {
     logOutput.textContent = '-';
     logCheck.textContent = '-';
-    logError.textContent = 'Adj meg helyes alapot \u00e9s \u00e9rt\u00e9ket.';
+    logError.textContent = 'Adj meg \u00e9rv\u00e9nyes alapot \u00e9s \u00e9rt\u00e9ket.';
     logError.style.color = '#f04747';
     return;
   }
@@ -529,7 +529,7 @@ function updateLinkModel() {
   if (!Number.isFinite(base) || !Number.isFinite(exp) || base <= 0 || base === 1) {
     linkValue.textContent = '-';
     linkFormula.textContent = '-';
-    linkError.textContent = 'Adj meg helyes alapot \u00e9s kitev\u0151t.';
+    linkError.textContent = 'Adj meg \u00e9rv\u00e9nyes alapot \u00e9s kitev\u0151t.';
     linkError.style.color = '#f04747';
     return;
   }

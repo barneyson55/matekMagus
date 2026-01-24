@@ -53,7 +53,13 @@
         .xp-summary .xp-meta { display: flex; justify-content: space-between; align-items: center; font-weight: 600; margin-bottom: 12px; }
         .xp-progress { height: 12px; border-radius: 999px; background-color: #e5e7eb; overflow: hidden; }
         .xp-progress-fill { height: 100%; background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary)); width: 0%; transition: width 0.4s; }
-    </style>
+    
+        /* Touch targets */
+        button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+</style>
 </head>
 <body>
     <div class="xp-summary">
@@ -90,6 +96,20 @@
         const resultsTotalXp = document.getElementById('results-total-xp');
         const resultsXpProgress = document.getElementById('results-xp-progress');
         const resultsXpText = document.getElementById('results-xp-text');
+        const LOCALE = 'hu-HU';
+        const numberFormatter = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 2 });
+
+        function formatNumber(value, fallback = '-') {
+            if (value === null || value === undefined || value === '') return fallback;
+            const num = Number(value);
+            return Number.isFinite(num) ? numberFormatter.format(num) : fallback;
+        }
+
+        function formatDateTime(value) {
+            const date = value instanceof Date ? value : new Date(value);
+            if (Number.isNaN(date.getTime())) return '';
+            return date.toLocaleString(LOCALE, { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
 
         function getTopicLabel(topicId) {
             if (!topicId) return '';
@@ -124,9 +144,19 @@
                         if (!result || !result.timestamp) return;
                         const resultItem = document.createElement('div');
                         resultItem.className = 'result-item';
-                        const date = new Date(result.timestamp).toLocaleString('hu-HU', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                        const dateText = formatDateTime(result.timestamp) || '-';
+                        const gradeValue = result.grade !== null && result.grade !== undefined && result.grade !== ''
+                            ? Number(result.grade)
+                            : Number.NaN;
+                        const gradeText = Number.isFinite(gradeValue) ? formatNumber(gradeValue) : '-';
+                        const gradeClass = Number.isFinite(gradeValue) ? `grade-${gradeValue}` : '';
+                        const percentageValue = result.percentage !== null && result.percentage !== undefined && result.percentage !== ''
+                            ? Number(result.percentage)
+                            : Number.NaN;
+                        const percentageText = Number.isFinite(percentageValue) ? formatNumber(percentageValue) : '-';
                         const topicTitle = result.topicName || getTopicLabel(result.topicId);
-                        resultItem.innerHTML = `<div class="grade-badge grade-${result.grade}">${result.grade}</div> <div class="result-details"> <h3>${topicTitle || 'Ismeretlen'}</h3> <p><b>Nehézség:</b> ${result.difficulty} | <b>Eredmény:</b> ${result.percentage}% | <b>Dátum:</b> ${date}</p> </div> <div class="result-actions"><button>Részletek</button></div>`;
+                        const difficultyLabel = result.difficulty || '-';
+                        resultItem.innerHTML = `<div class="grade-badge ${gradeClass}">${gradeText}</div> <div class="result-details"> <h3>${topicTitle || 'Ismeretlen'}</h3> <p><b>Nehézség:</b> ${difficultyLabel} | <b>Eredmény:</b> ${percentageText}% | <b>Dátum:</b> ${dateText}</p> </div> <div class="result-actions"><button>Részletek</button></div>`;
                         const detailsBtn = resultItem.querySelector('button');
                         detailsBtn.addEventListener('click', () => showDetails(result));
                         container.appendChild(resultItem);
@@ -141,8 +171,8 @@
         function updateXpSummary(summary) {
             if (!summary || !summary.level) return;
             const totalXp = summary.xp || 0;
-            resultsLevel.textContent = summary.level.level;
-            resultsTotalXp.textContent = `${totalXp} XP`;
+            resultsLevel.textContent = formatNumber(summary.level.level, '1');
+            resultsTotalXp.textContent = `${formatNumber(totalXp, '0')} XP`;
             const current = Number.isFinite(summary.level.xpIntoLevel) ? summary.level.xpIntoLevel : 0;
             const required = Number.isFinite(summary.level.xpForNext) ? summary.level.xpForNext : 0;
             const isMaxLevel = required <= 0;
@@ -151,7 +181,7 @@
             resultsXpProgress.style.width = `${percent}%`;
             resultsXpText.textContent = isMaxLevel
                 ? `Max szint`
-                : `${current} / ${required} XP a kovetkezo szintig`;
+                : `${formatNumber(current, '0')} / ${formatNumber(required, '0')} XP a kovetkezo szintig`;
         }
         function showDetails(result) {
             const topicTitle = result.topicName || getTopicLabel(result.topicId);

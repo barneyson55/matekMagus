@@ -558,7 +558,7 @@ function updateOperationModel() {
     lcmResult.textContent = '-';
     fractionAExpanded.textContent = '-';
     fractionBExpanded.textContent = '-';
-    fractionError.textContent = 'Adj meg helyes t\u00f6rteket.';
+    fractionError.textContent = 'Adj meg \u00e9rv\u00e9nyes t\u00f6rteket.';
     fractionError.style.color = '#f04747';
     return;
   }
@@ -571,7 +571,7 @@ function updateOperationModel() {
     lcmResult.textContent = '-';
     fractionAExpanded.textContent = '-';
     fractionBExpanded.textContent = '-';
-    fractionError.textContent = 'Adj meg helyes t\u00f6rteket.';
+    fractionError.textContent = 'Adj meg \u00e9rv\u00e9nyes t\u00f6rteket.';
     fractionError.style.color = '#f04747';
     return;
   }
@@ -631,7 +631,7 @@ function updateSimplifyModel() {
   if (!Number.isFinite(num) || !Number.isFinite(den) || den === 0) {
     simplifiedOutput.textContent = '-';
     expandedOutput.textContent = '-';
-    simplifyError.textContent = 'Adj meg helyes t\u00f6rtet.';
+    simplifyError.textContent = 'Adj meg \u00e9rv\u00e9nyes t\u00f6rtet.';
     simplifyError.style.color = '#f04747';
     return;
   }
@@ -640,7 +640,7 @@ function updateSimplifyModel() {
   if (!simplified) {
     simplifiedOutput.textContent = '-';
     expandedOutput.textContent = '-';
-    simplifyError.textContent = 'Adj meg helyes t\u00f6rtet.';
+    simplifyError.textContent = 'Adj meg \u00e9rv\u00e9nyes t\u00f6rtet.';
     simplifyError.style.color = '#f04747';
     return;
   }

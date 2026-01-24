@@ -480,7 +480,13 @@
         }
 
         .result-popup.show { opacity: 1; }
-    </style>
+    
+        /* Touch targets */
+        button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+</style>
 </head>
 <body>
     <div class="tab-buttons" role="tablist">
@@ -1123,7 +1129,7 @@
             const parsed = parseBaseValue(baseInput.value || '', base);
             if (parsed === null) {
                 baseDecimalOutput.textContent = '-';
-                baseError.textContent = 'Hib\u00e1s sz\u00e1m';
+                baseError.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mot.';
                 baseError.style.color = '#f04747';
                 return;
             }

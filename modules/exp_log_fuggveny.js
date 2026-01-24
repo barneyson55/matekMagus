@@ -799,7 +799,7 @@ function updateLogModel() {
     if (logIntercept) logIntercept.textContent = '-';
     if (logCheck) logCheck.textContent = '-';
     if (logNote) {
-      logNote.textContent = 'Adj meg helyes alapot (a>0, a\u22601) \u00e9s pozit\u00edv x-et.';
+      logNote.textContent = 'Adj meg \u00e9rv\u00e9nyes alapot (a>0, a\u22601) \u00e9s pozit\u00edv x-et.';
       logNote.style.color = '#f04747';
     }
     return;

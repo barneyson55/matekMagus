@@ -613,7 +613,7 @@ function updateAbsModel() {
     absRootOne.textContent = '-';
     absRootTwo.textContent = '-';
     absStatus.textContent = '-';
-    absNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    absNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     absNote.style.color = '#f04747';
     return;
   }
@@ -623,7 +623,7 @@ function updateAbsModel() {
   if (b < 0) {
     absRootOne.textContent = '-';
     absRootTwo.textContent = '-';
-    absStatus.textContent = 'Nincs megold\u00e1s';
+    absStatus.textContent = 'Nincs megold\u00e1s.';
     absNote.textContent = 'A jobb oldal nem lehet negat\u00edv.';
     absNote.style.color = '#f04747';
     return;
@@ -658,7 +658,7 @@ function updateSqrtModel() {
     sqrtSolution.textContent = '-';
     sqrtCheck.textContent = '-';
     sqrtStatus.textContent = '-';
-    sqrtNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    sqrtNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     sqrtNote.style.color = '#f04747';
     return;
   }
@@ -668,7 +668,7 @@ function updateSqrtModel() {
   if (b < 0) {
     sqrtSolution.textContent = '-';
     sqrtCheck.textContent = '-';
-    sqrtStatus.textContent = 'Nincs megold\u00e1s';
+    sqrtStatus.textContent = 'Nincs megold\u00e1s.';
     sqrtNote.textContent = 'A jobb oldal nem lehet negat\u00edv.';
     sqrtNote.style.color = '#f04747';
     return;

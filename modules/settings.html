@@ -154,7 +154,13 @@
         .reset-btn:hover {
             background: #b91c1c;
         }
-    </style>
+    
+        /* Touch targets */
+        button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+</style>
 </head>
 <body>
     <div class="card">
@@ -200,11 +206,11 @@
                 <input type="color" id="button-text" value="#ffffff">
             </div>
             <div class="color-picker">
-                <label for="link-color">Link szín:</label>
+                <label for="link-color">Hivatkozás színe:</label>
                 <input type="color" id="link-color" value="#b9bbbe">
             </div>
             <div class="color-picker">
-                <label for="content-overlay">Tartalom overlay:</label>
+                <label for="content-overlay">Tartalom fedőréteg:</label>
                 <input type="text" id="content-overlay" value="rgba(255, 255, 255, 0.8)" placeholder="rgba(255, 255, 255, 0.8)">
             </div>
         </div>
@@ -214,7 +220,7 @@
             <div class="bg-upload">
                 <label for="bg-file">Saját háttérkép feltöltése:</label>
                 <input type="file" id="bg-file" accept="image/*">
-                <div class="bg-preview" id="bg-preview">Nincs kép kiválasztva</div>
+                <div class="bg-preview" id="bg-preview">Nincs háttérkép kiválasztva.</div>
             </div>
         </div>
 
@@ -322,7 +328,7 @@
             applySettingsToUI(currentSettings);
             bgImageData = null;
             document.getElementById('bg-preview').style.backgroundImage = 'none';
-            document.getElementById('bg-preview').textContent = 'Nincs kép kiválasztva';
+            document.getElementById('bg-preview').textContent = 'Nincs háttérkép kiválasztva.';
             document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('selected'));
         });
 
@@ -348,7 +354,7 @@
             document.getElementById('content-overlay').value = theme.contentOverlay;
             document.getElementById('bg-preview').style.backgroundImage = theme.bgImage;
             if (theme.bgImage === 'none') {
-                document.getElementById('bg-preview').textContent = 'Nincs kép kiválasztva';
+                document.getElementById('bg-preview').textContent = 'Nincs háttérkép kiválasztva.';
             }
         }
     </script>

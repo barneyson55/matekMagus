@@ -586,7 +586,7 @@ function updateParabolaModel() {
     parabolaRootTwo.textContent = '-';
     parabolaRootStatus.textContent = '-';
     parabolaYIntercept.textContent = '-';
-    parabolaNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    parabolaNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     parabolaNote.style.color = '#f04747';
     return;
   }

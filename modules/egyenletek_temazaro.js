@@ -750,7 +750,7 @@ function updateEquationModel() {
     leftValue.textContent = '-';
     rightValue.textContent = '-';
     equationCheck.textContent = '-';
-    solutionNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    solutionNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     solutionNote.style.color = '#f04747';
     return;
   }
@@ -796,7 +796,7 @@ function updateQuadraticModel() {
     discriminantValue.textContent = '-';
     rootOne.textContent = '-';
     rootTwo.textContent = '-';
-    rootNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    rootNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     rootNote.style.color = '#f04747';
     return;
   }

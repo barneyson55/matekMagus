@@ -516,12 +516,18 @@
             font-weight: 600;
             margin-top: 10px;
         }
-    </style>
+    
+        /* Touch targets */
+        button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+</style>
 </head>
 <body>
     <div class="tab-buttons">
         <button class="tab-button active" onclick="openTab('miert')">Kulcsfogalmak</button>
-        <button class="tab-button" onclick="openTab('hogyan')">Vizuális Modell</button>
+        <button class="tab-button" onclick="openTab('hogyan')">Vizuális modell</button>
         <button class="tab-button" onclick="openTab('teszt')">Teszt</button>
         <button class="tab-button" onclick="openTab('gyakorlas')">Gyakorlás</button>
     </div>
@@ -553,7 +559,7 @@
         </ul>
     </div>
 
-    <!-- Vizuális Modell tab -->
+    <!-- Vizuális modell tab -->
     <div id="hogyan" class="tab-content card">
         <div class="model-container">
             <div class="controls">
@@ -599,7 +605,7 @@
             <h3>Azonnali Gyakorlás</h3>
             <p id="instant-q"></p>
             <input type="text" id="instant-input" class="module-input" placeholder="Eredmény...">
-            <button id="instant-check" class="btn btn-secondary">Ellenőrzés</button>
+            <button id="instant-check" class="btn btn-secondary">Válasz elküldése</button>
             <p id="instant-feedback"></p>
         </div>
     </div>
@@ -653,7 +659,7 @@
         <!-- XP reward explanation for practice questions -->
         <p class="practice-info" style="margin-top:-10px;">
             <strong>XP Jutalom:</strong> Könnyű kérdésért 1 XP, Normál kérdésért 2 XP,
-            Nehéz kérdésért 3 XP. Válassz több nehézséget egyszerre, hogy nagyobb
+            Nehéz kérdésért 3 XP. Válassz több nehézségi szintet egyszerre, hogy nagyobb
             jutalmat szerezz!
         </p>
         <div class="learning-hint" data-role="practice-help">
@@ -675,7 +681,7 @@
             <div id="practice-question"></div>
             <div id="practice-hint" class="learning-hint help-compact"></div>
             <input type="text" id="practice-input" class="options-input module-input" placeholder="Írd be az elemeket vesszővel..." />
-            <button id="practice-check" class="btn btn-primary">Ellenőrzés</button>
+            <button id="practice-check" class="btn btn-primary">Válasz elküldése</button>
             <p id="practice-feedback"></p>
         </div>
     </div>
@@ -692,7 +698,7 @@
         const TOPIC_ID = 'halmazmuveletek';
         const TAB_LABELS = {
             miert: 'Kulcsfogalmak',
-            hogyan: 'Vizuális Modell',
+            hogyan: 'Vizuális modell',
             teszt: 'Teszt',
             gyakorlas: 'Gyakorlás'
         };
@@ -883,10 +889,10 @@
         function checkInstantAnswer(correctAnswer) {
             const userAnswer = dom.instantInput.value;
             if (setsEqual(correctAnswer, userAnswer)) {
-                dom.instantFeedback.textContent = "Helyes! ✅";
+                dom.instantFeedback.textContent = "Helyes!";
                 dom.instantFeedback.style.color = "var(--success)";
             } else {
-                dom.instantFeedback.textContent = "Próbáld újra! ❌";
+                dom.instantFeedback.textContent = "Próbáld újra!";
                 dom.instantFeedback.style.color = "var(--danger)";
             }
         }
@@ -1023,7 +1029,7 @@
                 grade = 5;
                 feedback = 'Jeles (5)';
             }
-            showResultPopup(`Sikeres Teszt! <span>Eredmény: ${percentage.toFixed(0)}% - ${feedback}</span>`);
+            showResultPopup(`Sikeres teszt! <span>Eredmény: ${percentage.toFixed(0)}% - ${feedback}</span>`);
             const resultObject = {
                 topicId: TOPIC_ID,
                 topicName: 'Halmazműveletek',
@@ -1082,7 +1088,7 @@
         dom.startPracticeBtn.addEventListener('click', () => {
             const selected = getSelectedPracticeDifficulties();
             if (selected.length === 0) {
-                alert('Válassz legalább egy nehézségi szintet!');
+                alert('Válassz legalább egy nehézségi szintet.');
                 return;
             }
             practiceActive = true;
@@ -1096,7 +1102,7 @@
             if (setsEqual(currentPracticeAnswer, userAnswer)) {
                 // Determine XP reward based on current practice difficulty
                 const xpReward = practiceXpRewards[currentPracticeDifficulty] || 1;
-                dom.practiceFeedback.textContent = `Helyes! ✅ (+${xpReward} XP)`;
+                dom.practiceFeedback.textContent = `Helyes! (+${xpReward} XP)`;
                 dom.practiceFeedback.style.color = 'var(--success)';
                 window.parent.postMessage({ type: 'practiceXp', xp: xpReward, topicId: TOPIC_ID }, '*');
                 clearTimeout(practiceTimeout);
@@ -1104,7 +1110,7 @@
                     nextPracticeQuestion();
                 }, 2000);
             } else {
-                dom.practiceFeedback.textContent = 'Próbáld újra! ❌';
+                dom.practiceFeedback.textContent = 'Próbáld újra!';
                 dom.practiceFeedback.style.color = 'var(--danger)';
             }
         });
@@ -1244,6 +1250,4 @@
     </script>
 </body>
 </html>
-
-
 

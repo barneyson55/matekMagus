@@ -599,7 +599,7 @@ function updateEquationModel() {
     leftValue.textContent = '-';
     rightValue.textContent = '-';
     equationCheck.textContent = '-';
-    solutionNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    solutionNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     solutionNote.style.color = '#f04747';
     checkNote.textContent = '';
     return;
@@ -697,7 +697,7 @@ if (practiceStartBtn) {
   practiceStartBtn.addEventListener('click', () => {
     const enabled = getEnabledPracticeDifficulties();
     if (!enabled.length) {
-      practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
+      practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9gi szintet.';
       practiceFeedback.style.color = '#f04747';
       return;
     }

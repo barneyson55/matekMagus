@@ -1,4 +1,4 @@
-const test = require('node:test');
+const nodeTest = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
@@ -6,6 +6,33 @@ const path = require('node:path');
 const { _electron: electron } = require('playwright-core');
 
 const DEFAULT_TIMEOUT_MS = 15000;
+const E2E_RANDOM_SEED = 424242;
+const IS_WINDOWS = process.platform === 'win32';
+const WSL_ENV_VARS = ['WSL_DISTRO_NAME', 'WSL_INTEROP'];
+const isWsl = !IS_WINDOWS
+  && (WSL_ENV_VARS.some((key) => Boolean(process.env[key]))
+    || os.release().toLowerCase().includes('microsoft'));
+const hasDisplay = Boolean(
+  process.env.DISPLAY
+  || process.env.WAYLAND_DISPLAY
+  || process.env.MIR_SOCKET
+);
+const isHeadless = !IS_WINDOWS && !hasDisplay;
+const shouldSkipE2E = isWsl || isHeadless;
+const skipReason = isWsl
+  ? 'WSL detected; skipping Electron E2E.'
+  : 'Headless environment detected; skipping Electron E2E.';
+const e2eTest = shouldSkipE2E
+  ? (name, fn) => nodeTest(name, { skip: skipReason }, fn)
+  : nodeTest;
+
+async function applyE2ERandomSeed(page, seed) {
+  if (!Number.isFinite(seed)) return;
+  await page.waitForFunction(() => typeof window.__setMatekSeed === 'function');
+  await page.evaluate((value) => {
+    window.__setMatekSeed(value);
+  }, seed);
+}
 
 async function launchApp(options = {}) {
   const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'matek-mester-e2e-'));
@@ -32,6 +59,10 @@ async function launchApp(options = {}) {
   page.setDefaultTimeout(DEFAULT_TIMEOUT_MS);
   await page.waitForLoadState('domcontentloaded');
   await page.waitForSelector('#content-frame');
+  const seed = Object.prototype.hasOwnProperty.call(options, 'randomSeed')
+    ? options.randomSeed
+    : E2E_RANDOM_SEED;
+  await applyE2ERandomSeed(page, seed);
 
   return { app, page, userDataDir };
 }
@@ -82,7 +113,7 @@ async function postLegacyTestResult(page, overrides = {}) {
   return payload;
 }
 
-test('launches and navigates between modules', async () => {
+e2eTest('launches and navigates between modules', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -131,7 +162,7 @@ test('launches and navigates between modules', async () => {
   }
 });
 
-test('uses compact header height token', async () => {
+e2eTest('uses compact header height token', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -182,7 +213,7 @@ test('uses compact header height token', async () => {
   }
 });
 
-test('quest log toggle collapses sidebar', async () => {
+e2eTest('quest log toggle collapses sidebar', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -210,7 +241,105 @@ test('quest log toggle collapses sidebar', async () => {
   }
 });
 
-test('opens character sheet from avatar', async () => {
+e2eTest('keeps header and quest log stable across orientation changes', async () => {
+  const { app, page } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+    const assertLayoutAtViewport = async (label, width, height) => {
+      await page.setViewportSize({ width, height });
+      await page.waitForFunction(([targetWidth, targetHeight]) => {
+        return window.innerWidth === targetWidth && window.innerHeight === targetHeight;
+      }, [width, height]);
+
+      const metrics = await page.evaluate(() => {
+        const header = document.querySelector('.app-header');
+        const sidebar = document.querySelector('.sidebar');
+        const container = document.querySelector('.app-container');
+        const headerRect = header ? header.getBoundingClientRect() : null;
+        const sidebarRect = sidebar ? sidebar.getBoundingClientRect() : null;
+        const containerRect = container ? container.getBoundingClientRect() : null;
+        const headerStyle = header ? getComputedStyle(header) : null;
+        const sidebarStyle = sidebar ? getComputedStyle(sidebar) : null;
+        const rootStyles = getComputedStyle(document.documentElement);
+        return {
+          viewport: { width: window.innerWidth, height: window.innerHeight },
+          tier: rootStyles.getPropertyValue('--viewport-tier').trim(),
+          headerRect: headerRect ? {
+            top: headerRect.top,
+            left: headerRect.left,
+            width: headerRect.width,
+            height: headerRect.height,
+            right: headerRect.right,
+            bottom: headerRect.bottom
+          } : null,
+          sidebarRect: sidebarRect ? {
+            top: sidebarRect.top,
+            left: sidebarRect.left,
+            width: sidebarRect.width,
+            height: sidebarRect.height,
+            right: sidebarRect.right,
+            bottom: sidebarRect.bottom
+          } : null,
+          containerRect: containerRect ? {
+            top: containerRect.top,
+            left: containerRect.left,
+            width: containerRect.width,
+            height: containerRect.height,
+            right: containerRect.right,
+            bottom: containerRect.bottom
+          } : null,
+          headerDisplay: headerStyle ? headerStyle.display : '',
+          sidebarPosition: sidebarStyle ? sidebarStyle.position : '',
+          sidebarTransform: sidebarStyle ? sidebarStyle.transform : '',
+          questCollapsed: document.body.classList.contains('quest-collapsed'),
+        };
+      });
+
+      assert.ok(metrics.headerRect, `${label}: header missing`);
+      assert.ok(metrics.sidebarRect, `${label}: sidebar missing`);
+      assert.ok(metrics.containerRect, `${label}: container missing`);
+
+      const header = metrics.headerRect;
+      const sidebar = metrics.sidebarRect;
+      const container = metrics.containerRect;
+      const viewport = metrics.viewport;
+
+      assert.ok(Math.abs(header.top) <= 1, `${label}: header top drift`);
+      assert.ok(Math.abs(header.left) <= 1, `${label}: header left drift`);
+      assert.ok(Math.abs(header.width - viewport.width) <= 1, `${label}: header width mismatch`);
+      assert.ok(header.height > 0, `${label}: header height invalid`);
+      assert.ok(header.bottom <= viewport.height + 1, `${label}: header bottom out of view`);
+
+      const containerDelta = Math.abs(container.top - header.bottom);
+      assert.ok(containerDelta <= 1.5, `${label}: container not aligned to header`);
+
+      const sidebarDelta = Math.abs(sidebar.top - container.top);
+      assert.ok(sidebarDelta <= 1.5, `${label}: sidebar not aligned to container`);
+      assert.ok(sidebar.height > 0, `${label}: sidebar height invalid`);
+      assert.ok(sidebar.right > 0, `${label}: sidebar off-screen`);
+      assert.ok(sidebar.left < viewport.width, `${label}: sidebar off-screen`);
+
+      if (metrics.tier === 'mobile') {
+        assert.equal(metrics.sidebarPosition, 'absolute', `${label}: sidebar not absolute on mobile`);
+        assert.ok(metrics.sidebarTransform.includes('matrix') || metrics.sidebarTransform === 'none',
+          `${label}: sidebar transform missing`);
+      } else {
+        assert.ok(['static', 'relative'].includes(metrics.sidebarPosition),
+          `${label}: sidebar position unexpected`);
+        const headerHeightDelta = Math.abs(header.height - 72);
+        assert.ok(headerHeightDelta <= 2, `${label}: header height drift`);
+      }
+    };
+
+    await assertLayoutAtViewport('portrait', 390, 844);
+    await assertLayoutAtViewport('landscape', 844, 390);
+  } finally {
+    await app.close();
+  }
+});
+
+e2eTest('opens character sheet from avatar', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -231,7 +360,7 @@ test('opens character sheet from avatar', async () => {
   }
 });
 
-test('accepts legacy testResult payloads', async () => {
+e2eTest('accepts legacy testResult payloads', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -255,7 +384,7 @@ test('accepts legacy testResult payloads', async () => {
   }
 });
 
-test('test results apply indicators and formula xp', async () => {
+e2eTest('test results apply indicators and formula xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -311,7 +440,7 @@ test('test results apply indicators and formula xp', async () => {
   }
 });
 
-test('test XP awards only grade improvement delta', async () => {
+e2eTest('test XP awards only grade improvement delta', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -364,7 +493,7 @@ test('test XP awards only grade improvement delta', async () => {
   }
 });
 
-test('low grade test does not award xp', async () => {
+e2eTest('low grade test does not award xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -395,7 +524,7 @@ test('low grade test does not award xp', async () => {
   }
 });
 
-test('levels update at xp thresholds', async () => {
+e2eTest('levels update at xp thresholds', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -439,7 +568,7 @@ test('levels update at xp thresholds', async () => {
   }
 });
 
-test('migrates legacy progress data into structured results', async () => {
+e2eTest('migrates legacy progress data into structured results', async () => {
   const legacyProgress = {
     xp: 120,
     tests: [
@@ -491,7 +620,7 @@ test('migrates legacy progress data into structured results', async () => {
   }
 });
 
-test('practice xp updates structured stats', async () => {
+e2eTest('practice xp updates structured stats', async () => {
   const { app, page, userDataDir } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -517,7 +646,7 @@ test('practice xp updates structured stats', async () => {
   }
 });
 
-test('awards achievements on first hard perfect test', async () => {
+e2eTest('awards achievements on first hard perfect test', async () => {
   const { app, page, userDataDir } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -552,7 +681,7 @@ test('awards achievements on first hard perfect test', async () => {
   }
 });
 
-test('character sheet reflects quest counts and achievements', async () => {
+e2eTest('character sheet reflects quest counts and achievements', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -631,7 +760,7 @@ test('character sheet reflects quest counts and achievements', async () => {
   }
 });
 
-test('accepts quests from the module banner', async () => {
+e2eTest('accepts quests from the module banner', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -711,7 +840,7 @@ test('accepts quests from the module banner', async () => {
   }
 });
 
-test('aggregates quest status up the hierarchy', async () => {
+e2eTest('aggregates quest status up the hierarchy', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -751,7 +880,7 @@ test('aggregates quest status up the hierarchy', async () => {
   }
 });
 
-test('practice accepts formatted set answers', async () => {
+e2eTest('practice accepts formatted set answers', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -841,7 +970,7 @@ test('practice accepts formatted set answers', async () => {
   }
 });
 
-test('halmaz module runs a test flow', async () => {
+e2eTest('halmaz module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -945,7 +1074,7 @@ test('halmaz module runs a test flow', async () => {
   }
 });
 
-test('linearis module runs a test flow', async () => {
+e2eTest('linearis module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -1105,7 +1234,7 @@ test('linearis module runs a test flow', async () => {
   }
 });
 
-test('linearis module practice grants xp', async () => {
+e2eTest('linearis module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -1200,7 +1329,7 @@ test('linearis module practice grants xp', async () => {
   }
 });
 
-test('linearis visual model updates equation', async () => {
+e2eTest('linearis visual model updates equation', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -1272,7 +1401,7 @@ test('linearis visual model updates equation', async () => {
   }
 });
 
-test('masodfoku fuggveny module runs a test flow', async () => {
+e2eTest('masodfoku fuggveny module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -1397,7 +1526,7 @@ test('masodfoku fuggveny module runs a test flow', async () => {
   }
 });
 
-test('masodfoku fuggveny module practice grants xp', async () => {
+e2eTest('masodfoku fuggveny module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -1470,7 +1599,7 @@ test('masodfoku fuggveny module practice grants xp', async () => {
   }
 });
 
-test('masodfoku fuggveny visual model updates outputs', async () => {
+e2eTest('masodfoku fuggveny visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -1546,7 +1675,7 @@ test('masodfoku fuggveny visual model updates outputs', async () => {
   }
 });
 
-test('hatvanyfuggvenyek module runs a test flow', async () => {
+e2eTest('hatvanyfuggvenyek module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -1671,7 +1800,7 @@ test('hatvanyfuggvenyek module runs a test flow', async () => {
   }
 });
 
-test('hatvanyfuggvenyek module practice grants xp', async () => {
+e2eTest('hatvanyfuggvenyek module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -1758,7 +1887,7 @@ test('hatvanyfuggvenyek module practice grants xp', async () => {
   }
 });
 
-test('hatvanyfuggvenyek visual model updates outputs', async () => {
+e2eTest('hatvanyfuggvenyek visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -1832,7 +1961,7 @@ test('hatvanyfuggvenyek visual model updates outputs', async () => {
   }
 });
 
-test('logikai szita module runs a test flow', async () => {
+e2eTest('logikai szita module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -1958,7 +2087,7 @@ test('logikai szita module runs a test flow', async () => {
   }
 });
 
-test('logikai szita module practice grants xp', async () => {
+e2eTest('logikai szita module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -2053,7 +2182,7 @@ test('logikai szita module practice grants xp', async () => {
   }
 });
 
-test('logikai szita visual model updates counts', async () => {
+e2eTest('logikai szita visual model updates counts', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -2140,7 +2269,7 @@ test('logikai szita visual model updates counts', async () => {
   }
 });
 
-test('skatulya elv module practice grants xp', async () => {
+e2eTest('skatulya elv module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -2219,7 +2348,7 @@ test('skatulya elv module practice grants xp', async () => {
   }
 });
 
-test('skatulya elv visual model updates outputs', async () => {
+e2eTest('skatulya elv visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -2291,7 +2420,7 @@ test('skatulya elv visual model updates outputs', async () => {
   }
 });
 
-test('oszthatosag module runs a test flow', async () => {
+e2eTest('oszthatosag module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -2417,7 +2546,7 @@ test('oszthatosag module runs a test flow', async () => {
   }
 });
 
-test('oszthatosag module practice grants xp', async () => {
+e2eTest('oszthatosag module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -2490,7 +2619,7 @@ test('oszthatosag module practice grants xp', async () => {
   }
 });
 
-test('oszthatosag visual model updates outputs', async () => {
+e2eTest('oszthatosag visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -2565,7 +2694,7 @@ test('oszthatosag visual model updates outputs', async () => {
   }
 });
 
-test('lnko lkkt module runs a test flow', async () => {
+e2eTest('lnko lkkt module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -2689,7 +2818,7 @@ test('lnko lkkt module runs a test flow', async () => {
   }
 });
 
-test('lnko lkkt module practice grants xp', async () => {
+e2eTest('lnko lkkt module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -2762,7 +2891,7 @@ test('lnko lkkt module practice grants xp', async () => {
   }
 });
 
-test('lnko lkkt visual model updates outputs', async () => {
+e2eTest('lnko lkkt visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -2837,7 +2966,7 @@ test('lnko lkkt visual model updates outputs', async () => {
   }
 });
 
-test('primtenyezok module runs a test flow', async () => {
+e2eTest('primtenyezok module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -2967,7 +3096,7 @@ test('primtenyezok module runs a test flow', async () => {
   }
 });
 
-test('primtenyezok module practice grants xp', async () => {
+e2eTest('primtenyezok module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -3040,7 +3169,7 @@ test('primtenyezok module practice grants xp', async () => {
   }
 });
 
-test('primtenyezok visual model updates outputs', async () => {
+e2eTest('primtenyezok visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -3109,7 +3238,7 @@ test('primtenyezok visual model updates outputs', async () => {
   }
 });
 
-test('szamrendszerek module runs a test flow', async () => {
+e2eTest('szamrendszerek module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -3239,7 +3368,7 @@ test('szamrendszerek module runs a test flow', async () => {
   }
 });
 
-test('szamrendszerek module practice grants xp', async () => {
+e2eTest('szamrendszerek module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -3312,7 +3441,7 @@ test('szamrendszerek module practice grants xp', async () => {
   }
 });
 
-test('szamrendszerek visual model updates outputs', async () => {
+e2eTest('szamrendszerek visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -3405,7 +3534,7 @@ test('szamrendszerek visual model updates outputs', async () => {
   }
 });
 
-test('racionalis szamok temazaro module runs a test flow', async () => {
+e2eTest('racionalis szamok temazaro module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -3531,7 +3660,7 @@ test('racionalis szamok temazaro module runs a test flow', async () => {
   }
 });
 
-test('racionalis szamok temazaro module practice grants xp', async () => {
+e2eTest('racionalis szamok temazaro module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -3604,7 +3733,7 @@ test('racionalis szamok temazaro module practice grants xp', async () => {
   }
 });
 
-test('racionalis szamok temazaro visual model updates outputs', async () => {
+e2eTest('racionalis szamok temazaro visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -3691,7 +3820,7 @@ test('racionalis szamok temazaro visual model updates outputs', async () => {
   }
 });
 
-test('tortek module runs a test flow', async () => {
+e2eTest('tortek module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -3819,7 +3948,7 @@ test('tortek module runs a test flow', async () => {
   }
 });
 
-test('tortek module practice grants xp', async () => {
+e2eTest('tortek module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -3892,7 +4021,7 @@ test('tortek module practice grants xp', async () => {
   }
 });
 
-test('tortek visual model updates outputs', async () => {
+e2eTest('tortek visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -3999,7 +4128,7 @@ test('tortek visual model updates outputs', async () => {
   }
 });
 
-test('tizedes tortek module runs a test flow', async () => {
+e2eTest('tizedes tortek module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -4124,7 +4253,7 @@ test('tizedes tortek module runs a test flow', async () => {
   }
 });
 
-test('tizedes tortek module practice grants xp', async () => {
+e2eTest('tizedes tortek module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -4197,7 +4326,7 @@ test('tizedes tortek module practice grants xp', async () => {
   }
 });
 
-test('tizedes tortek visual model updates outputs', async () => {
+e2eTest('tizedes tortek visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -4304,7 +4433,7 @@ test('tizedes tortek visual model updates outputs', async () => {
   }
 });
 
-test('szazalekszamitas module runs a test flow', async () => {
+e2eTest('szazalekszamitas module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -4429,7 +4558,7 @@ test('szazalekszamitas module runs a test flow', async () => {
   }
 });
 
-test('szazalekszamitas module practice grants xp', async () => {
+e2eTest('szazalekszamitas module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -4502,7 +4631,7 @@ test('szazalekszamitas module practice grants xp', async () => {
   }
 });
 
-test('szazalekszamitas visual model updates outputs', async () => {
+e2eTest('szazalekszamitas visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -4592,7 +4721,7 @@ test('szazalekszamitas visual model updates outputs', async () => {
   }
 });
 
-test('hatvany temazaro module runs a test flow', async () => {
+e2eTest('hatvany temazaro module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -4718,7 +4847,7 @@ test('hatvany temazaro module runs a test flow', async () => {
   }
 });
 
-test('hatvany temazaro module practice grants xp', async () => {
+e2eTest('hatvany temazaro module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -4791,7 +4920,7 @@ test('hatvany temazaro module practice grants xp', async () => {
   }
 });
 
-test('hatvany temazaro visual model updates outputs', async () => {
+e2eTest('hatvany temazaro visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -4883,7 +5012,7 @@ test('hatvany temazaro visual model updates outputs', async () => {
   }
 });
 
-test('algebrai kifejezesek temazaro module runs a test flow', async () => {
+e2eTest('algebrai kifejezesek temazaro module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -5009,7 +5138,7 @@ test('algebrai kifejezesek temazaro module runs a test flow', async () => {
   }
 });
 
-test('algebrai kifejezesek temazaro module practice grants xp', async () => {
+e2eTest('algebrai kifejezesek temazaro module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -5082,7 +5211,7 @@ test('algebrai kifejezesek temazaro module practice grants xp', async () => {
   }
 });
 
-test('algebrai kifejezesek temazaro visual model updates outputs', async () => {
+e2eTest('algebrai kifejezesek temazaro visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -5161,7 +5290,7 @@ test('algebrai kifejezesek temazaro visual model updates outputs', async () => {
   }
 });
 
-test('polinomok module runs a test flow', async () => {
+e2eTest('polinomok module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -5286,7 +5415,7 @@ test('polinomok module runs a test flow', async () => {
   }
 });
 
-test('polinomok module practice grants xp', async () => {
+e2eTest('polinomok module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -5359,7 +5488,7 @@ test('polinomok module practice grants xp', async () => {
   }
 });
 
-  test('polinomok visual model updates outputs', async () => {
+  e2eTest('polinomok visual model updates outputs', async () => {
     const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -5455,7 +5584,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('nevezetes azonossagok module runs a test flow', async () => {
+  e2eTest('nevezetes azonossagok module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -5580,7 +5709,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
   
-  test('nevezetes azonossagok module practice grants xp', async () => {
+  e2eTest('nevezetes azonossagok module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -5653,7 +5782,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
   
-  test('nevezetes azonossagok visual model updates outputs', async () => {
+  e2eTest('nevezetes azonossagok visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -5729,7 +5858,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('algebrai tortek module runs a test flow', async () => {
+  e2eTest('algebrai tortek module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -5854,7 +5983,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('algebrai tortek module practice grants xp', async () => {
+  e2eTest('algebrai tortek module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -5927,7 +6056,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('algebrai tortek visual model updates outputs', async () => {
+  e2eTest('algebrai tortek visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -6005,7 +6134,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('linearis egyenletek module runs a test flow', async () => {
+  e2eTest('linearis egyenletek module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -6130,7 +6259,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('linearis egyenletek module practice grants xp', async () => {
+  e2eTest('linearis egyenletek module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -6203,7 +6332,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('linearis egyenletek visual model updates outputs', async () => {
+  e2eTest('linearis egyenletek visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -6273,7 +6402,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('egyenletek temazaro module runs a test flow', async () => {
+  e2eTest('egyenletek temazaro module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -6399,7 +6528,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('egyenletek temazaro module practice grants xp', async () => {
+  e2eTest('egyenletek temazaro module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -6472,7 +6601,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('egyenletek temazaro visual model updates outputs', async () => {
+  e2eTest('egyenletek temazaro visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -6563,7 +6692,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggvenyek alt temazaro module runs a test flow', async () => {
+  e2eTest('fuggvenyek alt temazaro module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -6689,7 +6818,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggvenyek alt temazaro module practice grants xp', async () => {
+  e2eTest('fuggvenyek alt temazaro module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -6762,7 +6891,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggvenyek alt temazaro visual model updates outputs', async () => {
+  e2eTest('fuggvenyek alt temazaro visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -6855,7 +6984,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('nevezetes fuggvenyek temazaro module runs a test flow', async () => {
+  e2eTest('nevezetes fuggvenyek temazaro module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -6981,7 +7110,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('nevezetes fuggvenyek temazaro module practice grants xp', async () => {
+  e2eTest('nevezetes fuggvenyek temazaro module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -7054,7 +7183,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('nevezetes fuggvenyek temazaro visual model updates outputs', async () => {
+  e2eTest('nevezetes fuggvenyek temazaro visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -7167,7 +7296,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggveny alapok module runs a test flow', async () => {
+  e2eTest('fuggveny alapok module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -7292,7 +7421,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggveny alapok module practice grants xp', async () => {
+  e2eTest('fuggveny alapok module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -7365,7 +7494,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggveny alapok visual model updates outputs', async () => {
+  e2eTest('fuggveny alapok visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -7453,7 +7582,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggveny jellemzes module runs a test flow', async () => {
+  e2eTest('fuggveny jellemzes module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -7578,7 +7707,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggveny jellemzes module practice grants xp', async () => {
+  e2eTest('fuggveny jellemzes module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -7651,7 +7780,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggveny jellemzes visual model updates outputs', async () => {
+  e2eTest('fuggveny jellemzes visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -7747,7 +7876,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggveny transzformaciok module runs a test flow', async () => {
+  e2eTest('fuggveny transzformaciok module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -7872,7 +8001,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggveny transzformaciok module practice grants xp', async () => {
+  e2eTest('fuggveny transzformaciok module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -7945,7 +8074,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('fuggveny transzformaciok visual model updates outputs', async () => {
+  e2eTest('fuggveny transzformaciok visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -8025,7 +8154,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('paritas module runs a test flow', async () => {
+  e2eTest('paritas module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -8150,7 +8279,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('paritas module practice grants xp', async () => {
+  e2eTest('paritas module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -8223,7 +8352,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('paritas visual model updates outputs', async () => {
+  e2eTest('paritas visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -8314,7 +8443,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('masodfoku egyenlet module runs a test flow', async () => {
+  e2eTest('masodfoku egyenlet module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -8439,7 +8568,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('masodfoku egyenlet module practice grants xp', async () => {
+  e2eTest('masodfoku egyenlet module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -8512,7 +8641,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('masodfoku egyenlet visual model updates outputs', async () => {
+  e2eTest('masodfoku egyenlet visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -8584,7 +8713,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('viete formulak module runs a test flow', async () => {
+  e2eTest('viete formulak module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -8709,7 +8838,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('viete formulak module practice grants xp', async () => {
+  e2eTest('viete formulak module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -8782,7 +8911,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('viete formulak visual model updates outputs', async () => {
+  e2eTest('viete formulak visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -8873,7 +9002,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('parameteres masodfoku module runs a test flow', async () => {
+  e2eTest('parameteres masodfoku module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -8998,7 +9127,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('parameteres masodfoku module practice grants xp', async () => {
+  e2eTest('parameteres masodfoku module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -9071,7 +9200,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('parameteres masodfoku visual model updates outputs', async () => {
+  e2eTest('parameteres masodfoku visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -9143,7 +9272,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('specialis egyenletek module runs a test flow', async () => {
+  e2eTest('specialis egyenletek module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -9268,7 +9397,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('specialis egyenletek module practice grants xp', async () => {
+  e2eTest('specialis egyenletek module practice grants xp', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -9341,7 +9470,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('specialis egyenletek visual model updates outputs', async () => {
+  e2eTest('specialis egyenletek visual model updates outputs', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -9419,7 +9548,7 @@ test('polinomok module practice grants xp', async () => {
     }
   });
 
-  test('hatvanyozas module runs a test flow', async () => {
+  e2eTest('hatvanyozas module runs a test flow', async () => {
     const { app, page } = await launchApp();
     try {
       await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -9544,7 +9673,7 @@ test('polinomok module practice grants xp', async () => {
   }
 });
 
-test('hatvanyozas module practice grants xp', async () => {
+e2eTest('hatvanyozas module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -9631,7 +9760,7 @@ test('hatvanyozas module practice grants xp', async () => {
   }
 });
 
-test('hatvanyozas visual model updates outputs', async () => {
+e2eTest('hatvanyozas visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -9717,7 +9846,7 @@ test('hatvanyozas visual model updates outputs', async () => {
   }
 });
 
-test('gyokvonas module runs a test flow', async () => {
+e2eTest('gyokvonas module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -9842,7 +9971,7 @@ test('gyokvonas module runs a test flow', async () => {
   }
 });
 
-test('gyokvonas module practice grants xp', async () => {
+e2eTest('gyokvonas module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -9929,7 +10058,7 @@ test('gyokvonas module practice grants xp', async () => {
   }
 });
 
-test('gyokvonas visual model updates outputs', async () => {
+e2eTest('gyokvonas visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -10018,7 +10147,7 @@ test('gyokvonas visual model updates outputs', async () => {
   }
 });
 
-test('logaritmus module runs a test flow', async () => {
+e2eTest('logaritmus module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -10143,7 +10272,7 @@ test('logaritmus module runs a test flow', async () => {
   }
 });
 
-test('logaritmus module practice grants xp', async () => {
+e2eTest('logaritmus module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -10230,7 +10359,7 @@ test('logaritmus module practice grants xp', async () => {
   }
 });
 
-test('logaritmus visual model updates outputs', async () => {
+e2eTest('logaritmus visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -10309,7 +10438,7 @@ test('logaritmus visual model updates outputs', async () => {
   }
 });
 
-test('exp log fuggveny module runs a test flow', async () => {
+e2eTest('exp log fuggveny module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -10434,7 +10563,7 @@ test('exp log fuggveny module runs a test flow', async () => {
   }
 });
 
-test('exp log fuggveny module practice grants xp', async () => {
+e2eTest('exp log fuggveny module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -10521,7 +10650,7 @@ test('exp log fuggveny module practice grants xp', async () => {
   }
 });
 
-test('exp log fuggveny visual model updates outputs', async () => {
+e2eTest('exp log fuggveny visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -10600,7 +10729,7 @@ test('exp log fuggveny visual model updates outputs', async () => {
   }
 });
 
-test('trigonometrikus fuggvenyek module runs a test flow', async () => {
+e2eTest('trigonometrikus fuggvenyek module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -10725,7 +10854,7 @@ test('trigonometrikus fuggvenyek module runs a test flow', async () => {
   }
 });
 
-test('trigonometrikus fuggvenyek module practice grants xp', async () => {
+e2eTest('trigonometrikus fuggvenyek module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -10812,7 +10941,7 @@ test('trigonometrikus fuggvenyek module practice grants xp', async () => {
   }
 });
 
-test('trigonometrikus fuggvenyek visual model updates outputs', async () => {
+e2eTest('trigonometrikus fuggvenyek visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -10896,7 +11025,7 @@ test('trigonometrikus fuggvenyek visual model updates outputs', async () => {
   }
 });
 
-test('specialis fuggvenyek module runs a test flow', async () => {
+e2eTest('specialis fuggvenyek module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11021,7 +11150,7 @@ test('specialis fuggvenyek module runs a test flow', async () => {
   }
 });
 
-test('specialis fuggvenyek module practice grants xp', async () => {
+e2eTest('specialis fuggvenyek module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11108,7 +11237,7 @@ test('specialis fuggvenyek module practice grants xp', async () => {
   }
 });
 
-test('specialis fuggvenyek visual model updates outputs', async () => {
+e2eTest('specialis fuggvenyek visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11205,7 +11334,7 @@ test('specialis fuggvenyek visual model updates outputs', async () => {
   }
 });
 
-test('records test results and shows them in results view', async () => {
+e2eTest('records test results and shows them in results view', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11242,7 +11371,7 @@ test('records test results and shows them in results view', async () => {
   }
 });
 
-test('haromszogek temazaro module runs a test flow', async () => {
+e2eTest('haromszogek temazaro module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11368,7 +11497,7 @@ test('haromszogek temazaro module runs a test flow', async () => {
   }
 });
 
-test('haromszogek temazaro module practice grants xp', async () => {
+e2eTest('haromszogek temazaro module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11441,7 +11570,7 @@ test('haromszogek temazaro module practice grants xp', async () => {
   }
 });
 
-test('haromszogek temazaro visual model updates outputs', async () => {
+e2eTest('haromszogek temazaro visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11514,7 +11643,7 @@ test('haromszogek temazaro visual model updates outputs', async () => {
   }
 });
 
-test('nevezetes vonalak module runs a test flow', async () => {
+e2eTest('nevezetes vonalak module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11639,7 +11768,7 @@ test('nevezetes vonalak module runs a test flow', async () => {
   }
 });
 
-test('nevezetes vonalak module practice grants xp', async () => {
+e2eTest('nevezetes vonalak module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11712,7 +11841,7 @@ test('nevezetes vonalak module practice grants xp', async () => {
   }
 });
 
-test('nevezetes vonalak visual model updates outputs', async () => {
+e2eTest('nevezetes vonalak visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11781,7 +11910,7 @@ test('nevezetes vonalak visual model updates outputs', async () => {
   }
 });
 
-test('haromszog egyenlotlenseg module runs a test flow', async () => {
+e2eTest('haromszog egyenlotlenseg module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11906,7 +12035,7 @@ test('haromszog egyenlotlenseg module runs a test flow', async () => {
   }
 });
 
-test('haromszog egyenlotlenseg module practice grants xp', async () => {
+e2eTest('haromszog egyenlotlenseg module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -11979,7 +12108,7 @@ test('haromszog egyenlotlenseg module practice grants xp', async () => {
   }
 });
 
-test('haromszog egyenlotlenseg visual model updates outputs', async () => {
+e2eTest('haromszog egyenlotlenseg visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -12051,7 +12180,7 @@ test('haromszog egyenlotlenseg visual model updates outputs', async () => {
   }
 });
 
-test('szogtetelek module runs a test flow', async () => {
+e2eTest('szogtetelek module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -12176,7 +12305,7 @@ test('szogtetelek module runs a test flow', async () => {
   }
 });
 
-test('szogtetelek module practice grants xp', async () => {
+e2eTest('szogtetelek module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -12249,7 +12378,7 @@ test('szogtetelek module practice grants xp', async () => {
   }
 });
 
-test('szogtetelek visual model updates outputs', async () => {
+e2eTest('szogtetelek visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -12320,7 +12449,7 @@ test('szogtetelek visual model updates outputs', async () => {
   }
 });
 
-test('szinusz koszinusz tetel module runs a test flow', async () => {
+e2eTest('szinusz koszinusz tetel module runs a test flow', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -12445,7 +12574,7 @@ test('szinusz koszinusz tetel module runs a test flow', async () => {
   }
 });
 
-test('szinusz koszinusz tetel module practice grants xp', async () => {
+e2eTest('szinusz koszinusz tetel module practice grants xp', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -12518,7 +12647,7 @@ test('szinusz koszinusz tetel module practice grants xp', async () => {
   }
 });
 
-test('szinusz koszinusz tetel visual model updates outputs', async () => {
+e2eTest('szinusz koszinusz tetel visual model updates outputs', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
@@ -12590,7 +12719,7 @@ test('szinusz koszinusz tetel visual model updates outputs', async () => {
   }
 });
 
-test('applies settings from the settings overlay', async () => {
+e2eTest('applies settings from the settings overlay', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getSettings);
@@ -12613,7 +12742,7 @@ test('applies settings from the settings overlay', async () => {
   }
 });
 
-test('settings cancel discards preview changes', async () => {
+e2eTest('settings cancel discards preview changes', async () => {
   const { app, page, userDataDir } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getSettings);
@@ -12654,7 +12783,7 @@ test('settings cancel discards preview changes', async () => {
   }
 });
 
-test('settings save persists to disk', async () => {
+e2eTest('settings save persists to disk', async () => {
   const { app, page, userDataDir } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getSettings);
@@ -12683,7 +12812,7 @@ test('settings save persists to disk', async () => {
   }
 });
 
-test('applies module opacity to iframe body', async () => {
+e2eTest('applies module opacity to iframe body', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getSettings);
@@ -12828,7 +12957,7 @@ test('applies module opacity to iframe body', async () => {
   }
 });
 
-test('saves avatar image from settings overlay', async () => {
+e2eTest('saves avatar image from settings overlay', async () => {
   const { app, page } = await launchApp();
   try {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getSettings);

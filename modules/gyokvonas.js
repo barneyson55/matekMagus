@@ -480,7 +480,7 @@ function updateRootModel() {
   if (!Number.isFinite(radicand) || !Number.isFinite(index) || index < 2) {
     rootOutput.textContent = '-';
     rootCheck.textContent = '-';
-    rootError.textContent = 'Adj meg helyes gy\u00f6k\u00f6s adatokat.';
+    rootError.textContent = 'Adj meg \u00e9rv\u00e9nyes gy\u00f6k\u00f6s adatokat.';
     rootError.style.color = '#f04747';
     return;
   }
@@ -524,7 +524,7 @@ function updateLinkModel() {
     linkRadicand.textContent = '-';
     linkResult.textContent = '-';
     linkFormula.textContent = '-';
-    linkError.textContent = 'Adj meg helyes param\u00e9tereket.';
+    linkError.textContent = 'Adj meg \u00e9rv\u00e9nyes param\u00e9tereket.';
     linkError.style.color = '#f04747';
     return;
   }

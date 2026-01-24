@@ -539,7 +539,7 @@ function updateFractionModel() {
   if (!Number.isFinite(num) || !Number.isFinite(den) || den === 0) {
     fracDecimalOutput.textContent = '-';
     fracPercentOutput.textContent = '-';
-    fracError.textContent = 'Adj meg helyes t\u00f6rtet.';
+    fracError.textContent = 'Adj meg \u00e9rv\u00e9nyes t\u00f6rtet.';
     fracError.style.color = '#f04747';
     return;
   }
@@ -547,7 +547,7 @@ function updateFractionModel() {
   if (!simplified) {
     fracDecimalOutput.textContent = '-';
     fracPercentOutput.textContent = '-';
-    fracError.textContent = 'Adj meg helyes t\u00f6rtet.';
+    fracError.textContent = 'Adj meg \u00e9rv\u00e9nyes t\u00f6rtet.';
     fracError.style.color = '#f04747';
     return;
   }
@@ -563,7 +563,7 @@ function updatePercentModel() {
   if (percentValue === null) {
     percentDecimalOutput.textContent = '-';
     percentFractionOutput.textContent = '-';
-    percentError.textContent = 'Adj meg helyes sz\u00e1zal\u00e9kot.';
+    percentError.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1zal\u00e9kot.';
     percentError.style.color = '#f04747';
     return;
   }

@@ -269,7 +269,7 @@ function buildMonotoneLinear(difficulty) {
   if (a < 0) monotone = 'csokkeno';
   if (a === 0) monotone = 'allando';
   return {
-    question: `Add meg a f(x) = ${formatLinearExpression(a, b)} fuggveny monotonitasat (novegvo/csokkeno/allando).`,
+    question: `Add meg a f(x) = ${formatLinearExpression(a, b)} f\u00fcggv\u00e9ny monotonit\u00e1s\u00e1t (n\u00f6vekv\u0151/cs\u00f6kken\u0151/\u00e1lland\u00f3).`,
     answerString: monotone,
     answerType: 'text',
     expectedText: monotone
@@ -282,7 +282,7 @@ function buildRangeLinear(difficulty) {
   const b = randomInt(-range, range);
   const rangeText = a === 0 ? `{${formatNumber(b, 3)}}` : 'R';
   return {
-    question: `Mi a f(x) = ${formatLinearExpression(a, b)} ertekkeszlete? Valasz: R vagy {${formatNumber(b, 3)}}.`,
+    question: `Mi a f(x) = ${formatLinearExpression(a, b)} \u00e9rt\u00e9kk\u00e9szlete? V\u00e1lasz: R vagy {${formatNumber(b, 3)}}.`,
     answerString: rangeText,
     answerType: 'text',
     expectedText: rangeText
@@ -292,7 +292,7 @@ function buildRangeLinear(difficulty) {
 function buildParityBasic() {
   const choice = PARITY_BASES[randomInt(0, PARITY_BASES.length - 1)];
   return {
-    question: `A f(x) = ${choice.expr} fuggveny paros vagy paratlan? (paros/paratlan)`,
+    question: `A f(x) = ${choice.expr} f\u00fcggv\u00e9ny p\u00e1ros vagy p\u00e1ratlan? (p\u00e1ros/p\u00e1ratlan)`,
     answerString: choice.parity,
     answerType: 'text',
     expectedText: choice.parity
@@ -302,7 +302,7 @@ function buildParityBasic() {
 function buildParityShift(difficulty) {
   const params = pickParabolaParams(difficulty, false);
   return {
-    question: `A f(x) = ${formatParabolaExpression(1, params.h, params.k)} paros vagy paratlan? (paros/paratlan/nem paros)`,
+    question: `A f(x) = ${formatParabolaExpression(1, params.h, params.k)} p\u00e1ros vagy p\u00e1ratlan? (p\u00e1ros/p\u00e1ratlan/nem p\u00e1ros)`,
     answerString: 'nem paros',
     answerType: 'text',
     expectedText: 'nem paros'
@@ -312,7 +312,7 @@ function buildParityShift(difficulty) {
 function buildVertexX(difficulty) {
   const params = pickParabolaParams(difficulty, true);
   return {
-    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabolanak mennyi a csucsanak x koordinataja?`,
+    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabol\u00e1nak mennyi a cs\u00facs\u00e1nak x koordin\u00e1t\u00e1ja?`,
     answerString: formatNumber(params.h, 3),
     answerType: 'number',
     expectedValue: params.h
@@ -322,7 +322,7 @@ function buildVertexX(difficulty) {
 function buildVertexY(difficulty) {
   const params = pickParabolaParams(difficulty, true);
   return {
-    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabolanak mennyi a csucsanak y koordinataja?`,
+    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabol\u00e1nak mennyi a cs\u00facs\u00e1nak y koordin\u00e1t\u00e1ja?`,
     answerString: formatNumber(params.k, 3),
     answerType: 'number',
     expectedValue: params.k
@@ -332,7 +332,7 @@ function buildVertexY(difficulty) {
 function buildAxisX(difficulty) {
   const params = pickParabolaParams(difficulty, true);
   return {
-    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabolanak mi a tengelye? Add meg x erteket.`,
+    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabol\u00e1nak mi a tengelye? Add meg x \u00e9rt\u00e9ket.`,
     answerString: formatNumber(params.h, 3),
     answerType: 'number',
     expectedValue: params.h
@@ -658,7 +658,7 @@ function updateLinearModel() {
     linDomain.textContent = '-';
     linRange.textContent = '-';
     linMonotone.textContent = '-';
-    linNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    linNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     linNote.style.color = '#f04747';
     return;
   }
@@ -668,7 +668,7 @@ function updateLinearModel() {
 
   if (Math.abs(a) < 1e-9) {
     linRange.textContent = `{${formatNumber(b, 3)}}`;
-    linMonotone.textContent = 'Alland\u00f3';
+    linMonotone.textContent = '\u00c1lland\u00f3';
     linNote.textContent = 'A meredeks\u00e9g nulla, a f\u00fcggv\u00e9ny konstans.';
     linNote.style.color = '#f04747';
     return;
@@ -690,7 +690,7 @@ function updateParabolaModel() {
     paraAxis.textContent = '-';
     paraParity.textContent = '-';
     paraOpening.textContent = '-';
-    paraNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    paraNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     paraNote.style.color = '#f04747';
     return;
   }

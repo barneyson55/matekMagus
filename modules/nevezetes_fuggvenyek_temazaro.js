@@ -322,7 +322,7 @@ function buildLinearZero(difficulty) {
   const answerValue = fraction ? fraction.n / fraction.d : -b / a;
   const answerString = fraction ? formatFraction(fraction.n, fraction.d) : formatNumber(answerValue, 3);
   return {
-    question: `Add meg a f(x) = ${formatLinearExpression(a, b)} fuggveny z\u00e9rushelyet.`,
+    question: `Add meg a f(x) = ${formatLinearExpression(a, b)} f\u00fcggv\u00e9ny z\u00e9rushely\u00e9t.`,
     answerString,
     answerType: 'number',
     expectedValue: answerValue
@@ -332,7 +332,7 @@ function buildLinearZero(difficulty) {
 function buildQuadraticVertexX(difficulty) {
   const params = pickParabolaParams(difficulty);
   return {
-    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabolanak mennyi a csucsanak x koordinataja?`,
+    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabol\u00e1nak mennyi a cs\u00facs\u00e1nak x koordin\u00e1t\u00e1ja?`,
     answerString: formatNumber(params.h, 3),
     answerType: 'number',
     expectedValue: params.h
@@ -342,7 +342,7 @@ function buildQuadraticVertexX(difficulty) {
 function buildQuadraticVertexY(difficulty) {
   const params = pickParabolaParams(difficulty);
   return {
-    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabolanak mennyi a csucsanak y koordinataja?`,
+    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabol\u00e1nak mennyi a cs\u00facs\u00e1nak y koordin\u00e1t\u00e1ja?`,
     answerString: formatNumber(params.k, 3),
     answerType: 'number',
     expectedValue: params.k
@@ -352,7 +352,7 @@ function buildQuadraticVertexY(difficulty) {
 function buildQuadraticAxis(difficulty) {
   const params = pickParabolaParams(difficulty);
   return {
-    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabolanak mi a tengelye? Add meg x erteket.`,
+    question: `A f(x) = ${formatParabolaExpression(params.a, params.h, params.k)} parabol\u00e1nak mi a tengelye? Add meg x \u00e9rt\u00e9ket.`,
     answerString: formatNumber(params.h, 3),
     answerType: 'number',
     expectedValue: params.h
@@ -427,7 +427,7 @@ function buildExpMonotone() {
   const baseLabel = useDecreasing ? '1/2' : '2';
   const answer = useDecreasing ? 'csokkeno' : 'novegvo';
   return {
-    question: `A f(x) = ${baseLabel}^x fuggveny novekvo vagy csokkeno? (novegvo/csokkeno)`,
+    question: `A f(x) = ${baseLabel}^x f\u00fcggv\u00e9ny n\u00f6vekv\u0151 vagy cs\u00f6kken\u0151? (n\u00f6vekv\u0151/cs\u00f6kken\u0151)`,
     answerString: answer,
     answerType: 'text',
     expectedText: answer
@@ -749,7 +749,7 @@ function updateLinearModel() {
     linEquation.textContent = '-';
     linValue.textContent = '-';
     linZero.textContent = '-';
-    linNote.textContent = 'Adj meg helyes szamokat.';
+    linNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     linNote.style.color = '#f04747';
     return;
   }
@@ -763,7 +763,7 @@ function updateLinearModel() {
     } else {
       linZero.textContent = 'Nincs';
     }
-    linNote.textContent = 'A meredekseg nulla, a fuggveny konstans.';
+    linNote.textContent = 'A meredeks\u00e9g nulla, a f\u00fcggv\u00e9ny konstans.';
     linNote.style.color = '#f04747';
     return;
   }
@@ -784,7 +784,7 @@ function updateQuadraticModel() {
     quadAxis.textContent = '-';
     quadDiscriminant.textContent = '-';
     quadRoots.textContent = '-';
-    quadNote.textContent = 'Adj meg helyes szamokat.';
+    quadNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     quadNote.style.color = '#f04747';
     return;
   }
@@ -795,7 +795,7 @@ function updateQuadraticModel() {
     quadAxis.textContent = '-';
     quadDiscriminant.textContent = '-';
     quadRoots.textContent = '-';
-    quadNote.textContent = 'Ez nem masodfoku fuggveny.';
+    quadNote.textContent = 'Ez nem m\u00e1sodfok\u00fa f\u00fcggv\u00e9ny.';
     quadNote.style.color = '#f04747';
     return;
   }
@@ -808,11 +808,11 @@ function updateQuadraticModel() {
   const disc = b * b - 4 * a * c;
   quadDiscriminant.textContent = formatNumber(disc, 3);
   if (disc > 1e-9) {
-    quadRoots.textContent = '2 valos gyok';
+    quadRoots.textContent = '2 val\u00f3s gy\u00f6k';
   } else if (Math.abs(disc) <= 1e-9) {
-    quadRoots.textContent = '1 valos gyok';
+    quadRoots.textContent = '1 val\u00f3s gy\u00f6k';
   } else {
-    quadRoots.textContent = 'Nincs valos gyok';
+    quadRoots.textContent = 'Nincs val\u00f3s gy\u00f6k';
   }
   quadNote.textContent = '';
   quadNote.style.color = '';
@@ -825,7 +825,7 @@ function updateExpModel() {
     expValue.textContent = '-';
     expLog.textContent = '-';
     expGrowth.textContent = '-';
-    expNote.textContent = 'Adj meg helyes alapot es kitevot.';
+    expNote.textContent = 'Adj meg \u00e9rv\u00e9nyes alapot \u00e9s kitev\u0151t.';
     expNote.style.color = '#f04747';
     return;
   }
@@ -896,7 +896,7 @@ if (practiceStartBtn) {
   practiceStartBtn.addEventListener('click', () => {
     const enabled = getEnabledPracticeDifficulties();
     if (!enabled.length) {
-      practiceFeedback.textContent = 'Valassz legalabb egy nehezseget.';
+      practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
       practiceFeedback.style.color = '#f04747';
       return;
     }

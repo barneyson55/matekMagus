@@ -854,7 +854,7 @@ function updateAbsModel() {
     if (absAxis) absAxis.textContent = '-';
     if (absVertex) absVertex.textContent = '-';
     if (absNote) {
-      absNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+      absNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
       absNote.style.color = '#f04747';
     }
     return;
@@ -895,7 +895,7 @@ function updateRootModel() {
     if (rootStart) rootStart.textContent = '-';
     if (rootMonotonicity) rootMonotonicity.textContent = '-';
     if (rootNote) {
-      rootNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+      rootNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
       rootNote.style.color = '#f04747';
     }
     return;

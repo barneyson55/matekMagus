@@ -229,7 +229,13 @@
                 grid-template-columns: 1fr;
             }
         }
-    </style>
+    
+        /* Touch targets */
+        button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+</style>
 </head>
 <body>
     <div class="sheet">
@@ -241,7 +247,7 @@
 
             <div class="tab-panel is-active" id="tab-active">
                 <ul class="list" id="active-quest-list"></ul>
-                <div class="empty-state" id="active-empty" style="display:none;">Nincs akt&iacute;v k&uuml;ldet&eacute;s.</div>
+                <div class="empty-state" id="active-empty" style="display:none;">M&eacute;g nincs akt&iacute;v k&uuml;ldet&eacute;s.</div>
             </div>
 
             <div class="tab-panel" id="tab-results">
@@ -251,7 +257,7 @@
 
                 <div class="section-title">Legut&oacute;bbi tesztek</div>
                 <ul class="list" id="recent-results-list"></ul>
-                <div class="empty-state" id="results-empty" style="display:none;">Nincs mentett teszteredm&eacute;ny.</div>
+                <div class="empty-state" id="results-empty" style="display:none;">M&eacute;g nincsenek mentett teszteredm&eacute;nyek.</div>
             </div>
         </section>
 
@@ -260,8 +266,8 @@
                 <div class="avatar"></div>
                 <div>
                     <h2 id="profile-level">Lv. 1</h2>
-                    <p id="profile-xp">Osszes XP: 0</p>
-                    <p id="profile-next">Kovetkezo szint: 0 XP</p>
+                    <p id="profile-xp">&Ouml;sszes XP: 0</p>
+                    <p id="profile-next">K&ouml;vetkez&#337; szint: 0 XP</p>
                 </div>
             </div>
 
@@ -285,11 +291,11 @@
                     <strong id="stat-completed">0</strong>
                 </div>
                 <div class="stat-card">
-                    <span>Osszes teszt</span>
+                    <span>&Ouml;sszes teszt</span>
                     <strong id="stat-tests">0</strong>
                 </div>
                 <div class="stat-card">
-                    <span>Gyakorlas XP</span>
+                    <span>Gyakorl&aacute;s XP</span>
                     <strong id="stat-practice-xp">0</strong>
                 </div>
             </div>
@@ -379,6 +385,20 @@
                 description: 'Elertel egy uj szintet.'
             }
         ];
+        const LOCALE = 'hu-HU';
+        const numberFormatter = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 2 });
+
+        function formatNumber(value, fallback = '-') {
+            if (value === null || value === undefined || value === '') return fallback;
+            const num = Number(value);
+            return Number.isFinite(num) ? numberFormatter.format(num) : fallback;
+        }
+
+        function formatDate(value) {
+            const date = value instanceof Date ? value : new Date(value);
+            if (Number.isNaN(date.getTime())) return '';
+            return date.toLocaleDateString(LOCALE);
+        }
 
         function parseHexColor(hex) {
             const match = (hex || '').trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
@@ -506,9 +526,9 @@
         }
 
         function getScopeLabel(scope) {
-            if (scope === 'main') return 'Fotema';
-            if (scope === 'sub') return 'Altema';
-            return 'Temakor';
+            if (scope === 'main') return 'Főtéma';
+            if (scope === 'sub') return 'Altéma';
+            return 'Témakör';
         }
 
         function getBestGrade(topicData) {
@@ -541,7 +561,8 @@
                 button.type = 'button';
                 button.className = 'list-item';
                 const scopeLabel = getScopeLabel(entry.scope);
-                button.innerHTML = `<span class="item-title">${getTopicLabel(entry.topicId)}</span><span class="item-meta">Aktiv · ${scopeLabel}</span>`;
+                const metaText = `Aktív küldetés · ${scopeLabel}`;
+                button.innerHTML = `<span class="item-title">${getTopicLabel(entry.topicId)}</span><span class="item-meta">${metaText}</span>`;
                 button.addEventListener('click', () => navigateToTopic(entry.topicId));
                 li.appendChild(button);
                 return li;
@@ -557,8 +578,14 @@
                 button.className = 'list-item';
                 const bestGrade = getBestGrade(summaryData && summaryData.completions ? summaryData.completions[entry.topicId] : null);
                 const scopeLabel = getScopeLabel(entry.scope);
-                const gradeText = bestGrade ? `Legjobb jegy: ${bestGrade}` : 'Kimaxolt';
-                const metaText = `${gradeText} · ${scopeLabel}`;
+                const hasBestGrade = bestGrade !== null && bestGrade !== undefined;
+                const statusLabel = 'Kimaxolt küldetés';
+                const metaParts = [statusLabel];
+                if (hasBestGrade) {
+                    metaParts.push(`Legjobb jegy: ${formatNumber(bestGrade, '-')}`);
+                }
+                metaParts.push(scopeLabel);
+                const metaText = metaParts.join(' · ');
                 button.innerHTML = `<span class="item-title">${getTopicLabel(entry.topicId)}</span><span class="item-meta">${metaText}</span>`;
                 button.addEventListener('click', () => navigateToTopic(entry.topicId));
                 li.appendChild(button);
@@ -573,8 +600,11 @@
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.className = 'list-item';
-                const grade = typeof result.grade === 'number' ? result.grade : '-';
-                button.innerHTML = `<span class="item-title">${getTopicLabel(result.topicId || '')}</span><span class="item-meta">Jegy: ${grade}</span>`;
+                const gradeValue = result && result.grade !== null && result.grade !== undefined && result.grade !== ''
+                    ? Number(result.grade)
+                    : Number.NaN;
+                const gradeText = Number.isFinite(gradeValue) ? formatNumber(gradeValue, '-') : '-';
+                button.innerHTML = `<span class="item-title">${getTopicLabel(result.topicId || '')}</span><span class="item-meta">Jegy: ${gradeText}</span>`;
                 if (result.topicId) {
                     button.addEventListener('click', () => navigateToTopic(result.topicId));
                 }
@@ -591,10 +621,10 @@
             const practiceXp = summaryData && summaryData.practiceXp
                 ? Object.values(summaryData.practiceXp).reduce((sum, value) => sum + Number(value || 0), 0)
                 : 0;
-            dom.statActive.textContent = activeCount;
-            dom.statCompleted.textContent = completedCount;
-            dom.statTests.textContent = testsCount;
-            dom.statPracticeXp.textContent = practiceXp;
+            dom.statActive.textContent = formatNumber(activeCount, '0');
+            dom.statCompleted.textContent = formatNumber(completedCount, '0');
+            dom.statTests.textContent = formatNumber(testsCount, '0');
+            dom.statPracticeXp.textContent = formatNumber(practiceXp, '0');
         }
 
         function renderAchievements() {
@@ -617,9 +647,9 @@
                 const description = achievement.description || '';
                 let metaText = isUnlocked ? 'Megszerezve' : 'Meg nem szerzett';
                 if (state.unlockedAt) {
-                    const date = new Date(state.unlockedAt);
-                    if (!Number.isNaN(date.getTime())) {
-                        metaText = `Megszerezve: ${date.toLocaleDateString('hu-HU')}`;
+                    const dateLabel = formatDate(state.unlockedAt);
+                    if (dateLabel) {
+                        metaText = `Megszerezve: ${dateLabel}`;
                     }
                 }
                 card.innerHTML = `<h4>${achievement.title || achievement.id}</h4><p>${description}</p><span class="achievement-meta">${metaText}</span>`;
@@ -640,13 +670,16 @@
             const isMaxLevel = xpForNext <= 0;
             const safeRequired = isMaxLevel ? Math.max(1, xpInto) : xpForNext;
             const percent = Math.min(100, Math.round((xpInto / safeRequired) * 100));
-            dom.profileLevel.textContent = levelName ? `Lv. ${level} - ${levelName}` : `Lv. ${level}`;
-            dom.profileXp.textContent = `Osszes XP: ${xpTotal}`;
+            const levelText = formatNumber(level, '1');
+            dom.profileLevel.textContent = levelName ? `Lv. ${levelText} - ${levelName}` : `Lv. ${levelText}`;
+            dom.profileXp.textContent = `\u00d6sszes XP: ${formatNumber(xpTotal, '0')}`;
             dom.profileNext.textContent = isMaxLevel
-                ? "Kovetkezo szint: Max"
-                : `Kovetkezo szint: ${xpToNext} XP`;
-            dom.xpText.textContent = isMaxLevel ? `${xpInto} XP` : `${xpInto} / ${xpForNext} XP`;
-            dom.xpPercent.textContent = `${percent}%`;
+                ? "K\u00f6vetkez\u0151 szint: Max"
+                : `K\u00f6vetkez\u0151 szint: ${formatNumber(xpToNext, '0')} XP`;
+            dom.xpText.textContent = isMaxLevel
+                ? `${formatNumber(xpInto, '0')} XP`
+                : `${formatNumber(xpInto, '0')} / ${formatNumber(xpForNext, '0')} XP`;
+            dom.xpPercent.textContent = `${formatNumber(percent, '0')}%`;
             dom.xpBarFill.style.width = `${percent}%`;
         }
         function renderAll() {

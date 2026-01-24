@@ -36,9 +36,9 @@ itt szövegesen magyarázzuk el, mit jelentenek ezek a számok.
 - **Főtéma**: Algebra és Függvények (topicWeight: 1.2, baseXP: 300).
 
 ### 3. Geometria
-- **Nehézség**: Közepes–nehéz, vizuális gondolkodás (topicWeight: 1.25).
+- **Nehézség**: Közepes–nehéz, vizuális gondolkodás (topicWeight: 1.2).
 - **Leírás**: Sík- és térgeometria, transzformációk. Nehéz a térbeli képzelőerő miatt, de érdekes példák segítenek.
-- **Főtéma**: Geometria (topicWeight: 1.25, baseXP: 300).
+- **Főtéma**: Geometria (topicWeight: 1.2, baseXP: 300).
 
 ### 4. Valószínűségszámítás és Statisztika
 - **Nehézség**: Nehéz, logikai kihívások (topicWeight: 1.3).

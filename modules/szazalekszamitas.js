@@ -484,7 +484,7 @@ function updatePartModel() {
   if (!Number.isFinite(whole) || whole <= 0 || percent === null) {
     partOutput.textContent = '-';
     partFormula.textContent = '-';
-    wholeError.textContent = 'Adj meg helyes adatokat.';
+    wholeError.textContent = 'Adj meg \u00e9rv\u00e9nyes adatokat.';
     wholeError.style.color = '#f04747';
     return;
   }
@@ -501,7 +501,7 @@ function updatePercentModel() {
   if (!Number.isFinite(part) || !Number.isFinite(whole) || whole <= 0) {
     percentOutput.textContent = '-';
     ratioOutput.textContent = '-';
-    ratioError.textContent = 'Adj meg helyes adatokat.';
+    ratioError.textContent = 'Adj meg \u00e9rv\u00e9nyes adatokat.';
     ratioError.style.color = '#f04747';
     return;
   }

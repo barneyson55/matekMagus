@@ -538,7 +538,7 @@ function updatePolynomialModel() {
   if (a === null || b === null || c === null || x === null) {
     polyFormula.textContent = '-';
     polyOutput.textContent = '-';
-    polyError.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    polyError.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     polyError.style.color = '#f04747';
     return;
   }
@@ -562,7 +562,7 @@ function updateOperationModel() {
     opPOutput.textContent = '-';
     opQOutput.textContent = '-';
     opResult.textContent = '-';
-    opError.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    opError.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     opError.style.color = '#f04747';
     return;
   }

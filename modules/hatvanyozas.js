@@ -501,7 +501,7 @@ function updatePowerModel() {
   if (!Number.isFinite(base) || !Number.isFinite(exp) || base === 0 && exp === 0) {
     powOutput.textContent = '-';
     powFormula.textContent = '-';
-    powError.textContent = 'Adj meg helyes alapot \u00e9s kitev\u0151t.';
+    powError.textContent = 'Adj meg \u00e9rv\u00e9nyes alapot \u00e9s kitev\u0151t.';
     powError.style.color = '#f04747';
     return;
   }
@@ -520,7 +520,7 @@ function updateRuleModel() {
     ruleExponent.textContent = '-';
     ruleOutput.textContent = '-';
     ruleFormula.textContent = '-';
-    ruleError.textContent = 'Adj meg helyes kitev\u0151ket.';
+    ruleError.textContent = 'Adj meg \u00e9rv\u00e9nyes kitev\u0151ket.';
     ruleError.style.color = '#f04747';
     return;
   }

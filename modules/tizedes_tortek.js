@@ -589,7 +589,7 @@ function updateDecimalModel() {
     decimalFractionOutput.textContent = '-';
     decimalPercentOutput.textContent = '-';
     decimalRoundedOutput.textContent = '-';
-    decimalError.textContent = 'Adj meg helyes tizedes sz\u00e1mot.';
+    decimalError.textContent = 'Adj meg \u00e9rv\u00e9nyes tizedes sz\u00e1mot.';
     decimalError.style.color = '#f04747';
     return;
   }
@@ -599,7 +599,7 @@ function updateDecimalModel() {
     decimalFractionOutput.textContent = '-';
     decimalPercentOutput.textContent = '-';
     decimalRoundedOutput.textContent = '-';
-    decimalError.textContent = 'Adj meg helyes tizedes sz\u00e1mot.';
+    decimalError.textContent = 'Adj meg \u00e9rv\u00e9nyes tizedes sz\u00e1mot.';
     decimalError.style.color = '#f04747';
     return;
   }
@@ -624,14 +624,14 @@ function updateFractionModel() {
   const den = Number.parseInt(fracDenInput.value, 10);
   if (!Number.isFinite(num) || !Number.isFinite(den) || den === 0) {
     fractionDecimalOutput.textContent = '-';
-    fractionError.textContent = 'Adj meg helyes t\u00f6rtet.';
+    fractionError.textContent = 'Adj meg \u00e9rv\u00e9nyes t\u00f6rtet.';
     fractionError.style.color = '#f04747';
     return;
   }
   const simplified = simplifyFraction(num, den);
   if (!simplified) {
     fractionDecimalOutput.textContent = '-';
-    fractionError.textContent = 'Adj meg helyes t\u00f6rtet.';
+    fractionError.textContent = 'Adj meg \u00e9rv\u00e9nyes t\u00f6rtet.';
     fractionError.style.color = '#f04747';
     return;
   }
@@ -644,7 +644,7 @@ function updatePercentModel() {
   const percentValue = parsePercentInput(percentInput.value || '');
   if (percentValue === null) {
     percentDecimalOutput.textContent = '-';
-    percentError.textContent = 'Adj meg helyes sz\u00e1zal\u00e9kot.';
+    percentError.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1zal\u00e9kot.';
     percentError.style.color = '#f04747';
     return;
   }

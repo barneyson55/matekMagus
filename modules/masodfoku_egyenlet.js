@@ -635,7 +635,7 @@ function updateQuadraticModel() {
     rootStatus.textContent = '-';
     rootSum.textContent = '-';
     rootProduct.textContent = '-';
-    rootNote.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    rootNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     rootNote.style.color = '#f04747';
     vietaNote.textContent = '';
     return;

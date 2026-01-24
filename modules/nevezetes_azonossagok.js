@@ -498,7 +498,7 @@ function updateIdentityModel() {
     idFormula.textContent = '-';
     idExpanded.textContent = '-';
     idOutput.textContent = '-';
-    idError.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    idError.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     idError.style.color = '#f04747';
     return;
   }
@@ -535,7 +535,7 @@ function updateAxModel() {
   if (a === null || b === null || x === null) {
     axExpanded.textContent = '-';
     axOutput.textContent = '-';
-    axError.textContent = 'Adj meg helyes sz\u00e1mokat.';
+    axError.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     axError.style.color = '#f04747';
     return;
   }

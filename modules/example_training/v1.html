@@ -30,7 +30,13 @@
             to { transform: translateY(0); opacity: 1; }
         }
         .animate-slide-up { animation: slide-up 0.5s ease-out forwards; }
-    </style>
+    
+        /* Touch targets */
+        button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+</style>
 </head>
 <body class="text-white flex flex-col h-screen">
 
@@ -335,7 +341,7 @@ const problemTypes = [
         setTimeout(() => document.getElementById('answer-input')?.focus(), 100);
     }
 
-    function checkAnswer() { const input = document.getElementById('answer-input'); if (!input || input.disabled) return; const userAnswer = parseFloat(input.value); if (isNaN(userAnswer)) { feedbackEl.textContent = "Kérlek, számot adj meg!"; feedbackEl.className = 'h-6 text-md text-yellow-400'; return; } if (userAnswer === currentProblem.answer) { feedbackEl.textContent = "Helyes válasz!"; feedbackEl.className = 'h-6 text-md text-green-400'; input.disabled = true; input.classList.remove('border-gray-600', 'border-red-500'); input.classList.add('border-green-500'); setTimeout(generateNewProblem, 1500); } else { feedbackEl.textContent = `Sajnos nem jó. Próbáld újra!`; feedbackEl.className = 'h-6 text-md text-red-400'; input.classList.add('shake'); input.classList.remove('border-gray-600'); input.classList.add('border-red-500'); setTimeout(() => { input.classList.remove('shake'); }, 500); } }
+    function checkAnswer() { const input = document.getElementById('answer-input'); if (!input || input.disabled) return; const userAnswer = parseFloat(input.value); if (isNaN(userAnswer)) { feedbackEl.textContent = "Adj meg érvényes számot."; feedbackEl.className = 'h-6 text-md text-yellow-400'; return; } if (userAnswer === currentProblem.answer) { feedbackEl.textContent = "Helyes!"; feedbackEl.className = 'h-6 text-md text-green-400'; input.disabled = true; input.classList.remove('border-gray-600', 'border-red-500'); input.classList.add('border-green-500'); setTimeout(generateNewProblem, 1500); } else { feedbackEl.textContent = `Próbáld újra!`; feedbackEl.className = 'h-6 text-md text-red-400'; input.classList.add('shake'); input.classList.remove('border-gray-600'); input.classList.add('border-red-500'); setTimeout(() => { input.classList.remove('shake'); }, 500); } }
     
     function generateNewProblem() {
         feedbackEl.textContent = '\u00A0';
@@ -345,7 +351,7 @@ const problemTypes = [
         inputContainerEl.innerHTML = '';
         showVisualBtn.classList.add('opacity-0', 'pointer-events-none');
         let selectedDifficulties = [...difficultyCheckboxes].filter(cb => cb.checked).map(cb => parseInt(cb.value));
-        if (selectedDifficulties.length === 0) { problemTitleEl.textContent = "Nincs kiválasztott szint"; problemContainerEl.innerHTML = '<span class="text-lg text-gray-400">Kérlek, válassz legalább egy nehézségi szintet.</span>'; return; }
+        if (selectedDifficulties.length === 0) { problemTitleEl.textContent = "Nincs kiválasztott nehézségi szint."; problemContainerEl.innerHTML = '<span class="text-lg text-gray-400">Válassz legalább egy nehézségi szintet.</span>'; return; }
         const availableProblems = problemTypes.filter(p => selectedDifficulties.includes(p.difficulty));
         if (availableProblems.length === 0) { problemTitleEl.textContent = "Nincs feladat"; problemContainerEl.innerHTML = '<span class="text-lg text-gray-400">A kiválasztott szint(ek)hez nincsenek feladatok.</span>'; return; }
         const randomIndex = Math.floor(Math.random() * availableProblems.length);

@@ -698,7 +698,7 @@ function updatePolyModel() {
     polyNeg.textContent = '-';
     polyParity.textContent = '-';
     polySymmetry.textContent = '-';
-    polyNote.textContent = 'Adj meg helyes szamokat.';
+    polyNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     polyNote.style.color = '#f04747';
     return;
   }
@@ -733,7 +733,7 @@ function updateAbsModel() {
     absNeg.textContent = '-';
     absParity.textContent = '-';
     absSymmetry.textContent = '-';
-    absNote.textContent = 'Adj meg helyes szamokat.';
+    absNote.textContent = 'Adj meg \u00e9rv\u00e9nyes sz\u00e1mokat.';
     absNote.style.color = '#f04747';
     return;
   }
@@ -810,7 +810,7 @@ if (practiceStartBtn) {
   practiceStartBtn.addEventListener('click', () => {
     const enabled = getEnabledPracticeDifficulties();
     if (!enabled.length) {
-      practiceFeedback.textContent = 'Valassz legalabb egy nehezseget.';
+      practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
       practiceFeedback.style.color = '#f04747';
       return;
     }

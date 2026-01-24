@@ -20,6 +20,7 @@
 - App icon added at `assets/icon.png` for the Electron window.
 - CSS encoding normalized in `style.css` (UTF-8 charset, ASCII-safe glyph escapes).
 - Legacy `modules/xp_guide.html` removed and the quest exclusions cleaned up in `index.html`.
+- ENDGAME / RELEASE task list added to `docs/ai_todo.md` to drive localization, responsive UI, testing, and release readiness.
 
 ## Partial or Unverified
 - Windows renderer verification pending for CSS glyph rendering in the sidebar disclosure arrow.

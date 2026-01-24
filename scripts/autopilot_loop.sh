@@ -2,34 +2,43 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+USER_TODO="$ROOT_DIR/docs/user_todo.md"
+AI_TODO="$ROOT_DIR/docs/ai_todo.md"
 LOG_DIR="$ROOT_DIR/logs"
+LOG_FILE="$LOG_DIR/autopilot.log"
+
 mkdir -p "$LOG_DIR"
 
+normalize() { tr '\r' '\n'; }
+
+has_unchecked() {
+  normalize < "$1" | grep -qE '^[[:space:]]*[-*+][[:space:]]*\[[[:space:]]\][[:space:]]+'
+}
+
+echo "== autopilot_loop starting =="
+echo "repo: $ROOT_DIR"
+echo "log:  $LOG_FILE"
+echo
+
 while true; do
-  RUN_LOG="$(mktemp)"
-
-  echo "=== $(date -Is) ===" | tee -a "$LOG_DIR/autopilot.log" > "$RUN_LOG"
-
   set +e
-  bash "$ROOT_DIR/scripts/autopilot.sh" 2>&1 | tee -a "$LOG_DIR/autopilot.log" >> "$RUN_LOG"
-  STATUS=${PIPESTATUS[0]}
+  (cd "$ROOT_DIR" && bash scripts/autopilot.sh) 2>&1 | tee -a "$LOG_FILE"
+  status=${PIPESTATUS[0]}
   set -e
 
-  # Normal stop conditions
-  if grep -q "STOP: user input required" "$RUN_LOG"; then
-    echo "Autopilot STOP: user input required -> docs/user_todo.md" | tee -a "$LOG_DIR/autopilot.log"
+  if [[ $status -ne 0 ]]; then
+    echo "autopilot.sh failed with exit code $status"
+    exit "$status"
+  fi
+
+  if has_unchecked "$USER_TODO"; then
+    echo "STOP: user input required. See docs/user_todo.md"
     exit 0
   fi
 
-  if grep -q "No pending items in docs/ai_todo.md" "$RUN_LOG"; then
-    echo "Autopilot DONE: no pending AI tasks -> docs/ai_todo.md" | tee -a "$LOG_DIR/autopilot.log"
+  if ! has_unchecked "$AI_TODO"; then
+    echo "No pending items in docs/ai_todo.md"
     exit 0
-  fi
-
-  # Real error
-  if [ $STATUS -ne 0 ]; then
-    echo "Autopilot ERROR: exit $STATUS (see logs/autopilot.log)" | tee -a "$LOG_DIR/autopilot.log"
-    exit $STATUS
   fi
 
   sleep 2

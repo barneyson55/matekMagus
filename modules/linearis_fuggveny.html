@@ -800,6 +800,15 @@
             return Math.round(value * 100) / 100;
         }
 
+        function shuffle(list) {
+            const array = list.slice();
+            for (let i = array.length - 1; i > 0; i -= 1) {
+                const j = randomInt(0, i);
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
         function getSliderConfig(input) {
             return {
                 min: parseFloat(input.min),
@@ -889,30 +898,38 @@
             const xIntercept = -line.b / line.m;
 
             if (type === 'slope-from-points') {
+                const answer = line.m;
                 return {
                     kind: 'slope-from-points',
                     question: `Az egyenes átmegy a (${formatNumber(x1)}, ${formatNumber(y1)}) és (${formatNumber(x2)}, ${formatNumber(y2)}) pontokon. Mi a meredeksége (m)?`,
-                    answer: line.m
+                    answer,
+                    answerString: formatNumber(answer)
                 };
             }
             if (type === 'intercept-from-point') {
+                const answer = line.b;
                 return {
                     kind: 'intercept-from-point',
                     question: `Az egyenes meredeksége m = ${formatNumber(line.m)} és átmegy a (${formatNumber(x0)}, ${formatNumber(y0)}) ponton. Mi a tengelymetszete (b)?`,
-                    answer: line.b
+                    answer,
+                    answerString: formatNumber(answer)
                 };
             }
             if (type === 'x-intercept') {
+                const answer = xIntercept;
                 return {
                     kind: 'x-intercept',
                     question: `Hol metszi az x-tengelyt az egyenes? (${eq}) Add meg az x értékét!`,
-                    answer: xIntercept
+                    answer,
+                    answerString: formatNumber(answer)
                 };
             }
+            const answer = line.m * xValue + line.b;
             return {
                 kind: 'value-from-equation',
                 question: `Mennyi f(${formatNumber(xValue)})? (${eq})`,
-                answer: line.m * xValue + line.b
+                answer,
+                answerString: formatNumber(answer)
             };
         }
 
@@ -923,13 +940,35 @@
 
         function buildTestQuestions(difficulty) {
             const questions = [];
+            const used = new Set();
+            const isValid = (question) => Number.isFinite(question.answer);
+            const makeSignature = (question) => [question.kind, question.question, formatNumber(question.answer)].join('|');
+
             QUESTION_TYPES.forEach((type) => {
-                questions.push(buildQuestionByType(difficulty, type));
+                let selected = null;
+                let attempts = 0;
+                while (attempts < 30) {
+                    const candidate = buildQuestionByType(difficulty, type);
+                    const signature = makeSignature(candidate);
+                    if (isValid(candidate) && !used.has(signature)) {
+                        used.add(signature);
+                        selected = candidate;
+                        break;
+                    }
+                    attempts += 1;
+                }
+                if (selected) questions.push(selected);
             });
+
             while (questions.length < TEST_QUESTION_COUNT) {
-                questions.push(buildRandomQuestion(difficulty));
+                const candidate = buildRandomQuestion(difficulty);
+                const signature = makeSignature(candidate);
+                if (isValid(candidate) && !used.has(signature)) {
+                    used.add(signature);
+                    questions.push(candidate);
+                }
             }
-            return questions;
+            return shuffle(questions).slice(0, TEST_QUESTION_COUNT);
         }
 
         function renderPagination() {
@@ -1002,7 +1041,7 @@
             testQuestions.forEach((q) => {
                 const parsed = parseNumberInput(q.userAnswer || '');
                 const isCorrect = parsed !== null && isClose(parsed, q.answer);
-                q.correctAnswer = formatNumber(q.answer);
+                q.correctAnswer = q.answerString || formatNumber(q.answer);
                 q.isCorrect = isCorrect;
                 if (isCorrect) correctAnswers += 1;
             });
@@ -1027,8 +1066,11 @@
                 timestamp: new Date().toISOString(),
                 questions: testQuestions.map((q) => ({
                     question: q.question,
+                    kind: q.kind || '',
                     userAnswer: q.userAnswer || '',
-                    correctAnswer: q.correctAnswer || formatNumber(q.answer)
+                    correctAnswer: q.correctAnswer || q.answerString || formatNumber(q.answer),
+                    expectedValue: Number.isFinite(q.answer) ? q.answer : null,
+                    isCorrect: Boolean(q.isCorrect)
                 }))
             };
             if (window.parent) {
@@ -1246,7 +1288,6 @@
     </script>
 </body>
 </html>
-
 
 
 

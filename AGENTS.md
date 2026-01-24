@@ -35,7 +35,7 @@ Rule of precedence: if code conflicts with constitution, update code to match th
 
 ## Project Goal
 Matek Mester is an Electron-based, modular math learning app for Hungarian students.
-It delivers theory, visual models, tests, and practice in topic modules.
+It covers foundations through advanced topics with theory, visual models, tests, and practice modules.
 
 ## Non-negotiables
 - Keep changes small and incremental.
@@ -44,11 +44,13 @@ It delivers theory, visual models, tests, and practice in topic modules.
 - Never commit secrets; only `.env.example` if needed.
 
 ## Quality Gates
-- Tests: `npm run test` (or `npm run test:e2e`)
+- Tests: `npm run test` (alias) and `npm run test:e2e`
 - Lint: TBD (no lint script found)
 - Format: TBD (no format script found)
 - Build: TBD (no build script found)
 - Minimum verify when needed: `npm install` then `npm run test`
+- In WSL or other headless environments, E2E (Playwright + Electron) tests may be skipped or treated as expected failures.
+
 
 ## Task Protocol
 1) Read `docs/SPEC.md` + `docs/ACCEPTANCE.md` + `docs/critical_todo.md`

@@ -1,6 +1,6 @@
 # Tananyag Roadmap
 
-Ez a dokumentum tartalmazza a teljes tananyag szerkezetét, amely alapján a matekMagus alkalmazás épül. A roadmap hierarchikusan szervezi a főtémákat, altémákat és témaköröket, hogy átlátható legyen a tanulási út. A szerkezet az index.html fájlból és a temakorok szöveges fájlból származik, ahol a topicId-k és nevek definiáltak.
+Ez a dokumentum tartalmazza a teljes tananyag szerkezetét, amely alapján a matekMagus alkalmazás épül. A roadmap hierarchikusan szervezi a főtémákat, altémákat és témaköröket, hogy átlátható legyen a tanulási út. A szerkezet jelenleg az index.html fájlban kézzel karbantartott navigációból származik; a temakorok szöveges fájl alapú generálás ebben a fázisban nincs használatban.
 
 ## Cél
 
@@ -122,6 +122,6 @@ Ez a dokumentum tartalmazza a teljes tananyag szerkezetét, amely alapján a mat
 
 ## Megvalósítás és Hivatkozások
 - Minden topicId egyedi és az index.html-ben definiált.
-- A nevek és szerkezet a temakorok fájlból származnak.
+- A nevek és szerkezet jelenleg az index.html manuális listájából származnak; temakorok fájl alapú generálás későbbi fázisra halasztva.
 - XP súlyok és nehezségek: lásd xp_progress_plan.md és difficulties.md.
 - A roadmap alapján lehet tervezni a modulokat és a tanulási utat.

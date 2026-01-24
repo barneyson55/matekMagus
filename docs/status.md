@@ -1,19 +1,33 @@
 # Status
 
 ## Snapshot
-- Electron shell loads topic modules via an iframe (`index.html` + `style.css`).
-- `main.js` handles IPC and local persistence (`progress.json` in userData).
-- E2E coverage exists in `tests/e2e/electron-smoke.test.js`.
-- Many Algebra/Function modules are implemented; remaining roadmap modules are tracked in `todo.md`.
+- Electron app: `main.js` main process, `index.html` renderer, iframe module loader.
+- Modules implemented for foundational and algebra topics in `modules/`, plus `results.html`, `settings.html`, `character_sheet.html`, and `placeholder.html`.
+- Function transformations module (`modules/fuggveny_transzformaciok.html` + `.js`) implemented with test/practice/visual tabs and E2E coverage.
+- Nevezetes fuggvenyek temazaro module (`modules/nevezetes_fuggvenyek_temazaro.html` + `.js`) implemented with test/practice/visual tabs and E2E coverage.
+- Lineáris függvény module now generates full test question sets and emits enriched result payloads; E2E assertions updated.
+- Másodfokú függvény module implemented (`modules/masodfoku_fuggveny.html` + `.js`) with test/practice/visual tabs and E2E coverage.
+- Hatványfüggvények module implemented (`modules/hatvanyfuggvenyek.html` + `.js`) with test/practice/visual tabs and E2E coverage.
+- Exponenciális és logaritmus függvények module implemented (`modules/exp_log_fuggveny.html` + `.js`) with test/practice/visual tabs and E2E coverage.
+- Trigonometrikus függvények module implemented (`modules/trigonometrikus_fuggvenyek.html` + `.js`) with test/practice/visual tabs and E2E coverage.
+- Abszolútérték, gyök függvények module implemented (`modules/specialis_fuggvenyek.html` + `.js`) with test/practice/visual tabs and E2E coverage.
+- Alapfogalmak és Háromszögek temazaro module implemented (`modules/haromszogek_temazaro.html` + `.js`) with test/practice/visual tabs and E2E coverage.
+- Nevezetes vonalak module implemented (`modules/nevezetes_vonalak.html` + `.js`) with test/practice/visual tabs and E2E coverage.
+- Háromszög-egyenlőtlenség, Pitagorasz/befogó/magasság, és Szinusz/Koszinusz tétel modules implemented (`modules/haromszog_egyenlotlenseg.html`, `modules/szogtetelek.html`, `modules/szinusz_koszinusz_tetel.html` + `.js`) with test/practice/visual tabs and E2E coverage.
+- Local persistence in `progress.json` via IPC; `preload.js` exposes the bridge.
+- E2E smoke test in `tests/e2e/electron-smoke.test.js`.
+- Navigation source-of-truth is the manual list in `index.html` (no `assets/temakorok` generation in this phase).
+- App icon added at `assets/icon.png` for the Electron window.
+- CSS encoding normalized in `style.css` (UTF-8 charset, ASCII-safe glyph escapes).
+- Legacy `modules/xp_guide.html` removed and the quest exclusions cleaned up in `index.html`.
 
 ## Partial or Unverified
-- README notes `modules/linearis_fuggveny.html` test generator is incomplete (verify current state).
-- Navigation list appears manually maintained while `assets/temakorok` exists (risk of drift).
+- Windows renderer verification pending for CSS glyph rendering in the sidebar disclosure arrow.
+- E2E tests may fail in headless/WSL environments; `npm run test` (which invokes `npm run test:e2e`) failed here with `ERR_TEST_FAILURE` before reporting individual cases.
+- Packaging verification is pending (no packaging script configured in `package.json`).
 
 ## Missing or Risky
-- `assets/icon.png` is referenced by the app shell but missing (per README).
-- CSS encoding issues in `style.css` can affect UI rendering (per README).
-- Remaining curriculum modules are still outstanding (see `todo.md`).
+- Many geometry/probability/statistics/advanced curriculum modules are not present in `modules/` yet.
 
 ## Next Milestone
 - TBD

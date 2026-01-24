@@ -1,36 +1,32 @@
 # Setup Automation (Codex Autopilot)
 
 ## Safe Codex Usage
-- Use workspace-only permissions whenever possible.
-- Avoid running destructive commands without explicit approval.
+- Recommended sandbox: workspace-only (for example `CODEX_SANDBOX=workspace` or `--sandbox workspace`).
+- Recommended approval policy: require confirmation for commands outside the repo (TBD: exact flag).
 - Keep secrets out of the repo; use `.env.example` only.
 
 ## Codex CLI
-- Install Codex CLI per official docs (TBD: exact install command for your environment).
-- Login/authenticate per CLI instructions (TBD).
-- Common config locations (verify in your setup):
-  - Windows: `%USERPROFILE%\\.codex`
-  - macOS/Linux: `$HOME/.codex`
-
-If any of the above are unknown, update `docs/user_todo.md`.
+- Install: `npm install -g @openai/codex`
+- Run inside WSL Ubuntu
 
 ## Windows + VS Code + WSL (Recommended)
 - Open the repo in VS Code.
-- Use WSL for running bash scripts if possible:
+- Run scripts via WSL:
   - `wsl bash scripts/autopilot.sh`
   - `wsl bash scripts/review_only.sh`
-- If you do not use WSL, run the scripts from Git Bash.
+- Without WSL, use Git Bash or PowerShell and run the scripts directly.
 
 ## Autopilot Loop (Minimal Concept)
-1. Check `docs/user_todo.md` for unchecked items; stop if any exist.
+1. Stop if `docs/user_todo.md` has unchecked items.
 2. Read `docs/ai_todo.md` and pick the top unchecked task.
 3. Run Codex non-interactively to complete the task.
 4. Update `docs/status.md`, `docs/ai_todo.md`, and `docs/critical_todo.md`.
 
-## Script Configuration (TBD)
-The scripts use these environment variables to avoid hard-coding CLI flags:
-- `CODEX_AUTOPILOT_ARGS` (default in `scripts/autopilot.sh`: `--non-interactive`)
-- `CODEX_REVIEW_ARGS` (default in `scripts/review_only.sh`: `--non-interactive --read-only`)
-- `CODEX_SANDBOX` (default: `workspace`)
-
-Adjust these to match your Codex CLI version.
+## Script Configuration
+- `scripts/autopilot.sh`:
+  - Default args: `--non-interactive` (override via `CODEX_AUTOPILOT_ARGS`).
+  - Sandbox is forced to `workspace` inside the script.
+- `scripts/review_only.sh`:
+  - Default args: `--non-interactive --read-only` (override via `CODEX_REVIEW_ARGS`).
+  - Sandbox is forced to `workspace` inside the script.
+- If your Codex CLI uses different flags, update the env vars or scripts (TBD).

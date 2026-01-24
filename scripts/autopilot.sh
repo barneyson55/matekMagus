@@ -6,7 +6,7 @@ USER_TODO="$ROOT_DIR/docs/user_todo.md"
 AI_TODO="$ROOT_DIR/docs/ai_todo.md"
 
 if ! command -v codex >/dev/null 2>&1; then
-  echo "codex not found. Install Codex CLI first."
+  echo "codex not found. Install Codex CLI first (see docs/SETUP_AUTOMATION.md)."
   exit 1
 fi
 
@@ -28,12 +28,17 @@ fi
 
 NEXT_ITEM="$(echo "$NEXT_LINE" | sed 's/^[0-9]*:- \\[ \\] //')"
 
-export CODEX_SANDBOX="${CODEX_SANDBOX:-workspace}"
-CODEX_AUTOPILOT_ARGS="${CODEX_AUTOPILOT_ARGS:---non-interactive}"
-read -r -a CODEX_ARGS <<< "$CODEX_AUTOPILOT_ARGS"
-
+CURRENT_SANDBOX="${CODEX_SANDBOX:-}"
+if [ -n "$CURRENT_SANDBOX" ] && [ "$CURRENT_SANDBOX" != "workspace" ]; then
+  echo "For safety, forcing CODEX_SANDBOX=workspace (was: $CURRENT_SANDBOX)"
+fi
+export CODEX_SANDBOX="workspace"
 PROMPT="Follow AGENTS.md. Complete the next task from docs/ai_todo.md: $NEXT_ITEM"
 
-echo "Running Codex with sandbox: $CODEX_SANDBOX"
+echo "Running Codex (exec) with sandbox: $CODEX_SANDBOX"
 echo "Task: $NEXT_ITEM"
-codex "${CODEX_ARGS[@]}" "$PROMPT"
+
+codex exec \
+  --full-auto \
+  "$PROMPT"
+

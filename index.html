@@ -57,6 +57,7 @@
                 <a href="#" class="module-link results-btn" id="results-btn">Eredm&#233;nyeim</a>
             </div>
             <div class="module-list">
+                <!-- Navigation source-of-truth: keep this manual list in index.html (no temakorok generation in this phase). -->
 
                 <details>
                     <summary>
@@ -716,7 +717,7 @@
             ACTIVE: 1,
             COMPLETED: 2
         };
-        const QUEST_EXCLUDED_TOPICS = new Set(['settings', 'xp_guide']);
+        const QUEST_EXCLUDED_TOPICS = new Set(['settings']);
         const QUEST_HIERARCHY = buildQuestHierarchy();
         const QUEST_INDEX = QUEST_HIERARCHY.index;
         const SHEET_BANNER_MAP = {
@@ -2194,8 +2195,6 @@
 </html>
 
 ]
-
-
 
 
 

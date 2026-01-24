@@ -9,10 +9,12 @@ It delivers theory, visual models, tests, and practice in topic modules.
 - Secondary: Teachers or tutors reviewing progress.
 
 ## Scope IN
-- Electron desktop shell with module navigation.
-- Per-topic modules in `modules/` (HTML/JS) with theory, visuals, test, and practice.
-- Local persistence of progress and XP.
-- E2E test coverage for module flows.
+- Electron desktop shell (main + renderer).
+- Iframe-based module loader in `index.html` with per-topic HTML/JS modules in `modules/`.
+- Theory, visual models, tests, and practice per module.
+- Local persistence of progress and XP in `progress.json` via Electron main process.
+- Results, character sheet, and settings modules.
+- E2E smoke test coverage in `tests/e2e/electron-smoke.test.js`.
 
 ## Scope OUT
 - Web-only deployment (TBD).
@@ -21,17 +23,19 @@ It delivers theory, visual models, tests, and practice in topic modules.
 
 ## Tech Stack
 - Electron 25 (main + renderer processes).
-- Node.js (runtime, scripts).
+- Node.js (runtime/scripts).
 - Playwright-core (E2E tests).
 - Vanilla JS/HTML/CSS for renderer modules.
-- KaTeX and Chart.js (used in modules per README).
+- KaTeX and Chart.js for math rendering and charts (per README).
+- Google Fonts (per README).
 
 ## Architecture Notes
-- `main.js` hosts the Electron main process and IPC, and writes `progress.json` under userData.
-- `preload.js` exposes a limited `electronAPI` bridge to renderer/iframe modules.
-- `index.html` + `style.css` provide the app shell and iframe-based module loader.
-- `modules/` holds per-topic HTML/JS modules loaded into the iframe.
-- `tests/e2e/electron-smoke.test.js` provides Playwright-based E2E coverage.
+- `main.js`: Electron main process, IPC, writes `progress.json` under userData.
+- `preload.js`: `contextBridge` exposing `saveTestResult` and `getAllResults` to modules.
+- `index.html` + `style.css`: app shell, navigation, and iframe loader.
+- Navigation source-of-truth: manual list in `index.html` (no `assets/temakorok` generation in this phase).
+- `modules/`: per-topic modules plus `results.html`, `settings.html`, and `character_sheet.html`.
+- `tests/e2e/electron-smoke.test.js`: Playwright-based E2E smoke test.
 
 ## Constraints
 - Keep the current Electron/Node/vanilla JS stack.
@@ -39,6 +43,6 @@ It delivers theory, visual models, tests, and practice in topic modules.
 - Preserve existing module patterns and naming conventions.
 
 ## TBD
-- Distribution/packaging targets.
+- Packaging/distribution targets and platforms.
 - CI/CD pipeline and release process.
-- Sync/backup strategy beyond local `progress.json`.
+- Backup/sync strategy beyond local `progress.json`.

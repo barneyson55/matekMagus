@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* style.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
@@ -124,13 +125,13 @@ body, html { font-family: 'Inter', sans-serif; background-color: var(--bg-dark);
 .xp-tooltip { position: absolute; right: 12px; top: -28px; background: rgba(10, 12, 14, 0.9); color: #f5f6f7; padding: 4px 10px; border-radius: 6px; font-size: 12px; opacity: 0; transform: translateY(4px); transition: opacity 0.2s ease, transform 0.2s ease; pointer-events: none; }
 .xp-bar:hover .xp-tooltip, .xp-bar:focus-visible .xp-tooltip { opacity: 1; transform: translateY(0); }
 .app-container { display: flex; flex: 1; min-height: 0; }
-.sidebar { width: 300px; /* Picit szélesebb a jobb olvashatóságért */ background-color: var(--sidebar-bg); padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; border-right: 1px solid var(--bg-medium); }
+.sidebar { width: 300px; /* Slightly wider for readability */ background-color: var(--sidebar-bg); padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; border-right: 1px solid var(--bg-medium); }
 .sidebar-title { font-size: 24px; font-weight: 700; margin-bottom: 20px; }
 .module-list { overflow-y: auto; flex: 1; min-height: 0; }
 details { margin-bottom: 5px; }
 summary { list-style: none; padding: 0 10px; cursor: pointer; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.2s; }
 summary:hover { background-color: var(--bg-medium); }
-summary::before { content: '▶'; font-size: 0.8em; transition: transform 0.2s; margin-right: 5px; padding: 10px 0 10px 5px; }
+summary::before { content: '\25B6'; font-size: 0.8em; transition: transform 0.2s; margin-right: 5px; padding: 10px 0 10px 5px; }
 details[open] > summary::before { transform: rotate(90deg); }
 details details { margin-left: 15px; }
 details details ul { margin-left: 15px; }
@@ -174,7 +175,7 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
     z-index: 2;
 }
 
-/* --- Modern Görgetősáv Stílusok --- */
+/* --- Modern scrollbar styles --- */
 .module-list::-webkit-scrollbar {
     width: 8px;
 }

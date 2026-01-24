@@ -1,0 +1,9 @@
+# Context from my IDE setup:
+
+## Active file: docs/user_todo.md
+
+## Open tabs:
+- user_todo.md: docs/user_todo.md
+- status.md: docs/status.md
+- ACCEPTANCE.md: docs/ACCEPTANCE.md
+- SETUP_AUTOMATION.md: docs/SETUP_AUTOMATION.md

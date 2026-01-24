@@ -11,7 +11,7 @@ Interaktív, moduláris matematikaoktató alkalmazás, amely a magyar emelt szin
 - **Eredmények nézet:** a `modules/results.html` modul az Electron főfolyamathoz fordulva kilistázza a lokálisan mentett teszteredményeket, modális ablakban részletes kérdésenkénti visszanézési lehetőséggel.
 - **Mentés diskre:** minden teszteredmény az `app.getPath('userData')/progress.json` állományba kerül, így újraindítás után is visszakereshető (a státuszkörök jelenleg még nem töltik vissza automatikusan ezt az adatot).
 - **XP és szint rendszer:** minden téma-nehézség kombináció első teljesítése egyszeri XP-t ad (WoW-szerű fejlődési görbével), Modul/Témazáró/Emelt blokkok extra bónuszt kapnak, a szintek és haladás a bal oldali sávban és az eredményoldalon is megjelennek.
-- **Tematikus terv:** az `assets/temakorok` fájl tartalmazza a teljes tananyagtervet szövegesen, amelyhez az index.html navigáció igazodik.
+- **Tematikus terv:** a teljes tananyagtervet jelenleg az `index.html`-ben kézzel karbantartott navigációs fa adja; ebben a fázisban nincs automatikus generálás `assets/temakorok` alapján.
 
 ## Technológiák
 
@@ -26,8 +26,6 @@ Interaktív, moduláris matematikaoktató alkalmazás, amely a magyar emelt szin
 
 ```
 matekMagus/
-├── assets/
-│   └── temakorok                  # Szöveges tanmenet
 ├── modules/
 │   ├── halmazmuveletek.html       # Teljesen működő modul
 │   ├── linearis_fuggveny.html   # Vizualizáció + teszt mód prototípus
@@ -103,7 +101,6 @@ matekMagus/
 - Az XP/Beállítások felület továbbra is minimális: nincsenek achievement jelvények, teljes testreszabási opciók vagy értesítések.
 - A `mainWindow` konfiguráció `icon` mezője `assets/icon.png`-ra mutat, de ilyen fájl jelenleg nincs a repóban.
 - A globális CSS több helyen hibás karakterkódolású (például `summary::before` ikonja), emiatt egyes UI elemek nem jelennek meg megfelelően Windows alatt.
-- Az `assets/temakorok` tervfájlt még nem használja fel automatikusan az alkalmazás (kézzel duplikált lista szerepel az indexben).
 
 ## Licenc
 

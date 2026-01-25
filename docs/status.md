@@ -2,6 +2,7 @@
 
 ## Snapshot
 - Electron app: `main.js` main process, `index.html` renderer, iframe module loader.
+- AI TODO refreshed to focus on Desktop V1 systems/quality work; mobile backlog isolated in V2.
 - AI TODO restructured with Desktop V1 quality/UX/systems P0 focus and a separate V2/mobile backlog.
 - Autopilot scripts now detect Codex CLI flags, enforce write-enabled sandboxing, and stream+tee logs with clean exits.
 - Automation policy clarified: autopilot prompt + AGENTS + setup docs now state tests should not be run automatically.

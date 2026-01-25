@@ -36,6 +36,7 @@ Last reviewed: 2026-01-25 (Bug triage log initialized)
 ## Notes
 
 - 2026-01-25: Mobile touch target audit completed; 44px minimum enforced for app shell controls, settings inputs, and module iframe controls.
+- 2026-01-25: AI TODO refreshed to isolate remaining Desktop V1 systems/quality work; no new critical risks added.
 - 2026-01-25: Unit vs E2E npm script split clarified (`npm run test:unit` / `npm run test:e2e`) and documented in `docs/test_strategy.md`.
 - 2026-01-25: Module tab responsive override refined to prevent iframe horizontal scrolling at 360–414px.
 - 2026-01-25: Mobile Quest Log drawer auto-collapses on small screens and closes after navigation; header stack spacing refined for phones.

@@ -122,8 +122,8 @@ let currentPracticeKind = '';
 let currentPracticeExpected = null;
 let currentPracticeDifficulty = DIFF_EASY;
 let practiceActive = false;
-const PRACTICE_HISTORY_LIMIT = 8;
-const PRACTICE_RETRY_LIMIT = 16;
+const PRACTICE_HISTORY_LIMIT = 12;
+const PRACTICE_RETRY_LIMIT = 24;
 const practiceHistory = [];
 
 function announceActiveTab(tabName) {
@@ -307,7 +307,7 @@ function buildLinearValue(difficulty) {
   const x = randomInt(-range, range);
   const y = a * x + b;
   return {
-    question: `Szamitsd ki: f(x) = ${formatLinearExpression(a, b)}. Mennyi f(${formatNumber(x, 3)})?`,
+    question: `Sz\u00e1m\u00edtsd ki: f(x) = ${formatLinearExpression(a, b)}. Mennyi f(${formatNumber(x, 3)})?`,
     answerString: formatNumber(y, 3),
     answerType: 'number',
     expectedValue: y
@@ -365,7 +365,7 @@ function buildPowerValue(difficulty) {
   const exp = difficulty === DIFF_EASY ? randomInt(2, 3) : randomInt(2, 4);
   const value = Math.pow(base, exp);
   return {
-    question: `Szamitsd ki: ${base}^${exp}`,
+    question: `Sz\u00e1m\u00edtsd ki: ${base}^${exp}`,
     answerString: formatNumber(value, 3),
     answerType: 'number',
     expectedValue: value
@@ -377,7 +377,7 @@ function buildExpValue(difficulty) {
   const exp = difficulty === DIFF_EASY ? randomInt(2, 3) : randomInt(2, 4);
   const value = Math.pow(base, exp);
   return {
-    question: `Szamitsd ki: ${base}^${exp}`,
+    question: `Sz\u00e1m\u00edtsd ki: ${base}^${exp}`,
     answerString: formatNumber(value, 3),
     answerType: 'number',
     expectedValue: value
@@ -389,7 +389,7 @@ function buildLogValue(difficulty) {
   const exp = difficulty === DIFF_EASY ? 2 : randomInt(2, 4);
   const value = Math.pow(base, exp);
   return {
-    question: `Szamitsd ki: log_${base}(${value})`,
+    question: `Sz\u00e1m\u00edtsd ki: log_${base}(${value})`,
     answerString: formatNumber(exp, 3),
     answerType: 'number',
     expectedValue: exp
@@ -400,7 +400,7 @@ function buildTrigValue(difficulty) {
   const table = TRIG_TABLES[difficulty] || TRIG_TABLES[DIFF_EASY];
   const item = table[randomInt(0, table.length - 1)];
   return {
-    question: `Szamitsd ki: ${item.fn}(${item.angle} fok)`,
+    question: `Sz\u00e1m\u00edtsd ki: ${item.fn}(${item.angle} fok)`,
     answerString: formatNumber(item.value, 3),
     answerType: 'number',
     expectedValue: item.value
@@ -415,7 +415,7 @@ function buildAbsValue(difficulty) {
   const x = randomInt(-range, range);
   const value = a * Math.abs(x - h) + k;
   return {
-    question: `Szamitsd ki: f(x) = ${formatAbsExpression(a, h, k)}. Mennyi f(${formatNumber(x, 3)})?`,
+    question: `Sz\u00e1m\u00edtsd ki: f(x) = ${formatAbsExpression(a, h, k)}. Mennyi f(${formatNumber(x, 3)})?`,
     answerString: formatNumber(value, 3),
     answerType: 'number',
     expectedValue: value
@@ -475,6 +475,7 @@ function buildTestQuestions(difficulty) {
   const types = QUESTION_TYPES_BY_DIFFICULTY[difficulty] || QUESTION_TYPES_BY_DIFFICULTY[DIFF_EASY];
   const questions = [];
   const used = new Set();
+  const poolTarget = TEST_QUESTION_COUNT + Math.min(types.length * 3, 8);
 
   types.forEach((kind) => {
     let q = null;
@@ -492,7 +493,7 @@ function buildTestQuestions(difficulty) {
     if (q) questions.push(q);
   });
 
-  while (questions.length < TEST_QUESTION_COUNT) {
+  while (questions.length < poolTarget) {
     const kind = types[randomInt(0, types.length - 1)];
     const candidate = buildQuestion(kind, difficulty);
     const signature = `${kind}:${candidate.question}`;
@@ -896,7 +897,7 @@ if (practiceStartBtn) {
   practiceStartBtn.addEventListener('click', () => {
     const enabled = getEnabledPracticeDifficulties();
     if (!enabled.length) {
-      practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
+      practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9gi szintet.';
       practiceFeedback.style.color = '#f04747';
       return;
     }

@@ -10,3 +10,4 @@ This document defines the target viewport widths for responsive behavior in Mate
 ## Notes
 - The base layout is desktop-first.
 - Use these ranges when updating `style.css` and module layouts.
+- A compact override for very small phones (<=480px) tightens header padding/typography and settings UI spacing.

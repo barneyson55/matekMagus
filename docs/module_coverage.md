@@ -1,73 +1,123 @@
-# Module Coverage Gap Report
+# Module Coverage (Roadmap vs Repo)
 
-Last updated: 2026-01-24
+Last updated: 2026-01-25
 
 ## Summary
-- Navigation tree vs roadmap: 95 topicIds in both (no mismatches).
-- Missing module HTML files: 53.
-- Scope: "missing" means the navigation/roadmap topicId has no matching `modules/<topicId>.html`.
+- Roadmap topicIds (constitution/curriculum/roadmap.md): 95
+- Linked in index.html navigation: 95 (matches roadmap)
+- Module HTML files present for linked topics: 95
+- Missing module HTML files: 0
+- Orphan module files (not in navigation): `modules/character_sheet.html`, `modules/results.html`, `modules/settings.html`, `modules/placeholder.html`
 
-## Missing modules by topic
+## What's missing for v1 (desktop)
+- All roadmap-linked modules now exist (95/95); no curriculum gaps remain.
+- Focus shifts to localization sweep and Windows validation (see `docs/ai_todo.md` and `docs/critical_todo.md`).
+- Maintain the required tabs on any future module edits: Elmélet + Vizuális modell + Teszt + Gyakorlás.
 
-### 1. Alapozó Modulok (alapozo_modulzaro)
-- Missing main module: alapozo_modulzaro
-- Gondolkodási módszerek, Halmazok (gondolkodas_temazaro) — missing subtopic module
-- Számelmélet és Számrendszerek (szamelmelet_temazaro) — missing subtopic module
+## Coverage table
+Notes:
+- Tabs column order is Test/Practice/Visual.
+- "JS" means a dedicated `modules/<id>.js` file exists (inline-only scripts count as "No").
+- Status values: OK, Missing, Placeholder, Not linked.
 
-### 2. Algebra és Függvények (algebra_modulzaro)
-- Missing main module: algebra_modulzaro
-
-### 3. Geometria (geometria_modulzaro)
-- Missing main module: geometria_modulzaro
-- Négyzetek és Sokszögek (sokszogek_temazaro) — missing subtopic module
-  - Terület- és kerületszámítás (terulet_kerulet)
-  - Húrnégyszögek, érintőnégyszögek (specialis_negyszogek)
-- A Kör (kor_temazaro) — missing subtopic module
-  - Kerületi és középponti szögek (keruleti_szogek)
-  - Látókörív (latokoriv)
-  - Kör és egyenes, kör és kör (kor_helyzetek)
-- Geometriai Transzformációk (geo_transzform_temazaro) — missing subtopic module
-  - Tengelyes és középpontos tükörzés (tukrozes)
-  - Eltolás, elforgatás (eltolas_forgatas)
-  - Középpontos hasonlóság (hasonlosag)
-- Koordinátageometria (koordinatageometria_temazaro) — missing subtopic module
-  - Vektorok (skaláris szorzat) (vektorok)
-  - Pont, szakasz, egyenes (egyenes_egyenlete)
-  - Kör egyenlete (kor_egyenlete)
-  - Két alakzat metszéspontja (alakzatok_metszespontja)
-- Térgeometria (tergeometria_temazaro) — missing subtopic module
-  - Hasábok, gúlák F, V (hasabok_gulak)
-  - Forgástestek (henger, kúp, gömb) (forgastestek)
-
-### 4. Valószínűségszámítás és Statisztika (valstat_modulzaro)
-- Missing main module: valstat_modulzaro
-- Kombinatorika (kombinatorika_temazaro) — missing subtopic module
-  - Permutációk (permutaciok)
-  - Variációk (variaciok)
-  - Kombinációk (kombinaciok)
-  - Binomiális tétel (binomialis_tetel)
-- Valószínűségszámítás (valszam_temazaro) — missing subtopic module
-  - Klasszikus valószínűségi modell (klasszikus_valoszinuseg)
-  - Geometriai valószínűség (geometriai_valoszinuseg)
-  - Feltételes valószínűség (felteteles_valoszinuseg)
-- Statisztika (statisztika_temazaro) — missing subtopic module
-  - Adatok ábrázolása (adatok_abrazolasa)
-  - Középértékek (kozepertekek)
-  - Szóródási mutatók (szorodas)
-
-### 5. Emelt Szintű Kiegészítések (emelt_modulzaro)
-- Missing main module: emelt_modulzaro
-- Sorozatok (sorozatok_temazaro) — missing subtopic module
-  - Számtani és mértani sorozatok (szamtani_mertani)
-  - Kamatoskamat-számítás (kamatoskamat)
-  - Konvergencia (konvergencia)
-- Differenciálszámítás (differencial_temazaro) — missing subtopic module
-  - Határértékek, folytonosság (hatarertek)
-  - A derivált fogalma (derivalt_fogalma)
-  - Deriválási szabályok (derivalasi_szabalyok)
-  - Függvényvizsgálat deriválttal (fuggvenyvizsgalat)
-- Integrálszámítás (integral_temazaro) — missing subtopic module
-  - A határozatlan integrál (hatarozatlan_integral)
-  - A határozott integrál (hatarozott_integral)
-  - Newton-Leibniz formula (newton_leibniz)
-  - Terfogatszámítás integrállal (terfogatszamitas)
+| Topic | Module file | Status | JS | Tabs (Test/Practice/Visual) | Temazaro? |
+| --- | --- | --- | --- | --- | --- |
+| Alapozó Modulok | modules/alapozo_modulzaro.html | OK | Yes | Y/Y/Y | Yes |
+| Gondolkodási módszerek, Halmazok | modules/gondolkodas_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Halmazműveletek | modules/halmazmuveletek.html | OK | No | Y/Y/Y | No |
+| Logikai szita formula | modules/logikai_szita.html | OK | No | Y/Y/Y | No |
+| Skatulya-elv, párosítások | modules/skatulya_elv.html | OK | No | Y/Y/Y | No |
+| Számelmélet és Számrendszerek | modules/szamelmelet_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Oszthatósági szabályok | modules/oszthatosag.html | OK | No | Y/Y/Y | No |
+| LNKO, LKKT | modules/lnko_lkkt.html | OK | No | Y/Y/Y | No |
+| Prímtényezős felbontás | modules/primtenyezok.html | OK | No | Y/Y/Y | No |
+| Számrendszerek | modules/szamrendszerek.html | OK | No | Y/Y/Y | No |
+| Racionális számok | modules/racionalis_szamok_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Törtek és műveletek | modules/tortek.html | OK | Yes | Y/Y/Y | No |
+| Tizedes törtek, átváltások | modules/tizedes_tortek.html | OK | Yes | Y/Y/Y | No |
+| Százalékszámítás | modules/szazalekszamitas.html | OK | Yes | Y/Y/Y | No |
+| Hatvány, Gyök, Logaritmus | modules/hatvany_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Hatványozás azonosságai | modules/hatvanyozas.html | OK | Yes | Y/Y/Y | No |
+| Négyzetgyök, n-edik gyök | modules/gyokvonas.html | OK | Yes | Y/Y/Y | No |
+| A logaritmus fogalma | modules/logaritmus.html | OK | Yes | Y/Y/Y | No |
+| Algebra és Függvények | modules/algebra_modulzaro.html | OK | Yes | Y/Y/Y | Yes |
+| Algebrai kifejezések | modules/algebrai_kif_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Műveletek polinomokkal | modules/polinomok.html | OK | Yes | Y/Y/Y | No |
+| Nevezetes azonosságok | modules/nevezetes_azonossagok.html | OK | Yes | Y/Y/Y | No |
+| Algebrai törtek | modules/algebrai_tortek.html | OK | Yes | Y/Y/Y | No |
+| Egyenletek, Egyenlőtlenségek | modules/egyenletek_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Lineáris egyenletek | modules/linearis_egyenletek.html | OK | Yes | Y/Y/Y | No |
+| Másodfokú egyenlet | modules/masodfoku_egyenlet.html | OK | Yes | Y/Y/Y | No |
+| Viète-formulák | modules/viete_formulak.html | OK | Yes | Y/Y/Y | No |
+| Paraméteres másodfokú egyenletek | modules/parameteres_masodfoku.html | OK | Yes | Y/Y/Y | No |
+| Abszolútértékes, gyökös stb. | modules/specialis_egyenletek.html | OK | Yes | Y/Y/Y | No |
+| Függvények általános tulajdonságai | modules/fuggvenyek_alt_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Értelmezési tartomány, értékkészlet | modules/fuggveny_alapok.html | OK | Yes | Y/Y/Y | No |
+| Monotonitás, szélsőértékek | modules/fuggveny_jellemzes.html | OK | Yes | Y/Y/Y | No |
+| Paritás (páros, páratlan) | modules/paritas.html | OK | Yes | Y/Y/Y | No |
+| Függvénytranszformációk | modules/fuggveny_transzformaciok.html | OK | Yes | Y/Y/Y | No |
+| Nevezetes függvények | modules/nevezetes_fuggvenyek_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Lineáris függvény | modules/linearis_fuggveny.html | OK | No | Y/Y/Y | No |
+| Másodfokú függvény | modules/masodfoku_fuggveny.html | OK | Yes | Y/Y/Y | No |
+| Hatványfüggvények | modules/hatvanyfuggvenyek.html | OK | Yes | Y/Y/Y | No |
+| Exponenciális és logaritmus fv. | modules/exp_log_fuggveny.html | OK | Yes | Y/Y/Y | No |
+| Trigonometrikus fv. | modules/trigonometrikus_fuggvenyek.html | OK | Yes | Y/Y/Y | No |
+| Abszolútérték, gyök fv. | modules/specialis_fuggvenyek.html | OK | Yes | Y/Y/Y | No |
+| Geometria | modules/geometria_modulzaro.html | OK | Yes | Y/Y/Y | Yes |
+| Alapfogalmak és Háromszögek | modules/haromszogek_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Nevezetes vonalak | modules/nevezetes_vonalak.html | OK | Yes | Y/Y/Y | No |
+| Háromszög-egyenlőtlenség | modules/haromszog_egyenlotlenseg.html | OK | Yes | Y/Y/Y | No |
+| Pitagorasz, befogó, magasság | modules/szogtetelek.html | OK | Yes | Y/Y/Y | No |
+| Szinusz-tétel, Koszinusz-tétel | modules/szinusz_koszinusz_tetel.html | OK | Yes | Y/Y/Y | No |
+| Négyzetek és Sokszögek | modules/sokszogek_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Terület- és kerületszámítás | modules/terulet_kerulet.html | OK | Yes | Y/Y/Y | No |
+| Húrnégyszögek, érintőnégyszögek | modules/specialis_negyszogek.html | OK | Yes | Y/Y/Y | No |
+| A Kör | modules/kor_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Kerületi és középponti szögek | modules/keruleti_szogek.html | OK | Yes | Y/Y/Y | No |
+| Látókörív | modules/latokoriv.html | OK | Yes | Y/Y/Y | No |
+| Kör és egyenes, kör és kör | modules/kor_helyzetek.html | OK | Yes | Y/Y/Y | No |
+| Geometriai Transzformációk | modules/geo_transzform_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Tengelyes és középpontos tükörzés | modules/tukrozes.html | OK | Yes | Y/Y/Y | No |
+| Eltolás, elforgatás | modules/eltolas_forgatas.html | OK | Yes | Y/Y/Y | No |
+| Középpontos hasonlóság | modules/hasonlosag.html | OK | Yes | Y/Y/Y | No |
+| Koordinátageometria | modules/koordinatageometria_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Vektorok (skaláris szorzat) | modules/vektorok.html | OK | Yes | Y/Y/Y | No |
+| Pont, szakasz, egyenes | modules/egyenes_egyenlete.html | OK | Yes | Y/Y/Y | No |
+| Kör egyenlete | modules/kor_egyenlete.html | OK | Yes | Y/Y/Y | No |
+| Két alakzat metszéspontja | modules/alakzatok_metszespontja.html | OK | Yes | Y/Y/Y | No |
+| Térgeometria | modules/tergeometria_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Hasábok, gúlák F, V | modules/hasabok_gulak.html | OK | Yes | Y/Y/Y | No |
+| Forgástestek (henger, kúp, gömb) | modules/forgastestek.html | OK | Yes | Y/Y/Y | No |
+| Valószínűségszámítás és Statisztika | modules/valstat_modulzaro.html | OK | Yes | Y/Y/Y | Yes |
+| Kombinatorika | modules/kombinatorika_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Permutációk | modules/permutaciok.html | OK | Yes | Y/Y/Y | No |
+| Variációk | modules/variaciok.html | OK | Yes | Y/Y/Y | No |
+| Kombinációk | modules/kombinaciok.html | OK | Yes | Y/Y/Y | No |
+| Binomiális tétel | modules/binomialis_tetel.html | OK | Yes | Y/Y/Y | No |
+| Valószínűségszámítás | modules/valszam_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Klasszikus valószínűségi modell | modules/klasszikus_valoszinuseg.html | OK | Yes | Y/Y/Y | No |
+| Geometriai valószínűség | modules/geometriai_valoszinuseg.html | OK | Yes | Y/Y/Y | No |
+| Feltételes valószínűség | modules/felteteles_valoszinuseg.html | OK | Yes | Y/Y/Y | No |
+| Statisztika | modules/statisztika_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Adatok ábrázolása | modules/adatok_abrazolasa.html | OK | Yes | Y/Y/Y | No |
+| Középértékek | modules/kozepertekek.html | OK | Yes | Y/Y/Y | No |
+| Szóródási mutatók | modules/szorodas.html | OK | Yes | Y/Y/Y | No |
+| Emelt Szintű Kiegészítések | modules/emelt_modulzaro.html | OK | Yes | Y/Y/Y | Yes |
+| Sorozatok | modules/sorozatok_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Számtani és mértani sorozatok | modules/szamtani_mertani.html | OK | Yes | Y/Y/Y | No |
+| Kamatoskamat-számítás | modules/kamatoskamat.html | OK | Yes | Y/Y/Y | No |
+| Konvergencia | modules/konvergencia.html | OK | Yes | Y/Y/Y | No |
+| Differenciálszámítás | modules/differencial_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| Határértékek, folytonosság | modules/hatarertek.html | OK | Yes | Y/Y/Y | No |
+| A derivált fogalma | modules/derivalt_fogalma.html | OK | Yes | Y/Y/Y | No |
+| Deriválási szabályok | modules/derivalasi_szabalyok.html | OK | Yes | Y/Y/Y | No |
+| Függvényvizsgálat deriválttal | modules/fuggvenyvizsgalat.html | OK | Yes | Y/Y/Y | No |
+| Integrálszámítás | modules/integral_temazaro.html | OK | Yes | Y/Y/Y | Yes |
+| A határozatlan integrál | modules/hatarozatlan_integral.html | OK | Yes | Y/Y/Y | No |
+| A határozott integrál | modules/hatarozott_integral.html | OK | Yes | Y/Y/Y | No |
+| Newton-Leibniz formula | modules/newton_leibniz.html | OK | Yes | Y/Y/Y | No |
+| Terfogatszámítás integrállal | modules/terfogatszamitas.html | OK | Yes | Y/Y/Y | No |
+| Karakterlap | modules/character_sheet.html | Not linked | No | Y/N/N | No |
+| placeholder | modules/placeholder.html | Placeholder | No | N/N/N | No |
+| Eredményeim | modules/results.html | Not linked | No | N/N/N | No |
+| Beállítások | modules/settings.html | Not linked | No | N/N/N | No |

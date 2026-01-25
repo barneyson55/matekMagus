@@ -2,7 +2,9 @@
 
 ## Snapshot
 - Electron app: `main.js` main process, `index.html` renderer, iframe module loader.
+- Module coverage audit: 95 of 95 roadmap-linked modules exist; 0 missing (see `docs/module_coverage.md`).
 - Modules implemented for foundational and algebra topics in `modules/`, plus `results.html`, `settings.html`, `character_sheet.html`, and `placeholder.html`.
+- Alapozó és Algebra témakörök elméleti részei bővítve kidolgozott példákkal és diagramokkal (témakör-modulok).
 - Function transformations module (`modules/fuggveny_transzformaciok.html` + `.js`) implemented with test/practice/visual tabs and E2E coverage.
 - Nevezetes fuggvenyek temazaro module (`modules/nevezetes_fuggvenyek_temazaro.html` + `.js`) implemented with test/practice/visual tabs and E2E coverage.
 - Lineáris függvény module now generates full test question sets and emits enriched result payloads; E2E assertions updated.
@@ -12,8 +14,12 @@
 - Trigonometrikus függvények module implemented (`modules/trigonometrikus_fuggvenyek.html` + `.js`) with test/practice/visual tabs and E2E coverage.
 - Abszolútérték, gyök függvények module implemented (`modules/specialis_fuggvenyek.html` + `.js`) with test/practice/visual tabs and E2E coverage.
 - Alapfogalmak és Háromszögek temazaro module implemented (`modules/haromszogek_temazaro.html` + `.js`) with test/practice/visual tabs and E2E coverage.
+- Modulzáró/témazáró modules implemented for Alapozó, Algebra, Geometria, Valószínűség/Statisztika, and Emelt topics (`modules/alapozo_modulzaro.html`, `modules/gondolkodas_temazaro.html`, `modules/szamelmelet_temazaro.html`, `modules/algebra_modulzaro.html`, `modules/geometria_modulzaro.html`, `modules/sokszogek_temazaro.html`, `modules/kor_temazaro.html`, `modules/geo_transzform_temazaro.html`, `modules/koordinatageometria_temazaro.html`, `modules/tergeometria_temazaro.html`, `modules/valstat_modulzaro.html`, `modules/kombinatorika_temazaro.html`, `modules/valszam_temazaro.html`, `modules/statisztika_temazaro.html`, `modules/emelt_modulzaro.html`, `modules/sorozatok_temazaro.html`, `modules/differencial_temazaro.html`, `modules/integral_temazaro.html`).
 - Nevezetes vonalak module implemented (`modules/nevezetes_vonalak.html` + `.js`) with test/practice/visual tabs and E2E coverage.
 - Háromszög-egyenlőtlenség, Pitagorasz/befogó/magasság, és Szinusz/Koszinusz tétel modules implemented (`modules/haromszog_egyenlotlenseg.html`, `modules/szogtetelek.html`, `modules/szinusz_koszinusz_tetel.html` + `.js`) with test/practice/visual tabs and E2E coverage.
+- Geometria core modules implemented (`modules/terulet_kerulet.html`, `modules/specialis_negyszogek.html`, `modules/keruleti_szogek.html`, `modules/latokoriv.html`, `modules/kor_helyzetek.html`, `modules/tukrozes.html`, `modules/eltolas_forgatas.html`, `modules/hasonlosag.html`, `modules/vektorok.html`, `modules/egyenes_egyenlete.html`, `modules/kor_egyenlete.html`, `modules/alakzatok_metszespontja.html`, `modules/hasabok_gulak.html`, `modules/forgastestek.html` + `.js`) with standard test/practice/visual tabs and result payloads.
+- Valószínűség/Statisztika core modules implemented (`modules/permutaciok.html`, `modules/variaciok.html`, `modules/kombinaciok.html`, `modules/binomialis_tetel.html`, `modules/klasszikus_valoszinuseg.html`, `modules/geometriai_valoszinuseg.html`, `modules/felteteles_valoszinuseg.html`, `modules/adatok_abrazolasa.html`, `modules/kozepertekek.html`, `modules/szorodas.html` + `.js`) with standard test/practice/visual tabs and result payloads.
+- Emelt core modules implemented (`modules/szamtani_mertani.html`, `modules/kamatoskamat.html`, `modules/konvergencia.html`, `modules/hatarertek.html`, `modules/derivalt_fogalma.html`, `modules/derivalasi_szabalyok.html`, `modules/fuggvenyvizsgalat.html`, `modules/hatarozatlan_integral.html`, `modules/hatarozott_integral.html`, `modules/newton_leibniz.html`, `modules/terfogatszamitas.html` + `.js`) with standard test/practice/visual tabs and result payloads.
 - Local persistence in `progress.json` via IPC; `preload.js` exposes the bridge.
 - E2E smoke test in `tests/e2e/electron-smoke.test.js`.
 - E2E smoke tests auto-skip in WSL/headless environments; Windows runs execute normally.
@@ -21,53 +27,92 @@
 - Navigation source-of-truth is the manual list in `index.html` (no `assets/temakorok` generation in this phase).
 - App icon added at `assets/icon.png` for the Electron window.
 - CSS encoding normalized in `style.css` (UTF-8 charset, ASCII-safe glyph escapes).
-- Responsive breakpoints (desktop/tablet/mobile) defined in `style.css` and documented in `docs/responsive.md`.
+- Responsive breakpoints (desktop/tablet/mobile) defined in `style.css` and documented in `docs/responsive.md`, with refined tablet/mobile spacing and compact <=480px overrides.
+- Mobile Quest Log drawer now defaults closed on small screens, auto-closes after selection, and header stacking spacing is tightened for mobile.
+- Quest Log collapse state now restores when leaving mobile breakpoints, keeping header/Quest Log layout stable across portrait/landscape changes.
 - Legacy `modules/xp_guide.html` removed and the quest exclusions cleaned up in `index.html`.
 - ENDGAME / RELEASE task list added to `docs/ai_todo.md` to drive localization, responsive UI, testing, and release readiness.
 - App shell/settings labels cleaned up to remove leftover English.
 - Hungarian UI terminology/capitalization normalized for module tabs and character sheet labels (Elmélet/Vizuális modell/Teszt/Gyakorlás/Küldetés).
 - Module question/feedback text diacritics corrected in function characterization and parity/notable-functions modules (ASCII fallbacks removed).
 - Localization glossary added in `docs/localization_glossary.md`; button labels, status messages, and validation/error copy normalized to the glossary across modules and settings.
+- Localization sweep #1 completed: difficulty phrasing aligned to "nehézségi szint", XP next-level labels updated, and achievement/settings fallbacks localized.
+- Localization sweep #2 completed: casing/diacritics normalized for tab/quest labels in release checklist references; legacy Beállítások title corrected in module coverage.
 - Hungarian locale number formatting applied to results, character sheet, and XP header summaries (thousand separators/decimal comma where applicable).
+- Results and character sheet now include trend summaries plus per-topic performance insights.
+- Achievementek külön nézetként elérhetők a bal oldali gyorslinkeknél, és megjelennek az elért/lockolt listák valamint a bónusz XP összegzés.
+- Új achievement feloldásakor toast értesítés jelenik meg a fő felületen.
 - Quest Log state labels and quest-acceptance overlay copy aligned with constitution phrasing; character sheet status meta labels corrected.
 - Mobile layout rules applied: Quest Log drawer on small screens, stacked header, and responsive module tab wrapping/scrolling.
-- Iframe module responsive overrides now reduce padding/fonts and force single-column grids on small widths to prevent horizontal scrolling at 360–414px.
-- Touch targets updated to a 44px minimum for app shell buttons, Quest Log entries, and module buttons/tabs.
+- Iframe module responsive overrides updated with tab-row wrapping/scroll tuning and overflow guards to eliminate horizontal scrolling at 360–414px.
+- Mobile touch targets enforced at a 44px minimum across app shell controls, settings inputs, and iframe module buttons/tabs/inputs (including checkbox labels).
 - Orientation-change E2E coverage added to validate header and Quest Log layout stability across portrait/landscape viewports.
+- Mobile quest drawer E2E smoke coverage added (drawer/backdrop visibility and auto-close on navigation).
 - Manual release smoke-test checklist added in `docs/RELEASE_CHECKLIST.md`.
 - Release readiness report added in `docs/release_readiness_report.md`.
 - Bug triage log initialized in `docs/critical_todo.md` with severity labels and reproduction steps.
-- Module coverage gap report added in `docs/module_coverage.md` with missing modules grouped by roadmap topics.
+- Module coverage audit updated in `docs/module_coverage.md` (table + status per module).
 - Module content audit completed; no mismatches recorded in `docs/module_content_audit.md`.
 - TopicId alias normalization added to keep `progress.json` aligned with navigation (`specialis_fuggvenyek` vs legacy `abszolut_ertek_fuggveny`), plus XP config alias coverage.
 - XP weight audit completed; `constitution/curriculum/difficulties.md` aligned with `xp_formula.md` for Geometria main topic weight (1.2).
 - Nehézségi címke audit lezárva a tesztkérdés-generátoroknál; nem találtunk tantervi eltérést (lásd `docs/difficulty_tag_audit.md`).
 - Module tab/payload consistency script added (`scripts/check_module_consistency.js`) with usage notes in `docs/module_consistency.md`.
 - Test strategy documented in `docs/test_strategy.md` (how to run `npm run test` / `npm run test:e2e`, headless/WSL skip expectations).
-- Minimal unit-test coverage added for generator/helper invariants (`tests/unit/generator_helpers.test.js`) with a DOM-stub harness; `npm run test` now runs unit + E2E, and `npm run test:unit` runs unit tests only.
+- Test runner now uses `scripts/run-tests.js` to run unit tests and conditionally skip E2E in WSL/headless, avoiding shell glob issues on Windows.
+- Minimal unit-test coverage added for generator/helper invariants (`tests/unit/generator_helpers.test.js`) with a DOM-stub harness; `npm run test` runs unit + E2E unless auto-skipped in WSL/headless, and `npm run test:unit` runs unit tests only.
+- Test/practice generators now build expanded test pools (sampling from `TEST_QUESTION_COUNT` + extra variety per difficulty) and use longer anti-repeat windows in practice sessions (history 12, retry 24) to reduce repetition.
 
 ## Partial or Unverified
 - Windows renderer verification pending for CSS glyph rendering in the sidebar disclosure arrow.
 - Windows smoke tests are still pending; no native Windows environment available in this session.
 - Latest orientation layout coverage is unverified on Windows (WSL2 run completed, but Windows coverage remains outstanding).
 - Packaging verification is pending (no packaging script configured in `package.json`).
+- Mobile/responsive behavior is deferred to V2; existing CSS rules are not v1 gating.
 
 ## Missing or Risky
-- Many geometry/probability/statistics/advanced curriculum modules are not present in `modules/` yet.
+- No missing roadmap modules; remaining validation risk is Windows coverage (see Partial or Unverified).
 
 ## Next Milestone
-- TBD
+- Desktop v1: complete Hungarian localization sweep and stabilize test strategy across Windows/WSL.
 
 ## Recent Tests
+- 2026-01-25 (WSL2): `npm run test` — pass (E2E skipped by WSL gate; mobile quest drawer smoke test).
+- 2026-01-25 (WSL2): `npm run test:e2e` — pass (mobile quest drawer smoke test).
+- 2026-01-25 (WSL2): `npm run test` — pass (E2E skipped by WSL gate; orientation quest drawer sync).
+- 2026-01-25 (WSL2): `npm run test:e2e` — pass.
+- 2026-01-25 (WSL2): `npm run test` — pass (E2E skipped by WSL gate; mobile touch target audit).
+- 2026-01-25 (WSL2): `npm run test:e2e` — pass.
+- 2026-01-25 (WSL2): `npm run test` — pass (E2E skipped by WSL gate; module tab wrap/scroll override update).
+- 2026-01-25 (WSL2): `npm run test:e2e` — pass.
+- 2026-01-25 (WSL2): `npm run test` — pass (E2E skipped by WSL gate; responsive breakpoint refinements).
+- 2026-01-25 (WSL2): `npm run test:e2e` — pass.
+- 2026-01-25 (WSL2): `npm run test` — pass (E2E skipped by WSL gate; achievements view + toasts).
+- 2026-01-25 (WSL2): `npm run test:e2e` — pass.
+- 2026-01-25 (WSL2): `npm run test` — pass (trend summaries update; E2E skipped by WSL gate).
+- 2026-01-25 (WSL2): `npm run test:e2e` — pass (trend summaries update).
+- 2026-01-25 (WSL2): `npm run test` — pass (E2E skipped by WSL gate).
+- 2026-01-25 (WSL2): `npm run test:e2e` — pass.
+- 2026-01-25 (local CLI): `npm run test` — pass (localization sweep #2).
+- 2026-01-25 (local CLI): `npm run test:e2e` — pass (localization sweep #2).
+- 2026-01-25 (local CLI): `npm run test` — pass (localization sweep #1).
+- 2026-01-25 (local CLI): `npm run test:e2e` — pass (localization sweep #1).
+- 2026-01-25 (local CLI): `npm run test` — pass (Emelt core modules).
+- 2026-01-25 (local CLI): `npm run test:e2e` — pass (Emelt core modules).
 - 2026-01-24 (local CLI): `npm run test` — pass (seeded E2E randomness).
 - 2026-01-24 (local CLI): `npm run test` — pass.
 - 2026-01-24 (local CLI): `npm run test:e2e` — pass.
 - 2026-01-24 (WSL2, DISPLAY=:0): `npm run test` (alias for `npm run test:e2e`) — pass.
 - 2026-01-24 (WSL2, DISPLAY=:0): `npm run test:e2e` — pass.
-- 2026-01-24 (Windows): not run (no native Windows environment available in this session).
+- 2026-01-25 (Windows): not run (no native Windows environment available in this session).
 - 2026-01-24 (local CLI): `npm run test` — pass (test strategy doc update).
 - 2026-01-24 (local CLI): `npm run test:e2e` — pass (test strategy doc update).
 - 2026-01-24 (local CLI): `npm run test` — pass (unit + E2E).
 - 2026-01-24 (local CLI): `npm run test:e2e` — pass.
 - 2026-01-24 (WSL2): `npm run test` — pass (unit + E2E; E2E not skipped).
 - 2026-01-24 (WSL2): `npm run test:e2e` — pass.
+- 2026-01-24 (local CLI): `npm run test` — pass (modulzáró/témazáró modules).
+- 2026-01-24 (local CLI): `npm run test:e2e` — pass (modulzáró/témazáró modules).
+- 2026-01-25 (local CLI): `npm run test` — pass.
+- 2026-01-25 (local CLI): `npm run test:e2e` — pass.
+- 2026-01-25 (local CLI): `npm run test` — pass (Valószínűség/Statisztika core modules).
+- 2026-01-25 (local CLI): `npm run test:e2e` — pass (Valószínűség/Statisztika core modules).

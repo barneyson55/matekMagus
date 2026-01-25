@@ -13,7 +13,7 @@ adds a minimal unit-test layer for generator/helper invariants.
 npm install
 ```
 
-2) Run the default test alias (unit + E2E):
+2) Run the default test alias (unit + conditional E2E):
 
 ```
 npm run test
@@ -32,10 +32,12 @@ npm run test:e2e
 ```
 
 Notes:
-- `npm run test` runs unit tests first and then the E2E suite in a single Node test run.
+- `npm run test` runs `scripts/run-tests.js`, which executes unit tests first and then
+  conditionally runs E2E based on environment detection.
 - `npm run test:unit` runs only the unit tests under `tests/unit/`.
 - The E2E command uses Node's test runner on `tests/e2e/electron-smoke.test.js`.
 - Playwright browsers are not required because the test launches Electron.
+  (No shell globbing is required, so Windows runs are stable.)
 
 ## Unit-test coverage targets (minimal)
 
@@ -69,23 +71,25 @@ To change the seed, update `E2E_RANDOM_SEED` in the test file or pass
 
 - Windows (native, with GUI): E2E runs normally.
 - Linux/macOS with a display server (X11/Wayland/MIR): E2E runs normally.
-- WSL (any): E2E is auto-skipped by design.
-- Headless Linux (no DISPLAY/WAYLAND/MIR): E2E is auto-skipped by design.
+- WSL (any): E2E is auto-skipped by design in `scripts/run-tests.js`.
+- Headless Linux (no DISPLAY/WAYLAND/MIR): E2E is auto-skipped by design in `scripts/run-tests.js`.
 
-The skip behavior is implemented in `tests/e2e/electron-smoke.test.js` and reports
+The skip behavior is implemented in `scripts/run-tests.js` (primary gate) and
+`tests/e2e/electron-smoke.test.js` (secondary guard). The test file reports
 one of these reasons:
 - "WSL detected; skipping Electron E2E."
 - "Headless environment detected; skipping Electron E2E."
 
 ## Headless caveats
 
-- In WSL or headless environments, a SKIP status is expected and not a failure.
+- In WSL or headless environments, `npm run test` logs the skip reason after unit tests.
+- `npm run test:e2e` reports SKIPPED entries in the TAP output when the guard triggers.
 - If CI needs E2E coverage, use Windows or Linux with a virtual display (Xvfb)
   and set `DISPLAY` so Electron can launch.
 
 ## Expected failures
 
-- Expected: E2E tests show as SKIPPED in WSL/headless environments.
+- Expected: E2E tests are skipped in WSL/headless environments (script gate + test guard).
 - Unexpected: Any failures on Windows or on Linux/macOS with a display should be
   treated as regressions.
 

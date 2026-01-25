@@ -588,7 +588,31 @@
                 <li>Ha |A&#8746;B| = 18, |A| = 11, |B| = 10, akkor |A&#8745;B| = ? (3)</li>
             </ul>
         </div>
-    </div>
+    
+        <div class="learning-hint">
+            <h3>Kidolgozott példa</h3>
+            <p>1 és 30 között hány szám osztható 2-vel vagy 5-tel?</p>
+            <ol>
+                <li>|A| = floor(30 / 2) = 15.</li>
+                <li>|B| = floor(30 / 5) = 6.</li>
+                <li>|A ∩ B| = floor(30 / 10) = 3.</li>
+                <li>|A ∪ B| = 15 + 6 - 3 = 18.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Ábra: duplaszámlálás korrigálása</h3>
+            <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
+                <circle cx="130" cy="80" r="55" fill="rgba(160,191,224,0.25)" stroke="#4A55A2" stroke-width="2" />
+                <circle cx="190" cy="80" r="55" fill="rgba(120,149,203,0.25)" stroke="#4A55A2" stroke-width="2" />
+                <text x="112" y="86" font-size="18" fill="#2C3333">12</text>
+                <text x="156" y="86" font-size="18" fill="#2C3333">3</text>
+                <text x="214" y="86" font-size="18" fill="#2C3333">3</text>
+                <text x="110" y="30" font-size="14" font-weight="600">A</text>
+                <text x="200" y="30" font-size="14" font-weight="600">B</text>
+            </svg>
+            <p style="font-size: 0.95em; color: var(--text-light);">A metszetet egyszer levonjuk, ezért lesz az összesen 18.</p>
+        </div>
+</div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <div class="model-container">
@@ -659,7 +683,7 @@
 
     <div id="teszt" class="tab-content card" role="tabpanel">
         <h2>Teszt</h2>
-        <p>R&#246;vid teszt, ami ellen&#337;rzi a szita formula haszn&#225;lat&#225;t halmazokra &#233;s oszthat&#243;s&#225;gi feladatokra. V&#225;lassz neh&#233;zs&#233;get, majd oldd meg a k&#233;rd&#233;seket.</p>
+        <p>R&#246;vid teszt, ami ellen&#337;rzi a szita formula haszn&#225;lat&#225;t halmazokra &#233;s oszthat&#243;s&#225;gi feladatokra. V&#225;lassz neh&#233;zs&#233;gi szintet, majd oldd meg a k&#233;rd&#233;seket.</p>
         <div class="learning-hint" data-role="test-help">
             <h3>Megold&#225;si l&#233;p&#233;sek</h3>
             <ul>
@@ -709,7 +733,7 @@
         <div class="learning-hint" data-role="practice-help">
             <h3>Gyakorl&#225;si tipp</h3>
             <ul>
-                <li>V&#225;lassz legal&#225;bb egy neh&#233;zs&#233;get a feladatokhoz.</li>
+                <li>V&#225;lassz legal&#225;bb egy neh&#233;zs&#233;gi szintet a feladatokhoz.</li>
                 <li>Haszn&#225;ld a szita formul&#225;t: |A&#8746;B| = |A| + |B| - |A&#8745;B|.</li>
                 <li>Oszthat&#243;s&#225;gn&#225;l el&#337;sz&#246;r sz&#225;mold ki a floor(N / a) &#233;rt&#233;keket.</li>
                 <li>Helyes v&#225;lasz ut&#225;n automatikusan j&#246;n a k&#246;vetkez&#337; k&#233;rd&#233;s.</li>

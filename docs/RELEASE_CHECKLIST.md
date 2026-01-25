@@ -23,13 +23,13 @@ Keep notes for any failures (steps, expected vs actual, logs/screenshots if need
 ## Navigation (Quest Log + Character Sheet)
 - [ ] Hamburger toggles Quest Log open/closed without layout glitches.
 - [ ] Clicking a module in the Quest Log loads the correct module in the iframe.
-- [ ] If the module is not accepted, the `Kuldetes elfogadasa` button is visible.
+- [ ] If the module is not accepted, the `Küldetés elfogadása` button is visible.
 - [ ] Accepting a quest updates the Quest Log state (active styling).
 - [ ] Clicking the avatar opens the Character Sheet in the main content area.
 - [ ] Selecting a module from the Quest Log returns from Character Sheet to module view.
 
 ## Module tabs
-- [ ] Module view shows tabs for `Elmelet`, `Vizualis modell`, `Teszt`, `Gyakorlas`.
+- [ ] Module view shows tabs for `Elmélet`, `Vizuális modell`, `Teszt`, `Gyakorlás`.
 - [ ] Switching tabs changes only the main content area and keeps the shell intact.
 - [ ] Tab buttons remain usable on smaller widths (wrap or scroll without overlap).
 
@@ -38,7 +38,7 @@ Keep notes for any failures (steps, expected vs actual, logs/screenshots if need
 - [ ] Submitting shows a result/grade and XP feedback.
 - [ ] The result is saved and appears in `Eredmenyeim`.
 
-## Practice (Gyakorlas)
+## Practice (Gyakorlás)
 - [ ] Start a practice session and verify feedback for correct/incorrect answers.
 - [ ] XP updates are reflected in the header after practice.
 - [ ] Practice completion is saved and appears in `Eredmenyeim` (if applicable).

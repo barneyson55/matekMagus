@@ -91,8 +91,8 @@ let currentPracticeKind = '';
 let currentPracticeExpected = null;
 let currentPracticeDifficulty = DIFF_EASY;
 let practiceActive = false;
-const PRACTICE_HISTORY_LIMIT = 8;
-const PRACTICE_RETRY_LIMIT = 16;
+const PRACTICE_HISTORY_LIMIT = 12;
+const PRACTICE_RETRY_LIMIT = 24;
 const practiceHistory = [];
 
 const BASE_POOL = {
@@ -482,6 +482,7 @@ function buildTestQuestions(difficulty) {
   const types = QUESTION_TYPES_BY_DIFFICULTY[difficulty] || QUESTION_TYPES_BY_DIFFICULTY[DIFF_EASY];
   const questions = [];
   const used = new Set();
+  const poolTarget = TEST_QUESTION_COUNT + Math.min(types.length * 3, 8);
 
   types.forEach((kind) => {
     let q = null;
@@ -499,7 +500,7 @@ function buildTestQuestions(difficulty) {
     if (q) questions.push(q);
   });
 
-  while (questions.length < TEST_QUESTION_COUNT) {
+  while (questions.length < poolTarget) {
     const kind = types[randomInt(0, types.length - 1)];
     const candidate = buildQuestion(kind, difficulty);
     const signature = candidate.signature || `${kind}:${candidate.question}`;
@@ -880,7 +881,7 @@ if (practiceStartBtn) {
   practiceStartBtn.addEventListener('click', () => {
     const enabled = getEnabledPracticeDifficulties();
     if (!enabled.length) {
-      practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
+      practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9gi szintet.';
       practiceFeedback.style.color = '#f04747';
       return;
     }

@@ -23,10 +23,10 @@ fields (or missing files, unless `--allow-missing` is used).
 
 Each module referenced by `index.html` should include tabs that cover:
 
-- Theory (labels containing `Elmelet` or `Kulcsfogalmak`/`Fogalmak`/`Alapok`)
-- Visual model (labels containing `Vizualis`)
+- Theory (labels containing `Elmélet` or `Kulcsfogalmak`/`Fogalmak`/`Alapok`)
+- Visual model (labels containing `Vizuális modell`)
 - Test (labels containing `Teszt`)
-- Practice (labels containing `Gyakorlas`)
+- Practice (labels containing `Gyakorlás`)
 
 ## Expected `testResult` Payload
 

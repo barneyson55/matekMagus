@@ -241,6 +241,91 @@ e2eTest('quest log toggle collapses sidebar', async () => {
   }
 });
 
+e2eTest('mobile quest drawer opens and auto-closes', async () => {
+  const { app, page } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+
+    await page.setViewportSize({ width: 360, height: 740 });
+    await page.waitForFunction(() => {
+      const tier = getComputedStyle(document.documentElement)
+        .getPropertyValue('--viewport-tier')
+        .trim();
+      return tier === 'mobile';
+    });
+    await page.waitForFunction(() => document.body.classList.contains('quest-collapsed'));
+
+    const baseState = await page.evaluate(() => {
+      const sidebar = document.querySelector('.sidebar');
+      const backdrop = document.getElementById('quest-drawer-backdrop');
+      const sidebarStyle = sidebar ? getComputedStyle(sidebar) : null;
+      const backdropStyle = backdrop ? getComputedStyle(backdrop) : null;
+      return {
+        sidebarPosition: sidebarStyle ? sidebarStyle.position : '',
+        backdropHidden: backdrop ? backdrop.getAttribute('aria-hidden') : '',
+        backdropOpacity: backdropStyle ? backdropStyle.opacity : '',
+      };
+    });
+    assert.equal(baseState.sidebarPosition, 'absolute');
+    assert.equal(baseState.backdropHidden, 'true');
+    assert.equal(Number.parseFloat(baseState.backdropOpacity), 0);
+
+    await page.click('#quest-toggle');
+    await page.waitForFunction(() => !document.body.classList.contains('quest-collapsed'));
+
+    const openState = await page.evaluate(() => {
+      const sidebar = document.querySelector('.sidebar');
+      const backdrop = document.getElementById('quest-drawer-backdrop');
+      const backdropStyle = backdrop ? getComputedStyle(backdrop) : null;
+      const rect = sidebar ? sidebar.getBoundingClientRect() : null;
+      return {
+        backdropHidden: backdrop ? backdrop.getAttribute('aria-hidden') : '',
+        backdropOpacity: backdropStyle ? backdropStyle.opacity : '',
+        sidebarLeft: rect ? rect.left : null,
+        sidebarRight: rect ? rect.right : null,
+      };
+    });
+    assert.equal(openState.backdropHidden, 'false');
+    assert.ok(Number.parseFloat(openState.backdropOpacity) > 0);
+    assert.ok(openState.sidebarLeft <= 1);
+    assert.ok(openState.sidebarRight > 0);
+
+    await page.evaluate(() => {
+      if (typeof setQuestStatus === 'function') {
+        setQuestStatus('halmazmuveletek', 'ACTIVE');
+      }
+      const outer = document.querySelector('[data-topic-id="alapozo_modulzaro"]')?.closest('details');
+      if (outer) outer.open = true;
+      const inner = document.querySelector('[data-topic-id="gondolkodas_temazaro"]')?.closest('details');
+      if (inner) inner.open = true;
+    });
+
+    const moduleLink = page.locator('[data-topic-id="halmazmuveletek"]');
+    await moduleLink.scrollIntoViewIfNeeded();
+    await moduleLink.click();
+    await waitForIframeSrc(page, 'modules/halmazmuveletek.html');
+
+    await page.waitForFunction(() => document.body.classList.contains('quest-collapsed'));
+    const closedState = await page.evaluate(() => {
+      const backdrop = document.getElementById('quest-drawer-backdrop');
+      const backdropStyle = backdrop ? getComputedStyle(backdrop) : null;
+      return {
+        backdropHidden: backdrop ? backdrop.getAttribute('aria-hidden') : '',
+        backdropOpacity: backdropStyle ? backdropStyle.opacity : '',
+      };
+    });
+    assert.equal(closedState.backdropHidden, 'true');
+    assert.equal(Number.parseFloat(closedState.backdropOpacity), 0);
+
+    await page.click('#quest-toggle');
+    await page.waitForFunction(() => !document.body.classList.contains('quest-collapsed'));
+    await page.click('#quest-drawer-backdrop');
+    await page.waitForFunction(() => document.body.classList.contains('quest-collapsed'));
+  } finally {
+    await app.close();
+  }
+});
+
 e2eTest('keeps header and quest log stable across orientation changes', async () => {
   const { app, page } = await launchApp();
   try {

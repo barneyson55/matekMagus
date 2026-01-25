@@ -46,6 +46,7 @@
     --panel-border: rgba(255, 255, 255, 0.08);
     --panel-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
     --sidebar-width: 300px;
+    --sidebar-width-tablet: 260px;
     --sidebar-width-mobile: min(320px, 88vw);
     --bp-desktop-min: 1200px;
     --bp-tablet-min: 768px;
@@ -172,6 +173,7 @@ details > ul { list-style: none; margin-left: 20px; margin-top: 5px; padding-lef
 
 body.quest-collapsed .sidebar { width: 0; padding: 0; border-right: none; overflow: hidden; }
 body.quest-collapsed .sidebar > * { opacity: 0; pointer-events: none; }
+body.quest-collapsed .sidebar { pointer-events: none; }
 body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after {
     transition: none !important;
     animation: none !important;
@@ -576,12 +578,115 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
 }
 .settings-btn:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 2px; }
 
+/* Achievement toasts */
+.achievement-toast-layer {
+    position: fixed;
+    top: calc(var(--header-height) + 16px);
+    right: 24px;
+    width: min(360px, 90vw);
+    display: grid;
+    gap: 12px;
+    z-index: 120;
+    pointer-events: none;
+}
+.achievement-toast {
+    background: var(--header-bg);
+    border: 1px solid var(--header-border);
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 10px;
+    align-items: start;
+    color: var(--text-primary);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: auto;
+}
+.achievement-toast.is-hiding {
+    opacity: 0;
+    transform: translateY(-6px);
+}
+.achievement-toast__badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--accent-color);
+    background: rgba(88, 101, 242, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.achievement-toast__title {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+.achievement-toast__desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+.achievement-toast__meta {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+.achievement-toast__close {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.achievement-toast__close:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 2px; }
+
 /* Responsive breakpoints: desktop >=1200px, tablet 768-1199px, mobile <=767px. */
 @media (min-width: 1200px) {
     :root { --viewport-tier: desktop; }
 }
 @media (min-width: 768px) and (max-width: 1199px) {
-    :root { --viewport-tier: tablet; }
+    :root {
+        --viewport-tier: tablet;
+        --sidebar-width: var(--sidebar-width-tablet);
+    }
+    .app-header { grid-template-columns: minmax(56px, 72px) 1fr; }
+    .header-main { padding: 4px 10px; }
+    .header-top { column-gap: 8px; }
+    .buff-icon { width: 20px; height: 20px; }
+    .app-title { font-size: 18px; }
+    .player-panel { flex-wrap: wrap; row-gap: 4px; }
+    .player-level { font-size: 15px; padding: 0 10px; }
+    .level-name { font-size: 0.9rem; }
+    .xp-bar { height: 12px; }
+    .sidebar { padding: 16px; }
+    .sidebar-title { font-size: 20px; margin-bottom: 16px; }
+    summary { padding: 0 8px; }
+    summary::before { padding: 8px 0 8px 4px; }
+    .module-link {
+        font-size: 14px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        padding-left: 8px;
+        padding-right: 36px;
+    }
+    .module-link.main-topic {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-left: 6px;
+    }
+    .module-banner { flex-wrap: wrap; }
+    .settings-panel { width: min(880px, 96vw); }
+    .settings-body { grid-template-columns: 200px 1fr; }
+    .settings-categories { padding: 12px; }
 }
 @media (max-width: 767px) {
     :root {
@@ -603,20 +708,36 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
     .header-top {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         gap: 6px;
         text-align: center;
     }
-    .buffs { justify-content: center; }
+    .buffs {
+        width: 100%;
+        justify-content: center;
+    }
     .app-title { font-size: 18px; }
     .player-panel {
+        width: 100%;
         justify-content: center;
         flex-wrap: wrap;
+        column-gap: 8px;
         row-gap: 4px;
     }
-    .level-name { font-size: 0.9rem; }
+    .level-name {
+        flex-basis: 100%;
+        font-size: 0.9rem;
+        text-align: center;
+    }
     .xp-bar { height: 12px; }
     .xp-tooltip { right: 8px; top: -30px; }
+    .achievement-toast-layer {
+        top: auto;
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        width: auto;
+    }
 
     .app-container { position: relative; }
     .quest-drawer-backdrop {
@@ -639,6 +760,7 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
         bottom: 0;
         left: 0;
         width: var(--sidebar-width);
+        padding: 16px;
         transform: translateX(-100%);
         transition: transform 0.25s ease;
         z-index: 20;
@@ -647,7 +769,7 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
     body:not(.quest-collapsed) .sidebar { transform: translateX(0); }
     body.quest-collapsed .sidebar {
         width: var(--sidebar-width);
-        padding: 20px;
+        padding: 16px;
         border-right: 1px solid var(--bg-medium);
         overflow: hidden;
     }
@@ -661,8 +783,72 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
         align-items: flex-start;
         gap: 8px;
     }
+    summary { padding: 0 8px; }
+    summary::before { padding: 8px 0 8px 4px; }
+    .module-link { font-size: 14px; }
     .quest-accept-btn {
         width: 100%;
         text-align: center;
+    }
+    .settings-overlay { padding: 16px; }
+    .settings-panel {
+        width: min(96vw, 560px);
+        max-height: 92vh;
+        border-radius: 14px;
+    }
+    .settings-header { flex-wrap: wrap; gap: 12px; }
+    .settings-body { grid-template-columns: 1fr; }
+    .settings-categories {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .settings-tab { flex: 1 1 140px; }
+    .settings-content { padding: 16px; }
+    .settings-field {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+    .settings-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .settings-btn { width: 100%; }
+    button,
+    [type="button"],
+    [type="submit"],
+    [type="reset"] {
+        min-height: var(--touch-target-size);
+        min-width: var(--touch-target-size);
+    }
+    input,
+    select,
+    textarea {
+        min-height: var(--touch-target-size);
+    }
+    .achievement-toast__close {
+        min-width: var(--touch-target-size);
+        min-height: var(--touch-target-size);
+    }
+    .settings-field input[type="checkbox"] {
+        width: var(--touch-target-size);
+        height: var(--touch-target-size);
+    }
+}
+
+@media (max-width: 480px) {
+    .app-header { grid-template-columns: minmax(52px, 60px) 1fr; }
+    .header-main { padding: 6px 8px 8px; }
+    .app-title { font-size: 16px; letter-spacing: 0.2px; }
+    .player-level { font-size: 14px; padding: 0 8px; }
+    .level-name { font-size: 0.85rem; }
+    .xp-tooltip { font-size: 11px; }
+    .settings-fab {
+        width: 48px;
+        height: 48px;
+        right: 16px;
+        bottom: 16px;
     }
 }

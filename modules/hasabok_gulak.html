@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Has&#225;bok, g&#250;l&#225;k F, V</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+        :root {
+            --brand-primary: #4A55A2;
+            --brand-secondary: #7895CB;
+            --brand-light: #A0BFE0;
+            --brand-background: #C5DFF8;
+            --text-dark: #2C3333;
+            --text-light: #393E46;
+            --bg-main: #FBFBFF;
+            --bg-card: #FFFFFF;
+            --border-color: #EAEFF2;
+            --success: #2ECC71;
+            --danger: #E74C3C;
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Cinzel', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-light);
+            padding: 40px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            font-weight: 400;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: var(--brand-primary);
+            border-bottom: 2px solid var(--brand-background);
+            padding-bottom: 10px;
+            margin: 30px 0 16px 0;
+            font-weight: 600;
+            font-family: var(--font-heading), var(--font-main);
+        }
+
+        h3 {
+            font-size: 1.2em;
+            color: var(--text-dark);
+            margin: 16px 0 8px 0;
+            font-weight: 600;
+        }
+
+        p,
+        li {
+            font-size: 1.05em;
+            line-height: 1.7;
+            max-width: 80ch;
+        }
+
+        ul,
+        ol {
+            padding-left: 24px;
+        }
+
+        b,
+        strong {
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+
+        .muted {
+            color: var(--text-light);
+            font-size: 0.95em;
+        }
+
+        .theory-grid {
+            display: grid;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        @media (min-width: 900px) {
+            .theory-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .card {
+            background-color: var(--bg-card, rgba(255, 255, 255, var(--module-card-opacity, 1)));
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-light);
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--brand-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: var(--brand-primary);
+        }
+
+        .tab-button.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .learning-hint {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--brand-primary);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 14px 0;
+            color: var(--text-dark);
+        }
+
+        .learning-hint h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.05em;
+            color: var(--brand-primary);
+        }
+
+        .learning-hint ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-light);
+        }
+
+        .learning-hint li { margin-bottom: 6px; }
+
+        .formula-line {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-main);
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 8px 10px;
+            color: var(--text-dark);
+            display: inline-block;
+        }
+
+        .model-container {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .model-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .model-card {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group input {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            font-size: 1em;
+        }
+
+        .result-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .result-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .test-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .difficulty-btn.active {
+            background-color: var(--brand-primary);
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(74, 85, 162, 0.25);
+        }
+
+        .test-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .test-area,
+        .practice-area {
+            margin-top: 16px;
+        }
+
+        .test-area.is-hidden,
+        .practice-area.is-hidden {
+            display: none;
+        }
+
+        .test-navigation {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #pagination-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            background-color: var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dot.answered {
+            background-color: var(--success);
+        }
+
+        .dot.current {
+            box-shadow: 0 0 0 4px var(--brand-light);
+            transform: scale(1.15);
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 46px;
+            height: 46px;
+            cursor: pointer;
+            color: var(--brand-primary);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--brand-primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(74, 85, 162, 0.2);
+        }
+
+        .nav-btn:disabled {
+            background-color: var(--bg-main);
+            color: var(--border-color);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .question-box {
+            padding: 24px;
+            border-radius: 12px;
+            background-color: var(--bg-main);
+            min-height: 160px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .test-question,
+        .practice-question {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--brand-primary);
+            outline-offset: 2px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: default;
+            box-shadow: none;
+        }
+
+        .btn-primary {
+            background-color: var(--brand-primary);
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(74, 85, 162, 0.25);
+        }
+
+        .btn-primary:hover { transform: translateY(-1px); }
+
+        .btn-secondary,
+        .secondary {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+
+        .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+        .module-input {
+            width: min(320px, 100%);
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            font-size: 1em;
+        }
+
+        .module-input:focus {
+            outline: 2px solid var(--brand-primary);
+            border-color: var(--brand-primary);
+        }
+
+        .input-help {
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: var(--text-light);
+        }
+
+        .practice-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .practice-controls label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95em;
+        }
+
+        .practice-info {
+            margin-top: -10px;
+        }
+
+        .result-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 30px 50px;
+            border-radius: 15px;
+            font-size: 2em;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .result-popup.show { opacity: 1; }
+    
+        /* Touch targets */
+        button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+</style>
+</head>
+<body>
+    <div class="tab-buttons" role="tablist">
+        <button class="tab-button active" data-tab="elmelet" type="button" role="tab" aria-selected="true">Elm&#233;let</button>
+        <button class="tab-button" data-tab="vizualis" type="button" role="tab" aria-selected="false">Vizu&#225;lis modell</button>
+        <button class="tab-button" data-tab="teszt" type="button" role="tab" aria-selected="false">Teszt</button>
+        <button class="tab-button" data-tab="gyakorlas" type="button" role="tab" aria-selected="false">Gyakorl&#225;s</button>
+    </div>
+
+    <div id="elmelet" class="tab-content card active" role="tabpanel">
+        <h2>Has&#225;bok, g&#250;l&#225;k F, V</h2>
+        <p>T&#233;rgeometri&#225;ban a t&#233;rfogat alap &#233;s magass&#225;g szorzat&#225;b&#243;l sz&#225;rmazik.</p>
+        <div class="theory-grid">
+            <div class="learning-hint">
+                <h3>K&#233;pletek</h3>
+                <ul>
+                    <li><span class="formula-line">Has&#225;b t&#233;rfogata: V = B * m</span></li>
+<li><span class="formula-line">T&#233;glatest: V = a * b * m</span></li>
+<li><span class="formula-line">G&#250;la: V = B * m / 3</span></li>
+                </ul>
+            </div>
+            <div class="learning-hint">
+                <h3>Tippek</h3>
+                <ul>
+                    <li>B az alap ter&#252;lete.</li>
+<li>A magass&#225;g mindig mer&#337;leges az alapra.</li>
+<li>A g&#250;la t&#233;rfogata harmada a has&#225;b&#233;nak.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="vizualis" class="tab-content card" role="tabpanel">
+        <h2>Vizu&#225;lis modell</h2>
+        <p>A t&#233;rfogat k&#233;pletek gyors alkalmaz&#225;sa.</p>
+        <div class="model-container">
+            <div class="model-card">
+                <h3>Has&#225;b</h3>
+                
+                <ul>
+                    <li><span class="formula-line">B = 20 cm^2, m = 5 cm</span></li>
+<li><span class="formula-line">V = 100 cm^3</span></li>
+                </ul>
+            </div>
+<div class="model-card">
+                <h3>G&#250;la</h3>
+                
+                <ul>
+                    <li><span class="formula-line">B = 30 cm^2, m = 6 cm</span></li>
+<li><span class="formula-line">V = 60 cm^3</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="teszt" class="tab-content card" role="tabpanel">
+        <h2>Teszt</h2>
+        <p>Sz&#225;mold ki a t&#233;rfogatot a megadott adatokb&#243;l.</p>
+        <div class="learning-hint" data-role="test-help">
+            <h3>Megold&#225;si tippek</h3>
+            <ul>
+                <li>Haszn&#225;ld a megfelel&#337; k&#233;pletet.</li>
+<li>Ha nem eg&#233;sz, kerek&#237;ts k&#233;t tizedesre.</li>
+<li>Csak a sz&#225;m&#233;rt&#233;ket &#237;rd be.</li>
+            </ul>
+            <div class="input-help">Enterrel is tov&#225;bbl&#233;phetsz.</div>
+        </div>
+        <div class="test-meta">
+            <div class="meta-row">
+                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <div class="difficulty-buttons">
+                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="neh&#233;z" type="button">Neh&#233;z</button>
+                </div>
+            </div>
+        </div>
+        <div class="test-controls">
+            <button id="start-test-btn" class="btn btn-secondary" type="button" hidden>&#218;j teszt</button>
+        </div>
+        <div id="test-area" class="test-area is-hidden">
+            <div class="test-navigation">
+                <button id="prev-q" class="nav-btn" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg></button>
+                <div id="pagination-dots"></div>
+                <button id="next-q" class="nav-btn" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg></button>
+            </div>
+            <div class="question-box">
+                <div id="test-question" class="test-question"></div>
+                <input type="text" id="test-answer" class="module-input" placeholder="V&#225;lasz...">
+                <div class="input-help">Ha sz&#252;ks&#233;ges, kerek&#237;ts k&#233;t tizedesre.</div>
+            </div>
+            <button id="finish-test-btn" class="btn btn-primary" type="button" style="width: 100%;">Teszt befejez&#233;se &#233;s &#233;rt&#233;kel&#233;s</button>
+        </div>
+    </div>
+
+    <div id="gyakorlas" class="tab-content card" role="tabpanel">
+        <h2>Gyakorl&#225;s</h2>
+        <p class="practice-info">V&#233;gtelen&#237;tett gyakorl&#225;s. XP jutalom: k&#246;nny&#369; = 1 XP, norm&#225;l = 2 XP, neh&#233;z = 3 XP.</p>
+        <div class="learning-hint" data-role="practice-help">
+            <h3>Gyakorl&#225;si tippek</h3>
+            <ul>
+                <li>V&#225;lassz t&#246;bb neh&#233;zs&#233;gi szintet, ha vegyes gyakorl&#225;st szeretn&#233;l.</li>
+<li>Helyes v&#225;lasz ut&#225;n 2 mp m&#250;lva j&#246;n a k&#246;vetkez&#337;.</li>
+<li>Figyelj az el&#337;jelekre &#233;s az egys&#233;gekre.</li>
+            </ul>
+        </div>
+        <div class="practice-controls">
+            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
+            <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
+            <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>
+            <button id="start-practice-btn" class="btn btn-secondary" type="button">Gyakorl&#225;s ind&#237;t&#225;sa</button>
+        </div>
+        <div id="practice-area" class="practice-area is-hidden">
+            <div class="question-box">
+                <div id="practice-question" class="practice-question"></div>
+                <input type="text" id="practice-input" class="module-input" placeholder="V&#225;lasz...">
+                <button id="check-practice-btn" class="btn btn-primary" type="button">V&#225;lasz elk&#252;ld&#233;se</button>
+                <div id="practice-feedback" class="input-help"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="result-popup" id="resultPopup"></div>
+
+    <script src="hasabok_gulak.js"></script>
+</body>
+</html>

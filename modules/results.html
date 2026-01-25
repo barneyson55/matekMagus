@@ -53,6 +53,30 @@
         .xp-summary .xp-meta { display: flex; justify-content: space-between; align-items: center; font-weight: 600; margin-bottom: 12px; }
         .xp-progress { height: 12px; border-radius: 999px; background-color: #e5e7eb; overflow: hidden; }
         .xp-progress-fill { height: 100%; background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary)); width: 0%; transition: width 0.4s; }
+        .insights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 24px; }
+        .insight-card { background-color: var(--panel-bg); border-radius: 16px; padding: 20px; border: 1px solid var(--border-color); box-shadow: 0 12px 30px -18px rgba(0,0,0,0.2); }
+        .insight-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; gap: 12px; flex-wrap: wrap; }
+        .insight-header h2 { margin: 0; font-size: 1.1em; color: var(--brand-primary); }
+        .insight-sub { color: var(--text-light); font-size: 0.85em; }
+        .metric-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+        .metric { background-color: rgba(255, 255, 255, 0.7); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 14px; display: grid; gap: 6px; }
+        .metric span { color: var(--text-light); font-size: 0.85em; }
+        .metric strong { font-size: 1.1em; color: var(--text-dark); }
+        .trend-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-weight: 600; font-size: 0.75em; }
+        .trend-chip.up { background-color: rgba(46, 204, 113, 0.15); color: var(--grade-5); }
+        .trend-chip.down { background-color: rgba(231, 76, 60, 0.15); color: var(--grade-1); }
+        .trend-chip.flat { background-color: rgba(241, 196, 15, 0.18); color: #b9770e; }
+        .trend-note { margin-top: 10px; color: var(--text-light); font-size: 0.9em; }
+        .topic-list { display: grid; gap: 10px; }
+        .topic-item { border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background-color: rgba(255, 255, 255, 0.6); }
+        .topic-info { display: grid; gap: 4px; }
+        .topic-info strong { font-size: 1rem; }
+        .topic-meta { color: var(--text-light); font-size: 0.85em; }
+        .insight-empty { text-align: center; padding: 16px; color: var(--text-light); border: 1px dashed var(--border-color); border-radius: 12px; background: rgba(255, 255, 255, 0.4); }
+
+        @media (max-width: 700px) {
+            .metric-grid { grid-template-columns: 1fr; }
+        }
     
         /* Touch targets */
         button {
@@ -70,7 +94,42 @@
         <div class="xp-progress">
             <div class="xp-progress-fill" id="results-xp-progress"></div>
         </div>
-        <p id="results-xp-text">0 / 50 XP a kovetkezo szintig</p>
+        <p id="results-xp-text">Következő szint: 50 XP</p>
+    </div>
+    <div class="insights-grid">
+        <div class="insight-card" id="trend-card">
+            <div class="insight-header">
+                <h2>Trend &ouml;sszegz&eacute;s</h2>
+                <span class="insight-sub" id="trend-window-label">Ut&oacute;bbi 10 teszt alapj&aacute;n</span>
+            </div>
+            <div class="metric-grid" id="trend-metrics">
+                <div class="metric">
+                    <span>Ut&oacute;bbi 5 teszt &aacute;tlaga</span>
+                    <strong id="trend-last-avg">-</strong>
+                    <span id="trend-last-count">0 teszt</span>
+                </div>
+                <div class="metric">
+                    <span>El&#337;z&#337; 5 teszt &aacute;tlaga</span>
+                    <strong id="trend-prev-avg">-</strong>
+                    <span id="trend-prev-count">0 teszt</span>
+                </div>
+                <div class="metric">
+                    <span>Trend</span>
+                    <strong id="trend-delta">-</strong>
+                    <span id="trend-direction" class="trend-chip flat">Nincs adat</span>
+                </div>
+            </div>
+            <div class="trend-note" id="trend-note"></div>
+            <div class="insight-empty" id="trend-empty" style="display:none;">M&eacute;g nincs elegend&#337; teszteredm&eacute;ny trendhez.</div>
+        </div>
+        <div class="insight-card" id="topic-card">
+            <div class="insight-header">
+                <h2>T&eacute;mak&ouml;r betekint&eacute;s</h2>
+                <span class="insight-sub" id="topic-summary">Legut&oacute;bbi aktivit&aacute;s alapj&aacute;n</span>
+            </div>
+            <div class="topic-list" id="topic-insights-list"></div>
+            <div class="insight-empty" id="topic-insights-empty" style="display:none;">M&eacute;g nincsenek t&eacute;mak&ouml;r adatok.</div>
+        </div>
     </div>
     <div id="results-container"></div>
 
@@ -96,8 +155,23 @@
         const resultsTotalXp = document.getElementById('results-total-xp');
         const resultsXpProgress = document.getElementById('results-xp-progress');
         const resultsXpText = document.getElementById('results-xp-text');
+        const trendWindowLabel = document.getElementById('trend-window-label');
+        const trendLastAvg = document.getElementById('trend-last-avg');
+        const trendLastCount = document.getElementById('trend-last-count');
+        const trendPrevAvg = document.getElementById('trend-prev-avg');
+        const trendPrevCount = document.getElementById('trend-prev-count');
+        const trendDelta = document.getElementById('trend-delta');
+        const trendDirection = document.getElementById('trend-direction');
+        const trendNote = document.getElementById('trend-note');
+        const trendEmpty = document.getElementById('trend-empty');
+        const topicInsightsList = document.getElementById('topic-insights-list');
+        const topicInsightsEmpty = document.getElementById('topic-insights-empty');
         const LOCALE = 'hu-HU';
         const numberFormatter = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 2 });
+        const TREND_WINDOW = 5;
+        const TOPIC_INSIGHT_LIMIT = 6;
+        const TREND_THRESHOLD = 2;
+        let resultsData = [];
 
         function formatNumber(value, fallback = '-') {
             if (value === null || value === undefined || value === '') return fallback;
@@ -109,6 +183,50 @@
             const date = value instanceof Date ? value : new Date(value);
             if (Number.isNaN(date.getTime())) return '';
             return date.toLocaleString(LOCALE, { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function formatPercent(value, fallback = '-') {
+            if (!Number.isFinite(value)) return fallback;
+            return `${formatNumber(value, fallback)}%`;
+        }
+
+        function formatSigned(value, fallback = '-') {
+            if (!Number.isFinite(value)) return fallback;
+            const sign = value > 0 ? '+' : value < 0 ? '' : '';
+            return `${sign}${formatNumber(value, fallback)}`;
+        }
+
+        function toTimestamp(value) {
+            const time = new Date(value).getTime();
+            return Number.isFinite(time) ? time : null;
+        }
+
+        function getResultScore(result) {
+            const percent = Number(result && result.percentage);
+            if (Number.isFinite(percent)) return percent;
+            const grade = Number(result && result.grade);
+            if (Number.isFinite(grade)) return grade * 20;
+            return null;
+        }
+
+        function getResultGrade(result) {
+            const grade = Number(result && result.grade);
+            return Number.isFinite(grade) ? grade : null;
+        }
+
+        function getSortedResults(results) {
+            if (!Array.isArray(results)) return [];
+            const mapped = results
+                .map((result) => ({ result, ts: toTimestamp(result && result.timestamp) }))
+                .filter((entry) => entry.ts !== null);
+            mapped.sort((a, b) => b.ts - a.ts);
+            return mapped.map((entry) => entry.result);
+        }
+
+        function average(values) {
+            if (!values.length) return null;
+            const total = values.reduce((sum, value) => sum + value, 0);
+            return total / values.length;
         }
 
         function getTopicLabel(topicId) {
@@ -127,46 +245,207 @@
             return topicId.replace(/_/g, ' ');
         }
 
+        function resolveTopicName(result) {
+            if (result && result.topicName) return result.topicName;
+            return getTopicLabel(result && result.topicId);
+        }
+
+        function buildTrendSummary(sortedResults) {
+            const scored = sortedResults
+                .map((result) => ({ score: getResultScore(result) }))
+                .filter((entry) => Number.isFinite(entry.score));
+            const last = scored.slice(0, TREND_WINDOW).map((entry) => entry.score);
+            const prev = scored.slice(TREND_WINDOW, TREND_WINDOW * 2).map((entry) => entry.score);
+            const lastAvg = average(last);
+            const prevAvg = average(prev);
+            const delta = Number.isFinite(lastAvg) && Number.isFinite(prevAvg) ? lastAvg - prevAvg : null;
+            const direction = delta === null
+                ? 'none'
+                : delta > TREND_THRESHOLD ? 'up' : delta < -TREND_THRESHOLD ? 'down' : 'flat';
+            return {
+                total: scored.length,
+                lastCount: last.length,
+                prevCount: prev.length,
+                lastAvg,
+                prevAvg,
+                delta,
+                direction,
+            };
+        }
+
+        function getDirectionLabel(direction) {
+            if (direction === 'up') return { label: 'Emelked\u0151', className: 'trend-chip up' };
+            if (direction === 'down') return { label: 'Cs\u00f6kken\u0151', className: 'trend-chip down' };
+            if (direction === 'flat') return { label: 'Stabil', className: 'trend-chip flat' };
+            return { label: 'Nincs adat', className: 'trend-chip flat' };
+        }
+
+        function buildTopicInsights(sortedResults) {
+            const grouped = new Map();
+            sortedResults.forEach((result) => {
+                const topicId = result && result.topicId ? result.topicId : null;
+                const key = topicId || (result && result.topicName ? result.topicName : 'ismeretlen');
+                if (!grouped.has(key)) {
+                    grouped.set(key, {
+                        key,
+                        topicId,
+                        title: resolveTopicName(result),
+                        entries: [],
+                    });
+                }
+                const score = getResultScore(result);
+                const grade = getResultGrade(result);
+                const ts = toTimestamp(result && result.timestamp);
+                grouped.get(key).entries.push({ score, grade, ts });
+            });
+
+            const insights = [];
+            grouped.forEach((group) => {
+                const validEntries = group.entries.filter((entry) => Number.isFinite(entry.score) && entry.ts !== null);
+                validEntries.sort((a, b) => b.ts - a.ts);
+                if (!validEntries.length) return;
+                const scores = validEntries.map((entry) => entry.score);
+                const avgScore = average(scores);
+                const avgGrade = average(validEntries.map((entry) => entry.grade).filter((value) => Number.isFinite(value)));
+                const last = validEntries[0];
+                const prev = validEntries[1];
+                const delta = last && prev ? last.score - prev.score : null;
+                let direction = 'flat';
+                if (delta === null) {
+                    direction = 'none';
+                } else if (delta > TREND_THRESHOLD) {
+                    direction = 'up';
+                } else if (delta < -TREND_THRESHOLD) {
+                    direction = 'down';
+                }
+                insights.push({
+                    topicId: group.topicId,
+                    title: group.title || group.key,
+                    attempts: validEntries.length,
+                    avgScore,
+                    avgGrade,
+                    lastScore: last.score,
+                    delta,
+                    direction,
+                    lastTs: last.ts,
+                });
+            });
+            insights.sort((a, b) => b.lastTs - a.lastTs);
+            return insights.slice(0, TOPIC_INSIGHT_LIMIT);
+        }
+
+        function renderTrendSummary(sortedResults) {
+            const summary = buildTrendSummary(sortedResults);
+            if (!summary.total) {
+                trendEmpty.style.display = 'block';
+                trendNote.textContent = '';
+                trendWindowLabel.textContent = 'M\u00e9g nincs trendadat';
+                trendLastAvg.textContent = '-';
+                trendPrevAvg.textContent = '-';
+                trendDelta.textContent = '-';
+                trendLastCount.textContent = '0 teszt';
+                trendPrevCount.textContent = '0 teszt';
+                const label = getDirectionLabel('none');
+                trendDirection.textContent = label.label;
+                trendDirection.className = label.className;
+                return;
+            }
+            trendEmpty.style.display = 'none';
+            const totalWindow = Math.min(summary.total, TREND_WINDOW * 2);
+            trendWindowLabel.textContent = `Ut\u00f3bbi ${totalWindow} teszt alapj\u00e1n`;
+            trendLastAvg.textContent = formatPercent(summary.lastAvg, '-');
+            trendPrevAvg.textContent = summary.prevCount ? formatPercent(summary.prevAvg, '-') : '-';
+            trendLastCount.textContent = `${summary.lastCount} teszt`;
+            trendPrevCount.textContent = `${summary.prevCount} teszt`;
+            if (summary.prevCount) {
+                trendDelta.textContent = `${formatSigned(summary.delta, '-')}\u0025`;
+            } else {
+                trendDelta.textContent = '-';
+            }
+            const label = getDirectionLabel(summary.direction);
+            trendDirection.textContent = label.label;
+            trendDirection.className = label.className;
+            if (summary.prevCount) {
+                trendNote.textContent = 'A trend az ut\u00f3bbi \u00e9s az azt megel\u0151z\u0151 5 teszt \u00e1tlag\u00e1t hasonl\u00edtja \u00f6ssze.';
+            } else {
+                trendNote.textContent = 'T\u00f6lts ki legal\u00e1bb 6 tesztet a r\u00e9szletes trendhez.';
+            }
+        }
+
+        function renderTopicInsights(sortedResults) {
+            const insights = buildTopicInsights(sortedResults);
+            topicInsightsList.innerHTML = '';
+            if (!insights.length) {
+                topicInsightsEmpty.style.display = 'block';
+                return;
+            }
+            topicInsightsEmpty.style.display = 'none';
+            insights.forEach((insight) => {
+                const item = document.createElement('div');
+                item.className = 'topic-item';
+                const avgText = Number.isFinite(insight.avgScore) ? formatPercent(insight.avgScore, '-') : '-';
+                const lastText = Number.isFinite(insight.lastScore) ? formatPercent(insight.lastScore, '-') : '-';
+                const attemptsText = `${formatNumber(insight.attempts, '0')} pr\u00f3ba`;
+                const gradeText = Number.isFinite(insight.avgGrade)
+                    ? `\u00c1tlagjegy: ${formatNumber(insight.avgGrade, '-')}`
+                    : 'Nincs \u00e1tlagjegy';
+                const deltaText = insight.delta === null ? '-' : `${formatSigned(insight.delta, '-')}\u0025`;
+                const directionLabel = getDirectionLabel(insight.direction);
+                item.innerHTML = `<div class="topic-info"><strong>${insight.title || 'Ismeretlen'}</strong><div class="topic-meta">${gradeText} \u00b7 \u00c1tlag: ${avgText} \u00b7 Ut\u00f3bbi: ${lastText} \u00b7 ${attemptsText}</div></div><span class="${directionLabel.className}">${directionLabel.label} ${deltaText}</span>`;
+                topicInsightsList.appendChild(item);
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             container.innerHTML = `<div class="no-results"><p>Eredmények betöltése...</p></div>`;
             window.parent.postMessage({ type: 'get-all-results' }, '*');
             window.parent.postMessage({ type: 'request-xp-summary' }, '*');
             window.addEventListener('message', (event) => {
                 if (event.data.type === 'all-results-response') {
-                    const results = event.data.results;
-                    container.innerHTML = '';
-                    if (!results || results.length === 0) {
-                        container.innerHTML = `<div class="no-results"><h3>Még nincsenek mentett teszteredmények.</h3><p>Tölts ki egy tesztet, és az eredmény itt fog megjelenni!</p></div>`;
-                        return;
-                    }
-
-                    results.forEach(result => {
-                        if (!result || !result.timestamp) return;
-                        const resultItem = document.createElement('div');
-                        resultItem.className = 'result-item';
-                        const dateText = formatDateTime(result.timestamp) || '-';
-                        const gradeValue = result.grade !== null && result.grade !== undefined && result.grade !== ''
-                            ? Number(result.grade)
-                            : Number.NaN;
-                        const gradeText = Number.isFinite(gradeValue) ? formatNumber(gradeValue) : '-';
-                        const gradeClass = Number.isFinite(gradeValue) ? `grade-${gradeValue}` : '';
-                        const percentageValue = result.percentage !== null && result.percentage !== undefined && result.percentage !== ''
-                            ? Number(result.percentage)
-                            : Number.NaN;
-                        const percentageText = Number.isFinite(percentageValue) ? formatNumber(percentageValue) : '-';
-                        const topicTitle = result.topicName || getTopicLabel(result.topicId);
-                        const difficultyLabel = result.difficulty || '-';
-                        resultItem.innerHTML = `<div class="grade-badge ${gradeClass}">${gradeText}</div> <div class="result-details"> <h3>${topicTitle || 'Ismeretlen'}</h3> <p><b>Nehézség:</b> ${difficultyLabel} | <b>Eredmény:</b> ${percentageText}% | <b>Dátum:</b> ${dateText}</p> </div> <div class="result-actions"><button>Részletek</button></div>`;
-                        const detailsBtn = resultItem.querySelector('button');
-                        detailsBtn.addEventListener('click', () => showDetails(result));
-                        container.appendChild(resultItem);
-                    });
+                    resultsData = Array.isArray(event.data.results) ? event.data.results : [];
+                    renderResults();
                 }
                 if (event.data.type === 'xp-summary') {
                     updateXpSummary(event.data.summary);
                 }
             });
         });
+
+        function renderResults() {
+            const sortedResults = getSortedResults(resultsData);
+            container.innerHTML = '';
+            if (!sortedResults.length) {
+                container.innerHTML = `<div class="no-results"><h3>Még nincsenek mentett teszteredmények.</h3><p>Tölts ki egy tesztet, és az eredmény itt fog megjelenni!</p></div>`;
+                renderTrendSummary([]);
+                renderTopicInsights([]);
+                return;
+            }
+
+            sortedResults.forEach(result => {
+                if (!result || !result.timestamp) return;
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                const dateText = formatDateTime(result.timestamp) || '-';
+                const gradeValue = result.grade !== null && result.grade !== undefined && result.grade !== ''
+                    ? Number(result.grade)
+                    : Number.NaN;
+                const gradeText = Number.isFinite(gradeValue) ? formatNumber(gradeValue) : '-';
+                const gradeClass = Number.isFinite(gradeValue) ? `grade-${gradeValue}` : '';
+                const percentageValue = result.percentage !== null && result.percentage !== undefined && result.percentage !== ''
+                    ? Number(result.percentage)
+                    : Number.NaN;
+                const percentageText = Number.isFinite(percentageValue) ? formatNumber(percentageValue) : '-';
+                const topicTitle = result.topicName || getTopicLabel(result.topicId);
+                const difficultyLabel = result.difficulty || '-';
+                resultItem.innerHTML = `<div class="grade-badge ${gradeClass}">${gradeText}</div> <div class="result-details"> <h3>${topicTitle || 'Ismeretlen'}</h3> <p><b>Nehézség:</b> ${difficultyLabel} | <b>Eredmény:</b> ${percentageText}% | <b>Dátum:</b> ${dateText}</p> </div> <div class="result-actions"><button>Részletek</button></div>`;
+                const detailsBtn = resultItem.querySelector('button');
+                detailsBtn.addEventListener('click', () => showDetails(result));
+                container.appendChild(resultItem);
+            });
+
+            renderTrendSummary(sortedResults);
+            renderTopicInsights(sortedResults);
+        }
 
         function updateXpSummary(summary) {
             if (!summary || !summary.level) return;
@@ -178,10 +457,11 @@
             const isMaxLevel = required <= 0;
             const safeRequired = isMaxLevel ? Math.max(1, current) : required;
             const percent = Math.min(100, Math.round((current / safeRequired) * 100));
+            const xpToNext = Math.max(0, required - current);
             resultsXpProgress.style.width = `${percent}%`;
             resultsXpText.textContent = isMaxLevel
-                ? `Max szint`
-                : `${formatNumber(current, '0')} / ${formatNumber(required, '0')} XP a kovetkezo szintig`;
+                ? `Következő szint: Max`
+                : `Következő szint: ${formatNumber(xpToNext, '0')} XP`;
         }
         function showDetails(result) {
             const topicTitle = result.topicName || getTopicLabel(result.topicId);

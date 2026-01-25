@@ -208,7 +208,9 @@
             border-radius: 12px;
             padding: 12px 14px;
             display: grid;
-            gap: 4px;
+            grid-template-columns: 40px 1fr;
+            gap: 12px;
+            align-items: start;
         }
         .achievement-item h4 { margin: 0; font-size: 1rem; }
         .achievement-item p { margin: 0; color: var(--muted); font-size: 0.9rem; }
@@ -219,13 +221,96 @@
         .achievement-item.is-unlocked {
             border-color: var(--success);
         }
+        .achievement-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: rgba(88, 101, 242, 0.15);
+            border: 1px solid var(--border);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .achievement-item.is-unlocked .achievement-badge {
+            background: rgba(46, 204, 113, 0.18);
+            color: var(--success);
+            border-color: rgba(46, 204, 113, 0.4);
+        }
+        .achievement-details {
+            display: grid;
+            gap: 6px;
+        }
+        .achievement-title-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .achievement-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(88, 101, 242, 0.14);
+            color: var(--accent);
+        }
         .achievement-meta {
             font-size: 0.85rem;
             color: var(--muted);
         }
+        .achievement-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .achievement-reward {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .trend-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+        .trend-card {
+            background: var(--panel-strong);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: grid;
+            gap: 6px;
+        }
+        .trend-card span { color: var(--muted); font-size: 0.85rem; }
+        .trend-card strong { font-size: 1.1rem; }
+        .trend-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .trend-pill.up { background: rgba(46, 204, 113, 0.18); color: var(--success); }
+        .trend-pill.down { background: rgba(231, 76, 60, 0.18); color: #c0392b; }
+        .trend-pill.flat { background: rgba(243, 156, 18, 0.2); color: var(--warning); }
+        .trend-note { margin-top: 10px; color: var(--muted); font-size: 0.85rem; }
+        .item-details { display: grid; gap: 4px; }
+        .item-details .item-meta { font-size: 0.85rem; }
 
         @media (max-width: 960px) {
             .sheet {
+                grid-template-columns: 1fr;
+            }
+            .trend-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -254,6 +339,31 @@
                 <div class="section-title">Kimaxolt modulok</div>
                 <ul class="list" id="completed-quest-list"></ul>
                 <div class="empty-state" id="completed-empty" style="display:none;">M&eacute;g nincs kimaxolt modul.</div>
+
+                <div class="section-title">Trend &ouml;sszegz&eacute;s</div>
+                <div class="trend-grid" id="trend-grid">
+                    <div class="trend-card">
+                        <span>Ut&oacute;bbi 5 teszt &aacute;tlaga</span>
+                        <strong id="trend-last-avg">-</strong>
+                        <span id="trend-last-count">0 teszt</span>
+                    </div>
+                    <div class="trend-card">
+                        <span>El&#337;z&#337; 5 teszt &aacute;tlaga</span>
+                        <strong id="trend-prev-avg">-</strong>
+                        <span id="trend-prev-count">0 teszt</span>
+                    </div>
+                    <div class="trend-card">
+                        <span>Trend</span>
+                        <strong id="trend-delta">-</strong>
+                        <span id="trend-direction" class="trend-pill flat">Nincs adat</span>
+                    </div>
+                </div>
+                <div class="trend-note" id="trend-note"></div>
+                <div class="empty-state" id="trend-empty" style="display:none;">M&eacute;g nincs elegend&#337; teszteredm&eacute;ny trendhez.</div>
+
+                <div class="section-title">T&eacute;mak&ouml;r betekint&eacute;s</div>
+                <ul class="list" id="topic-insights-list"></ul>
+                <div class="empty-state" id="topic-insights-empty" style="display:none;">M&eacute;g nincsenek t&eacute;mak&ouml;r adatok.</div>
 
                 <div class="section-title">Legut&oacute;bbi tesztek</div>
                 <ul class="list" id="recent-results-list"></ul>
@@ -321,6 +431,16 @@
             completedEmpty: document.getElementById('completed-empty'),
             resultsList: document.getElementById('recent-results-list'),
             resultsEmpty: document.getElementById('results-empty'),
+            trendLastAvg: document.getElementById('trend-last-avg'),
+            trendLastCount: document.getElementById('trend-last-count'),
+            trendPrevAvg: document.getElementById('trend-prev-avg'),
+            trendPrevCount: document.getElementById('trend-prev-count'),
+            trendDelta: document.getElementById('trend-delta'),
+            trendDirection: document.getElementById('trend-direction'),
+            trendNote: document.getElementById('trend-note'),
+            trendEmpty: document.getElementById('trend-empty'),
+            topicInsightsList: document.getElementById('topic-insights-list'),
+            topicInsightsEmpty: document.getElementById('topic-insights-empty'),
             profileLevel: document.getElementById('profile-level'),
             profileXp: document.getElementById('profile-xp'),
             profileNext: document.getElementById('profile-next'),
@@ -341,52 +461,85 @@
         const ACHIEVEMENT_FALLBACK = [
             {
                 id: 'first_test',
-                title: 'Elso teszteredmeny',
-                description: 'Elso sikeres teszt (jegy >= 2).'
+                title: 'Els\u0151 teszteredm\u00e9ny',
+                description: 'Els\u0151 sikeres teszt (jegy \u2265 2).',
+                xpReward: 0,
+                category: 'performance'
             },
             {
                 id: 'hard_first',
-                title: 'Nehez harcos',
-                description: 'Elso nehez teszt sikeresen teljesitve.'
+                title: 'Neh\u00e9z harcos',
+                description: 'Els\u0151 neh\u00e9z teszt sikeresen teljes\u00edtve.',
+                xpReward: 50,
+                category: 'difficulty'
             },
             {
                 id: 'hard_perfect',
-                title: 'Tokeletes vizsga',
-                description: '5-os jegy nehez teszten.'
+                title: 'T\u00f6k\u00e9letes vizsga',
+                description: '5-\u00f6s jegy neh\u00e9z teszten.',
+                xpReward: 75,
+                category: 'performance'
             },
             {
                 id: 'streak_5',
-                title: 'Sorozatgyoztes',
-                description: '5 egymas utani jo eredmeny.'
+                title: 'Sorozatgy\u0151ztes',
+                description: '5 egym\u00e1s ut\u00e1ni j\u00f3 eredm\u00e9ny.',
+                xpReward: 50,
+                category: 'performance'
             },
             {
                 id: 'subtopic_master',
-                title: 'Altema zaro',
-                description: 'Egy altema kimaxolasa.'
+                title: 'Alt\u00e9ma z\u00e1r\u00f3',
+                description: 'Egy alt\u00e9ma kimaxol\u00e1sa.',
+                xpReward: 80,
+                category: 'structure'
             },
             {
                 id: 'main_topic_master',
-                title: 'Fotema mester',
-                description: 'Egy fotema kimaxolasa.'
+                title: 'F\u0151t\u00e9ma mester',
+                description: 'Egy f\u0151t\u00e9ma kimaxol\u00e1sa.',
+                xpReward: 120,
+                category: 'structure'
             },
             {
                 id: 'emelt_bajnok',
                 title: 'Emelt bajnok',
-                description: 'Emelt modulzaro sikeres teljesitese.'
+                description: 'Emelt modulz\u00e1r\u00f3 sikeres teljes\u00edt\u00e9se.',
+                xpReward: 150,
+                category: 'difficulty'
             },
             {
                 id: 'xp_collector_1000',
-                title: 'XP gyujto',
-                description: 'Osszegyujtottel 1000 XP-t.'
+                title: 'XP gy\u0171jt\u0151',
+                description: '\u00d6sszegy\u0171jt\u00f6tt\u00e9l 1000 XP-t.',
+                xpReward: 100,
+                category: 'special'
             },
             {
                 id: 'level_up',
-                title: 'Szintlepo',
-                description: 'Elertel egy uj szintet.'
+                title: 'Szintl\u00e9p\u0151',
+                description: 'El\u00e9rt\u00e9l egy \u00faj szintet.',
+                xpReward: 0,
+                category: 'special'
             }
         ];
         const LOCALE = 'hu-HU';
         const numberFormatter = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 2 });
+        const TREND_WINDOW = 5;
+        const TOPIC_INSIGHT_LIMIT = 5;
+        const TREND_THRESHOLD = 2;
+        const CATEGORY_LABELS = {
+            performance: 'Teljes\u00edtm\u00e9ny',
+            difficulty: 'Neh\u00e9zs\u00e9g',
+            structure: 'Strukt\u00fara',
+            special: 'Speci\u00e1lis'
+        };
+        const CATEGORY_BADGES = {
+            performance: 'T',
+            difficulty: 'N',
+            structure: 'ST',
+            special: 'SP'
+        };
 
         function formatNumber(value, fallback = '-') {
             if (value === null || value === undefined || value === '') return fallback;
@@ -398,6 +551,50 @@
             const date = value instanceof Date ? value : new Date(value);
             if (Number.isNaN(date.getTime())) return '';
             return date.toLocaleDateString(LOCALE);
+        }
+
+        function formatPercent(value, fallback = '-') {
+            if (!Number.isFinite(value)) return fallback;
+            return `${formatNumber(value, fallback)}%`;
+        }
+
+        function formatSigned(value, fallback = '-') {
+            if (!Number.isFinite(value)) return fallback;
+            const sign = value > 0 ? '+' : value < 0 ? '' : '';
+            return `${sign}${formatNumber(value, fallback)}`;
+        }
+
+        function toTimestamp(value) {
+            const time = new Date(value).getTime();
+            return Number.isFinite(time) ? time : null;
+        }
+
+        function getResultScore(result) {
+            const percent = Number(result && result.percentage);
+            if (Number.isFinite(percent)) return percent;
+            const grade = Number(result && result.grade);
+            if (Number.isFinite(grade)) return grade * 20;
+            return null;
+        }
+
+        function getResultGrade(result) {
+            const grade = Number(result && result.grade);
+            return Number.isFinite(grade) ? grade : null;
+        }
+
+        function getSortedResults(results) {
+            if (!Array.isArray(results)) return [];
+            const mapped = results
+                .map((result) => ({ result, ts: toTimestamp(result && result.timestamp) }))
+                .filter((entry) => entry.ts !== null);
+            mapped.sort((a, b) => b.ts - a.ts);
+            return mapped.map((entry) => entry.result);
+        }
+
+        function average(values) {
+            if (!values.length) return null;
+            const total = values.reduce((sum, value) => sum + value, 0);
+            return total / values.length;
         }
 
         function parseHexColor(hex) {
@@ -487,6 +684,11 @@
             const fallback = topicId.replace(/_/g, ' ');
             topicLabelCache[topicId] = fallback;
             return fallback;
+        }
+
+        function resolveTopicName(result) {
+            if (result && result.topicName) return result.topicName;
+            return getTopicLabel(result && result.topicId);
         }
 
         function navigateToTopic(topicId) {
@@ -594,7 +796,7 @@
         }
 
         function renderRecentResults() {
-            const recent = (resultsData || []).slice(0, 5);
+            const recent = getSortedResults(resultsData).slice(0, 5);
             renderList(dom.resultsList, dom.resultsEmpty, recent, (result) => {
                 const li = document.createElement('li');
                 const button = document.createElement('button');
@@ -613,11 +815,11 @@
             });
         }
 
-        function renderStats() {
+        function renderStats(sortedResults) {
             const entries = getQuestEntries();
             const activeCount = entries.filter(entry => entry.status === 'ACTIVE').length;
             const completedCount = entries.filter(entry => entry.status === 'COMPLETED').length;
-            const testsCount = resultsData ? resultsData.length : 0;
+            const testsCount = sortedResults ? sortedResults.length : 0;
             const practiceXp = summaryData && summaryData.practiceXp
                 ? Object.values(summaryData.practiceXp).reduce((sum, value) => sum + Number(value || 0), 0)
                 : 0;
@@ -645,14 +847,35 @@
                 card.className = `achievement-item ${isUnlocked ? 'is-unlocked' : 'is-locked'}`;
                 card.dataset.achievementId = achievement.id;
                 const description = achievement.description || '';
-                let metaText = isUnlocked ? 'Megszerezve' : 'Meg nem szerzett';
+                const category = achievement.category || 'special';
+                const categoryLabel = CATEGORY_LABELS[category] || 'Speci\u00e1lis';
+                const badgeText = CATEGORY_BADGES[category] || 'SP';
+                const rewardValue = Number(isUnlocked && Number.isFinite(state.grantedXp)
+                    ? state.grantedXp
+                    : (achievement.xpReward || 0));
+                const rewardText = rewardValue > 0
+                    ? `+${formatNumber(rewardValue, '0')} XP`
+                    : 'Jelv\u00e9ny';
+                let metaText = isUnlocked ? 'Megszerezve' : 'M\u00e9g nem szerzett';
                 if (state.unlockedAt) {
                     const dateLabel = formatDate(state.unlockedAt);
                     if (dateLabel) {
                         metaText = `Megszerezve: ${dateLabel}`;
                     }
                 }
-                card.innerHTML = `<h4>${achievement.title || achievement.id}</h4><p>${description}</p><span class="achievement-meta">${metaText}</span>`;
+                card.innerHTML = `
+                    <div class="achievement-badge" aria-hidden="true">${badgeText}</div>
+                    <div class="achievement-details">
+                        <div class="achievement-title-row">
+                            <h4>${achievement.title || achievement.id}</h4>
+                            <span class="achievement-tag">${categoryLabel}</span>
+                        </div>
+                        <p>${description}</p>
+                        <div class="achievement-footer">
+                            <span class="achievement-meta">${metaText}</span>
+                            <span class="achievement-reward">Jutalom: ${rewardText}</span>
+                        </div>
+                    </div>`;
                 dom.achievementList.appendChild(card);
             });
         }
@@ -682,12 +905,165 @@
             dom.xpPercent.textContent = `${formatNumber(percent, '0')}%`;
             dom.xpBarFill.style.width = `${percent}%`;
         }
+
+        function buildTrendSummary(sortedResults) {
+            const scored = sortedResults
+                .map((result) => ({ score: getResultScore(result) }))
+                .filter((entry) => Number.isFinite(entry.score));
+            const last = scored.slice(0, TREND_WINDOW).map((entry) => entry.score);
+            const prev = scored.slice(TREND_WINDOW, TREND_WINDOW * 2).map((entry) => entry.score);
+            const lastAvg = average(last);
+            const prevAvg = average(prev);
+            const delta = Number.isFinite(lastAvg) && Number.isFinite(prevAvg) ? lastAvg - prevAvg : null;
+            const direction = delta === null
+                ? 'none'
+                : delta > TREND_THRESHOLD ? 'up' : delta < -TREND_THRESHOLD ? 'down' : 'flat';
+            return {
+                total: scored.length,
+                lastCount: last.length,
+                prevCount: prev.length,
+                lastAvg,
+                prevAvg,
+                delta,
+                direction,
+            };
+        }
+
+        function getDirectionLabel(direction) {
+            if (direction === 'up') return { label: 'Emelked\u0151', className: 'trend-pill up' };
+            if (direction === 'down') return { label: 'Cs\u00f6kken\u0151', className: 'trend-pill down' };
+            if (direction === 'flat') return { label: 'Stabil', className: 'trend-pill flat' };
+            return { label: 'Nincs adat', className: 'trend-pill flat' };
+        }
+
+        function buildTopicInsights(sortedResults) {
+            const grouped = new Map();
+            sortedResults.forEach((result) => {
+                const topicId = result && result.topicId ? result.topicId : null;
+                const key = topicId || (result && result.topicName ? result.topicName : 'ismeretlen');
+                if (!grouped.has(key)) {
+                    grouped.set(key, {
+                        key,
+                        topicId,
+                        title: resolveTopicName(result),
+                        entries: [],
+                    });
+                }
+                const score = getResultScore(result);
+                const grade = getResultGrade(result);
+                const ts = toTimestamp(result && result.timestamp);
+                grouped.get(key).entries.push({ score, grade, ts });
+            });
+
+            const insights = [];
+            grouped.forEach((group) => {
+                const validEntries = group.entries.filter((entry) => Number.isFinite(entry.score) && entry.ts !== null);
+                validEntries.sort((a, b) => b.ts - a.ts);
+                if (!validEntries.length) return;
+                const scores = validEntries.map((entry) => entry.score);
+                const avgScore = average(scores);
+                const avgGrade = average(validEntries.map((entry) => entry.grade).filter((value) => Number.isFinite(value)));
+                const last = validEntries[0];
+                const prev = validEntries[1];
+                const delta = last && prev ? last.score - prev.score : null;
+                let direction = 'flat';
+                if (delta === null) {
+                    direction = 'none';
+                } else if (delta > TREND_THRESHOLD) {
+                    direction = 'up';
+                } else if (delta < -TREND_THRESHOLD) {
+                    direction = 'down';
+                }
+                insights.push({
+                    topicId: group.topicId,
+                    title: group.title || group.key,
+                    attempts: validEntries.length,
+                    avgScore,
+                    avgGrade,
+                    lastScore: last.score,
+                    delta,
+                    direction,
+                    lastTs: last.ts,
+                });
+            });
+            insights.sort((a, b) => b.lastTs - a.lastTs);
+            return insights.slice(0, TOPIC_INSIGHT_LIMIT);
+        }
+
+        function renderTrendSummary(sortedResults) {
+            const summary = buildTrendSummary(sortedResults);
+            if (!summary.total) {
+                dom.trendEmpty.style.display = 'block';
+                dom.trendNote.textContent = '';
+                dom.trendLastAvg.textContent = '-';
+                dom.trendPrevAvg.textContent = '-';
+                dom.trendDelta.textContent = '-';
+                dom.trendLastCount.textContent = '0 teszt';
+                dom.trendPrevCount.textContent = '0 teszt';
+                const label = getDirectionLabel('none');
+                dom.trendDirection.textContent = label.label;
+                dom.trendDirection.className = label.className;
+                return;
+            }
+            dom.trendEmpty.style.display = 'none';
+            dom.trendLastAvg.textContent = formatPercent(summary.lastAvg, '-');
+            dom.trendPrevAvg.textContent = summary.prevCount ? formatPercent(summary.prevAvg, '-') : '-';
+            dom.trendLastCount.textContent = `${summary.lastCount} teszt`;
+            dom.trendPrevCount.textContent = `${summary.prevCount} teszt`;
+            if (summary.prevCount) {
+                dom.trendDelta.textContent = `${formatSigned(summary.delta, '-')}\u0025`;
+            } else {
+                dom.trendDelta.textContent = '-';
+            }
+            const label = getDirectionLabel(summary.direction);
+            dom.trendDirection.textContent = label.label;
+            dom.trendDirection.className = label.className;
+            if (summary.prevCount) {
+                dom.trendNote.textContent = 'A trend az ut\u00f3bbi \u00e9s az azt megel\u0151z\u0151 5 teszt \u00e1tlag\u00e1t hasonl\u00edtja \u00f6ssze.';
+            } else {
+                dom.trendNote.textContent = 'T\u00f6lts ki legal\u00e1bb 6 tesztet a r\u00e9szletes trendhez.';
+            }
+        }
+
+        function renderTopicInsights(sortedResults) {
+            const insights = buildTopicInsights(sortedResults);
+            dom.topicInsightsList.innerHTML = '';
+            if (!insights.length) {
+                dom.topicInsightsEmpty.style.display = 'block';
+                return;
+            }
+            dom.topicInsightsEmpty.style.display = 'none';
+            insights.forEach((insight) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'list-item';
+                const avgText = Number.isFinite(insight.avgScore) ? formatPercent(insight.avgScore, '-') : '-';
+                const lastText = Number.isFinite(insight.lastScore) ? formatPercent(insight.lastScore, '-') : '-';
+                const attemptsText = `${formatNumber(insight.attempts, '0')} pr\u00f3ba`;
+                const gradeText = Number.isFinite(insight.avgGrade)
+                    ? `\u00c1tlagjegy: ${formatNumber(insight.avgGrade, '-')}`
+                    : 'Nincs \u00e1tlagjegy';
+                const deltaText = insight.delta === null ? '-' : `${formatSigned(insight.delta, '-')}\u0025`;
+                const directionLabel = getDirectionLabel(insight.direction);
+                button.innerHTML = `<div class="item-details"><span class="item-title">${insight.title || 'Ismeretlen'}</span><span class="item-meta">${gradeText} \u00b7 \u00c1tlag: ${avgText} \u00b7 Ut\u00f3bbi: ${lastText} \u00b7 ${attemptsText}</span></div><span class="${directionLabel.className}">${directionLabel.label} ${deltaText}</span>`;
+                if (insight.topicId) {
+                    button.addEventListener('click', () => navigateToTopic(insight.topicId));
+                }
+                li.appendChild(button);
+                dom.topicInsightsList.appendChild(li);
+            });
+        }
+
         function renderAll() {
+            const sortedResults = getSortedResults(resultsData);
             renderProfile();
             renderActiveQuests();
             renderCompletedQuests();
+            renderTrendSummary(sortedResults);
+            renderTopicInsights(sortedResults);
             renderRecentResults();
-            renderStats();
+            renderStats(sortedResults);
             renderAchievements();
         }
 

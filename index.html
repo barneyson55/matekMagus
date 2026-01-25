@@ -9,9 +9,10 @@
         details details { margin-left: 15px; }
         details details ul { margin-left: 15px; }
         .sidebar-tooltip { position: absolute; background-color: #18191c; color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; z-index: 1000; display: none; white-space: nowrap; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .results-btn { background-color: var(--brand-secondary); color: white !important; font-weight: 600 !important; margin-bottom: 20px !important; justify-content: center !important; }
-        .results-btn:hover { background-color: var(--brand-primary) !important; }
-        .results-btn.active { background-color: var(--brand-primary) !important; }
+        .quick-links { display: grid; gap: 12px; margin-bottom: 20px; }
+        .quick-link { background-color: var(--brand-secondary); color: white !important; font-weight: 600 !important; justify-content: center !important; }
+        .quick-link:hover { background-color: var(--brand-primary) !important; }
+        .quick-link.active { background-color: var(--brand-primary) !important; }
     </style>
 </head>
 <body>
@@ -46,7 +47,7 @@
                 <div class="header-bottom">
                     <div class="xp-bar" id="xp-bar" tabindex="0" aria-label="XP sáv">
                         <div class="xp-bar-fill" id="xp-bar-fill"></div>
-                        <div class="xp-tooltip" id="xp-progress-text">0 / 50 XP a kovetkezo szintig</div>
+                        <div class="xp-tooltip" id="xp-progress-text">Következő szint: 50 XP</div>
                     </div>
                 </div>
             </div>
@@ -54,8 +55,9 @@
         <div class="app-container">
         <div class="quest-drawer-backdrop" id="quest-drawer-backdrop" aria-hidden="true"></div>
         <nav class="sidebar">
-            <div>
-                <a href="#" class="module-link results-btn" id="results-btn">Eredm&#233;nyeim</a>
+            <div class="quick-links">
+                <a href="#" class="module-link quick-link results-btn" id="results-btn">Eredm&#233;nyeim</a>
+                <a href="#" class="module-link quick-link achievements-btn" id="achievements-btn">Achievementek</a>
             </div>
             <div class="module-list">
                 <!-- Navigation source-of-truth: keep this manual list in index.html (no temakorok generation in this phase). -->
@@ -520,6 +522,7 @@
     </div>
     
     <div class="sidebar-tooltip" id="sidebarTooltip"></div>
+    <div class="achievement-toast-layer" id="achievement-toast-layer" aria-live="polite" aria-atomic="false"></div>
     </div>
 
     <button class="settings-fab" id="settings-fab" type="button" aria-haspopup="dialog" aria-controls="settings-overlay" aria-label="Beállítások">
@@ -534,15 +537,15 @@
             </div>
             <div class="settings-body">
                 <nav class="settings-categories" aria-label="Beállítás kategóriák">
-                    <button class="settings-tab is-active" data-section="theme" type="button">Skin &amp; Téma</button>
+                    <button class="settings-tab is-active" data-section="theme" type="button">Megjelenés &amp; Téma</button>
                     <button class="settings-tab" data-section="ui" type="button">UI &amp; Hozzáférhetőség</button>
                     <button class="settings-tab" data-section="sound" type="button">Hang &amp; Visszajelzés</button>
                     <button class="settings-tab" data-section="gameplay" type="button">Játékélmény</button>
                 </nav>
                 <div class="settings-content">
                     <section class="settings-section is-active" data-section="theme">
-                        <h3>Skin &amp; Téma</h3>
-                        <p class="settings-hint">Válassz alap skint, majd finomhangold az egyéni színeket vagy háttérképet.</p>
+                        <h3>Megjelenés &amp; Téma</h3>
+                        <p class="settings-hint">Válassz alap témát, majd finomhangold az egyéni színeket vagy háttérképet.</p>
                         <div class="settings-theme-grid" role="list">
                             <button class="theme-card" type="button" data-theme="pergamen" role="listitem">
                                 <h4>Pergamen</h4>
@@ -667,10 +670,12 @@
 
     <script>
         const allLinks = document.querySelectorAll('.module-link');
-        const contentLinks = Array.from(allLinks).filter(link => !link.classList.contains('results-btn'));
+        const contentLinks = Array.from(allLinks).filter(link => !link.classList.contains('results-btn') && !link.classList.contains('achievements-btn'));
         const iframe = document.getElementById('content-frame');
         const tooltip = document.getElementById('sidebarTooltip');
         const resultsBtn = document.getElementById('results-btn');
+        const achievementsBtn = document.getElementById('achievements-btn');
+        const achievementToastLayer = document.getElementById('achievement-toast-layer');
         const xpLevelLabel = document.getElementById('xp-level-label');
         const xpLevelName = document.getElementById('xp-level-name');
         const xpTotalLabel = document.getElementById('xp-total-label');
@@ -681,6 +686,7 @@
         const playerAvatar = document.getElementById('player-avatar');
         const questToggle = document.getElementById('quest-toggle');
         const questBackdrop = document.getElementById('quest-drawer-backdrop');
+        const sidebar = document.querySelector('.sidebar');
         const moduleBanner = document.getElementById('module-banner');
         const moduleTitleText = document.getElementById('module-title-text');
         const moduleSubtitle = document.getElementById('module-subtitle');
@@ -711,6 +717,7 @@
         const settingBgPreview = document.getElementById('setting-bg-preview');
         const settingFontScale = document.getElementById('setting-font-scale');
         const settingReduceMotion = document.getElementById('setting-reduce-motion');
+        const mobileQuestMedia = window.matchMedia('(max-width: 767px)');
         const QUEST_STORAGE_KEY = 'matek-mester-quests-v1';
         const QUEST_VERSION = 2;
         const QUEST_LEVELS = { MAIN: 'mainTopics', SUB: 'subtopics', TOPIC: 'topics' };
@@ -740,6 +747,10 @@
             'modules/results.html': {
                 title: 'Eredményeim',
                 subtitle: ''
+            },
+            'modules/achievements.html': {
+                title: 'Achievementek',
+                subtitle: 'Különleges mérföldkövek és jutalmak listája.'
             }
         };
         const moduleSheetSubtitles = {};
@@ -747,6 +758,24 @@
         const SETTINGS_MAX_OVERLAY_ALPHA = 0.9;
         const RNG_SEED_STORAGE_KEY = 'matek-mester-rng-seed';
         let seededRandomSeed = null;
+        const ACHIEVEMENT_CATEGORY_LABELS = {
+            performance: 'Teljesítmény',
+            difficulty: 'Nehézség',
+            structure: 'Struktúra',
+            special: 'Speciális'
+        };
+        const ACHIEVEMENT_CATEGORY_BADGES = {
+            performance: 'T',
+            difficulty: 'N',
+            structure: 'ST',
+            special: 'SP'
+        };
+        let achievementSnapshot = {};
+        let achievementsInitialized = false;
+        const MAX_ACHIEVEMENT_TOASTS = 4;
+        const ACHIEVEMENT_TOAST_DURATION = 6500;
+        let lastNonMobileQuestCollapsed = false;
+        let hasNonMobileQuestState = false;
 
         function createSeededRandom(seed) {
             let t = seed >>> 0;
@@ -1143,9 +1172,13 @@ button {
     max-width: 100%;
 }
 @media (max-width: 767px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
     body {
         padding: 28px 20px;
-        overflow-x: hidden;
     }
     .card,
     .module-card,
@@ -1160,13 +1193,51 @@ button {
         flex-wrap: wrap;
         gap: 8px;
         overflow-x: auto;
+        overflow-y: visible;
+        max-width: 100%;
         padding-bottom: 6px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+    .tab-buttons::-webkit-scrollbar {
+        height: 6px;
     }
     .tab-button {
-        flex: 1 1 auto;
+        flex: 1 1 160px;
         min-width: 0;
         padding: 10px 14px;
         font-size: 0.95rem;
+        text-align: center;
+    }
+    button,
+    [type="button"],
+    [type="submit"],
+    [type="reset"],
+    .tab-button,
+    .btn,
+    .nav-btn,
+    .difficulty-btn,
+    .option-btn,
+    .answer-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    input,
+    select,
+    textarea {
+        min-height: 44px;
+    }
+    label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+    }
+    label input[type="checkbox"],
+    label input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        flex: 0 0 auto;
     }
     .model-container,
     .theory-grid,
@@ -1209,8 +1280,12 @@ button {
     .modal-content {
         padding: 18px;
     }
+    .tab-buttons {
+        gap: 6px;
+        overflow-x: hidden;
+    }
     .tab-button {
-        min-width: 110px;
+        flex: 1 1 45%;
         padding: 9px 12px;
         font-size: 0.9rem;
     }
@@ -1465,13 +1540,13 @@ button {
             try {
                 localStorage.setItem(QUEST_STORAGE_KEY, JSON.stringify(questState));
             } catch (error) {
-                console.error('Nem sikerult a quest allapot mentese:', error);
+                console.error('Nem sikerült a küldetésállapot mentése:', error);
             }
             if (window.electronAPI && typeof window.electronAPI.saveQuestState === 'function') {
                 try {
                     window.electronAPI.saveQuestState(questState);
                 } catch (error) {
-                    console.error('Nem sikerult a quest allapot szinkron:', error);
+                    console.error('Nem sikerült a küldetésállapot szinkronizálása:', error);
                 }
             }
         }
@@ -1875,11 +1950,62 @@ button {
             });
         }
 
-        function setQuestCollapsed(collapsed) {
+        function isMobileQuestDrawer() {
+            return mobileQuestMedia && mobileQuestMedia.matches;
+        }
+
+        function recordNonMobileQuestState(collapsed) {
+            lastNonMobileQuestCollapsed = collapsed;
+            hasNonMobileQuestState = true;
+        }
+
+        function setQuestCollapsed(collapsed, options = {}) {
+            const trackNonMobile = options.trackNonMobile !== false;
             document.body.classList.toggle('quest-collapsed', collapsed);
             if (questToggle) {
                 questToggle.setAttribute('aria-expanded', String(!collapsed));
             }
+            if (sidebar) {
+                sidebar.setAttribute('aria-hidden', String(collapsed));
+            }
+            if (questBackdrop) {
+                const backdropHidden = collapsed || !isMobileQuestDrawer();
+                questBackdrop.setAttribute('aria-hidden', String(backdropHidden));
+            }
+            if (trackNonMobile && !isMobileQuestDrawer()) {
+                recordNonMobileQuestState(collapsed);
+            }
+        }
+
+        function closeQuestDrawerIfMobile() {
+            if (isMobileQuestDrawer()) {
+                setQuestCollapsed(true);
+            }
+        }
+
+        function syncQuestDrawerForViewport() {
+            if (isMobileQuestDrawer()) {
+                if (!hasNonMobileQuestState) {
+                    recordNonMobileQuestState(document.body.classList.contains('quest-collapsed'));
+                }
+                setQuestCollapsed(true, { trackNonMobile: false });
+                return;
+            }
+            if (hasNonMobileQuestState) {
+                setQuestCollapsed(lastNonMobileQuestCollapsed, { trackNonMobile: false });
+                return;
+            }
+            setQuestCollapsed(false);
+        }
+
+        syncQuestDrawerForViewport();
+        const handleQuestMediaChange = () => {
+            syncQuestDrawerForViewport();
+        };
+        if (mobileQuestMedia && typeof mobileQuestMedia.addEventListener === 'function') {
+            mobileQuestMedia.addEventListener('change', handleQuestMediaChange);
+        } else if (mobileQuestMedia && typeof mobileQuestMedia.addListener === 'function') {
+            mobileQuestMedia.addListener(handleQuestMediaChange);
         }
 
         if (questToggle) {
@@ -2108,7 +2234,19 @@ button {
             iframe.src = 'modules/results.html';
             updateModuleBanner(null);
             unlockModule();
+            closeQuestDrawerIfMobile();
         });
+
+        if (achievementsBtn) {
+            achievementsBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                setActiveLink(achievementsBtn);
+                iframe.src = 'modules/achievements.html';
+                updateModuleBanner(null);
+                unlockModule();
+                closeQuestDrawerIfMobile();
+            });
+        }
 
         contentLinks.forEach(link => {
             link.addEventListener('click', (event) => {
@@ -2117,16 +2255,19 @@ button {
                 const topicId = link.getAttribute('data-topic-id');
                 if (topicId === 'settings') {
                     openSettingsOverlay();
+                    closeQuestDrawerIfMobile();
                     return;
                 }
                 setActiveLink(link);
                 updateModuleBanner(link);
                 if (isQuestableTopic(topicId) && getQuestStatus(topicId, getQuestType(topicId)) === QUEST_STATUS.NOT_ACCEPTED) {
                     lockModule(link);
+                    closeQuestDrawerIfMobile();
                     return;
                 }
                 unlockModule();
                 iframe.src = link.getAttribute('data-src');
+                closeQuestDrawerIfMobile();
             });
         });
 
@@ -2209,6 +2350,7 @@ button {
                 const summary = await window.electronAPI.getProgressSummary();
                 if (!summary) return;
                 updateXpWidget(summary);
+                handleAchievementUpdates(summary);
                 syncQuestStateFromSummary(summary.quests);
                 if (summary.completions) {
                     hydrateProgressData(summary.completions);
@@ -2232,18 +2374,109 @@ button {
             const isMaxLevel = required <= 0;
             const safeRequired = isMaxLevel ? Math.max(1, current) : required;
             const percentage = Math.min(100, Math.round((current / safeRequired) * 100));
+            const xpToNext = Math.max(0, required - current);
             xpBarFill.style.width = `${percentage}%`;
-            xpProgressText.textContent = isMaxLevel
-                ? `Max szint`
-                : `${formatNumber(current, '0')} / ${formatNumber(required, '0')} XP a kovetkezo szintig`;
+            const nextLevelLabel = isMaxLevel
+                ? 'Következő szint: Max'
+                : `Következő szint: ${formatNumber(xpToNext, '0')} XP`;
+            xpProgressText.textContent = nextLevelLabel;
             if (xpBar) {
-                xpBar.setAttribute('title', isMaxLevel ? 'Max szint' : `${formatNumber(current, '0')} / ${formatNumber(required, '0')} XP`);
+                xpBar.setAttribute('title', nextLevelLabel);
             }
+        }
+
+        function buildAchievementSnapshot(summary) {
+            const states = summary && summary.achievements ? summary.achievements : {};
+            const snapshot = {};
+            Object.entries(states).forEach(([key, value]) => {
+                if (value && value.isUnlocked) {
+                    snapshot[key] = value;
+                }
+            });
+            return snapshot;
+        }
+
+        function getAchievementCatalog(summary) {
+            if (!summary || !Array.isArray(summary.achievementCatalog)) return [];
+            return summary.achievementCatalog;
+        }
+
+        function closeAchievementToast(toast) {
+            if (!toast) return;
+            toast.classList.add('is-hiding');
+            window.setTimeout(() => {
+                toast.remove();
+            }, 220);
+        }
+
+        function showAchievementToast(achievement, state) {
+            if (!achievementToastLayer || !achievement) return;
+            const badgeText = ACHIEVEMENT_CATEGORY_BADGES[achievement.category] || 'A';
+            const titleText = achievement.title || achievement.id || 'Achievement';
+            const description = achievement.description || '';
+            const categoryLabel = ACHIEVEMENT_CATEGORY_LABELS[achievement.category] || 'Speciális';
+            const rewardValue = Number(state && Number.isFinite(state.grantedXp)
+                ? state.grantedXp
+                : (achievement.xpReward || 0));
+            const rewardText = rewardValue > 0 ? `+${formatNumber(rewardValue, '0')} XP` : 'Jelvény';
+            const metaParts = [];
+            if (categoryLabel) metaParts.push(categoryLabel);
+            if (rewardText) metaParts.push(`Jutalom: ${rewardText}`);
+            const metaText = metaParts.join(' · ');
+
+            const toast = document.createElement('div');
+            toast.className = 'achievement-toast';
+            toast.innerHTML = `
+                <div class="achievement-toast__badge" aria-hidden="true">${badgeText}</div>
+                <div>
+                    <div class="achievement-toast__title">Új achievement: ${titleText}</div>
+                    ${description ? `<div class="achievement-toast__desc">${description}</div>` : ''}
+                    ${metaText ? `<div class="achievement-toast__meta">${metaText}</div>` : ''}
+                </div>
+                <button class="achievement-toast__close" type="button" aria-label="Bezárás">✕</button>
+            `;
+
+            const closeBtn = toast.querySelector('.achievement-toast__close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => closeAchievementToast(toast));
+            }
+
+            while (achievementToastLayer.children.length >= MAX_ACHIEVEMENT_TOASTS) {
+                const oldest = achievementToastLayer.firstElementChild;
+                if (!oldest) break;
+                oldest.remove();
+            }
+            achievementToastLayer.appendChild(toast);
+
+            const duration = document.body.classList.contains('reduce-motion')
+                ? 2000
+                : ACHIEVEMENT_TOAST_DURATION;
+            window.setTimeout(() => closeAchievementToast(toast), duration);
+        }
+
+        function handleAchievementUpdates(summary) {
+            if (!summary) return;
+            if (!achievementsInitialized) {
+                achievementSnapshot = buildAchievementSnapshot(summary);
+                achievementsInitialized = true;
+                return;
+            }
+            const catalog = getAchievementCatalog(summary);
+            const states = summary.achievements || {};
+            const newlyUnlocked = catalog.filter((achievement) => {
+                if (!achievement || !achievement.id) return false;
+                const unlocked = Boolean(states[achievement.id]?.isUnlocked);
+                return unlocked && !achievementSnapshot[achievement.id];
+            });
+            newlyUnlocked.forEach((achievement) => {
+                showAchievementToast(achievement, states[achievement.id]);
+            });
+            achievementSnapshot = buildAchievementSnapshot(summary);
         }
 
         function formatDifficultyTooltip(normalized, key, label) {
             const grade = normalized[key];
-            if (!grade) return `${label}: N/A`;
+            if (!grade) return `${label}: Nincs adat`;
             return `${label}: Jegy: ${grade}`;
         }
         function hydrateProgressData(completions) {

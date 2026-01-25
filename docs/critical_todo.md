@@ -22,6 +22,7 @@ Last reviewed: 2026-01-25 (Bug triage log initialized)
   - Actual: No Windows run logged; results unknown.
   - Notes: Verification gap that could hide platform regressions.
   - Update (2026-01-25): Test runner now auto-skips E2E in WSL/headless; Windows run still pending.
+  - Update (2026-01-25): `npm run test:e2e` now routes through the same skip gate as `npm run test` for WSL/headless.
 
 - [MINOR] Windows renderer glyph rendering for Quest Log disclosure arrows unverified
   - Repro steps:
@@ -35,6 +36,7 @@ Last reviewed: 2026-01-25 (Bug triage log initialized)
 ## Notes
 
 - 2026-01-25: Mobile touch target audit completed; 44px minimum enforced for app shell controls, settings inputs, and module iframe controls.
+- 2026-01-25: Unit vs E2E npm script split clarified (`npm run test:unit` / `npm run test:e2e`) and documented in `docs/test_strategy.md`.
 - 2026-01-25: Module tab responsive override refined to prevent iframe horizontal scrolling at 360–414px.
 - 2026-01-25: Mobile Quest Log drawer auto-collapses on small screens and closes after navigation; header stack spacing refined for phones.
 - 2026-01-25: Orientation change handling now restores Quest Log state when moving between portrait/landscape breakpoints.
@@ -54,3 +56,5 @@ Last reviewed: 2026-01-25 (Bug triage log initialized)
 - 2026-01-24: Added minimal unit-test coverage targets and generator/helper unit tests; `npm run test` now includes unit + E2E.
 - 2026-01-24: Release readiness report added in `docs/release_readiness_report.md`; WSL2 test run recorded in `docs/status.md`.
 - 2026-01-25: Responsive breakpoint refinements shipped for tablet/mobile layouts (style + settings overlay tweaks).
+- 2026-01-25: Autopilot scripts hardened for Codex flag detection and write-enabled sandboxing; new Desktop V1 P0 checklist + skeleton testing/XP audit docs added.
+- 2026-01-25: Automation policy clarified in AGENTS + autopilot prompt; tests are not run automatically.

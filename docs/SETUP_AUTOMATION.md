@@ -4,6 +4,7 @@
 - Recommended sandbox: workspace-only (for example `CODEX_SANDBOX=workspace` or `--sandbox workspace`).
 - Recommended approval policy: require confirmation for commands outside the repo (TBD: exact flag).
 - Keep secrets out of the repo; use `.env.example` only.
+- Automation policy: do not run tests automatically; only generate/update them. Record skips in `docs/status.md`.
 
 ## Codex CLI
 - Install: `npm install -g @openai/codex`

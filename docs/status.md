@@ -2,6 +2,10 @@
 
 ## Snapshot
 - Electron app: `main.js` main process, `index.html` renderer, iframe module loader.
+- AI TODO restructured with Desktop V1 quality/UX/systems P0 focus and a separate V2/mobile backlog.
+- Autopilot scripts now detect Codex CLI flags, enforce write-enabled sandboxing, and stream+tee logs with clean exits.
+- Automation policy clarified: autopilot prompt + AGENTS + setup docs now state tests should not be run automatically.
+- Skeleton docs added for upcoming work: `docs/TESTING.md` and `docs/XP_AUDIT.md`.
 - Module coverage audit: 95 of 95 roadmap-linked modules exist; 0 missing (see `docs/module_coverage.md`).
 - Modules implemented for foundational and algebra topics in `modules/`, plus `results.html`, `settings.html`, `character_sheet.html`, and `placeholder.html`.
 - Alapozó és Algebra témakörök elméleti részei bővítve kidolgozott példákkal és diagramokkal (témakör-modulok).
@@ -58,7 +62,9 @@
 - Nehézségi címke audit lezárva a tesztkérdés-generátoroknál; nem találtunk tantervi eltérést (lásd `docs/difficulty_tag_audit.md`).
 - Module tab/payload consistency script added (`scripts/check_module_consistency.js`) with usage notes in `docs/module_consistency.md`.
 - Test strategy documented in `docs/test_strategy.md` (how to run `npm run test` / `npm run test:e2e`, headless/WSL skip expectations).
+- Unit vs E2E npm scripts split clarified (`npm run test:unit` and `npm run test:e2e`), with split callout in `docs/test_strategy.md`.
 - Test runner now uses `scripts/run-tests.js` to run unit tests and conditionally skip E2E in WSL/headless, avoiding shell glob issues on Windows.
+- `npm run test:e2e` now routes through `scripts/run-tests.js --e2e` to share the WSL/headless skip gate.
 - Minimal unit-test coverage added for generator/helper invariants (`tests/unit/generator_helpers.test.js`) with a DOM-stub harness; `npm run test` runs unit + E2E unless auto-skipped in WSL/headless, and `npm run test:unit` runs unit tests only.
 - Test/practice generators now build expanded test pools (sampling from `TEST_QUESTION_COUNT` + extra variety per difficulty) and use longer anti-repeat windows in practice sessions (history 12, retry 24) to reduce repetition.
 
@@ -76,6 +82,9 @@
 - Desktop v1: complete Hungarian localization sweep and stabilize test strategy across Windows/WSL.
 
 ## Recent Tests
+- 2026-01-25: Not run (automation policy: tests are not executed automatically).
+- 2026-01-25 (WSL2): `npm run test` — pass (E2E skipped by WSL gate; unit ok).
+- 2026-01-25 (WSL2): `npm run test:e2e` — pass (WSL skip gate).
 - 2026-01-25 (WSL2): `npm run test` — pass (E2E skipped by WSL gate; mobile quest drawer smoke test).
 - 2026-01-25 (WSL2): `npm run test:e2e` — pass (mobile quest drawer smoke test).
 - 2026-01-25 (WSL2): `npm run test` — pass (E2E skipped by WSL gate; orientation quest drawer sync).

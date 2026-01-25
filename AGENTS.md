@@ -50,12 +50,13 @@ It covers foundations through advanced topics with theory, visual models, tests,
 - Build: TBD (no build script found)
 - Minimum verify when needed: `npm install` then `npm run test`
 - In WSL or other headless environments, E2E (Playwright + Electron) tests may be skipped or treated as expected failures.
+- Automation policy: do not run tests automatically; only generate/update them. Record skipped runs in `docs/status.md`.
 
 
 ## Task Protocol
 1) Read `docs/SPEC.md` + `docs/ACCEPTANCE.md` + `docs/critical_todo.md`
 2) Pick top unchecked item from `docs/ai_todo.md`
 3) Implement
-4) Run quality gates
+4) Run quality gates only when explicitly requested; otherwise skip and note in `docs/status.md`
 5) Update `docs/status.md` + `docs/ai_todo.md` + `docs/critical_todo.md`
 6) If user decision needed: write into `docs/user_todo.md` and STOP

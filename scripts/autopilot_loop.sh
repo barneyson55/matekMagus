@@ -22,14 +22,30 @@ echo
 
 while true; do
   set +e
-  (cd "$ROOT_DIR" && bash scripts/autopilot.sh) 2>&1 | tee -a "$LOG_FILE"
+  OUTPUT_TMP="$(mktemp)"
+  (cd "$ROOT_DIR" && bash scripts/autopilot.sh) 2>&1 | tee -a "$LOG_FILE" | tee "$OUTPUT_TMP"
   status=${PIPESTATUS[0]}
   set -e
 
   if [[ $status -ne 0 ]]; then
+    rm -f "$OUTPUT_TMP"
     echo "autopilot.sh failed with exit code $status"
     exit "$status"
   fi
+
+  if grep -q "STOP: user input required" "$OUTPUT_TMP"; then
+    rm -f "$OUTPUT_TMP"
+    echo "STOP: user input required. See docs/user_todo.md"
+    exit 0
+  fi
+
+  if grep -q "No pending items" "$OUTPUT_TMP"; then
+    rm -f "$OUTPUT_TMP"
+    echo "No pending items in docs/ai_todo.md"
+    exit 0
+  fi
+
+  rm -f "$OUTPUT_TMP"
 
   if has_unchecked "$USER_TODO"; then
     echo "STOP: user input required. See docs/user_todo.md"

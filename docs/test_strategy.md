@@ -5,6 +5,12 @@
 This repository uses an Electron E2E smoke test as the primary quality gate and
 adds a minimal unit-test layer for generator/helper invariants.
 
+## Unit vs E2E split
+
+- `npm run test:unit` runs only the Node unit tests under `tests/unit`.
+- `npm run test:e2e` runs only the Electron smoke tests under `tests/e2e`.
+- `npm run test` runs unit tests first, then E2E unless auto-skipped (WSL/headless).
+
 ## Commands (run from repo root)
 
 1) Install dependencies (first time or after lockfile changes):
@@ -35,7 +41,8 @@ Notes:
 - `npm run test` runs `scripts/run-tests.js`, which executes unit tests first and then
   conditionally runs E2E based on environment detection.
 - `npm run test:unit` runs only the unit tests under `tests/unit/`.
-- The E2E command uses Node's test runner on `tests/e2e/electron-smoke.test.js`.
+- The E2E command runs `scripts/run-tests.js --e2e`, which uses Node's test runner on
+  `tests/e2e/` (currently `electron-smoke.test.js`).
 - Playwright browsers are not required because the test launches Electron.
   (No shell globbing is required, so Windows runs are stable.)
 
@@ -83,7 +90,8 @@ one of these reasons:
 ## Headless caveats
 
 - In WSL or headless environments, `npm run test` logs the skip reason after unit tests.
-- `npm run test:e2e` reports SKIPPED entries in the TAP output when the guard triggers.
+- In WSL or headless environments, `npm run test:e2e` logs the skip reason and exits
+  without invoking the test runner (the test file still has a secondary skip guard).
 - If CI needs E2E coverage, use Windows or Linux with a virtual display (Xvfb)
   and set `DISPLAY` so Electron can launch.
 

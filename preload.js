@@ -21,4 +21,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   savePracticeXp: ({ topicId, xp }) => ipcRenderer.invoke('save-practice-xp', { topicId, xp }),
   // Save quest state to the main process.
   saveQuestState: (questState) => ipcRenderer.send('save-quest-state', questState),
+  // Save buff state to the main process.
+  saveBuffState: (buffState) => ipcRenderer.send('save-buff-state', buffState),
 });

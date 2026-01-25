@@ -196,6 +196,28 @@
             return `${sign}${formatNumber(value, fallback)}`;
         }
 
+        function normalizeDifficultyKey(value) {
+            if (!value) return '';
+            const normalized = value.toString().toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z]/g, '');
+            if (normalized.startsWith('konny') || normalized.startsWith('easy')) return 'konnyu';
+            if (normalized.startsWith('kozep') || normalized.startsWith('normal') || normalized.startsWith('medium')) return 'normal';
+            if (normalized.startsWith('nehez') || normalized.startsWith('hard')) return 'nehez';
+            return normalized;
+        }
+
+        function formatDifficultyLabel(value) {
+            const raw = (value === null || value === undefined) ? '' : String(value).trim();
+            if (!raw) return '-';
+            const normalized = normalizeDifficultyKey(raw);
+            if (normalized === 'konnyu') return 'Könnyű';
+            if (normalized === 'normal') return 'Normál';
+            if (normalized === 'nehez') return 'Nehéz';
+            return raw;
+        }
+
         function toTimestamp(value) {
             const time = new Date(value).getTime();
             return Number.isFinite(time) ? time : null;
@@ -229,6 +251,8 @@
             return total / values.length;
         }
 
+        const FALLBACK_TOPIC_LABEL = 'Ismeretlen témakör';
+
         function getTopicLabel(topicId) {
             if (!topicId) return '';
             try {
@@ -237,15 +261,17 @@
                     : null;
                 if (link) {
                     const textNode = Array.from(link.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.nodeValue.trim());
-                    return textNode ? textNode.nodeValue.trim() : link.textContent.trim();
+                    const label = textNode ? textNode.nodeValue.trim() : link.textContent.trim();
+                    return label.replace(/\u00ad/g, '').trim();
                 }
             } catch (error) {
                 // ignore cross-context access issues
             }
-            return topicId.replace(/_/g, ' ');
+            return FALLBACK_TOPIC_LABEL;
         }
 
         function resolveTopicName(result) {
+            if (result && result.topicNameHu) return result.topicNameHu;
             if (result && result.topicName) return result.topicName;
             return getTopicLabel(result && result.topicId);
         }
@@ -436,8 +462,8 @@
                     : Number.NaN;
                 const percentageText = Number.isFinite(percentageValue) ? formatNumber(percentageValue) : '-';
                 const topicTitle = result.topicName || getTopicLabel(result.topicId);
-                const difficultyLabel = result.difficulty || '-';
-                resultItem.innerHTML = `<div class="grade-badge ${gradeClass}">${gradeText}</div> <div class="result-details"> <h3>${topicTitle || 'Ismeretlen'}</h3> <p><b>Nehézség:</b> ${difficultyLabel} | <b>Eredmény:</b> ${percentageText}% | <b>Dátum:</b> ${dateText}</p> </div> <div class="result-actions"><button>Részletek</button></div>`;
+                const difficultyLabel = formatDifficultyLabel(result.difficulty || result.difficultyLabel || result.difficultyName);
+                resultItem.innerHTML = `<div class="grade-badge ${gradeClass}">${gradeText}</div> <div class="result-details"> <h3>${topicTitle || 'Ismeretlen'}</h3> <p><b>Nehézségi szint:</b> ${difficultyLabel} | <b>Eredmény:</b> ${percentageText}% | <b>Dátum:</b> ${dateText}</p> </div> <div class="result-actions"><button>Részletek</button></div>`;
                 const detailsBtn = resultItem.querySelector('button');
                 detailsBtn.addEventListener('click', () => showDetails(result));
                 container.appendChild(resultItem);

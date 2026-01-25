@@ -7,7 +7,16 @@
 const { app, BrowserWindow, session, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
-const { LEVEL_TYPES, DEFAULT_BASE_XP, TOPIC_CONFIG } = require('./xp_config');
+const {
+  LEVEL_TYPES,
+  DEFAULT_BASE_XP,
+  TOPIC_CONFIG,
+  LEVEL_BASE_XP,
+  LEVEL_GROWTH,
+  MAX_LEVEL,
+  XP_CAP,
+} = require('./xp_config');
+const { BUFF_CATALOG } = require('./buffs_config');
 
 const customUserDataDir = process.env.MATEK_MESTER_USER_DATA;
 if (customUserDataDir) {
@@ -39,18 +48,13 @@ const TOPIC_ID_ALIASES = {
   abszolut_ertek_fuggveny: 'specialis_fuggvenyek',
 };
 
-const LEVEL_BASE_XP = 50;
-const LEVEL_GROWTH = 1.07;
-const MAX_LEVEL = 50;
-
 function buildLevelTable() {
   const table = [];
   let xpStart = 0;
   for (let level = 1; level <= MAX_LEVEL; level += 1) {
-    const xpToNext = (level < MAX_LEVEL)
-      ? Math.round(LEVEL_BASE_XP * Math.pow(LEVEL_GROWTH, level - 1))
-      : 0;
-    const xpEnd = xpStart + xpToNext;
+    const xpSegment = Math.round(LEVEL_BASE_XP * Math.pow(LEVEL_GROWTH, level - 1));
+    const xpToNext = level < MAX_LEVEL ? xpSegment : 0;
+    const xpEnd = xpStart + xpSegment;
     table.push({ level, xpStart, xpEnd, xpToNext });
     xpStart = xpEnd;
   }
@@ -58,6 +62,13 @@ function buildLevelTable() {
 }
 
 const LEVEL_TABLE = buildLevelTable();
+
+function clampTotalXp(value) {
+  const raw = Number(value);
+  const xp = Math.max(0, Math.floor(Number.isFinite(raw) ? raw : 0));
+  if (!Number.isFinite(XP_CAP) || XP_CAP <= 0) return xp;
+  return Math.min(xp, XP_CAP);
+}
 
 // Level names from constitution/xp/xp_roadmap.md
 const LEVEL_NAMES = [
@@ -221,6 +232,12 @@ function normalizeResultTopicId(result) {
   return { ...result, topicId: normalized };
 }
 
+function normalizeBuffId(buffId) {
+  if (!buffId || typeof buffId !== 'string') return null;
+  const trimmed = buffId.trim();
+  return trimmed ? trimmed : null;
+}
+
 function mergeQuestStatus(current, incoming) {
   const currentScore = QUEST_STATUS_ORDER[current] ?? -1;
   const incomingScore = QUEST_STATUS_ORDER[incoming] ?? -1;
@@ -299,6 +316,13 @@ function createPracticeEntry() {
       normal: { correctCount: 0, totalCount: 0 },
       nehez: { correctCount: 0, totalCount: 0 },
     },
+  };
+}
+
+function createEmptyBuffState() {
+  return {
+    unlocked: {},
+    active: [],
   };
 }
 
@@ -399,6 +423,7 @@ function createEmptyProgress() {
     practice: {
       statsByTopic: {},
     },
+    buffs: createEmptyBuffState(),
     achievements: {},
     quests: coerceQuestState(null).state,
   };
@@ -544,6 +569,113 @@ function normalizePractice(rawPractice, legacyPracticeXp) {
     changed = true;
   }
   return { practice, changed };
+}
+
+function normalizeBuffState(raw) {
+  const buffs = createEmptyBuffState();
+  let changed = false;
+  if (!raw || typeof raw !== 'object') {
+    return { buffs, changed: true };
+  }
+
+  const hasUnlocked = Object.prototype.hasOwnProperty.call(raw, 'unlocked');
+  if (!hasUnlocked) {
+    changed = true;
+  } else if (Array.isArray(raw.unlocked)) {
+    raw.unlocked.forEach((entry) => {
+      const id = normalizeBuffId(
+        entry && typeof entry === 'object' ? entry.id : entry
+      );
+      if (!id) {
+        changed = true;
+        return;
+      }
+      if (!buffs.unlocked[id]) {
+        buffs.unlocked[id] = { isUnlocked: true };
+      }
+      if (entry && typeof entry === 'object' && typeof entry.unlockedAt === 'string') {
+        buffs.unlocked[id].unlockedAt = entry.unlockedAt;
+      }
+    });
+    changed = true;
+  } else if (raw.unlocked && typeof raw.unlocked === 'object') {
+    Object.entries(raw.unlocked).forEach(([buffId, entry]) => {
+      const id = normalizeBuffId(buffId);
+      if (!id) {
+        changed = true;
+        return;
+      }
+      if (entry && typeof entry === 'object') {
+        if (entry.isUnlocked === false) {
+          changed = true;
+          return;
+        }
+        const record = { isUnlocked: true };
+        if (typeof entry.unlockedAt === 'string') {
+          record.unlockedAt = entry.unlockedAt;
+        }
+        buffs.unlocked[id] = record;
+        if (entry.isUnlocked !== undefined && entry.isUnlocked !== true) {
+          changed = true;
+        }
+      } else if (entry === true) {
+        buffs.unlocked[id] = { isUnlocked: true };
+        changed = true;
+      } else if (typeof entry === 'string') {
+        buffs.unlocked[id] = { isUnlocked: true, unlockedAt: entry };
+        changed = true;
+      } else {
+        changed = true;
+      }
+    });
+  } else if (raw.unlocked !== undefined) {
+    changed = true;
+  }
+
+  const hasActive = Object.prototype.hasOwnProperty.call(raw, 'active');
+  if (!hasActive) {
+    changed = true;
+  } else if (Array.isArray(raw.active)) {
+    const seen = new Set();
+    raw.active.forEach((entry) => {
+      let id = null;
+      let activatedAt = null;
+      let expiresAt = null;
+      if (typeof entry === 'string') {
+        id = normalizeBuffId(entry);
+        if (id !== entry) changed = true;
+      } else if (entry && typeof entry === 'object') {
+        id = normalizeBuffId(entry.id);
+        if (typeof entry.activatedAt === 'string') activatedAt = entry.activatedAt;
+        if (typeof entry.expiresAt === 'string') expiresAt = entry.expiresAt;
+        if (id !== entry.id) changed = true;
+      } else {
+        changed = true;
+        return;
+      }
+      if (!id || seen.has(id)) {
+        changed = true;
+        return;
+      }
+      const record = { id };
+      if (activatedAt) record.activatedAt = activatedAt;
+      if (expiresAt) record.expiresAt = expiresAt;
+      buffs.active.push(record);
+      seen.add(id);
+    });
+  } else if (raw.active !== undefined) {
+    changed = true;
+  }
+
+  buffs.active.forEach((entry) => {
+    if (!entry || !entry.id) return;
+    if (!buffs.unlocked[entry.id]) {
+      buffs.unlocked[entry.id] = { isUnlocked: true };
+      changed = true;
+    }
+  });
+
+  return { buffs, changed };
 }
 
 function shouldUpdateBestGrade(nextGrade, currentGrade) {
@@ -844,7 +976,7 @@ function unlockAchievement(progress, achievement, timestamp) {
   const reward = Number(achievement.xpReward);
   if (Number.isFinite(reward) && reward > 0) {
     entry.grantedXp = reward;
-    progress.totalXp += reward;
+    progress.totalXp = clampTotalXp(Number(progress.totalXp || 0) + reward);
   }
   progress.achievements[achievement.id] = entry;
   return true;
@@ -919,6 +1051,11 @@ function normalizeProgress(raw) {
     progress.totalXp = source.xp;
     migrated = true;
   }
+  const clampedTotalXp = clampTotalXp(progress.totalXp);
+  if (clampedTotalXp !== progress.totalXp) {
+    progress.totalXp = clampedTotalXp;
+    migrated = true;
+  }
 
   if (Array.isArray(source.tests)) {
     const normalizedTests = normalizeTestHistory(source.tests);
@@ -933,6 +1070,10 @@ function normalizeProgress(raw) {
   const practicePayload = normalizePractice(source.practice, source.practiceXp);
   progress.practice = practicePayload.practice;
   migrated = migrated || practicePayload.changed;
+
+  const buffPayload = normalizeBuffState(source.buffs);
+  progress.buffs = buffPayload.buffs;
+  migrated = migrated || buffPayload.changed;
 
   if (source.achievements && typeof source.achievements === 'object') {
     progress.achievements = normalizeAchievements(source.achievements);
@@ -1008,14 +1149,14 @@ function grantXpForResult(progress, result) {
   }
   const xpGain = Math.max(0, (update.newBestXp || 0) - (update.previousBestXp || 0));
   if (xpGain > 0) {
-    progress.totalXp += xpGain;
+    progress.totalXp = clampTotalXp(Number(progress.totalXp || 0) + xpGain);
   }
   return xpGain;
 }
 
 // Calculate the current level and XP needed to reach the next level
 function calculateLevelStats(totalXp = 0) {
-  const xpTotal = Math.max(0, Math.floor(totalXp));
+  const xpTotal = clampTotalXp(totalXp);
   let current = LEVEL_TABLE[0];
   for (let i = 0; i < LEVEL_TABLE.length; i += 1) {
     const entry = LEVEL_TABLE[i];
@@ -1094,6 +1235,26 @@ function mergeQuestState(existing, incoming) {
   };
 }
 
+function mergeBuffState(existing, incoming) {
+  const base = normalizeBuffState(existing).buffs;
+  if (!incoming || typeof incoming !== 'object') return base;
+  const hasUnlocked = Object.prototype.hasOwnProperty.call(incoming, 'unlocked');
+  const hasActive = Object.prototype.hasOwnProperty.call(incoming, 'active');
+  if (!hasUnlocked && !hasActive) return base;
+  const normalizedIncoming = normalizeBuffState(incoming).buffs;
+  const merged = createEmptyBuffState();
+  merged.unlocked = hasUnlocked
+    ? { ...base.unlocked, ...normalizedIncoming.unlocked }
+    : base.unlocked;
+  merged.active = hasActive ? normalizedIncoming.active : base.active;
+  merged.active.forEach((entry) => {
+    if (entry && entry.id && !merged.unlocked[entry.id]) {
+      merged.unlocked[entry.id] = { isUnlocked: true };
+    }
+  });
+  return merged;
+}
+
 function inferDifficultyFromXp(xpValue) {
   const xp = Number(xpValue);
   if (!Number.isFinite(xp)) return null;
@@ -1129,7 +1290,7 @@ function recordPracticeXp(progress, payload) {
     entry.difficulties[difficultyKey].totalCount += 1;
   }
 
-  progress.totalXp += amount;
+  progress.totalXp = clampTotalXp(Number(progress.totalXp || 0) + amount);
 }
 
 // Create the main application window
@@ -1205,6 +1366,8 @@ ipcMain.handle('get-progress-summary', async () => {
     level: calculateLevelStats(progress.totalXp),
     results: progress.results,
     practice: progress.practice,
+    buffs: progress.buffs,
+    buffCatalog: BUFF_CATALOG,
     achievements: progress.achievements,
     achievementCatalog: ACHIEVEMENT_CATALOG,
   };
@@ -1249,5 +1412,16 @@ ipcMain.on('save-quest-state', (event, questState) => {
     saveProgress(progress);
   } catch (error) {
     console.error('Hiba a quest allapot mentese kozben:', error);
+  }
+});
+
+// IPC: save buff state
+ipcMain.on('save-buff-state', (event, buffState) => {
+  try {
+    const { progress } = normalizeProgress(readProgress());
+    progress.buffs = mergeBuffState(progress.buffs, buffState);
+    saveProgress(progress);
+  } catch (error) {
+    console.error('Hiba a buff allapot mentese kozben:', error);
   }
 });

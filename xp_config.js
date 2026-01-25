@@ -4,6 +4,14 @@ const LEVEL_TYPES = {
   TEMAKOR: 'temakor',
 };
 
+const LEVEL_BASE_XP = 50;
+const LEVEL_GROWTH = 1.07;
+const MAX_LEVEL = 50;
+const LEVEL_SEGMENTS = Array.from({ length: MAX_LEVEL }, (_, index) =>
+  Math.round(LEVEL_BASE_XP * Math.pow(LEVEL_GROWTH, index))
+);
+const XP_CAP = LEVEL_SEGMENTS.reduce((sum, xp) => sum + xp, 0);
+
 const DEFAULT_BASE_XP = {
   [LEVEL_TYPES.FOTEMA]: 300,
   [LEVEL_TYPES.ALTEMA]: 150,
@@ -123,6 +131,11 @@ const TOPIC_CONFIG = {
 
 module.exports = {
   LEVEL_TYPES,
+  LEVEL_BASE_XP,
+  LEVEL_GROWTH,
+  MAX_LEVEL,
+  LEVEL_SEGMENTS,
+  XP_CAP,
   DEFAULT_BASE_XP,
   TOPIC_CONFIG,
 };

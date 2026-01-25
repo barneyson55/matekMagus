@@ -21,14 +21,18 @@
         }
 
         * { box-sizing: border-box; }
-        html, body { background-color: transparent; }
+        html, body { background-color: transparent; height: 100%; }
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
             color: var(--text);
             padding: 32px;
-            min-height: 100vh;
+            min-height: 0;
+            height: 100%;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
         body::before {
             content: '';
@@ -44,7 +48,10 @@
             z-index: 1;
             display: grid;
             grid-template-columns: minmax(280px, 1.1fr) minmax(320px, 0.9fr);
+            grid-template-rows: minmax(0, 1fr);
             gap: 24px;
+            flex: 1;
+            min-height: 0;
         }
         .card {
             background: var(--panel);
@@ -52,12 +59,17 @@
             border-radius: 16px;
             padding: 20px;
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
         }
         .tabs {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
             margin-bottom: 16px;
+            flex-shrink: 0;
         }
         .tab-button {
             border: 1px solid transparent;
@@ -74,7 +86,14 @@
             transform: translateY(-1px);
             background: var(--panel-strong);
         }
-        .tab-panel { display: none; }
+        .tab-panel {
+            display: none;
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            padding-right: 4px;
+            scrollbar-gutter: stable;
+        }
         .tab-panel.is-active { display: block; }
         .list {
             list-style: none;
@@ -133,8 +152,11 @@
         .badge.warning { background: var(--warning); }
 
         .profile {
-            display: grid;
+            display: flex;
+            flex-direction: column;
             gap: 18px;
+            min-height: 0;
+            overflow: hidden;
         }
         .profile-header {
             display: flex;
@@ -196,11 +218,20 @@
         }
         .stat-card span { color: var(--muted); font-size: 0.85rem; }
         .stat-card strong { display: block; margin-top: 4px; font-size: 1.2rem; }
+        .achievement-section {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            flex: 1;
+        }
         .achievement-list {
             display: grid;
             gap: 10px;
-            max-height: 220px;
+            flex: 1;
+            min-height: 0;
             overflow-y: auto;
+            padding-right: 4px;
+            scrollbar-gutter: stable;
         }
         .achievement-item {
             background: var(--panel-strong);
@@ -309,9 +340,29 @@
         @media (max-width: 960px) {
             .sheet {
                 grid-template-columns: 1fr;
+                grid-template-rows: none;
+                height: auto;
+                flex: 0 0 auto;
             }
             .trend-grid {
                 grid-template-columns: 1fr;
+            }
+            body {
+                overflow: auto;
+            }
+            .card {
+                overflow: visible;
+            }
+            .tab-panel {
+                overflow: visible;
+                padding-right: 0;
+            }
+            .achievement-section {
+                flex: 0 0 auto;
+            }
+            .achievement-list {
+                overflow: visible;
+                padding-right: 0;
             }
         }
     
@@ -323,25 +374,25 @@
 </style>
 </head>
 <body>
-    <div class="sheet">
-        <section class="card">
-            <div class="tabs">
-                <button class="tab-button is-active" type="button" data-tab="active">Akt&iacute;v k&uuml;ldet&eacute;seim</button>
-                <button class="tab-button" type="button" data-tab="results">Eredm&eacute;nyeim</button>
+    <div class="sheet" data-testid="character-sheet">
+        <section class="card" data-testid="character-sheet-left">
+            <div class="tabs" role="tablist" aria-label="Karakterlap n&eacute;zetek" data-testid="character-sheet-tabs">
+                <button class="tab-button is-active" type="button" data-tab="active" id="tab-button-active" role="tab" aria-selected="true" aria-controls="tab-active" tabindex="0" data-testid="character-sheet-tab-active">Akt&iacute;v k&uuml;ldet&eacute;seim</button>
+                <button class="tab-button" type="button" data-tab="results" id="tab-button-results" role="tab" aria-selected="false" aria-controls="tab-results" tabindex="-1" data-testid="character-sheet-tab-results">Eredm&eacute;nyeim</button>
             </div>
 
-            <div class="tab-panel is-active" id="tab-active">
-                <ul class="list" id="active-quest-list"></ul>
-                <div class="empty-state" id="active-empty" style="display:none;">M&eacute;g nincs akt&iacute;v k&uuml;ldet&eacute;s.</div>
+            <div class="tab-panel is-active" id="tab-active" role="tabpanel" aria-labelledby="tab-button-active" data-testid="character-sheet-panel-active">
+                <ul class="list" id="active-quest-list" data-testid="character-sheet-active-list"></ul>
+                <div class="empty-state" id="active-empty" style="display:none;" data-testid="character-sheet-active-empty">M&eacute;g nincs akt&iacute;v k&uuml;ldet&eacute;s.</div>
             </div>
 
-            <div class="tab-panel" id="tab-results">
+            <div class="tab-panel" id="tab-results" role="tabpanel" aria-labelledby="tab-button-results" hidden data-testid="character-sheet-panel-results">
                 <div class="section-title">Kimaxolt modulok</div>
-                <ul class="list" id="completed-quest-list"></ul>
-                <div class="empty-state" id="completed-empty" style="display:none;">M&eacute;g nincs kimaxolt modul.</div>
+                <ul class="list" id="completed-quest-list" data-testid="character-sheet-completed-list"></ul>
+                <div class="empty-state" id="completed-empty" style="display:none;" data-testid="character-sheet-completed-empty">M&eacute;g nincs kimaxolt modul.</div>
 
                 <div class="section-title">Trend &ouml;sszegz&eacute;s</div>
-                <div class="trend-grid" id="trend-grid">
+                <div class="trend-grid" id="trend-grid" data-testid="character-sheet-trend-grid">
                     <div class="trend-card">
                         <span>Ut&oacute;bbi 5 teszt &aacute;tlaga</span>
                         <strong id="trend-last-avg">-</strong>
@@ -359,20 +410,20 @@
                     </div>
                 </div>
                 <div class="trend-note" id="trend-note"></div>
-                <div class="empty-state" id="trend-empty" style="display:none;">M&eacute;g nincs elegend&#337; teszteredm&eacute;ny trendhez.</div>
+                <div class="empty-state" id="trend-empty" style="display:none;" data-testid="character-sheet-trend-empty">M&eacute;g nincs elegend&#337; teszteredm&eacute;ny trendhez.</div>
 
                 <div class="section-title">T&eacute;mak&ouml;r betekint&eacute;s</div>
-                <ul class="list" id="topic-insights-list"></ul>
-                <div class="empty-state" id="topic-insights-empty" style="display:none;">M&eacute;g nincsenek t&eacute;mak&ouml;r adatok.</div>
+                <ul class="list" id="topic-insights-list" data-testid="character-sheet-topic-insights"></ul>
+                <div class="empty-state" id="topic-insights-empty" style="display:none;" data-testid="character-sheet-topic-insights-empty">M&eacute;g nincsenek t&eacute;mak&ouml;r adatok.</div>
 
                 <div class="section-title">Legut&oacute;bbi tesztek</div>
-                <ul class="list" id="recent-results-list"></ul>
-                <div class="empty-state" id="results-empty" style="display:none;">M&eacute;g nincsenek mentett teszteredm&eacute;nyek.</div>
+                <ul class="list" id="recent-results-list" data-testid="character-sheet-recent-results"></ul>
+                <div class="empty-state" id="results-empty" style="display:none;" data-testid="character-sheet-results-empty">M&eacute;g nincsenek mentett teszteredm&eacute;nyek.</div>
             </div>
         </section>
 
-        <section class="card profile">
-            <div class="profile-header">
+        <section class="card profile" data-testid="character-sheet-right">
+            <div class="profile-header" data-testid="character-sheet-profile-header">
                 <div class="avatar"></div>
                 <div>
                     <h2 id="profile-level">Lv. 1</h2>
@@ -381,7 +432,7 @@
                 </div>
             </div>
 
-            <div class="xp-block">
+            <div class="xp-block" data-testid="character-sheet-xp">
                 <div class="xp-meta">
                     <span id="xp-progress-text">0 / 50 XP</span>
                     <span id="xp-percent-text">0%</span>
@@ -391,7 +442,7 @@
                 </div>
             </div>
 
-            <div class="stats-grid">
+            <div class="stats-grid" data-testid="character-sheet-stats">
                 <div class="stat-card">
                     <span>Akt&iacute;v k&uuml;ldet&eacute;sek</span>
                     <strong id="stat-active">0</strong>
@@ -410,10 +461,10 @@
                 </div>
             </div>
 
-            <div>
+            <div class="achievement-section">
                 <div class="section-title">Achievementek</div>
-                <div class="achievement-list" id="achievement-list"></div>
-                <div class="empty-state" id="achievement-empty" style="display:none;">M&eacute;g nincsenek achievementek.</div>
+                <div class="achievement-list" id="achievement-list" data-testid="character-sheet-achievements"></div>
+                <div class="empty-state" id="achievement-empty" style="display:none;" data-testid="character-sheet-achievements-empty">M&eacute;g nincsenek achievementek.</div>
             </div>
         </section>
     </div>
@@ -528,9 +579,10 @@
         const TREND_WINDOW = 5;
         const TOPIC_INSIGHT_LIMIT = 5;
         const TREND_THRESHOLD = 2;
+        const FALLBACK_TOPIC_LABEL = 'Ismeretlen témakör';
         const CATEGORY_LABELS = {
             performance: 'Teljes\u00edtm\u00e9ny',
-            difficulty: 'Neh\u00e9zs\u00e9g',
+            difficulty: 'Neh\u00e9zs\u00e9gi szint',
             structure: 'Strukt\u00fara',
             special: 'Speci\u00e1lis'
         };
@@ -675,18 +727,19 @@
                 if (link) {
                     const textNode = Array.from(link.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.nodeValue.trim());
                     const label = textNode ? textNode.nodeValue.trim() : link.textContent.trim();
-                    topicLabelCache[topicId] = label;
-                    return label;
+                    const cleanLabel = label.replace(/\u00ad/g, '').trim();
+                    topicLabelCache[topicId] = cleanLabel;
+                    return cleanLabel;
                 }
             } catch (error) {
                 // ignore cross-context access issues
             }
-            const fallback = topicId.replace(/_/g, ' ');
-            topicLabelCache[topicId] = fallback;
-            return fallback;
+            topicLabelCache[topicId] = FALLBACK_TOPIC_LABEL;
+            return FALLBACK_TOPIC_LABEL;
         }
 
         function resolveTopicName(result) {
+            if (result && result.topicNameHu) return result.topicNameHu;
             if (result && result.topicName) return result.topicName;
             return getTopicLabel(result && result.topicId);
         }
@@ -835,28 +888,41 @@
                 : ACHIEVEMENT_FALLBACK;
             const states = summaryData && summaryData.achievements ? summaryData.achievements : {};
             dom.achievementList.innerHTML = '';
+            dom.achievementList.style.display = '';
             if (!catalog.length) {
                 dom.achievementEmpty.style.display = 'block';
+                dom.achievementList.style.display = 'none';
+                return;
+            }
+            const unlockedAchievements = catalog
+                .map((achievement) => {
+                    const state = states[achievement.id] || {};
+                    const isUnlocked = Boolean(state.isUnlocked || state.unlockedAt);
+                    return isUnlocked ? { achievement, state } : null;
+                })
+                .filter(Boolean);
+            if (!unlockedAchievements.length) {
+                dom.achievementEmpty.style.display = 'block';
+                dom.achievementList.style.display = 'none';
                 return;
             }
             dom.achievementEmpty.style.display = 'none';
-            catalog.forEach((achievement) => {
-                const state = states[achievement.id] || {};
-                const isUnlocked = Boolean(state.isUnlocked);
+            unlockedAchievements.forEach(({ achievement, state }) => {
                 const card = document.createElement('div');
-                card.className = `achievement-item ${isUnlocked ? 'is-unlocked' : 'is-locked'}`;
+                card.className = 'achievement-item is-unlocked';
                 card.dataset.achievementId = achievement.id;
+                const titleText = achievement.title || achievement.nameHu || 'Ismeretlen achievement';
                 const description = achievement.description || '';
                 const category = achievement.category || 'special';
                 const categoryLabel = CATEGORY_LABELS[category] || 'Speci\u00e1lis';
                 const badgeText = CATEGORY_BADGES[category] || 'SP';
-                const rewardValue = Number(isUnlocked && Number.isFinite(state.grantedXp)
+                const rewardValue = Number(Number.isFinite(state.grantedXp)
                     ? state.grantedXp
                     : (achievement.xpReward || 0));
                 const rewardText = rewardValue > 0
                     ? `+${formatNumber(rewardValue, '0')} XP`
                     : 'Jelv\u00e9ny';
-                let metaText = isUnlocked ? 'Megszerezve' : 'M\u00e9g nem szerzett';
+                let metaText = 'Megszerezve';
                 if (state.unlockedAt) {
                     const dateLabel = formatDate(state.unlockedAt);
                     if (dateLabel) {
@@ -867,7 +933,7 @@
                     <div class="achievement-badge" aria-hidden="true">${badgeText}</div>
                     <div class="achievement-details">
                         <div class="achievement-title-row">
-                            <h4>${achievement.title || achievement.id}</h4>
+                            <h4>${titleText}</h4>
                             <span class="achievement-tag">${categoryLabel}</span>
                         </div>
                         <p>${description}</p>
@@ -1067,15 +1133,60 @@
             renderAchievements();
         }
 
-        dom.tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                dom.tabs.forEach(btn => btn.classList.toggle('is-active', btn === tab));
-                const target = tab.dataset.tab;
-                Object.entries(dom.panels).forEach(([key, panel]) => {
-                    panel.classList.toggle('is-active', key === target);
-                });
+        function setActiveTab(tab) {
+            if (!tab) return;
+            const target = tab.dataset.tab;
+            dom.tabs.forEach((btn) => {
+                const isActive = btn === tab;
+                btn.classList.toggle('is-active', isActive);
+                btn.setAttribute('aria-selected', String(isActive));
+                btn.setAttribute('tabindex', isActive ? '0' : '-1');
+            });
+            Object.entries(dom.panels).forEach(([key, panel]) => {
+                const isActive = key === target;
+                panel.classList.toggle('is-active', isActive);
+                panel.hidden = !isActive;
+            });
+        }
+
+        function focusTabByOffset(currentTab, offset) {
+            const tabs = Array.from(dom.tabs);
+            const currentIndex = tabs.indexOf(currentTab);
+            if (currentIndex === -1) return;
+            const nextIndex = (currentIndex + offset + tabs.length) % tabs.length;
+            const nextTab = tabs[nextIndex];
+            nextTab.focus();
+            setActiveTab(nextTab);
+        }
+
+        function focusTabEdge(direction) {
+            const tabs = Array.from(dom.tabs);
+            if (!tabs.length) return;
+            const nextTab = direction === 'start' ? tabs[0] : tabs[tabs.length - 1];
+            nextTab.focus();
+            setActiveTab(nextTab);
+        }
+
+        dom.tabs.forEach((tab) => {
+            tab.addEventListener('click', () => setActiveTab(tab));
+            tab.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    focusTabByOffset(tab, 1);
+                } else if (event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    focusTabByOffset(tab, -1);
+                } else if (event.key === 'Home') {
+                    event.preventDefault();
+                    focusTabEdge('start');
+                } else if (event.key === 'End') {
+                    event.preventDefault();
+                    focusTabEdge('end');
+                }
             });
         });
+
+        setActiveTab(document.querySelector('.tab-button.is-active') || dom.tabs[0]);
 
         document.addEventListener('DOMContentLoaded', () => {
             window.parent.postMessage({ type: 'request-xp-summary' }, '*');

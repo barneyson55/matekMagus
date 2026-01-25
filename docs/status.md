@@ -7,6 +7,10 @@
 - Autopilot scripts now detect Codex CLI flags, enforce write-enabled sandboxing, and stream+tee logs with clean exits.
 - Automation policy clarified: autopilot prompt + AGENTS + setup docs now state tests should not be run automatically.
 - Skeleton docs added for upcoming work: `docs/TESTING.md` and `docs/XP_AUDIT.md`.
+- XP audit completed for `xp_config.js` + main XP utilities vs constitution; deltas recorded in `docs/XP_AUDIT.md`.
+- XP audit script added (`scripts/xp_audit.js`) and `docs/XP_AUDIT.md` now includes scripted level-delta and reachability metrics.
+- XP max-level config centralized in `xp_config.js`; XP cap/clamp behavior enforced in XP helpers and documented in `docs/XP_AUDIT.md`.
+- XP unit tests added for max-level reachability, cap/clamp behavior, and monotonic level curve progression.
 - Module coverage audit: 95 of 95 roadmap-linked modules exist; 0 missing (see `docs/module_coverage.md`).
 - Modules implemented for foundational and algebra topics in `modules/`, plus `results.html`, `settings.html`, `character_sheet.html`, and `placeholder.html`.
 - Alapozó és Algebra témakörök elméleti részei bővítve kidolgozott példákkal és diagramokkal (témakör-modulok).
@@ -27,14 +31,17 @@
 - Emelt core modules implemented (`modules/szamtani_mertani.html`, `modules/kamatoskamat.html`, `modules/konvergencia.html`, `modules/hatarertek.html`, `modules/derivalt_fogalma.html`, `modules/derivalasi_szabalyok.html`, `modules/fuggvenyvizsgalat.html`, `modules/hatarozatlan_integral.html`, `modules/hatarozott_integral.html`, `modules/newton_leibniz.html`, `modules/terfogatszamitas.html` + `.js`) with standard test/practice/visual tabs and result payloads.
 - Local persistence in `progress.json` via IPC; `preload.js` exposes the bridge.
 - E2E smoke test in `tests/e2e/electron-smoke.test.js`.
+- E2E scaffolding added for settings save/cancel, character sheet panels, and buff tooltips with new `data-testid` hooks.
+- Settings overlay categories (Skin/UI/Sound/Gameplay) now persist through the Save/Cancel flow with stored state for accessibility, sound, and gameplay options.
 - E2E smoke tests auto-skip in WSL/headless environments; Windows runs execute normally.
 - E2E suite now seeds deterministic randomness for question generation via `window.__setMatekSeed` and iframe re-seeding.
 - Navigation source-of-truth is the manual list in `index.html` (no `assets/temakorok` generation in this phase).
 - App icon added at `assets/icon.png` for the Electron window.
 - CSS encoding normalized in `style.css` (UTF-8 charset, ASCII-safe glyph escapes).
-- Responsive breakpoints (desktop/tablet/mobile) defined in `style.css` and documented in `docs/responsive.md`, with refined tablet/mobile spacing and compact <=480px overrides.
-- Mobile Quest Log drawer now defaults closed on small screens, auto-closes after selection, and header stacking spacing is tightened for mobile.
+- Responsive breakpoints (desktop/tablet/mobile) defined in `style.css` and documented in `docs/responsive.md`, with refined tablet/mobile spacing, compact <=480px overrides, and a header-column min-width clamp to preserve the 5% layout across smaller widths.
+- Mobile Quest Log drawer now defaults closed on small screens, auto-closes after selection, hides closed-state shadow/border, and header stacking spacing is tightened for mobile.
 - Quest Log collapse state now restores when leaving mobile breakpoints, keeping header/Quest Log layout stable across portrait/landscape changes.
+- Compact landscape sizing added for short-height orientation changes (header height + Quest Log spacing).
 - Legacy `modules/xp_guide.html` removed and the quest exclusions cleaned up in `index.html`.
 - ENDGAME / RELEASE task list added to `docs/ai_todo.md` to drive localization, responsive UI, testing, and release readiness.
 - App shell/settings labels cleaned up to remove leftover English.
@@ -43,16 +50,20 @@
 - Localization glossary added in `docs/localization_glossary.md`; button labels, status messages, and validation/error copy normalized to the glossary across modules and settings.
 - Localization sweep #1 completed: difficulty phrasing aligned to "nehézségi szint", XP next-level labels updated, and achievement/settings fallbacks localized.
 - Localization sweep #2 completed: casing/diacritics normalized for tab/quest labels in release checklist references; legacy Beállítások title corrected in module coverage.
+- Localization sweep #3 completed: settings category label fully localized; tooltips and results/character sheet topic fallbacks now avoid ASCII IDs.
 - Hungarian locale number formatting applied to results, character sheet, and XP header summaries (thousand separators/decimal comma where applicable).
 - Results and character sheet now include trend summaries plus per-topic performance insights.
+- Character sheet layout now uses fixed panel sizing with internal scroll regions for tabs and achievements, keeping panel headers aligned.
+- Character sheet UX aligned to the localization glossary; quest/achievement empty states reinforced; tab focus order now follows keyboard-friendly tablist behavior.
 - Achievementek külön nézetként elérhetők a bal oldali gyorslinkeknél, és megjelennek az elért/lockolt listák valamint a bónusz XP összegzés.
 - Új achievement feloldásakor toast értesítés jelenik meg a fő felületen.
 - Quest Log state labels and quest-acceptance overlay copy aligned with constitution phrasing; character sheet status meta labels corrected.
 - Mobile layout rules applied: Quest Log drawer on small screens, stacked header, and responsive module tab wrapping/scrolling.
-- Iframe module responsive overrides updated with tab-row wrapping/scroll tuning and overflow guards to eliminate horizontal scrolling at 360–414px.
-- Mobile touch targets enforced at a 44px minimum across app shell controls, settings inputs, and iframe module buttons/tabs/inputs (including checkbox labels).
+- Iframe module responsive overrides updated with <=480px grid tab layout and overflow guards to eliminate horizontal scrolling at 360–414px.
+- Mobile touch targets enforced at a 44px minimum across app shell controls, settings inputs, and iframe module buttons/tabs/inputs (including checkbox labels and test pagination dots).
 - Orientation-change E2E coverage added to validate header and Quest Log layout stability across portrait/landscape viewports.
 - Mobile quest drawer E2E smoke coverage added (drawer/backdrop visibility and auto-close on navigation).
+- Mobile module tab layout E2E smoke coverage added (grid tabs, overflow guard, touch target token).
 - Manual release smoke-test checklist added in `docs/RELEASE_CHECKLIST.md`.
 - Release readiness report added in `docs/release_readiness_report.md`.
 - Bug triage log initialized in `docs/critical_todo.md` with severity labels and reproduction steps.
@@ -67,6 +78,11 @@
 - Test runner now uses `scripts/run-tests.js` to run unit tests and conditionally skip E2E in WSL/headless, avoiding shell glob issues on Windows.
 - `npm run test:e2e` now routes through `scripts/run-tests.js --e2e` to share the WSL/headless skip gate.
 - Minimal unit-test coverage added for generator/helper invariants (`tests/unit/generator_helpers.test.js`) with a DOM-stub harness; `npm run test` runs unit + E2E unless auto-skipped in WSL/headless, and `npm run test:unit` runs unit tests only.
+- Unit-test scaffolding added for XP, settings persistence, buffs, and character sheet rendering with fixtures/mocks under `tests/unit/`.
+- Buff catalog config added in `buffs_config.js` with HU names, descriptions, icon tokens, and unlock rules.
+- Buff state persistence added: progress now stores unlocked/active buffs, exposes them in progress summary, and accepts buff state saves via IPC.
+- Buff HUD rendering now uses the buff catalog + progress summary state, renders SVG icon tokens, and provides Hungarian tooltips; icon mapping scaffolds live in `buffs_icons.js` with unit/E2E scaffolding updated.
+- Settings persistence unit/integration tests added for defaults, save/cancel flow, and persistence round-trips.
 - Test/practice generators now build expanded test pools (sampling from `TEST_QUESTION_COUNT` + extra variety per difficulty) and use longer anti-repeat windows in practice sessions (history 12, retry 24) to reduce repetition.
 
 ## Partial or Unverified
@@ -83,6 +99,26 @@
 - Desktop v1: complete Hungarian localization sweep and stabilize test strategy across Windows/WSL.
 
 ## Recent Tests
+- 2026-01-25: Not run (automation policy: mobile module tab layout E2E smoke test).
+- 2026-01-25: Not run (automation policy: compact landscape header + Quest Log orientation tweaks).
+- 2026-01-25: Not run (automation policy: mobile touch target audit update for module pagination dots).
+- 2026-01-25: Not run (automation policy: module tab wrapping/scrolling fix and iframe overflow guards).
+- 2026-01-25: Not run (automation policy: mobile Quest Log drawer/header stacking polish).
+- 2026-01-25: Not run (automation policy: responsive breakpoint re-validation in `style.css`).
+- 2026-01-25: Not run (automation policy: Hungarian consistency sweep in app shell/settings/results/character sheet/tooltips/toasts).
+- 2026-01-25: Not run (automation policy: buff HUD rendering + icon mapping scaffolding).
+- 2026-01-25: Not run (automation policy: buff persistence update).
+- 2026-01-25: Not run (automation policy: buff catalog config module).
+- 2026-01-25: Not run (automation policy: character sheet UX update).
+- 2026-01-25: Not run (automation policy: character sheet layout adjustments only).
+- 2026-01-25: Not run (automation policy: settings persistence unit/integration tests added).
+- 2026-01-25: Not run (automation policy: settings categories wired to persistence; tests not executed).
+- 2026-01-25: Not run (automation policy: XP unit tests added; tests not executed).
+- 2026-01-25: Not run (automation policy: XP cap/clamp update; tests not executed).
+- 2026-01-25: Not run (automation policy: XP audit script update; tests not executed).
+- 2026-01-25: Not run (automation policy: XP audit docs only; tests not executed).
+- 2026-01-25: Not run (automation policy: tests are not executed automatically; E2E scaffolding + test IDs only).
+- 2026-01-25: Not run (unit-test scaffolding added; automation policy: tests are not executed automatically).
 - 2026-01-25: Not run (automation policy: tests are not executed automatically).
 - 2026-01-25 (WSL2): `npm run test` — pass (E2E skipped by WSL gate; unit ok).
 - 2026-01-25 (WSL2): `npm run test:e2e` — pass (WSL skip gate).

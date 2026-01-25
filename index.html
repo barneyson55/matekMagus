@@ -30,10 +30,7 @@
             </div>
             <div class="header-main">
                 <div class="header-top">
-                    <div class="buffs" aria-label="Aktív buffok">
-                        <span class="buff-icon" title="Fókusz" aria-hidden="true"></span>
-                        <span class="buff-icon" title="Kitartás" aria-hidden="true"></span>
-                    </div>
+                    <div class="buffs" aria-label="Buffok" data-testid="buffs-bar"></div>
                     <div class="app-title">MatekMester</div>
                     <div class="player-panel">
                         <button id="xp-level-label" class="player-level" type="button" aria-label="Karakterlap">Lv. 1</button>
@@ -525,45 +522,45 @@
     <div class="achievement-toast-layer" id="achievement-toast-layer" aria-live="polite" aria-atomic="false"></div>
     </div>
 
-    <button class="settings-fab" id="settings-fab" type="button" aria-haspopup="dialog" aria-controls="settings-overlay" aria-label="Beállítások">
+    <button class="settings-fab" id="settings-fab" type="button" aria-haspopup="dialog" aria-controls="settings-overlay" aria-label="Beállítások" data-testid="settings-open">
         <span class="settings-fab-icon" aria-hidden="true">⚙</span>
     </button>
 
-    <div class="settings-overlay is-hidden" id="settings-overlay" aria-hidden="true">
-        <div class="settings-panel" id="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div class="settings-overlay is-hidden" id="settings-overlay" aria-hidden="true" data-testid="settings-overlay">
+        <div class="settings-panel" id="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title" data-testid="settings-panel">
             <div class="settings-header">
                 <h2 id="settings-title">Beállítások</h2>
-                <button class="icon-button settings-close" id="settings-close" type="button" aria-label="Bezárás">✕</button>
+                <button class="icon-button settings-close" id="settings-close" type="button" aria-label="Bezárás" data-testid="settings-close">✕</button>
             </div>
             <div class="settings-body">
-                <nav class="settings-categories" aria-label="Beállítás kategóriák">
-                    <button class="settings-tab is-active" data-section="theme" type="button">Megjelenés &amp; Téma</button>
-                    <button class="settings-tab" data-section="ui" type="button">UI &amp; Hozzáférhetőség</button>
-                    <button class="settings-tab" data-section="sound" type="button">Hang &amp; Visszajelzés</button>
-                    <button class="settings-tab" data-section="gameplay" type="button">Játékélmény</button>
+                <nav class="settings-categories" aria-label="Beállítás kategóriák" data-testid="settings-tabs">
+                    <button class="settings-tab is-active" data-section="theme" type="button" data-testid="settings-tab-theme">Skin &amp; Téma</button>
+                    <button class="settings-tab" data-section="ui" type="button" data-testid="settings-tab-ui">Felhasználói felület &amp; Hozzáférhetőség</button>
+                    <button class="settings-tab" data-section="sound" type="button" data-testid="settings-tab-sound">Hang &amp; Visszajelzések</button>
+                    <button class="settings-tab" data-section="gameplay" type="button" data-testid="settings-tab-gameplay">Játékélmény &amp; Segítség</button>
                 </nav>
                 <div class="settings-content">
-                    <section class="settings-section is-active" data-section="theme">
-                        <h3>Megjelenés &amp; Téma</h3>
+                    <section class="settings-section is-active" data-section="theme" data-testid="settings-section-theme">
+                        <h3>Skin &amp; Téma</h3>
                         <p class="settings-hint">Válassz alap témát, majd finomhangold az egyéni színeket vagy háttérképet.</p>
-                        <div class="settings-theme-grid" role="list">
-                            <button class="theme-card" type="button" data-theme="pergamen" role="listitem">
+                        <div class="settings-theme-grid" role="list" data-testid="settings-theme-grid">
+                            <button class="theme-card" type="button" data-theme="pergamen" role="listitem" data-testid="theme-card-pergamen">
                                 <h4>Pergamen</h4>
                                 <p>Meleg, klasszikus hangulat.</p>
                             </button>
-                            <button class="theme-card" type="button" data-theme="galaxis" role="listitem">
+                            <button class="theme-card" type="button" data-theme="galaxis" role="listitem" data-testid="theme-card-galaxis">
                                 <h4>Galaxis</h4>
                                 <p>Mély kék, kozmikus akcentus.</p>
                             </button>
-                            <button class="theme-card" type="button" data-theme="futurisztikus" role="listitem">
+                            <button class="theme-card" type="button" data-theme="futurisztikus" role="listitem" data-testid="theme-card-futurisztikus">
                                 <h4>Futurisztikus</h4>
                                 <p>Letisztult, neon jelleg.</p>
                             </button>
-                            <button class="theme-card" type="button" data-theme="dark" role="listitem">
+                            <button class="theme-card" type="button" data-theme="dark" role="listitem" data-testid="theme-card-dark">
                                 <h4>Sötét / Éjszakai</h4>
                                 <p>Alacsony fény, fókuszált tanulás.</p>
                             </button>
-                            <button class="theme-card" type="button" data-theme="custom" role="listitem">
+                            <button class="theme-card" type="button" data-theme="custom" role="listitem" data-testid="theme-card-custom">
                                 <h4>Egyéni</h4>
                                 <p>Saját színbeállításokkal.</p>
                             </button>
@@ -631,8 +628,8 @@
                         </div>
                     </section>
 
-                    <section class="settings-section" data-section="ui">
-                        <h3>UI &amp; Hozzáférhetőség</h3>
+                    <section class="settings-section" data-section="ui" data-testid="settings-section-ui">
+                        <h3>Felhasználói felület &amp; Hozzáférhetőség</h3>
                         <div class="settings-group">
                             <div class="settings-field">
                                 <label for="setting-font-scale">Betűméret</label>
@@ -643,31 +640,91 @@
                                 </select>
                             </div>
                             <div class="settings-field">
+                                <label for="setting-contrast-mode">Kontraszt mód</label>
+                                <select id="setting-contrast-mode">
+                                    <option value="normal">Normál</option>
+                                    <option value="high">Magas kontraszt</option>
+                                </select>
+                            </div>
+                            <div class="settings-field">
                                 <label for="setting-reduce-motion">Animációk csökkentése</label>
                                 <input type="checkbox" id="setting-reduce-motion">
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-shortcut-hints">Billentyűparancsok jelzése</label>
+                                <select id="setting-shortcut-hints">
+                                    <option value="show">Megjelenítve</option>
+                                    <option value="hide">Rejtve</option>
+                                </select>
                             </div>
                         </div>
                         <p class="settings-hint">A változások mentés után érvényesülnek.</p>
                     </section>
 
-                    <section class="settings-section" data-section="sound">
-                        <h3>Hang &amp; Visszajelzés</h3>
-                        <p class="settings-hint">Hamarosan elérhető.</p>
+                    <section class="settings-section" data-section="sound" data-testid="settings-section-sound">
+                        <h3>Hang &amp; Visszajelzések</h3>
+                        <div class="settings-group">
+                            <div class="settings-field">
+                                <label for="setting-sound-enabled">Hangok engedélyezése</label>
+                                <input type="checkbox" id="setting-sound-enabled">
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-feedback-level">Visszajelzés részletessége</label>
+                                <select id="setting-feedback-level">
+                                    <option value="minimal">Minimális</option>
+                                    <option value="normal">Normál</option>
+                                    <option value="detailed">Részletes</option>
+                                </select>
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-notification-duration">Értesítések hossza</label>
+                                <select id="setting-notification-duration">
+                                    <option value="short">Rövid</option>
+                                    <option value="normal">Normál</option>
+                                    <option value="long">Hosszú</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="settings-hint">A hangos és vizuális jelzéseket külön szabályozhatod.</p>
                     </section>
 
-                    <section class="settings-section" data-section="gameplay">
+                    <section class="settings-section" data-section="gameplay" data-testid="settings-section-gameplay">
                         <h3>Játékélmény &amp; Segítség</h3>
-                        <p class="settings-hint">Hamarosan elérhető.</p>
+                        <div class="settings-group">
+                            <div class="settings-field">
+                                <label for="setting-hint-mode">Tippek és magyarázatok</label>
+                                <select id="setting-hint-mode">
+                                    <option value="off">Kikapcsolva</option>
+                                    <option value="practice">Csak gyakorlásban</option>
+                                    <option value="always">Mindenhol</option>
+                                </select>
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-visual-aids">Vizuális segítségek</label>
+                                <input type="checkbox" id="setting-visual-aids">
+                            </div>
+                            <div class="settings-field">
+                                <label for="setting-practice-difficulty">Gyakorlás alapértelmezett nehézségi szint</label>
+                                <select id="setting-practice-difficulty">
+                                    <option value="last">Legutóbb használt</option>
+                                    <option value="easy">Könnyű</option>
+                                    <option value="normal">Normál</option>
+                                    <option value="hard">Nehéz</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="settings-hint">A tippek nem befolyásolják az értékelést, csak a segítség szintjét.</p>
                     </section>
                 </div>
             </div>
             <div class="settings-footer">
-                <button class="settings-btn secondary" id="settings-cancel" type="button">Mégse</button>
-                <button class="settings-btn primary" id="settings-save" type="button">Mentés</button>
+                <button class="settings-btn secondary" id="settings-cancel" type="button" data-testid="settings-cancel">Mégse</button>
+                <button class="settings-btn primary" id="settings-save" type="button" data-testid="settings-save">Mentés</button>
             </div>
         </div>
     </div>
 
+    <script src="buffs_icons.js"></script>
     <script>
         const allLinks = document.querySelectorAll('.module-link');
         const contentLinks = Array.from(allLinks).filter(link => !link.classList.contains('results-btn') && !link.classList.contains('achievements-btn'));
@@ -682,6 +739,7 @@
         const xpBar = document.getElementById('xp-bar');
         const xpBarFill = document.getElementById('xp-bar-fill');
         const xpProgressText = document.getElementById('xp-progress-text');
+        const buffBar = document.querySelector('[data-testid="buffs-bar"]');
         const NUMBER_FORMATTER = new Intl.NumberFormat('hu-HU', { maximumFractionDigits: 2 });
         const playerAvatar = document.getElementById('player-avatar');
         const questToggle = document.getElementById('quest-toggle');
@@ -716,7 +774,15 @@
         const settingBgFile = document.getElementById('setting-bg-file');
         const settingBgPreview = document.getElementById('setting-bg-preview');
         const settingFontScale = document.getElementById('setting-font-scale');
+        const settingContrastMode = document.getElementById('setting-contrast-mode');
         const settingReduceMotion = document.getElementById('setting-reduce-motion');
+        const settingShortcutHints = document.getElementById('setting-shortcut-hints');
+        const settingSoundEnabled = document.getElementById('setting-sound-enabled');
+        const settingFeedbackLevel = document.getElementById('setting-feedback-level');
+        const settingNotificationDuration = document.getElementById('setting-notification-duration');
+        const settingHintMode = document.getElementById('setting-hint-mode');
+        const settingVisualAids = document.getElementById('setting-visual-aids');
+        const settingPracticeDifficulty = document.getElementById('setting-practice-difficulty');
         const mobileQuestMedia = window.matchMedia('(max-width: 767px)');
         const QUEST_STORAGE_KEY = 'matek-mester-quests-v1';
         const QUEST_VERSION = 2;
@@ -727,9 +793,9 @@
             COMPLETED: 'COMPLETED'
         };
         const QUEST_STATUS_LABELS = {
-            NOT_ACCEPTED: 'Még nem elfogadott küldetés',
-            ACTIVE: 'Aktív küldetés',
-            COMPLETED: 'Kimaxolt küldetés'
+            NOT_ACCEPTED: 'Még nem elfogadott küldetés.',
+            ACTIVE: 'Aktív küldetés.',
+            COMPLETED: 'Kimaxolt küldetés.'
         };
         const QUEST_STATUS_ORDER = {
             NOT_ACCEPTED: 0,
@@ -760,7 +826,7 @@
         let seededRandomSeed = null;
         const ACHIEVEMENT_CATEGORY_LABELS = {
             performance: 'Teljesítmény',
-            difficulty: 'Nehézség',
+            difficulty: 'Nehézségi szint',
             structure: 'Struktúra',
             special: 'Speciális'
         };
@@ -915,6 +981,8 @@
             }
         };
         let progressData = {};
+        let buffCatalog = [];
+        let buffCatalogById = {};
         let questState = loadQuestState();
         let currentTopicId = null;
         let lockedTopicId = null;
@@ -933,8 +1001,16 @@
                 contentBgImage: 'none',
                 avatarImage: '',
                 moduleCardOpacity: 1,
+                contrastMode: 'normal',
                 reduceMotion: false,
-                fontScale: 100
+                fontScale: 100,
+                shortcutHints: 'show',
+                soundEnabled: true,
+                feedbackLevel: 'normal',
+                notificationDuration: 'normal',
+                hintMode: 'practice',
+                visualAids: true,
+                practiceDifficulty: 'last'
             };
         }
         function clampOverlayAlpha(value) {
@@ -1056,6 +1132,24 @@
         function normalizeSettings(settings) {
             const base = getDefaultSettings();
             const merged = { ...base, ...(settings || {}) };
+            merged.fontScale = Number.isFinite(Number(merged.fontScale)) ? Number(merged.fontScale) : base.fontScale;
+            merged.reduceMotion = typeof merged.reduceMotion === 'boolean' ? merged.reduceMotion : base.reduceMotion;
+            merged.contrastMode = merged.contrastMode === 'high' ? 'high' : base.contrastMode;
+            merged.shortcutHints = merged.shortcutHints === 'hide' ? 'hide' : base.shortcutHints;
+            merged.soundEnabled = typeof merged.soundEnabled === 'boolean' ? merged.soundEnabled : base.soundEnabled;
+            merged.feedbackLevel = ['minimal', 'normal', 'detailed'].includes(merged.feedbackLevel)
+                ? merged.feedbackLevel
+                : base.feedbackLevel;
+            merged.notificationDuration = ['short', 'normal', 'long'].includes(merged.notificationDuration)
+                ? merged.notificationDuration
+                : base.notificationDuration;
+            merged.hintMode = ['off', 'practice', 'always'].includes(merged.hintMode)
+                ? merged.hintMode
+                : base.hintMode;
+            merged.visualAids = typeof merged.visualAids === 'boolean' ? merged.visualAids : base.visualAids;
+            merged.practiceDifficulty = ['last', 'easy', 'normal', 'hard'].includes(merged.practiceDifficulty)
+                ? merged.practiceDifficulty
+                : base.practiceDifficulty;
             merged.contentBgImage = merged.contentBgImage || 'none';
             merged.avatarImage = merged.avatarImage || '';
             merged.contentOverlay = normalizeOverlayColor(merged.contentOverlay);
@@ -1100,6 +1194,7 @@
             }
             root.style.fontSize = normalized.fontScale ? `${normalized.fontScale}%` : '';
             document.body.classList.toggle('reduce-motion', Boolean(normalized.reduceMotion));
+            document.body.classList.toggle('high-contrast', normalized.contrastMode === 'high');
             applySettingsToIframe(normalized);
         }
 
@@ -1129,6 +1224,7 @@
                 doc.body.style.backgroundColor = 'transparent';
                 doc.body.style.backgroundImage = 'none';
                 doc.body.classList.toggle('reduce-motion', Boolean(normalized.reduceMotion));
+                doc.body.classList.toggle('high-contrast', normalized.contrastMode === 'high');
             }
             ensureModuleResponsiveStyles(doc);
         }
@@ -1172,6 +1268,9 @@ button {
     max-width: 100%;
 }
 @media (max-width: 767px) {
+    :root {
+        --touch-target-size: 44px;
+    }
     html,
     body {
         max-width: 100%;
@@ -1209,6 +1308,43 @@ button {
         font-size: 0.95rem;
         text-align: center;
     }
+    #pagination-dots {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+    .dot {
+        width: var(--touch-target-size, 44px);
+        height: var(--touch-target-size, 44px);
+        border-radius: 999px;
+        background: transparent;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .dot::before {
+        content: '';
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: var(--border-color);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+    .dot.answered::before {
+        background-color: var(--success);
+    }
+    .dot.answered {
+        background: transparent;
+    }
+    .dot.current {
+        background: transparent;
+        box-shadow: none;
+        transform: none;
+    }
+    .dot.current::before {
+        box-shadow: 0 0 0 4px var(--brand-light, rgba(74, 85, 162, 0.35));
+        transform: scale(1.1);
+    }
     button,
     [type="button"],
     [type="submit"],
@@ -1219,19 +1355,19 @@ button {
     .difficulty-btn,
     .option-btn,
     .answer-btn {
-        min-height: 44px;
-        min-width: 44px;
+        min-height: var(--touch-target-size, 44px);
+        min-width: var(--touch-target-size, 44px);
     }
     input,
     select,
     textarea {
-        min-height: 44px;
+        min-height: var(--touch-target-size, 44px);
     }
     label {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        min-height: 44px;
+        min-height: var(--touch-target-size, 44px);
     }
     label input[type="checkbox"],
     label input[type="radio"] {
@@ -1255,6 +1391,10 @@ button {
     }
 }
 @media (max-width: 480px) {
+    html,
+    body {
+        overflow-x: hidden;
+    }
     body {
         padding: 22px 16px;
     }
@@ -1281,13 +1421,17 @@ button {
         padding: 18px;
     }
     .tab-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 6px;
         overflow-x: hidden;
+        padding-bottom: 0;
+        width: 100%;
     }
     .tab-button {
-        flex: 1 1 45%;
-        padding: 9px 12px;
+        padding: 9px 10px;
         font-size: 0.9rem;
+        width: 100%;
     }
     .grade-badge {
         width: 48px;
@@ -1341,7 +1485,15 @@ button {
                 settingModuleOpacityValue.textContent = Number(settings.moduleCardOpacity ?? 1).toFixed(2);
             }
             if (settingFontScale) settingFontScale.value = String(settings.fontScale || 100);
+            if (settingContrastMode) settingContrastMode.value = settings.contrastMode || 'normal';
             if (settingReduceMotion) settingReduceMotion.checked = Boolean(settings.reduceMotion);
+            if (settingShortcutHints) settingShortcutHints.value = settings.shortcutHints || 'show';
+            if (settingSoundEnabled) settingSoundEnabled.checked = Boolean(settings.soundEnabled);
+            if (settingFeedbackLevel) settingFeedbackLevel.value = settings.feedbackLevel || 'normal';
+            if (settingNotificationDuration) settingNotificationDuration.value = settings.notificationDuration || 'normal';
+            if (settingHintMode) settingHintMode.value = settings.hintMode || 'practice';
+            if (settingVisualAids) settingVisualAids.checked = Boolean(settings.visualAids);
+            if (settingPracticeDifficulty) settingPracticeDifficulty.value = settings.practiceDifficulty || 'last';
             if (settingAvatarPreview) {
                 if (settings.avatarImage) {
                     settingAvatarPreview.style.backgroundImage = settings.avatarImage;
@@ -2130,9 +2282,49 @@ button {
                 updateSettingsDraft({ fontScale: Number.isNaN(value) ? 100 : value });
             });
         }
+        if (settingContrastMode) {
+            settingContrastMode.addEventListener('change', (event) => {
+                updateSettingsDraft({ contrastMode: event.target.value });
+            });
+        }
         if (settingReduceMotion) {
             settingReduceMotion.addEventListener('change', (event) => {
                 updateSettingsDraft({ reduceMotion: Boolean(event.target.checked) });
+            });
+        }
+        if (settingShortcutHints) {
+            settingShortcutHints.addEventListener('change', (event) => {
+                updateSettingsDraft({ shortcutHints: event.target.value });
+            });
+        }
+        if (settingSoundEnabled) {
+            settingSoundEnabled.addEventListener('change', (event) => {
+                updateSettingsDraft({ soundEnabled: Boolean(event.target.checked) });
+            });
+        }
+        if (settingFeedbackLevel) {
+            settingFeedbackLevel.addEventListener('change', (event) => {
+                updateSettingsDraft({ feedbackLevel: event.target.value });
+            });
+        }
+        if (settingNotificationDuration) {
+            settingNotificationDuration.addEventListener('change', (event) => {
+                updateSettingsDraft({ notificationDuration: event.target.value });
+            });
+        }
+        if (settingHintMode) {
+            settingHintMode.addEventListener('change', (event) => {
+                updateSettingsDraft({ hintMode: event.target.value });
+            });
+        }
+        if (settingVisualAids) {
+            settingVisualAids.addEventListener('change', (event) => {
+                updateSettingsDraft({ visualAids: Boolean(event.target.checked) });
+            });
+        }
+        if (settingPracticeDifficulty) {
+            settingPracticeDifficulty.addEventListener('change', (event) => {
+                updateSettingsDraft({ practiceDifficulty: event.target.value });
             });
         }
         if (settingBgFile) {
@@ -2344,6 +2536,149 @@ button {
             }
         });
 
+        function normalizeBuffCatalog(raw) {
+            if (!Array.isArray(raw)) return [];
+            return raw.filter((buff) => buff && typeof buff.id === 'string');
+        }
+
+        function setBuffCatalog(raw) {
+            buffCatalog = normalizeBuffCatalog(raw);
+            buffCatalogById = {};
+            buffCatalog.forEach((buff) => {
+                buffCatalogById[buff.id] = buff;
+            });
+        }
+
+        async function ensureBuffCatalog(summary) {
+            if (buffCatalog.length) return buffCatalog;
+            if (summary && Array.isArray(summary.buffCatalog)) {
+                setBuffCatalog(summary.buffCatalog);
+                return buffCatalog;
+            }
+            if (window.electronAPI && typeof window.electronAPI.getBuffCatalog === 'function') {
+                try {
+                    const maybeCatalog = window.electronAPI.getBuffCatalog();
+                    const catalog = typeof maybeCatalog?.then === 'function'
+                        ? await maybeCatalog
+                        : maybeCatalog;
+                    setBuffCatalog(catalog);
+                } catch (error) {
+                    console.warn('Nem sikerült betölteni a buff katalógust:', error);
+                }
+            }
+            return buffCatalog;
+        }
+
+        function getBuffCatalogIndex(id) {
+            const index = buffCatalog.findIndex((buff) => buff.id === id);
+            return index === -1 ? Number.MAX_SAFE_INTEGER : index;
+        }
+
+        function getBuffIconSvg(iconToken) {
+            if (window.BUFF_ICONS && typeof window.BUFF_ICONS.getIconSvg === 'function') {
+                return window.BUFF_ICONS.getIconSvg(iconToken);
+            }
+            return '';
+        }
+
+        function getBuffIconLabel(iconToken) {
+            if (window.BUFF_ICONS && typeof window.BUFF_ICONS.getIconLabel === 'function') {
+                return window.BUFF_ICONS.getIconLabel(iconToken);
+            }
+            return '?';
+        }
+
+        function buildBuffTooltip(buff) {
+            const name = buff && buff.nameHu ? buff.nameHu : 'Ismeretlen buff';
+            const description = buff && buff.description ? buff.description : '';
+            return description ? `${name} - ${description}` : name;
+        }
+
+        function buildBuffIconElement(buff, isActive) {
+            const icon = document.createElement('span');
+            icon.className = 'buff-icon';
+            icon.dataset.buffId = buff.id || 'unknown';
+            if (buff.iconToken) icon.dataset.icon = buff.iconToken;
+            icon.dataset.state = isActive ? 'active' : 'inactive';
+            const tooltip = buildBuffTooltip(buff);
+            icon.setAttribute('title', tooltip);
+            icon.setAttribute('role', 'img');
+            icon.setAttribute('aria-label', tooltip);
+            icon.setAttribute('data-testid', `buff-icon-${buff.id || 'unknown'}`);
+            const svgMarkup = getBuffIconSvg(buff.iconToken);
+            if (svgMarkup) {
+                icon.innerHTML = svgMarkup;
+            } else {
+                const glyph = document.createElement('span');
+                glyph.className = 'buff-icon__glyph';
+                glyph.textContent = getBuffIconLabel(buff.iconToken);
+                icon.appendChild(glyph);
+            }
+            return icon;
+        }
+
+        function parseBuffId(entry) {
+            if (!entry) return null;
+            if (typeof entry === 'string') return entry;
+            if (typeof entry.id === 'string') return entry.id;
+            return null;
+        }
+
+        function buildActiveBuffMap(activeList) {
+            const map = new Map();
+            activeList.forEach((entry) => {
+                const id = parseBuffId(entry);
+                if (!id) return;
+                map.set(id, entry && typeof entry === 'object' ? entry : { id });
+            });
+            return map;
+        }
+
+        async function renderBuffIcons(summary) {
+            if (!buffBar) return;
+            await ensureBuffCatalog(summary);
+            const buffsState = summary && summary.buffs ? summary.buffs : {};
+            const unlocked = buffsState && typeof buffsState.unlocked === 'object'
+                ? buffsState.unlocked
+                : {};
+            const activeList = Array.isArray(buffsState.active) ? buffsState.active : [];
+            const activeMap = buildActiveBuffMap(activeList);
+            const activeIds = Array.from(activeMap.keys());
+            let displayIds = Object.keys(unlocked || {});
+            if (!displayIds.length) {
+                displayIds = activeIds;
+            } else {
+                displayIds.sort((first, second) => {
+                    const firstRecord = unlocked[first] || {};
+                    const secondRecord = unlocked[second] || {};
+                    const firstTime = typeof firstRecord.unlockedAt === 'string' ? firstRecord.unlockedAt : '';
+                    const secondTime = typeof secondRecord.unlockedAt === 'string' ? secondRecord.unlockedAt : '';
+                    if (firstTime && secondTime) {
+                        const diff = new Date(firstTime) - new Date(secondTime);
+                        if (!Number.isNaN(diff) && diff !== 0) return diff;
+                    }
+                    if (firstTime && !secondTime) return -1;
+                    if (!firstTime && secondTime) return 1;
+                    return getBuffCatalogIndex(first) - getBuffCatalogIndex(second);
+                });
+            }
+
+            buffBar.innerHTML = '';
+            if (!displayIds.length) {
+                buffBar.dataset.empty = 'true';
+                return;
+            }
+            buffBar.dataset.empty = 'false';
+
+            const fragment = document.createDocumentFragment();
+            displayIds.forEach((id) => {
+                const buff = buffCatalogById[id] || { id, nameHu: 'Ismeretlen buff', description: '', iconToken: '' };
+                const isActive = activeMap.has(id);
+                fragment.appendChild(buildBuffIconElement(buff, isActive));
+            });
+            buffBar.appendChild(fragment);
+        }
+
         async function refreshProgressSummary() {
             if (!window.electronAPI) return;
             try {
@@ -2352,6 +2687,7 @@ button {
                 updateXpWidget(summary);
                 handleAchievementUpdates(summary);
                 syncQuestStateFromSummary(summary.quests);
+                await renderBuffIcons(summary);
                 if (summary.completions) {
                     hydrateProgressData(summary.completions);
                 }
@@ -2359,6 +2695,8 @@ button {
                 console.error('Nem siker&#252;lt bet&#246;lteni az XP &#246;sszegz&#233;st:', error);
             }
         }
+
+        window.__refreshProgressSummary = refreshProgressSummary;
 
         function updateXpWidget(summary) {
             if (!summary || !summary.level) return;
@@ -2412,8 +2750,8 @@ button {
         function showAchievementToast(achievement, state) {
             if (!achievementToastLayer || !achievement) return;
             const badgeText = ACHIEVEMENT_CATEGORY_BADGES[achievement.category] || 'A';
-            const titleText = achievement.title || achievement.id || 'Achievement';
-            const description = achievement.description || '';
+            const titleText = achievement.title || achievement.nameHu || achievement.titleHu || 'Ismeretlen achievement';
+            const description = achievement.description || achievement.descriptionHu || '';
             const categoryLabel = ACHIEVEMENT_CATEGORY_LABELS[achievement.category] || 'Speciális';
             const rewardValue = Number(state && Number.isFinite(state.grantedXp)
                 ? state.grantedXp
@@ -2476,8 +2814,17 @@ button {
 
         function formatDifficultyTooltip(normalized, key, label) {
             const grade = normalized[key];
-            if (!grade) return `${label}: Nincs adat`;
+            if (!grade) return `${label}: Nincs adat.`;
             return `${label}: Jegy: ${grade}`;
+        }
+
+        function getTopicLabelText(topicId) {
+            if (!topicId) return '';
+            const link = document.querySelector(`[data-topic-id="${topicId}"]`);
+            if (!link) return '';
+            const textNode = Array.from(link.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.nodeValue.trim());
+            const label = textNode ? textNode.nodeValue.trim() : link.textContent.trim();
+            return label.replace(/\u00ad/g, '').trim();
         }
         function hydrateProgressData(completions) {
             progressData = {};
@@ -2511,7 +2858,8 @@ button {
                 let tooltipContent = "M&#233;g nincsenek eredm&#233;nyek.";
                 if (topicData) {
                     const summary = getTopicGradeSummary(topicData);
-                    tooltipContent = `<b>Eredm&#233;nyek (${topicId}):</b><br>
+                    const topicLabel = getTopicLabelText(topicId) || 'Ismeretlen témakör';
+                    tooltipContent = `<b>Eredm&#233;nyek (${topicLabel}):</b><br>
                         ${formatDifficultyTooltip(summary.normalized, 'konnyu', 'K&#246;nny&#369;')}<br>
                         ${formatDifficultyTooltip(summary.normalized, 'normal', 'Norm&#225;l')}<br>
                         ${formatDifficultyTooltip(summary.normalized, 'nehez', 'Neh&#233;z')}`;

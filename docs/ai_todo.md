@@ -2,6 +2,9 @@
 
 Last updated: 2026-01-26
 
+## BUGFIXES / HOT
+- [x] Guard test question pool fill loops to prevent renderer freezes when random generation cannot reach the target pool size (module JS + legacy HTML modules).
+
 ## DESKTOP / PC ONLY — THEORY EXPANSION (P0)
 
 Guidelines for all theory tasks:

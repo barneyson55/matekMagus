@@ -977,7 +977,7 @@
                 if (selected) questions.push(selected);
             });
 
-            while (questions.length < TEST_QUESTION_COUNT) {
+            for (let safety = 0; questions.length < TEST_QUESTION_COUNT && safety < TEST_QUESTION_COUNT * 25; safety += 1) {
                 const candidate = buildRandomQuestion(difficulty);
                 const signature = makeSignature(candidate);
                 if (isValid(candidate) && !used.has(signature)) {

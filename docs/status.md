@@ -1,6 +1,7 @@
 # Status
 
 ## Snapshot
+- Added safety bounds to module test question pool fill loops (JS + legacy HTML) to prevent renderer freezes when random generation stalls.
 - Buff system rules implemented (practice/test/quest unlocks + active states) with expanded catalog + SVG icon set; spec and asset list documented in `docs/buffs.md`.
 - Character sheet/profile views polished: list items wrap cleanly with focus states, achievements cards top-align, and results now adapt to theme settings + responsive layout tweaks.
 - Electron app: `main.js` main process, `index.html` renderer, iframe module loader.
@@ -126,6 +127,7 @@
 - Desktop v1: expand Elmélet content across all modules using `docs/THEORY_TEMPLATE.md`, then follow with XP/settings/character sheet/buff polish.
 
 ## Recent Tests
+- 2026-01-26: Not run (automation policy: module test question pool safety guard update across JS + legacy HTML modules).
 - 2026-01-26: Not run (automation policy: mobile E2E coverage expansion for Quest Log drawer + tab layout).
 - 2026-01-26: Not run (automation policy: orientation-change regression checks for selected modules).
 - 2026-01-26: Not run (automation policy: mobile module tab overflow + touch target audit).

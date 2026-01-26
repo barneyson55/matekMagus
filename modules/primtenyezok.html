@@ -911,7 +911,7 @@
         function buildTestQuestions(difficulty) {
             const questions = [];
             const used = new Set();
-            while (questions.length < TEST_QUESTION_COUNT) {
+            for (let safety = 0; questions.length < TEST_QUESTION_COUNT && safety < TEST_QUESTION_COUNT * 25; safety += 1) {
                 const candidate = buildQuestion(difficulty);
                 if (!used.has(candidate.number)) {
                     used.add(candidate.number);

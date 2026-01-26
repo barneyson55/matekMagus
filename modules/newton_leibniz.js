@@ -199,7 +199,7 @@ function buildTestQuestions(difficulty) {
     if (q) questions.push(q);
   });
 
-  while (questions.length < poolTarget) {
+  for (let safety = 0; questions.length < poolTarget && safety < poolTarget * 25; safety += 1) {
     const kind = types[randomInt(0, types.length - 1)];
     const candidate = buildQuestion(kind, difficulty);
     const signature = candidate.signature || `${kind}:${candidate.question}`;

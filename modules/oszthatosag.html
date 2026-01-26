@@ -929,7 +929,7 @@
             shuffled.slice(0, Math.min(2, shuffled.length)).forEach((divisor) => {
                 questions.push(buildDivisibilityQuestion(difficulty, divisor));
             });
-            while (questions.length < TEST_QUESTION_COUNT) {
+            for (let safety = 0; questions.length < TEST_QUESTION_COUNT && safety < TEST_QUESTION_COUNT * 25; safety += 1) {
                 const divisor = allowed[randomInt(0, allowed.length - 1)];
                 questions.push(buildDivisibilityQuestion(difficulty, divisor));
             }

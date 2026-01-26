@@ -4,6 +4,16 @@ Last reviewed: 2026-01-26 (Bug triage log initialized)
 
 ## Bug Triage Log
 
+- [RESOLVED] Renderer freeze when opening random modules (especially subtopics) due to unbounded test question pool fill loops
+  - Repro steps:
+    1. Launch the app.
+    2. Open a module and switch to Teszt (default difficulty).
+    3. In some modules, test pool fill loops can stall and freeze the UI.
+  - Expected: Module loads and UI remains responsive.
+  - Actual: Renderer hangs; clicks become unresponsive.
+  - Fix: Added safety bounds to question pool fill loops across module JS + legacy HTML modules.
+  - Notes: 2026-01-26.
+
 - [RESOLVED] Curriculum module coverage complete (Emelt core modules added; 95 of 95)
   - Repro steps:
     1. Launch the app.

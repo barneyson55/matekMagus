@@ -484,25 +484,59 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Ker&#252;leti &#233;s k&#246;z&#233;pponti sz&#246;gek</h2>
-        <p>A ker&#252;leti &#233;s k&#246;z&#233;pponti sz&#246;gek ugyanahhoz az &#237;vhez kapcsol&#243;dnak, csak m&#225;s m&#243;don m&#233;rnek.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>K&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">Ker&#252;leti sz&#246;g = k&#246;z&#233;pponti sz&#246;g / 2.</span></li>
-<li><span class="formula-line">K&#246;z&#233;pponti sz&#246;g = 2 * ker&#252;leti sz&#246;g.</span></li>
-<li><span class="formula-line">Ugyanazon &#237;vhez tartoz&#243; ker&#252;leti sz&#246;gek egyenl&#337;k.</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>Az &#237;v fokm&#233;rt&#233;ke megegyezik a k&#246;z&#233;pponti sz&#246;ggel.</li>
-<li>Ha ker&#252;leti sz&#246;get keresel, felezd a k&#246;z&#233;ppontit.</li>
-<li>Mindig fokban sz&#225;mold a sz&#246;geket.</li>
-                </ul>
-            </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A ker&#252;leti &#233;s a k&#246;z&#233;pponti sz&#246;gek ugyanahhoz az &#237;vhez tartoznak, de m&#225;shol van a cs&#250;csuk. A k&#246;z&#233;pponti sz&#246;g a k&#246;r k&#246;z&#233;ppontj&#225;ban van, a ker&#252;leti pedig a k&#246;rvonalon. A kapcsolat egyszer&#369;: a ker&#252;leti sz&#246;g fele a k&#246;z&#233;pponti sz&#246;gnek. Ezzel gyorsan kisz&#225;molhatod a hi&#225;nyz&#243; sz&#246;geket.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>K&#246;z&#233;pponti sz&#246;g:</b> cs&#250;csa a k&#246;r k&#246;z&#233;ppontja, fokm&#233;rt&#233;ke az &#237;v fokm&#233;rt&#233;ke.</li>
+            <li><b>Ker&#252;leti sz&#246;g:</b> cs&#250;csa a k&#246;r&#246;n van, ugyanahhoz az &#237;vhez tartozva fele a k&#246;z&#233;pponti sz&#246;gnek.</li>
+            <li><b>&#205;v:</b> a k&#246;r egy r&#233;sze k&#233;t pont k&#246;z&#246;tt.</li>
+            <li><b>Kapcsolat:</b> <span class="formula-line">k&#246;z&#233;pponti = 2 &#183; ker&#252;leti</span>.</li>
+            <li><b>Azonos &#237;v:</b> ugyanahhoz az &#237;vhez tartoz&#243; ker&#252;leti sz&#246;gek egyenl&#337;k.</li>
+            <li><b>Thal&#233;sz t&#233;tel:</b> &#225;tm&#233;r&#337;h&#246;z tartoz&#243; ker&#252;leti sz&#246;g <span class="formula-line">90&#176;</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; k&#246;z&#233;pponti &#8594; ker&#252;leti</h4>
+            <p>Adott: k&#246;z&#233;pponti sz&#246;g <span class="formula-line">120&#176;</span>.</p>
+            <ol>
+                <li>Ker&#252;leti sz&#246;g: <span class="formula-line">120&#176; / 2 = 60&#176;</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; ker&#252;leti &#8594; k&#246;z&#233;pponti</h4>
+            <p>Adott: ker&#252;leti sz&#246;g <span class="formula-line">35&#176;</span>.</p>
+            <ol>
+                <li>K&#246;z&#233;pponti sz&#246;g: <span class="formula-line">2 &#183; 35&#176; = 70&#176;</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat</h3>
+            <p>Rajzolj egy k&#246;rt, jel&#246;ld az <span class="formula-line">A</span> &#233;s <span class="formula-line">B</span> pontokat az &#237;ven, a k&#246;z&#233;ppontot pedig <span class="formula-line">O</span>-val. Az <span class="formula-line">AOB</span> a k&#246;z&#233;pponti sz&#246;g, m&#237;g b&#225;rmely <span class="formula-line">C</span> pont a k&#246;r&#246;n egy ker&#252;leti sz&#246;get ad: <span class="formula-line">ACB</span>. Ugyanahhoz az &#237;vhez tartoz&#243; ker&#252;leti sz&#246;gek mindig egyenl&#337;k.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Felcser&#233;led a felez&#233;s ir&#225;ny&#225;t (ker&#252;leti = fele, k&#246;z&#233;pponti = dupl&#225;ja).</li>
+                <li>Nem ugyanahhoz az &#237;vhez tartoz&#243; sz&#246;geket hasonl&#237;tasz &#246;ssze.</li>
+                <li>Fok helyett radi&#225;nban sz&#225;molsz.</li>
+                <li>&#193;tm&#233;r&#337;n&#233;l elfelejted a <span class="formula-line">90&#176;</span>-os ker&#252;leti sz&#246;get.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Ha a k&#246;z&#233;pponti sz&#246;g <span class="formula-line">80&#176;</span>, mennyi a ker&#252;leti sz&#246;g?</li>
+            <li>Ha a ker&#252;leti sz&#246;g <span class="formula-line">45&#176;</span>, mennyi a k&#246;z&#233;pponti sz&#246;g?</li>
+            <li>Mennyi a ker&#252;leti sz&#246;g &#225;tm&#233;r&#337; eset&#233;n?</li>
+            <li>Mit jelent az, hogy k&#233;t ker&#252;leti sz&#246;g ugyanahhoz az &#237;vhez tartozik?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A ker&#252;leti sz&#246;g mindig fele a k&#246;z&#233;pponti sz&#246;gnek.</li>
+            <li>Az &#237;v fokm&#233;rt&#233;ke a k&#246;z&#233;pponti sz&#246;g fokm&#233;rt&#233;ke.</li>
+            <li>&#193;tm&#233;r&#337;h&#246;z tartoz&#243; ker&#252;leti sz&#246;g der&#233;ksz&#246;g.</li>
+            <li>Ugyanahhoz az &#237;vhez tartoz&#243; ker&#252;leti sz&#246;gek egyenl&#337;k.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -542,7 +576,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -586,7 +620,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

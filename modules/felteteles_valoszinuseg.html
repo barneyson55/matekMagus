@@ -484,33 +484,72 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Felt&#233;teles val&#243;sz&#237;n&#369;s&#233;g</h2>
-        <p>Felt&#233;teles val&#243;sz&#237;n&#369;s&#233;gn&#233;l tudjuk, hogy egy esem&#233;ny m&#225;r bek&#246;vetkezett.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Felt&#233;teles val&#243;sz&#237;n&#369;s&#233;gn&#233;l egy plusz inform&#225;ci&#243;t is tudunk: p&#233;ld&#225;ul &#8222;m&#225;r p&#225;rosat dobtunk&#8221;. Ilyenkor a mintateret lesz&#369;k&#237;tj&#252;k erre a felt&#233;telre, &#233;s azon bel&#252;l sz&#225;molunk. Ez a gondolkod&#225;s sok k&#233;tl&#233;p&#233;ses feladatn&#225;l jelenik meg. A k&#233;plet egyszer&#369; ar&#225;nyt ad, csak a megfelel&#337; mintat&#233;rrel.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Felt&#233;teles val&#243;sz&#237;n&#369;s&#233;g:</b> P(A|B) = P(A &#8745; B) / P(B), ha P(B) > 0.</li>
+            <li><b>Felt&#233;tel (B):</b> az az esem&#233;ny, amir&#337;l tudjuk, hogy bek&#246;vetkezett.</li>
+            <li><b>Metszet (A &#8745; B):</b> amikor A &#233;s B egyszerre teljes&#252;l.</li>
+            <li><b>Sz&#369;k&#237;tett mintat&#233;r:</b> a sz&#225;mol&#225;s csak B-n bel&#252;l t&#246;rt&#233;nik.</li>
+            <li><b>F&#252;ggetlen esem&#233;nyek:</b> ha P(A|B) = P(A), akkor B nem befoly&#225;solja A-t.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>K&#233;plet</h3>
+            <h4>1. p&#233;lda &#8211; kockadob&#225;s felt&#233;tellel</h4>
+            <p>Mi a val&#243;sz&#237;n&#369;s&#233;ge annak, hogy 4-est dobunk, ha tudjuk, hogy p&#225;ros sz&#225;m j&#246;tt?</p>
+            <ol>
+                <li>A felt&#233;tel miatt a mintat&#233;r: {2, 4, 6}.</li>
+                <li>Kedvez&#337;: {4}, ez&#233;rt 1 kedvez&#337; eset.</li>
+                <li>P = 1/3.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; urn&#225;s h&#250;z&#225;s</h4>
+            <p>Egy dobozban 3 piros &#233;s 2 k&#233;k goly&#243; van. K&#233;t goly&#243;t h&#250;zunk visszatev&#233;s n&#233;lk&#252;l. Mi a P(m&#225;sodik piros | els&#337; piros)?</p>
+            <ol>
+                <li>Ha az els&#337; piros, marad 2 piros &#233;s 2 k&#233;k: &#246;sszesen 4.</li>
+                <li>Kedvez&#337;: 2 piros.</li>
+                <li>P = 2/4 = 1/2.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (sz&#369;k&#237;tett mintat&#233;r)</h3>
+            <svg viewBox="0 0 240 140" style="width: 100%; max-width: 280px; height: auto; display: block; margin: 10px 0;">
+                <circle cx="90" cy="70" r="55" fill="rgba(160,191,224,0.25)" stroke="#4A55A2" stroke-width="2" />
+                <circle cx="150" cy="70" r="55" fill="rgba(74,85,162,0.18)" stroke="#4A55A2" stroke-width="2" />
+                <text x="65" y="75" font-size="14">B</text>
+                <text x="165" y="75" font-size="14">A</text>
+                <text x="112" y="75" font-size="12">A&#8745;B</text>
+            </svg>
+            <p class="muted">A felt&#233;tel B-re sz&#369;k&#237;t, azon bel&#252;l n&#233;zz&#252;k az A-val k&#246;z&#246;s r&#233;szt.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li>P(A|B) = P(A&#8745;B) / P(B).</li>
-<li>P(B) > 0.</li>
-<li>A mintat&#233;r B-re sz&#369;k&#252;l.</li>
+                <li>A teljes mintat&#233;rrel osztasz, nem a felt&#233;tel szerinti r&#233;sszel.</li>
+                <li>Elfelejted, hogy P(B) nem lehet 0.</li>
+                <li>Automatikusan f&#252;ggetlennek tekinted az esem&#233;nyeket.</li>
+                <li>Nem sz&#225;molod meg j&#243;l a metszetet (A &#8745; B).</li>
+                <li>&#214;sszekevered a P(A|B) &#233;s a P(B|A) &#233;rt&#233;keket.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>F&#252;ggetlens&#233;g</h3>
-                <ul>
-                    <li>Ha A &#233;s B f&#252;ggetlen: P(A|B) = P(A).</li>
-<li>Ellen&#337;rizd a felt&#233;telt.</li>
-<li>Fa-diagram seg&#237;t.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Gyakori esetek</h3>
-                <ul>
-                    <li>Urn&#225;s h&#250;z&#225;s visszatev&#233;s n&#233;lk&#252;l.</li>
-<li>Kockadob&#225;s felt&#233;tellel.</li>
-<li>K&#233;tl&#233;p&#233;ses k&#237;s&#233;rletek.</li>
-                </ul>
-            </div>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi a P(6-os | p&#225;ros) egy kockadob&#225;sn&#225;l?</li>
+            <li>Mit jelent az, hogy &#8222;felt&#233;tel&#8221;?</li>
+            <li>Mikor mondjuk, hogy k&#233;t esem&#233;ny f&#252;ggetlen?</li>
+            <li>Egy dobozban 4 piros, 1 k&#233;k. Mi a P(k&#233;k | nem piros)?</li>
+            <li>Mi&#233;rt nem oszthatunk P(B) = 0 eset&#233;n?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Felt&#233;teles val&#243;sz&#237;n&#369;s&#233;g: P(A|B) = P(A &#8745; B) / P(B).</li>
+            <li>A felt&#233;tel lesz&#369;k&#237;ti a mintateret.</li>
+            <li>F&#252;ggetlens&#233;gn&#233;l P(A|B) = P(A).</li>
+            <li>Mindig sz&#225;mold meg k&#252;l&#246;n a metszetet.</li>
+            <li>Csak akkor sz&#225;molhat&#243;, ha P(B) > 0.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -550,7 +589,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -594,7 +633,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

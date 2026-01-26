@@ -484,25 +484,60 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>K&#246;z&#233;ppontos hasonl&#243;s&#225;g</h2>
-        <p>Hasonl&#243;s&#225;gn&#225;l minden hossz k-val, minden ter&#252;let k^2-tel v&#225;ltozik.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>K&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">Hosszok ar&#225;nya: k.</span></li>
-<li><span class="formula-line">Ter&#252;letek ar&#225;nya: k^2.</span></li>
-<li><span class="formula-line">k = &#250;j / eredeti.</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>El&#337;sz&#246;r a k ar&#225;nyt keresd.</li>
-<li>Ter&#252;letn&#233;l k&#233;tszeres hat&#225;s.</li>
-<li>k &gt; 1: nagy&#237;t&#225;s, 0 &lt; k &lt; 1: kicsiny&#237;t&#233;s.</li>
-                </ul>
-            </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Hasonl&#243;s&#225;gn&#225;l az alakzat form&#225;ja megmarad, csak a m&#233;rete v&#225;ltozik. Ez t&#233;rk&#233;pek, makettek &#233;s ar&#225;nyos rajzok alapja. A l&#233;nyeg a hasonl&#243;s&#225;gi ar&#225;ny <span class="formula-line">k</span>, ami megmondja, h&#225;nyszoros&#225;ra n&#337; vagy cs&#246;kken az alakzat. Ha ezt tudod, a hosszakat &#233;s ter&#252;leteket gyorsan kisz&#225;molod.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Hasonl&#243; alakzatok:</b> a megfelel&#337; sz&#246;gek egyenl&#337;k, a megfelel&#337; oldalak ar&#225;nya &#225;lland&#243;.</li>
+            <li><b>Hasonl&#243;s&#225;gi ar&#225;ny:</b> <span class="formula-line">k = &#250;j / eredeti</span>.</li>
+            <li><b>Hosszar&#225;ny:</b> minden hossz <span class="formula-line">k</span>-szoros&#225;ra v&#225;ltozik.</li>
+            <li><b>Ker&#252;letar&#225;ny:</b> szint&#233;n <span class="formula-line">k</span>.</li>
+            <li><b>Ter&#252;letar&#225;ny:</b> <span class="formula-line">k^2</span>.</li>
+            <li><b>&#201;rtelmez&#233;s:</b> <span class="formula-line">k &gt; 1</span> nagy&#237;t&#225;s, <span class="formula-line">0 &lt; k &lt; 1</span> kicsiny&#237;t&#233;s.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; hosszok sk&#225;l&#225;z&#225;sa</h4>
+            <p>Adott: h&#225;romsz&#246;g oldalai <span class="formula-line">3, 4, 5</span>, hasonl&#243;s&#225;gi ar&#225;ny <span class="formula-line">k = 2</span>.</p>
+            <ol>
+                <li>&#218;j oldalak: <span class="formula-line">3&#183;2 = 6</span>, <span class="formula-line">4&#183;2 = 8</span>, <span class="formula-line">5&#183;2 = 10</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; hi&#225;nyz&#243; oldal</h4>
+            <p>Adott: megfelel&#337; oldalak <span class="formula-line">5 cm</span> &#233;s <span class="formula-line">8 cm</span>.</p>
+            <ol>
+                <li>Hasonl&#243;s&#225;gi ar&#225;ny: <span class="formula-line">k = 8/5</span>.</li>
+                <li>Ha az eredeti m&#225;sik oldal <span class="formula-line">7 cm</span>, akkor az &#250;j: <span class="formula-line">7 &#183; 8/5 = 11,2 cm</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat</h3>
+            <p>K&#233;pzeld el, hogy az alakzatot r&#225;csh&#225;l&#243;ra rajzolod. Ha <span class="formula-line">k = 2</span>, minden r&#225;csl&#233;p&#233;s k&#233;tszeres&#233;re n&#337;: a pontok koordin&#225;t&#225;i is k&#233;tszerez&#337;dnek, a forma viszont ugyanaz marad.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Nem megfelel&#337; oldalakat hasonl&#237;tasz &#246;ssze.</li>
+                <li>&#214;sszekevered <span class="formula-line">k</span> &#233;s <span class="formula-line">1/k</span> &#233;rt&#233;k&#233;t.</li>
+                <li>Ter&#252;letn&#233;l <span class="formula-line">k</span>-t haszn&#225;lsz <span class="formula-line">k^2</span> helyett.</li>
+                <li>Kicsiny&#237;t&#233;sn&#233;l elfelejted, hogy <span class="formula-line">k</span> 0 &#233;s 1 k&#246;z&#233; esik.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Ha <span class="formula-line">k = 3</span>, mennyivel n&#337;nek a hosszok?</li>
+            <li>Ha <span class="formula-line">k = 1/2</span>, mennyi lesz a ter&#252;letar&#225;ny?</li>
+            <li>Egy oldal 12 cm-r&#337;l 18 cm-re n&#337;. Mennyi <span class="formula-line">k</span>?</li>
+            <li>Mit jelent az, hogy a megfelel&#337; sz&#246;gek egyenl&#337;k?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Hasonl&#243;s&#225;gn&#225;l a forma megmarad, csak a m&#233;ret v&#225;ltozik.</li>
+            <li>Hosszar&#225;ny &#233;s ker&#252;letar&#225;ny: <span class="formula-line">k</span>.</li>
+            <li>Ter&#252;letar&#225;ny: <span class="formula-line">k^2</span>.</li>
+            <li><span class="formula-line">k &gt; 1</span> nagy&#237;t&#225;s, <span class="formula-line">0 &lt; k &lt; 1</span> kicsiny&#237;t&#233;s.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -542,7 +577,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -586,7 +621,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

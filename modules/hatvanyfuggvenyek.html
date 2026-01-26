@@ -491,64 +491,66 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Hatv&#225;nyf&#252;ggv&#233;nyek</h2>
-        <p>A hatv&#225;nyf&#252;ggv&#233;ny alap alakja: <span class="formula-line">f(x) = x^n</span>, ahol n eg&#233;sz kitev&#337;.
-            Gyakran haszn&#225;ljuk az <span class="formula-line">f(x) = a x^n</span> alakot is (a &ne; 0).</p>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>P&#225;ros &#233;s p&#225;ratlan kitev&#337;</h3>
-                <ul>
-                    <li><strong>n p&#225;ros</strong>: a grafikon y-tengelyre szimmetrikus, az &#233;rt&#233;kk&#233;szlet nem tartalmaz negat&#237;v &#233;rt&#233;keket (ha a &gt; 0).</li>
-                    <li><strong>n p&#225;ratlan</strong>: a grafikon orig&#243;ra szimmetrikus, a jel&#246;l&#233;s &#246;rzi a sz&#225;m el&#337;jel&#233;t.</li>
-                    <li>A konstans szorz&#243; (a) f&#252;gg&#337;legesen t&#252;kr&#246;z, ha negat&#237;v.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Negat&#237;v kitev&#337;</h3>
-                <ul>
-                    <li><strong>n &lt; 0</strong>: <span class="formula-line">x^n = 1/x^{|n|}</span>, vagyis 0 nem lehet a tartom&#225;nyban.</li>
-                    <li>A grafikon k&#246;zel&#237;t a tengelyekhez: <strong>x = 0</strong> f&#252;gg&#337;leges, <strong>y = 0</strong> v&#237;zszintes aszimpt&#243;ta.</li>
-                    <li>P&#225;ros negat&#237;v kitev&#337; eset&#233;n mindig azonos el&#337;jel&#369; az &#233;rt&#233;kk&#233;szlet.</li>
-                </ul>
-            </div>
-        </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A hatv&#225;nyf&#252;ggv&#233;nyek egyszer&#369; szab&#225;ly szerint n&#337;nek vagy cs&#246;kkennek, ez&#233;rt j&#243;l le&#237;rj&#225;k a gyors n&#246;veked&#233;st vagy lass&#250; cs&#246;kken&#233;st. Sok k&#233;pletben felbukkannak, p&#233;ld&#225;ul ter&#252;letek, t&#233;rfogatok vagy fizikai &#246;sszef&#252;gg&#233;sek eset&#233;n. A kitev&#337; (n) meghat&#225;rozza a grafikon alakj&#225;t, az egy&#252;tthat&#243; (a) pedig a ny&#250;jt&#225;st &#233;s t&#252;kr&#246;z&#233;st. Ha ezeket felismered, gyorsan kital&#225;lod a grafikon f&#337; jellemz&#337;it.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Alap alak:</b> <span class="formula-line">f(x) = x^n</span>, ahol <span class="formula-line">n</span> eg&#233;sz.</li>
+            <li><b>&#193;ltal&#225;nos alak:</b> <span class="formula-line">f(x) = a x^n</span>, ahol <span class="formula-line">a &#8800; 0</span>.</li>
+            <li><b>P&#225;ros kitev&#337;:</b> a grafikon y-tengelyre szimmetrikus.</li>
+            <li><b>P&#225;ratlan kitev&#337;:</b> a grafikon orig&#243;ra szimmetrikus.</li>
+            <li><b>Negat&#237;v kitev&#337;:</b> <span class="formula-line">x^n = 1/x^{|n|}</span>, ez&#233;rt <span class="formula-line">x &#8800; 0</span>.</li>
+            <li><b>Aszimpt&#243;ta:</b> negat&#237;v kitev&#337;n&#233;l <span class="formula-line">x = 0</span> &#233;s <span class="formula-line">y = 0</span> k&#246;zel&#233;ben.</li>
+            <li><b>El&#337;jel:</b> <span class="formula-line">a &lt; 0</span> eset&#233;n t&#252;kr&#246;z&#233;s az x-tengelyre.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Gyors ellen&#337;rz&#233;s</h3>
-            <ul>
-                <li>n p&#225;ros: U-alak, n p&#225;ratlan: S-alak.</li>
-                <li>n &lt; 0 eset&#233;n nincs z&#233;rushely.</li>
-                <li>Az a el&#337;jel hat&#225;rozza meg, hogy a grafikon a f&#337;kvadr&#225;nsokba ker&#252;l-e vagy t&#252;kr&#246;z&#337;dik.</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h3>P&#233;ld&#225;k</h3>
-            <ul>
-                <li><span class="formula-line">f(x) = x</span> line&#225;ris, mindig n&#246;vekv&#337;.</li>
-                <li><span class="formula-line">f(x) = x^2</span> parabola, minimuma az orig&#243;.</li>
-                <li><span class="formula-line">f(x) = x^3</span> S-alak&#250;, orig&#243;ra szimmetrikus.</li>
-                <li><span class="formula-line">f(x) = x^{-1}</span> hiperbola, aszimpt&#243;t&#225;kkal.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>Hasonl&#237;tsd &#246;ssze x&#178; &#233;s x&#179; &#233;rt&#233;k&#233;t:</p>
+            <h4>1. p&#233;lda &#8211; p&#225;ros kitev&#337;</h4>
+            <p>Legyen <span class="formula-line">f(x) = x^4</span>.</p>
             <ol>
-                <li>x = 0,5 &#8594; x&#178; = 0,25, x&#179; = 0,125 (x&#179; kisebb).</li>
-                <li>x = 2 &#8594; x&#178; = 4, x&#179; = 8 (x&#179; nagyobb).</li>
+                <li><span class="formula-line">n = 4</span> p&#225;ros, ez&#233;rt a grafikon y-tengelyre szimmetrikus.</li>
+                <li>Tartom&#225;ny: <span class="formula-line">R</span>, &#233;rt&#233;kk&#233;szlet: <span class="formula-line">y &#8805; 0</span>.</li>
+                <li><span class="formula-line">f(2) = 16</span>, <span class="formula-line">f(-2) = 16</span> (szimmetria).</li>
+                <li>U-alak&#250; g&#246;rbe, minimum az orig&#243;ban.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: &#233;rt&#233;kt&#225;bla</h3>
+            <h4>2. p&#233;lda &#8211; negat&#237;v kitev&#337;</h4>
+            <p>Legyen <span class="formula-line">f(x) = 2x^{-2}</span>.</p>
+            <ol>
+                <li><span class="formula-line">f(x) = 2/(x^2)</span>, ez&#233;rt <span class="formula-line">x &#8800; 0</span>.</li>
+                <li><span class="formula-line">f(2) = 2/4 = 0,5</span>.</li>
+                <li>A f&#252;ggv&#233;ny mindig pozit&#237;v, &#233;s <span class="formula-line">x = 0</span> mellett a grafikon &#8222;elsz&#225;ll&#8221;.</li>
+                <li>Aszimpt&#243;t&#225;k: <span class="formula-line">x = 0</span> &#233;s <span class="formula-line">y = 0</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (p&#225;ros vs. p&#225;ratlan)</h3>
             <table style="border-collapse: collapse; width: 100%; max-width: 360px; text-align: center;">
                 <tr>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">x</th>
-                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">x&#178;</th>
-                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">x&#179;</th>
+                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">x^2</th>
+                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">x^3</th>
                 </tr>
                 <tr>
-                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">0,5</td>
-                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">0,25</td>
-                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">0,125</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">-2</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">4</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">-8</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">-1</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">1</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">-1</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">0</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">0</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">0</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">1</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">1</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">1</td>
                 </tr>
                 <tr>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px;">2</td>
@@ -556,8 +558,34 @@
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px;">8</td>
                 </tr>
             </table>
-            <p style="font-size: 0.95em; color: var(--text-light);">0 &#233;s 1 k&#246;z&#246;tt a magasabb kitev&#337; kisebb &#233;rt&#233;ket ad.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A p&#225;ros kitev&#337; mindig pozit&#237;v &#233;rt&#233;ket ad, a p&#225;ratlan megtartja az el&#337;jelet.</p>
         </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Negat&#237;v kitev&#337;n&#233;l elfelejted, hogy <span class="formula-line">x &#8800; 0</span>.</li>
+                <li>&#214;sszekevered a p&#225;ros &#233;s p&#225;ratlan kitev&#337;k szimmetri&#225;j&#225;t.</li>
+                <li>Azt hiszed, hogy <span class="formula-line">a &lt; 0</span> nem v&#225;ltoztat a grafikonon.</li>
+                <li>Rossz el&#337;jellel sz&#225;molod az <span class="formula-line">x^n</span> &#233;rt&#233;ket negat&#237;v <span class="formula-line">x</span>-n&#233;l.</li>
+                <li>Aszimpt&#243;t&#225;kat keresel pozit&#237;v kitev&#337;n&#233;l is.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Milyen szimmetri&#225;ja van a <span class="formula-line">f(x) = x^5</span> f&#252;ggv&#233;nynek?</li>
+            <li>Mi a tartom&#225;nya a <span class="formula-line">f(x) = x^{-3}</span> f&#252;ggv&#233;nynek?</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">f(-2)</span>, ha <span class="formula-line">f(x) = 3x^2</span>.</li>
+            <li>Mi t&#246;rt&#233;nik a grafikonj&#225;val, ha <span class="formula-line">a</span> negat&#237;v?</li>
+            <li>Mi&#233;rt nem lehet <span class="formula-line">x = 0</span> a <span class="formula-line">x^{-2}</span> f&#252;ggv&#233;nyn&#233;l?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A hatv&#225;nyf&#252;ggv&#233;ny alap alakja <span class="formula-line">f(x) = a x^n</span>.</li>
+            <li>P&#225;ros kitev&#337;: y-tengely szimmetria, p&#225;ratlan kitev&#337;: orig&#243; szimmetria.</li>
+            <li>Negat&#237;v kitev&#337;n&#233;l <span class="formula-line">x = 0</span> nem r&#233;sze a tartom&#225;nynak.</li>
+            <li><span class="formula-line">a</span> el&#337;jele t&#252;kr&#246;z&#233;st okoz az x-tengelyre.</li>
+            <li>A grafikon alakja a kitev&#337;t&#337;l f&#252;gg (U- vagy S-alak, illetve hiperbola-szer&#369;).</li>
+        </ul>
 </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -615,7 +643,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -659,7 +687,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

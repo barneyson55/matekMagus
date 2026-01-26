@@ -484,33 +484,75 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Klasszikus val&#243;sz&#237;n&#369;s&#233;gi modell</h2>
-        <p>Azonos es&#233;ly&#369; elemi esem&#233;nyekn&#233;l a val&#243;sz&#237;n&#369;s&#233;g a kedvez&#337; &#233;s &#246;sszes esetek ar&#225;nya.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Azonos es&#233;ly&#369; elemi esem&#233;nyekn&#233;l a val&#243;sz&#237;n&#369;s&#233;g egyszer&#369; ar&#225;ny. Ilyen helyzet a kockadob&#225;s, a p&#233;nzfeldob&#225;s vagy egy igazs&#225;gos sorsol&#225;s. El&#337;sz&#246;r mindig &#237;rd fel a mintateret, majd sz&#225;mold meg a kedvez&#337; eseteket. Az eredm&#233;ny 0 &#233;s 1 k&#246;z&#233; esik, ez&#233;rt k&#246;nnyen ellen&#337;rizhet&#337;.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Mintat&#233;r (&#937;):</b> az &#246;sszes lehets&#233;ges kimenet.</li>
+            <li><b>Elemi esem&#233;ny:</b> a mintat&#233;r egyetlen kimenete.</li>
+            <li><b>Esem&#233;ny (A):</b> a mintat&#233;r egy r&#233;szhalmaza.</li>
+            <li><b>Kedvez&#337; esetek sz&#225;ma:</b> |A|, vagyis az A-hoz tartoz&#243; kimenetek darabsz&#225;ma.</li>
+            <li><b>Klasszikus val&#243;sz&#237;n&#369;s&#233;g:</b> P(A) = |A| / |&#937;|.</li>
+            <li><b>Kieg&#233;sz&#237;t&#337; esem&#233;ny:</b> P(A&#772;) = 1 - P(A).</li>
+            <li><b>Kiz&#225;r&#243; esem&#233;nyek:</b> P(A &#8745; B) = 0, ez&#233;rt P(A &#8746; B) = P(A) + P(B).</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapk&#233;plet</h3>
+            <h4>1. p&#233;lda &#8211; kockadob&#225;s</h4>
+            <p>Mi a val&#243;sz&#237;n&#369;s&#233;ge, hogy egy dob&#225;s p&#225;ros sz&#225;mot ad?</p>
+            <ol>
+                <li>&#937; = {1, 2, 3, 4, 5, 6}, &#246;sszesen 6 kimenet.</li>
+                <li>Kedvez&#337;: {2, 4, 6}, ez&#233;rt |A| = 3.</li>
+                <li>P(A) = 3/6 = 1/2.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; urn&#225;s feladat</h4>
+            <p>Egy dobozban 5 piros &#233;s 3 k&#233;k goly&#243; van. Egyet h&#250;zunk. Mi a piros val&#243;sz&#237;n&#369;s&#233;ge?</p>
+            <ol>
+                <li>&#214;sszes goly&#243;: 5 + 3 = 8.</li>
+                <li>Kedvez&#337;: 5 piros.</li>
+                <li>P(piros) = 5/8.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (kedvez&#337; vs. &#246;sszes)</h3>
+            <svg viewBox="0 0 240 60" style="width: 100%; max-width: 260px; height: auto; display: block; margin: 10px 0;">
+                <rect x="10" y="15" width="30" height="30" fill="rgba(74,85,162,0.35)" stroke="#4A55A2" stroke-width="2" />
+                <rect x="45" y="15" width="30" height="30" fill="rgba(74,85,162,0.35)" stroke="#4A55A2" stroke-width="2" />
+                <rect x="80" y="15" width="30" height="30" fill="rgba(74,85,162,0.35)" stroke="#4A55A2" stroke-width="2" />
+                <rect x="115" y="15" width="30" height="30" fill="rgba(160,191,224,0.2)" stroke="#4A55A2" stroke-width="2" />
+                <rect x="150" y="15" width="30" height="30" fill="rgba(160,191,224,0.2)" stroke="#4A55A2" stroke-width="2" />
+                <rect x="185" y="15" width="30" height="30" fill="rgba(160,191,224,0.2)" stroke="#4A55A2" stroke-width="2" />
+            </svg>
+            <p class="muted">A 6 azonos es&#233;ly&#369; kimenetb&#337;l 3 kedvez&#337;, ez&#233;rt P = 3/6.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li>P(A) = kedvez&#337; / &#246;sszes eset.</li>
-<li>0 &#8804; P(A) &#8804; 1.</li>
-<li>P(&#175;A) = 1 - P(A).</li>
+                <li>Nem egyenl&#337; es&#233;ly&#369; kimenetekre is klasszikus modellt haszn&#225;lsz.</li>
+                <li>Rosszul sz&#225;molod meg az &#246;sszes kimenetet.</li>
+                <li>Val&#243;sz&#237;n&#369;s&#233;get kapsz 1-n&#233;l nagyobbra vagy negat&#237;vra.</li>
+                <li>Nem kiz&#225;r&#243; esem&#233;nyekn&#233;l is &#246;sszeadsz.</li>
+                <li>Nem egyszer&#369;s&#237;ted a t&#246;rtet.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Esem&#233;nyek</h3>
-                <ul>
-                    <li>Kiz&#225;r&#243; esem&#233;nyekn&#233;l &#246;sszeadunk.</li>
-<li>Mintat&#233;r felsorol&#225;sa seg&#237;t.</li>
-<li>Kocka, p&#233;nzfeldob&#225;s, urn&#225;s feladatok.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Gyors tippek</h3>
-                <ul>
-                    <li>Egyszer&#369;s&#237;tsd a t&#246;rtet.</li>
-<li>Ellen&#337;rizd az &#246;sszes esetet.</li>
-<li>Az eredm&#233;ny ar&#225;ny.</li>
-                </ul>
-            </div>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi a val&#243;sz&#237;n&#369;s&#233;ge a p&#225;ratlan sz&#225;mnak egy kockadob&#225;sn&#225;l?</li>
+            <li>Mi a val&#243;sz&#237;n&#369;s&#233;ge, hogy p&#233;nzfeldob&#225;sn&#225;l fej j&#246;n?</li>
+            <li>Mi a P(A&#772;), ha P(A) = 0,3?</li>
+            <li>H&#225;ny kedvez&#337; eset van, ha 1&#8211;6 k&#246;z&#246;tt 4-n&#233;l nagyobbat keres&#252;nk?</li>
+            <li>Mikor adhatod &#246;ssze k&#233;t esem&#233;ny val&#243;sz&#237;n&#369;s&#233;g&#233;t?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Klasszikus modell: P(A) = |A| / |&#937;| azonos es&#233;ly&#369; kimenetekn&#233;l.</li>
+            <li>A val&#243;sz&#237;n&#369;s&#233;g mindig 0 &#233;s 1 k&#246;z&#233; esik.</li>
+            <li>El&#337;sz&#246;r a mintateret &#237;rd fel, ut&#225;na sz&#225;molj.</li>
+            <li>Kiz&#225;r&#243; esem&#233;nyekn&#233;l &#246;sszeadunk, k&#252;l&#246;nben nem.</li>
+            <li>A kieg&#233;sz&#237;t&#337; esem&#233;ny: P(A&#772;) = 1 - P(A).</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -550,7 +592,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -594,7 +636,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

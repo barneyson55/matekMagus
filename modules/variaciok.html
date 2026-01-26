@@ -484,33 +484,67 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Vari&#225;ci&#243;k</h2>
-        <p>A vari&#225;ci&#243; k elem kiv&#225;laszt&#225;sa n-b&#337;l &#250;gy, hogy a sorrend sz&#225;m&#237;t.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A vari&#225;ci&#243; arr&#243;l sz&#243;l, hogy n elemb&#337;l k darabot kiv&#225;lasztasz &#233;s sorrendbe teszed. Nem kell minden elemnek szerepelnie, ez&#233;rt k&#252;l&#246;nb&#246;zik a permut&#225;ci&#243;t&#243;l. Ha ism&#233;tl&#233;s megengedett, akkor ugyanaz az elem t&#246;bbsz&#246;r is j&#246;het. A d&#246;nt&#233;sn&#233;l mindig k&#233;rdezd: a sorrend sz&#225;m&#237;t, &#233;s van-e ism&#233;tl&#233;s?</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Vari&#225;ci&#243;:</b> n elem k darabj&#225;nak sorrendje.</li>
+            <li><b>Ism&#233;tl&#233;s n&#233;lk&#252;li vari&#225;ci&#243;:</b> V(n,k) = n!/(n-k)!</li>
+            <li><b>Ism&#233;tl&#337;d&#233;ses vari&#225;ci&#243;:</b> V<sub>ism</sub>(n,k) = n^k.</li>
+            <li><b>n:</b> a v&#225;laszthat&#243; elemek sz&#225;ma.</li>
+            <li><b>k:</b> a kiv&#225;lasztott elemek sz&#225;ma (a helyek sz&#225;ma).</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Ism&#233;tl&#233;s n&#233;lk&#252;li vari&#225;ci&#243;</h3>
+            <h4>1. p&#233;lda &#8211; ism&#233;tl&#233;s n&#233;lk&#252;l</h4>
+            <p>H&#225;nyf&#233;le dobog&#243; (1., 2., 3. hely) &#225;llhat 5 versenyz&#337;b&#337;l?</p>
+            <ol>
+                <li>n = 5, k = 3, a sorrend sz&#225;m&#237;t, ism&#233;tl&#233;s nincs.</li>
+                <li>V(n,k) = 5&#183;4&#183;3.</li>
+                <li>Eredm&#233;ny: 60 k&#252;l&#246;nb&#246;z&#337; dobog&#243;.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; ism&#233;tl&#337;d&#233;ssel</h4>
+            <p>H&#225;ny 3 jegy&#369; k&#243;d k&#233;sz&#237;thet&#337; a {1,2,3,4} sz&#225;mokb&#243;l, ha ism&#233;tl&#233;s megengedett?</p>
+            <ol>
+                <li>n = 4, k = 3, ism&#233;tl&#233;s megengedett.</li>
+                <li>Ism&#233;tl&#337;d&#233;ses vari&#225;ci&#243;: 4^3.</li>
+                <li>Eredm&#233;ny: 64 k&#243;d.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (k helyes &#8222;szorz&#225;si fa&#8221;)</h3>
             <ul>
-                <li>V(n,k) = n!/(n-k)!</li>
-<li>A sorrend sz&#225;m&#237;t.</li>
-<li>K kiv&#225;lasztott elemet rendez&#252;nk.</li>
+                <li>Ism&#233;tl&#233;s n&#233;lk&#252;l: 1. helyre n, 2. helyre n-1, ... , k. helyre n-k+1 lehet&#337;s&#233;g.</li>
+                <li>Ism&#233;tl&#233;ssel: minden helyre n lehet&#337;s&#233;g.</li>
+                <li>A lehet&#337;s&#233;geket &#246;sszeszorozzuk.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Ism&#233;tl&#337;d&#233;ses vari&#225;ci&#243;</h3>
-                <ul>
-                    <li>Ism&#233;tl&#233;ssel: n^k.</li>
-<li>Minden helyre n lehet&#337;s&#233;g.</li>
-<li>Sorrend itt is sz&#225;m&#237;t.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;rd&#233;sek</h3>
-                <ul>
-                    <li>Sorrend sz&#225;m&#237;t?</li>
-<li>Ism&#233;tl&#233;s megengedett?</li>
-<li>Pontosan k elemet v&#225;lasztunk?</li>
-                </ul>
-            </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Vari&#225;ci&#243;t kombin&#225;ci&#243;val cser&#233;lsz fel (pedig itt a sorrend sz&#225;m&#237;t).</li>
+                <li>n! k&#233;pletet haszn&#225;lsz akkor is, amikor csak k elemet v&#225;lasztasz.</li>
+                <li>Elfelejted eld&#246;nteni, hogy van-e ism&#233;tl&#233;s.</li>
+                <li>Felcser&#233;led n &#233;s k szerep&#233;t.</li>
+            </ul>
         </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Sz&#225;mold ki: V(7,2).</li>
+            <li>H&#225;nyf&#233;le 4 jegy&#369; k&#243;d k&#233;sz&#237;thet&#337; 0&#8211;9 sz&#225;mokb&#243;l ism&#233;tl&#233;ssel?</li>
+            <li>Mi a k&#252;l&#246;nbs&#233;g a permut&#225;ci&#243; &#233;s a vari&#225;ci&#243; k&#246;z&#246;tt?</li>
+            <li>Igaz vagy hamis: ism&#233;tl&#233;s n&#233;lk&#252;li vari&#225;ci&#243;n&#225;l is lehet ugyanaz az elem t&#246;bbsz&#246;r.</li>
+            <li>Melyik k&#233;plet tartozik az ism&#233;tl&#337;d&#233;ses vari&#225;ci&#243;hoz?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Vari&#225;ci&#243; = k elem kiv&#225;laszt&#225;sa sorrenddel.</li>
+            <li>Ism&#233;tl&#233;s n&#233;lk&#252;l: V(n,k) = n!/(n-k)!</li>
+            <li>Ism&#233;tl&#337;d&#233;ssel: n^k.</li>
+            <li>Mindig ellen&#337;rizd: sorrend sz&#225;m&#237;t-e, &#233;s van-e ism&#233;tl&#233;s.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -550,7 +584,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -594,7 +628,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

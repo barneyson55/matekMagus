@@ -482,9 +482,19 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>F&#252;ggv&#233;nyek &#225;ltal&#225;nos tulajdons&#225;gai</h2>
-        <p>A f&#252;ggv&#233;nyek &#225;ltal&#225;nos tulajdons&#225;gai seg&#237;tenek meg&#233;rteni, hogyan viselkedik egy f&#252;ggv&#233;ny a teljes tartom&#225;ny&#225;n. Ezekre &#233;p&#237;t a monotonit&#225;s, a parit&#225;s &#233;s a transzform&#225;ci&#243;s szeml&#233;let.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ebben a t&#233;maz&#225;r&#243;ban a f&#252;ggv&#233;nyek legfontosabb &#225;ltal&#225;nos tulajdons&#225;gait foglaljuk &#246;ssze. Ezek seg&#237;tenek gyorsan felismerni, hogyan &#8222;viselkedik&#8221; egy f&#252;ggv&#233;ny: hol &#233;rtelmezett, milyen &#233;rt&#233;keket vehet fel, &#233;s hol n&#337; vagy cs&#246;kken. A parit&#225;s &#233;s a transzform&#225;ci&#243;k azt mutatj&#225;k meg, hogyan v&#225;ltozik a grafikon. Ha ezek stabilak, a k&#233;s&#337;bbi f&#252;ggv&#233;nyvizsg&#225;lat is sokkal k&#246;nnyebb.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>&#201;rtelmez&#233;si tartom&#225;ny:</b> <span class="formula-line">D(f)</span>, ahol a f&#252;ggv&#233;ny &#233;rtelmezett.</li>
+            <li><b>&#201;rt&#233;kk&#233;szlet:</b> <span class="formula-line">R(f)</span>, a lehets&#233;ges y &#233;rt&#233;kek.</li>
+            <li><b>Monotonit&#225;s:</b> n&#246;vekv&#337; vagy cs&#246;kken&#337; viselked&#233;s.</li>
+            <li><b>Sz&#233;ls&#337;&#233;rt&#233;k:</b> lok&#225;lis vagy glob&#225;lis minimum/maximum.</li>
+            <li><b>Parit&#225;s:</b> p&#225;ros, ha <span class="formula-line">f(&#8722;x) = f(x)</span>, p&#225;ratlan, ha <span class="formula-line">f(&#8722;x) = &#8722;f(x)</span>.</li>
+            <li><b>Transzform&#225;ci&#243;:</b> eltol&#225;s, ny&#250;jt&#225;s, t&#252;kr&#246;z&#233;s a grafikonon.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
                 <li>&#201;rtelmez&#233;si tartom&#225;ny, &#233;rt&#233;kk&#233;szlet</li>
                 <li>Monotonit&#225;s, sz&#233;ls&#337;&#233;rt&#233;kek</li>
@@ -492,40 +502,41 @@
                 <li>F&#252;ggv&#233;nytranszform&#225;ci&#243;k</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Alapfogalmak</h3>
-                <ul>
-                    <li><span class="formula-line">D(f)</span> az &#233;rtelmez&#233;si tartom&#225;ny.</li>
-                    <li><span class="formula-line">R(f)</span> az &#233;rt&#233;kk&#233;szlet.</li>
-                    <li>Line&#225;ris f&#252;ggv&#233;nyn&#233;l az &#233;rt&#233;kk&#233;szlet minden val&#243;s, ha a meredeks&#233;g nem nulla.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Parit&#225;s &#233;s monotonit&#225;s</h3>
-                <ul>
-                    <li><span class="formula-line">f(-x) = f(x)</span> &rarr; p&#225;ros.</li>
-                    <li><span class="formula-line">f(-x) = -f(x)</span> &rarr; p&#225;ratlan.</li>
-                    <li>Monotonit&#225;s: n&#246;vekv&#337; vagy cs&#246;kken&#337; a meredeks&#233;g el&#337;jel&#233;t&#337;l f&#252;gg&#337;en.</li>
-                </ul>
-            </div>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>&#214;sszegz&#337; p&#233;lda &#8211; parabola jellemz&#233;se</h4>
+            <p>Legyen f(x) = (x &#8722; 2)<sup>2</sup> &#8722; 3.</p>
+            <ol>
+                <li>D(f) = minden val&#243;s sz&#225;m, mert nincs tilt&#225;s.</li>
+                <li>Cs&#250;cs: (2, &#8722;3), ez&#233;rt <span class="formula-line">R(f): y &#8805; &#8722;3</span>.</li>
+                <li>A tengely: x = 2, ez&#233;rt nem p&#225;ros &#233;s nem p&#225;ratlan.</li>
+                <li>Monotonit&#225;s: cs&#246;kken&#337;, ha x &#8804; 2, &#233;s n&#246;vekv&#337;, ha x &#8805; 2.</li>
+                <li>Transzform&#225;ci&#243;: az y = x<sup>2</sup> grafikonja jobbra 2-vel, lefel&#233; 3-mal tolva.</li>
+            </ol>
         </div>
         <div class="learning-hint">
-            <h3>Transzform&#225;ci&#243;k</h3>
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li><span class="formula-line">f(x - a)</span> v&#237;zszintes eltol&#225;s.</li>
-                <li><span class="formula-line">f(x) + b</span> f&#252;gg&#337;leges eltol&#225;s.</li>
-                <li>Ny&#250;jt&#225;s/zsugor&#237;t&#225;s a szorz&#243;t&#233;nyez&#337;vel t&#246;rt&#233;nik.</li>
+                <li>&#214;sszekevered az &#233;rtelmez&#233;si tartom&#225;nyt az &#233;rt&#233;kk&#233;szlettel.</li>
+                <li>Eltol&#225;s ut&#225;n is p&#225;rosnak/p&#225;ratlannak gondolod a f&#252;ggv&#233;nyt.</li>
+                <li>Monotonit&#225;sn&#225;l csak a meredeks&#233;get n&#233;zed, a teljes tartom&#225;nyt nem.</li>
+                <li>A cs&#250;csot elt&#233;veszted, mert rosszul olvasod le a transzform&#225;ci&#243;t.</li>
             </ul>
         </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>Mindig n&#233;zd meg el&#337;sz&#246;r a f&#252;ggv&#233;ny t&#237;pus&#225;t.</li>
-                <li>A parit&#225;s csak akkor marad meg, ha nincs v&#237;zszintes eltol&#225;s.</li>
-                <li>Az &#225;br&#225;zolt jellemz&#337;k seg&#237;tenek gyorsan ellen&#337;rizni a v&#225;laszt.</li>
-            </ul>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi a D(f) &#233;s R(f) a f(x) = x<sup>2</sup> &#8722; 4 eset&#233;n?</li>
+            <li>Monoton-e a g(x) = &#8722;2x + 1 f&#252;ggv&#233;ny? Milyen ir&#225;nyban?</li>
+            <li>P&#225;ros vagy p&#225;ratlan az f(x) = x<sup>3</sup>?</li>
+            <li>Mit jelent a f(x &#8722; 3) &#225;talak&#237;t&#225;s a grafikonon?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>El&#337;sz&#246;r mindig az &#233;rtelmez&#233;si tartom&#225;nyt &#233;s az &#233;rt&#233;kk&#233;szletet r&#246;gz&#237;tsd.</li>
+            <li>A monotonit&#225;s &#233;s a sz&#233;ls&#337;&#233;rt&#233;kek a grafikon &#8222;ir&#225;ny&#225;t&#8221; mutatj&#225;k.</li>
+            <li>A parit&#225;s csak k&#246;z&#233;ppontos vagy tengelyes szimmetri&#225;n&#225;l igaz.</li>
+            <li>Transzform&#225;ci&#243;kn&#225;l az eltol&#225;s ir&#225;ny&#225;t &#233;s m&#233;rt&#233;k&#233;t figyeld.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -594,7 +605,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -644,7 +655,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

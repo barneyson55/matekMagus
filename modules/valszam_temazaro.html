@@ -476,32 +476,76 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Val&#243;sz&#237;n&#369;s&#233;gsz&#225;m&#237;t&#225;s</h2>
-        <p>T&#233;maz&#225;r&#243; a klasszikus val&#243;sz&#237;n&#369;s&#233;gi modell &#233;s alapfogalmak gyakorl&#225;s&#225;ra.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a t&#233;maz&#225;r&#243; a val&#243;sz&#237;n&#369;s&#233;gsz&#225;m&#237;t&#225;s alapfogalmait k&#233;ri sz&#225;mon. Megtanulod, hogyan sz&#225;molj es&#233;lyeket, &#233;s hogyan haszn&#225;ld a kedvez&#337; &#233;s &#246;sszes esetek ar&#225;ny&#225;t. A mindennapokban is tal&#225;lkozol vele (kockadob&#225;s, sorsol&#225;s, statisztik&#225;k). A feladatokban fontos a pontos esem&#233;nymegfogalmaz&#225;s.</p>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
                 <li>Esem&#233;nyek &#233;s val&#243;sz&#237;n&#369;s&#233;g</li>
-<li>F&#252;ggetlens&#233;g</li>
-<li>Gyakoris&#225;g</li>
+                <li>F&#252;ggetlens&#233;g</li>
+                <li>Gyakoris&#225;g</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">P(A) = |A|/|&#937;|</span></li>
-<li><span class="formula-line">0 &#8804; P(A) &#8804; 1</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tanul&#225;si f&#243;kusz</h3>
-                <ul>
-                    <li>&#201;rtsd a defin&#237;ci&#243;kat &#233;s jel&#246;l&#233;seket.</li>
-                    <li>Gyakorold a tipikus feladatt&#237;pusokat.</li>
-                    <li>Ellen&#337;rizd a m&#233;rt&#233;kegys&#233;geket &#233;s a logik&#225;t.</li>
-                </ul>
-            </div>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Esem&#233;nyt&#233;r (&#937;):</b> az &#246;sszes lehets&#233;ges kimenet.</li>
+            <li><b>Esem&#233;ny (A):</b> a kimenetek egy r&#233;sze.</li>
+            <li><b>Klasszikus val&#243;sz&#237;n&#369;s&#233;g:</b> P(A) = |A|/|&#937;|.</li>
+            <li><b>Gyakoris&#225;g:</b> h&#225;nyszor t&#246;rt&#233;nik meg egy esem&#233;ny sok ism&#233;tl&#233;s sor&#225;n.</li>
+            <li><b>F&#252;ggetlen esem&#233;nyek:</b> egym&#225;st&#243;l nem f&#252;ggenek, P(A&#8745;B) = P(A)&#183;P(B).</li>
+            <li><b>Kieg&#233;sz&#237;t&#337; esem&#233;ny:</b> P(A) + P(A&#772;) = 1.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; kockadob&#225;s</h4>
+            <p>Mi a val&#243;sz&#237;n&#369;s&#233;ge annak, hogy egy dob&#225;sn&#225;l 5-&#246;sn&#233;l nagyobb sz&#225;mot kapunk?</p>
+            <ol>
+                <li>&#937; = {1,2,3,4,5,6}, &#246;sszesen 6 kimenet.</li>
+                <li>Kedvez&#337;: {6}, azaz 1 kimenet.</li>
+                <li>P = 1/6.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; f&#252;ggetlens&#233;g</h4>
+            <p>Dobunk egy &#233;rm&#233;t &#233;s egy kock&#225;t. Mi a val&#243;sz&#237;n&#369;s&#233;ge, hogy fej &#233;s p&#225;ros sz&#225;m j&#246;n?</p>
+            <ol>
+                <li>P(fe j) = 1/2, P(p&#225;ros) = 3/6 = 1/2.</li>
+                <li>A k&#233;t esem&#233;ny f&#252;ggetlen.</li>
+                <li>P = 1/2&#183;1/2 = 1/4.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (esem&#233;nyt&#233;r t&#225;bl&#225;zat)</h3>
+            <ul>
+                <li>&#201;rme (F/I) &#215; kocka (1&#8211;6) = 12 kimenet.</li>
+                <li>A kedvez&#337; esetek csak egy r&#233;sze a t&#225;bl&#225;zatnak.</li>
+                <li>A val&#243;sz&#237;n&#369;s&#233;g = kedvez&#337; / &#246;sszes.</li>
+            </ul>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Rosszul sz&#225;molod meg az &#246;sszes kimenetet.</li>
+                <li>Olyan esem&#233;nyre adsz val&#243;sz&#237;n&#369;s&#233;get, ami > 1 vagy < 0.</li>
+                <li>F&#252;ggetlennek veszel nem f&#252;ggetlen esem&#233;nyeket.</li>
+                <li>Felcser&#233;led a gyakoris&#225;got &#233;s az elvi val&#243;sz&#237;n&#369;s&#233;get.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi a P(4-es dob&#225;s) egy szab&#225;lyos kock&#225;val?</li>
+            <li>Mi a P(p&#225;ratlan sz&#225;m) egy dob&#225;sn&#225;l?</li>
+            <li>Mikor f&#252;ggetlen k&#233;t esem&#233;ny?</li>
+            <li>Mi a kieg&#233;sz&#237;t&#337; esem&#233;ny val&#243;sz&#237;n&#369;s&#233;ge, ha P(A)=0,3?</li>
+            <li>Hogyan sz&#225;molod ki a gyakoris&#225;got?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Klasszikus val&#243;sz&#237;n&#369;s&#233;g: P(A) = |A|/|&#937;|.</li>
+            <li>A val&#243;sz&#237;n&#369;s&#233;g 0 &#233;s 1 k&#246;z&#246;tt van.</li>
+            <li>F&#252;ggetlen esem&#233;nyekn&#233;l szorzunk: P(A&#8745;B) = P(A)&#183;P(B).</li>
+            <li>A gyakoris&#225;g sok ism&#233;tl&#233;sn&#233;l k&#246;zel&#237;ti az elvi es&#233;lyt.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -546,7 +590,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="K&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="Norm&#225;l" type="button">Norm&#225;l</button>
@@ -596,7 +640,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="K&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="Norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="Neh&#233;z"> Neh&#233;z</label>

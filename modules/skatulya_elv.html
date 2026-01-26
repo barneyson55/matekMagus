@@ -481,52 +481,47 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>Skatulya-elv &ndash; alapok</h2>
-        <p>A skatuly&#225;z&#225;s (pigeonhole) l&#233;nyege: ha <strong>N</strong> elemet <strong>k</strong> skatuly&#225;ba osztunk, akkor biztosan van olyan skatulya, amelyben legal&#225;bb <strong>&lceil;N / k&rceil;</strong> elem tal&#225;lhat&#243;.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Alap k&#233;plet</h3>
-                <p class="formula-line">&lceil;N / k&rceil;</p>
-                <ul>
-                    <li>N: elemek sz&#225;ma.</li>
-                    <li>k: skatuly&#225;k (kateg&#243;ri&#225;k) sz&#225;ma.</li>
-                    <li>A minimum garant&#225;lt darabsz&#225;mot adja.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>P&#225;ros&#237;t&#225;s &#233;s garant&#225;lt egyez&#233;s</h3>
-                <p>Ha <strong>c</strong> k&#252;l&#246;nb&#246;z&#337; kateg&#243;ria van, akkor <strong>c + 1</strong> elem kiv&#225;laszt&#225;s&#225;val biztosan kapsz egy p&#225;rt (azonos kateg&#243;ri&#225;t).</p>
-                <p class="muted">Ez ugyanaz a skatuly&#225;z&#225;s, csak a "skatuly&#225;k" a sz&#237;nek, napok vagy t&#237;pusok.</p>
-            </div>
-        </div>
-        <div class="theory-section">
-            <h3>L&#233;p&#233;sek</h3>
-            <ol>
-                <li>Hat&#225;rozd meg, mi a skatulya (kateg&#243;ria).</li>
-                <li>Sz&#225;molj N elemmel, k skatuly&#225;val.</li>
-                <li>Haszn&#225;ld a &lceil;N / k&rceil; vagy a (m-1) * k + 1 formul&#225;t.</li>
-                <li>Ellen&#337;rizd, hogy garant&#225;lt minimumot k&#233;rdeznek.</li>
-            </ol>
-        </div>
+        <h2>Skatulya-elv, párosítások</h2>
+        <h3>Rövid bevezetés (Mi ez? Mire jó?)</h3>
+        <p>A skatulyázás azt mondja ki, hogy ha több elemet teszel kevesebb kategóriába, biztosan lesz ismétlődés. Ez nagyon hasznos garancia-típusú feladatokban. A párosítások és „legalább ennyi” kérdések mind erre épülnek. A lényeg: nem kell pontosan tudnod az eloszlást, mégis biztos következtetést kapsz.</p>
+        <h3>Alapfogalmak / definíciók</h3>
+        <ul>
+            <li><b>Elemek (N):</b> a vizsgált dolgok száma.</li>
+            <li><b>Skatulyák (k):</b> kategóriák vagy rekeszek száma.</li>
+            <li><b>Garantált minimum:</b> legalább ennyi elem lesz valamelyik skatulyában.</li>
+            <li><b>Plafon:</b> ⌈N / k⌉, felfelé kerekítés.</li>
+            <li><b>Párosítás:</b> két azonos kategóriájú elem biztos találkozása.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Mini-ellen&#337;rz&#233;s</h3>
+            <h3>Alapképlet</h3>
+            <p class="formula-line">⌈N / k⌉</p>
             <ul>
-                <li>13 ember 12 h&#243;napban: biztosan van legal&#225;bb 2 azonos h&#243;nap (&#225;prilis, stb.).</li>
-                <li>5 sz&#237;n&#369; zoknib&#243;l h&#225;nyat kell kih&#250;zni, hogy legyen p&#225;r? (6)</li>
-                <li>10 elemet 3 skatuly&#225;ba osztunk: minimum egy skatuly&#225;ban? (&lceil;10 / 3&rceil; = 4)</li>
+                <li>N: elemek száma.</li>
+                <li>k: skatulyák (kategóriák) száma.</li>
+                <li>Ez adja a garantált minimumot.</li>
             </ul>
         </div>
-    
+        <h3>Lépésről lépésre példa (1–2 db)</h3>
         <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>10 k&#246;nyvet 3 polcra tesz&#252;nk. Mennyi a minimum, ami biztosan egy polcon lesz?</p>
+            <h4>1. példa – hónapok</h4>
+            <p>13 ember születésnapja 12 hónapra esik. Mi garantált?</p>
             <ol>
-                <li>10 / 3 = 3 marad&#233;k 1, ez&#233;rt legal&#225;bb 4 k&#246;nyv ker&#252;l ugyanarra a polcra.</li>
-                <li>&#193;ltal&#225;nosan: legal&#225;bb &#8968;n / k&#8969; t&#225;rgy jut egy rekeszbe.</li>
+                <li>N = 13, k = 12.</li>
+                <li>⌈13 / 12⌉ = 2.</li>
+                <li>Biztosan van legalább két ember azonos hónapban.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: rekeszek &#233;s t&#225;rgyak</h3>
+            <h4>2. példa – polcok</h4>
+            <p>10 könyvet 3 polcra teszünk. Mennyi a minimum egy polcon?</p>
+            <ol>
+                <li>N = 10, k = 3.</li>
+                <li>⌈10 / 3⌉ = 4.</li>
+                <li>Biztosan van polc legalább 4 könyvvel.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizuális magyarázat</h3>
             <svg viewBox="0 0 320 140" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <rect x="20" y="30" width="80" height="80" rx="8" fill="none" stroke="#4A55A2" stroke-width="2" />
                 <rect x="120" y="30" width="80" height="80" rx="8" fill="none" stroke="#4A55A2" stroke-width="2" />
@@ -542,8 +537,31 @@
                 <circle cx="270" cy="55" r="6" fill="#A0BFE0" />
                 <circle cx="245" cy="80" r="6" fill="#A0BFE0" />
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A bal rekeszben 4 darab van, teh&#225;t biztosan l&#233;tezik ilyen rekesz.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">Az egyik rekeszben biztosan több elem lesz, ezért jön ki a minimum.</p>
         </div>
+        <div class="learning-hint">
+            <h3>Gyakori hibák / tévhitek</h3>
+            <ul>
+                <li>Lefelé kerekítesz, pedig felfelé kell (plafon).</li>
+                <li>Összekevered a minimum és maximum kérdését.</li>
+                <li>Nem tisztázod, mi számít skatulyának.</li>
+                <li>Azt hiszed, pontos eloszlást ad a képlet, pedig csak garanciát.</li>
+            </ul>
+        </div>
+        <h3>Mini önellenőrzés (válasz nélkül)</h3>
+        <ul>
+            <li>5 színű zokniból hányat kell húzni, hogy biztosan legyen pár?</li>
+            <li>9 labdát 4 dobozba teszünk. Mi a garantált minimum egy dobozban?</li>
+            <li>Mikor használod a plafon függvényt?</li>
+            <li>Mit jelent a skatulyák száma egy hétköznapi példában?</li>
+        </ul>
+        <h3>Összefoglaló</h3>
+        <ul>
+            <li>A skatulyázás garantált minimumot ad, nem pontos eloszlást.</li>
+            <li>Alapképlet: ⌈N / k⌉.</li>
+            <li>Először mindig az elemeket és a kategóriákat azonosítsd.</li>
+            <li>A párosítások ugyanennek egy speciális esete.</li>
+        </ul>
 </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -601,7 +619,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l">Norm&#225;l</button>
@@ -650,7 +668,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;gek:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szintek:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>
@@ -1085,7 +1103,7 @@
         function nextPracticeQuestion() {
             const enabled = getEnabledPracticeDifficulties();
             if (!enabled.length) {
-                practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
+                practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9gi szintet.';
                 practiceFeedback.style.color = '#f04747';
                 return;
             }
@@ -1195,7 +1213,7 @@
             practiceStartBtn.addEventListener('click', () => {
                 const enabled = getEnabledPracticeDifficulties();
                 if (!enabled.length) {
-                    practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
+                    practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9gi szintet.';
                     practiceFeedback.style.color = '#f04747';
                     return;
                 }

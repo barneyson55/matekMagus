@@ -533,74 +533,52 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>Logikai szita formula - alapok</h2>
-        <p>A logikai szita formula (inkl&#250;zi&#243;-exkl&#250;zi&#243;) akkor hasznos, ha t&#246;bb felt&#233;tel k&#246;z&#252;l legal&#225;bb az egyiket teljes&#237;t&#337; elemek sz&#225;m&#225;t keress&#252;k. K&#233;t halmaz eset&#233;n a metszetet egyszer levonjuk, mert a k&#246;z&#246;s elemeket k&#233;tszer sz&#225;moltuk.</p>
+        <h2>Logikai szita formula</h2>
+        <h3>Rövid bevezetés (Mi ez? Mire jó?)</h3>
+        <p>A logikai szita (inklúzió–exklúzió) akkor kell, amikor több feltétel közül legalább az egyik teljesül. Ha külön-külön számolsz, a közös elemeket kétszer számolnád. A formula pontosan ezt javítja ki. Így gyorsan megkapod az összes érintett elem számát.</p>
+        <h3>Alapfogalmak / definíciók</h3>
+        <ul>
+            <li><b>Elemszám:</b> |A| jelöli az A halmaz elemeinek számát.</li>
+            <li><b>Unió:</b> |A ∪ B| az A-ban vagy B-ben lévő elemek száma.</li>
+            <li><b>Metszet:</b> |A ∩ B| a közös elemek száma.</li>
+            <li><b>Logikai szita formula:</b> a duplaszámlálás korrigálása.</li>
+            <li><b>LKKT:</b> oszthatósági feladatoknál a közös elemeket adja.</li>
+            <li><b>Feltétel:</b> az a szabály, ami alapján A vagy B halmazt képezed.</li>
+        </ul>
         <div class="theory-grid">
             <div class="learning-hint">
-                <h3>K&#233;t halmaz szit&#225;ja</h3>
-                <p>Alap k&#233;plet:</p>
-                <p class="formula-line">|A&#8746;B| = |A| + |B| - |A&#8745;B|</p>
-                <ul>
-                    <li>|A| &#233;s |B|: k&#252;l&#246;n-k&#252;l&#246;n elemsz&#225;m.</li>
-                    <li>|A&#8745;B|: a k&#246;z&#246;s elemek sz&#225;ma.</li>
-                    <li>Ha a metszetet nem vonod le, a k&#246;z&#246;s elemeket k&#233;tszer sz&#225;molod.</li>
-                </ul>
+                <h3>Alapképlet (2 halmaz)</h3>
+                <p class="formula-line">|A ∪ B| = |A| + |B| − |A ∩ B|</p>
+                <p class="muted">A metszetet egyszer levonjuk, hogy ne legyen duplaszámolás.</p>
             </div>
             <div class="learning-hint">
-                <h3>H&#225;rom halmaz (kitekint&#233;s)</h3>
-                <p>Ha A, B, C is van:</p>
-                <p class="formula-line">|A&#8746;B&#8746;C| = |A| + |B| + |C| - |A&#8745;B| - |A&#8745;C| - |B&#8745;C| + |A&#8745;B&#8745;C|</p>
-                <p class="muted">A logika ugyanaz: egyszer sz&#225;molunk, majd a t&#246;bbsz&#246;r&#246;s besz&#225;m&#237;t&#225;st korrig&#225;ljuk.</p>
+                <h3>Három halmaz (kitekintés)</h3>
+                <p class="formula-line">|A ∪ B ∪ C| = |A| + |B| + |C| − |A ∩ B| − |A ∩ C| − |B ∩ C| + |A ∩ B ∩ C|</p>
+                <p class="muted">A logika ugyanaz: egyszer számolunk, majd javítjuk a többszörös beszámítást.</p>
             </div>
         </div>
-        <div class="theory-section">
-            <h3>Oszthat&#243;s&#225;gi szita</h3>
-            <p>1-t&#337;l N-ig a-val vagy b-vel oszthat&#243; sz&#225;mok sz&#225;ma:</p>
-            <ul>
-                <li>|A| = floor(N / a)</li>
-                <li>|B| = floor(N / b)</li>
-                <li>|A&#8745;B| = floor(N / lkkt(a, b))</li>
-            </ul>
-            <p>A v&#233;geredm&#233;ny: |A&#8746;B| = |A| + |B| - |A&#8745;B|.</p>
-        </div>
-        <div class="theory-section">
-            <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre</h3>
+        <h3>Lépésről lépésre példa (1–2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. példa – felmérés</h4>
+            <p>18-an sportolnak, 12-en zenélnek, 5-en mindkettőt. Hányan sportolnak vagy zenélnek?</p>
             <ol>
-                <li>&#205;rd fel, mi az A &#233;s B halmaz (vagy a felt&#233;telek).</li>
-                <li>Sz&#225;mold ki |A| &#233;s |B| elemsz&#225;m&#225;t.</li>
-                <li>Sz&#225;mold ki a metszetet: |A&#8745;B|.</li>
-                <li>Alkalmazd a szita formul&#225;t: |A&#8746;B| = |A| + |B| - |A&#8745;B|.</li>
+                <li>|A| = 18, |B| = 12, |A ∩ B| = 5.</li>
+                <li>|A ∪ B| = 18 + 12 − 5.</li>
+                <li>Az eredmény 25.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Gyakori hib&#225;k</h3>
-            <ul>
-                <li>A metszetet elfelejted levonni.</li>
-                <li>Az LKKT helyett szorzatot haszn&#225;lsz (ez csak akkor j&#243;, ha a &#233;s b relat&#237;v pr&#237;mek).</li>
-                <li>Nem ellen&#337;rz&#246;d, hogy a metszet nem nagyobb, mint |A| vagy |B|.</li>
-            </ul>
-        </div>
-        <div class="theory-section">
-            <h3>Mini-ellen&#337;rz&#233;s</h3>
-            <ul>
-                <li>|A| = 12, |B| = 9, |A&#8745;B| = 4. Mennyi |A&#8746;B|? (17)</li>
-                <li>1..30 k&#246;z&#246;tt h&#225;ny sz&#225;m oszthat&#243; 2-vel vagy 5-tel? (21)</li>
-                <li>Ha |A&#8746;B| = 18, |A| = 11, |B| = 10, akkor |A&#8745;B| = ? (3)</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott példa</h3>
+            <h4>2. példa – oszthatósági szita</h4>
             <p>1 és 30 között hány szám osztható 2-vel vagy 5-tel?</p>
             <ol>
-                <li>|A| = floor(30 / 2) = 15.</li>
-                <li>|B| = floor(30 / 5) = 6.</li>
-                <li>|A ∩ B| = floor(30 / 10) = 3.</li>
-                <li>|A ∪ B| = 15 + 6 - 3 = 18.</li>
+                <li>A = 2-vel oszthatók: 30 / 2 = 15.</li>
+                <li>B = 5-tel oszthatók: 30 / 5 = 6.</li>
+                <li>Közös elemek: LKKT(2,5) = 10, ezért 30 / 10 = 3.</li>
+                <li>Összesen: |A ∪ B| = 15 + 6 − 3 = 18.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Ábra: duplaszámlálás korrigálása</h3>
+            <h3>Vizuális magyarázat</h3>
             <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <circle cx="130" cy="80" r="55" fill="rgba(160,191,224,0.25)" stroke="#4A55A2" stroke-width="2" />
                 <circle cx="190" cy="80" r="55" fill="rgba(120,149,203,0.25)" stroke="#4A55A2" stroke-width="2" />
@@ -610,8 +588,31 @@
                 <text x="110" y="30" font-size="14" font-weight="600">A</text>
                 <text x="200" y="30" font-size="14" font-weight="600">B</text>
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A metszetet egyszer levonjuk, ezért lesz az összesen 18.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A metszet középen egyszer szerepel, ezért vonjuk le egyszer.</p>
         </div>
+        <div class="learning-hint">
+            <h3>Gyakori hibák / tévhitek</h3>
+            <ul>
+                <li>A metszetet elfelejted levonni, ezért túl nagy számot kapsz.</li>
+                <li>LKKT helyett szorzatot használsz, pedig nem mindig relatív prímek a számok.</li>
+                <li>Nem ellenőrzöd, hogy |A ∩ B| ≤ |A| és |B|.</li>
+                <li>Összekevered az uniót a metszettel.</li>
+            </ul>
+        </div>
+        <h3>Mini önellenőrzés (válasz nélkül)</h3>
+        <ul>
+            <li>|A| = 12, |B| = 9, |A ∩ B| = 4. Mennyi |A ∪ B|?</li>
+            <li>1 és 40 között hány szám osztható 4-gyel vagy 6-tal?</li>
+            <li>Mit jelent a duplaszámlálás a szita formulában?</li>
+            <li>Mikor kell LKKT-t használni oszthatósági feladatnál?</li>
+        </ul>
+        <h3>Összefoglaló</h3>
+        <ul>
+            <li>A szita formula az unió elemszámát adja meg.</li>
+            <li>Képlet: |A ∪ B| = |A| + |B| − |A ∩ B|.</li>
+            <li>Oszthatóságnál a metszethez LKKT kell.</li>
+            <li>Venn-diagrammal gyorsan ellenőrizhető a logika.</li>
+        </ul>
 </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -696,7 +697,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -740,7 +741,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;gek:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szintek:</span>
             <label><input type="checkbox" class="practice-difficulty" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input type="checkbox" class="practice-difficulty" value="norm&#225;l"> Norm&#225;l</label>
             <label><input type="checkbox" class="practice-difficulty" value="neh&#233;z"> Neh&#233;z</label>

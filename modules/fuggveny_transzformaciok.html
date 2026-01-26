@@ -487,59 +487,38 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>F&#252;ggv&#233;nytranszform&#225;ci&#243;k</h2>
-        <p>Az alapf&#252;ggv&#233;ny (f) grafikonj&#225;t eltol&#225;sokkal, t&#252;kr&#246;z&#233;sekkel &#233;s ny&#250;jt&#225;sokkal alak&#237;tjuk &#225;t.
-            A leg&#225;ltal&#225;nosabb alak: <span class="formula-line">g(x) = a f(b(x - h)) + k</span>.</p>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>Eltol&#225;sok</h3>
-                <ul>
-                    <li><strong>g(x) = f(x) + k</strong>: f&#252;gg&#337;leges eltol&#225;s k egys&#233;ggel.</li>
-                    <li><strong>g(x) = f(x - h)</strong>: v&#237;zszintes eltol&#225;s h egys&#233;ggel.</li>
-                    <li>k &gt; 0 felfel&#233;, k &lt; 0 lefel&#233; tol.</li>
-                    <li>h &gt; 0 jobbra, h &lt; 0 balra tol.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>T&#252;kr&#246;z&#233;s &#233;s sk&#225;l&#225;z&#225;s</h3>
-                <ul>
-                    <li><strong>g(x) = -f(x)</strong>: t&#252;kr&#246;z&#233;s az x-tengelyre.</li>
-                    <li><strong>g(x) = f(-x)</strong>: t&#252;kr&#246;z&#233;s az y-tengelyre.</li>
-                    <li><strong>g(x) = a f(x)</strong>: f&#252;gg&#337;leges ny&#250;jt&#225;s / &#246;sszenyom&#225;s.</li>
-                    <li><strong>g(x) = f(bx)</strong>: v&#237;zszintes ny&#250;jt&#225;s / &#246;sszenyom&#225;s.</li>
-                </ul>
-            </div>
-        </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A transzform&#225;ci&#243;k azt mutatj&#225;k meg, hogyan v&#225;ltozik egy grafikon eltol&#225;ssal, t&#252;kr&#246;z&#233;ssel vagy ny&#250;jt&#225;ssal. &#205;gy egy ismert alapf&#252;ggv&#233;nyb&#337;l gyorsan felrajzolhatod a bonyolultabb alakot. El&#233;g meg&#233;rteni, hogy a bels&#337; tagok v&#237;zszintesen, a k&#252;ls&#337;k f&#252;gg&#337;legesen hatnak. Ezzel id&#337;t sp&#243;rolsz grafikonrajzol&#225;sn&#225;l &#233;s feladatmegold&#225;sn&#225;l.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>F&#252;gg&#337;leges eltol&#225;s:</b> <span class="formula-line">g(x) = f(x) + k</span> (k &gt; 0 fel, k &lt; 0 le).</li>
+            <li><b>V&#237;zszintes eltol&#225;s:</b> <span class="formula-line">g(x) = f(x - h)</span> (h &gt; 0 jobbra, h &lt; 0 balra).</li>
+            <li><b>T&#252;kr&#246;z&#233;s:</b> <span class="formula-line">g(x) = -f(x)</span> (x-tengely), <span class="formula-line">g(x) = f(-x)</span> (y-tengely).</li>
+            <li><b>F&#252;gg&#337;leges ny&#250;jt&#225;s/&#246;sszenyom&#225;s:</b> <span class="formula-line">g(x) = a f(x)</span>.</li>
+            <li><b>V&#237;zszintes ny&#250;jt&#225;s/&#246;sszenyom&#225;s:</b> <span class="formula-line">g(x) = f(bx)</span>.</li>
+            <li><b>&#193;ltal&#225;nos alak:</b> <span class="formula-line">g(x) = a f(b(x - h)) + k</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Gyors ellen&#337;rz&#233;s</h3>
-            <ul>
-                <li>A bels&#337; (x - h) jobbra tol, m&#237;g (x + h) balra.</li>
-                <li>A negat&#237;v el&#337;jel a t&#252;kr&#246;z&#233;st jelzi.</li>
-                <li>A k&#252;ls&#337; szorz&#243; (a) a magass&#225;got, a bels&#337; (b) a sz&#233;less&#233;get v&#225;ltoztatja.</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h3>P&#233;lda</h3>
-            <p class="muted">Ha f(x) = x^2 &#233;s g(x) = -2 f(3(x - 1)) + 4, akkor:</p>
-            <ul>
-                <li>1 egys&#233;ggel jobbra tol&#225;s.</li>
-                <li>T&#252;kr&#246;z&#233;s az x-tengelyre (a &lt; 0).</li>
-                <li>F&#252;gg&#337;leges ny&#250;jt&#225;s 2x.</li>
-                <li>V&#237;zszintes &#246;sszenyom&#225;s 3x.</li>
-                <li>4 egys&#233;ggel felfel&#233; tol&#225;s.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>f(x) = x&#178;, g(x) = (x - 2)&#178; + 1:</p>
+            <h4>1. p&#233;lda &#8211; eltol&#225;s</h4>
+            <p>Legyen <span class="formula-line">g(x) = f(x - 2) + 3</span>.</p>
             <ol>
-                <li>(x - 2) &#8594; 2-vel jobbra tol&#225;s.</li>
-                <li>+1 &#8594; 1-gyel felfel&#233; tol&#225;s.</li>
-                <li>Cs&#250;cs: (0, 0) &#8594; (2, 1).</li>
+                <li>(x - 2) azt jelenti: 2-vel jobbra tol&#225;s.</li>
+                <li>+3 azt jelenti: 3-mal felfel&#233; tol&#225;s.</li>
+                <li>Egy pont (0, 0) &#237;gy (2, 3) helyre ker&#252;l.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: eltol&#225;s</h3>
+            <h4>2. p&#233;lda &#8211; t&#252;kr&#246;z&#233;s &#233;s ny&#250;jt&#225;s</h4>
+            <p>Legyen <span class="formula-line">h(x) = -2 f(0.5x)</span>.</p>
+            <ol>
+                <li>A m&#237;nusz jel az x-tengelyre t&#252;kr&#246;z.</li>
+                <li>A szorz&#243; 2 f&#252;gg&#337;legesen ny&#250;jt.</li>
+                <li>A 0.5x v&#237;zszintesen ny&#250;jt (k&#233;tszeres&#233;re).</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (eltol&#225;s)</h3>
             <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <line x1="160" y1="20" x2="160" y2="140" stroke="#4A55A2" stroke-width="2" />
                 <line x1="40" y1="100" x2="280" y2="100" stroke="#4A55A2" stroke-width="2" />
@@ -550,7 +529,34 @@
             </svg>
             <p style="font-size: 0.95em; color: var(--text-light);">A cs&#250;cs helye mutatja az eltol&#225;st.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>&#214;sszekevered, hogy (x - h) jobbra, (x + h) balra tol.</li>
+                <li>A bels&#337; szorz&#243;t (b) nem ford&#237;tva &#233;rtelmezed (&#246;sszenyom&#225;s vs ny&#250;jt&#225;s).</li>
+                <li>T&#252;kr&#246;z&#233;st &#233;s eltol&#225;st rossz sorrendben k&#233;pzelsz el.</li>
+                <li>Nem friss&#237;ted a kiemelt pontokat (cs&#250;cs, z&#233;rushely) a transzform&#225;ci&#243; ut&#225;n.</li>
+                <li>Az a &#233;s b szerep&#233;t felcser&#233;led.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mit csin&#225;l a <span class="formula-line">f(x) + 5</span>?</li>
+            <li>Merre tol a <span class="formula-line">f(x + 4)</span>?</li>
+            <li>Mit jelent a <span class="formula-line">-f(x)</span>?</li>
+            <li>Ny&#250;jt vagy &#246;sszenyom a <span class="formula-line">f(3x)</span>?</li>
+            <li>&#205;rd le egy pont (1, -2) &#250;j hely&#233;t a <span class="formula-line">g(x) = f(x - 1) + 4</span> eset&#233;n.</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A k&#252;ls&#337; tagok (a, k) f&#252;gg&#337;legesen hatnak.</li>
+            <li>A bels&#337; tagok (b, h) v&#237;zszintesen hatnak.</li>
+            <li>Negat&#237;v el&#337;jel t&#252;kr&#246;z&#233;st jelent.</li>
+            <li>A transzform&#225;ci&#243; a grafikon minden pontj&#225;ra ugyan&#250;gy hat.</li>
+            <li>Mindig egy pont elmozdul&#225;s&#225;val ellen&#337;rizd a l&#233;p&#233;seket.</li>
+        </ul>
+
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -624,7 +630,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -668,7 +674,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

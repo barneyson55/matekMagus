@@ -476,32 +476,71 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Gondolkod&#225;si m&#243;dszerek, Halmazok</h2>
-        <p>T&#233;maz&#225;r&#243; a halmazok, logikai m&#369;veletek &#233;s alapstrat&#233;gi&#225;k &#225;ttekint&#233;s&#233;re.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a t&#233;maz&#225;r&#243; a logikus gondolkod&#225;s &#233;s a halmazelm&#233;let alapjait foglalja &#246;ssze. Akkor hasznos, amikor t&#246;bb felt&#233;tel k&#246;z&#246;tt kell rendet tenned, &#233;s gyorsan szeretn&#233;l d&#246;nteni. A t&#233;mak&#246;r&#246;k egym&#225;sra &#233;p&#252;lnek: el&#337;bb a halmazm&#369;veletek, majd a szita formula &#233;s a skatuly&#225;z&#225;s. Ha ezeket &#233;rted, sok kombinatorikai feladat k&#246;nnyebb&#233; v&#225;lik.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Halmaz:</b> elemek j&#243;l meghat&#225;rozott &#246;sszess&#233;ge.</li>
+            <li><b>Elem:</b> egy konkr&#233;t objektum, amely benne van a halmazban.</li>
+            <li><b>Alaphalmaz (U):</b> a vizsg&#225;lat &#246;sszes lehets&#233;ges eleme.</li>
+            <li><b>Uni&#243; (A &#8746; B):</b> ami A-ban vagy B-ben benne van.</li>
+            <li><b>Metszet (A &#8745; B):</b> ami mindk&#233;t halmaz k&#246;z&#246;s eleme.</li>
+            <li><b>Komplementer (U \ A):</b> ami az alaphalmazban van, de A-ban nincs.</li>
+            <li><b>Logikai szita formula:</b> a duplasz&#225;ml&#225;l&#225;st jav&#237;t&#243; k&#233;plet elemsz&#225;mokra.</li>
+            <li><b>Skatulya-elv:</b> ha t&#246;bb elemet osztasz kevesebb kateg&#243;ri&#225;ba, biztosan lesz ism&#233;tl&#337;d&#233;s.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
-                <li>Halmazm&#369;veletek &#233;s Venn-diagram</li>
-<li>Logikai k&#246;vetkeztet&#233;s</li>
-<li>Kombin&#225;l&#243; gondolkod&#225;s alapjai</li>
+                <li>Halmazm&#369;veletek</li>
+                <li>Logikai szita formula</li>
+                <li>Skatulya-elv, p&#225;ros&#237;t&#225;sok</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">|A &#8746; B| = |A| + |B| &#8722; |A &#8745; B|</span></li>
-<li><span class="formula-line">A komplementere: U \ A</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tanul&#225;si f&#243;kusz</h3>
-                <ul>
-                    <li>&#201;rtsd a defin&#237;ci&#243;kat &#233;s jel&#246;l&#233;seket.</li>
-                    <li>Gyakorold a tipikus feladatt&#237;pusokat.</li>
-                    <li>Ellen&#337;rizd a m&#233;rt&#233;kegys&#233;geket &#233;s a logik&#225;t.</li>
-                </ul>
-            </div>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; halmazm&#369;velet</h4>
+            <p>Legyen A = {1,2,3,4} &#233;s B = {3,4,5}.</p>
+            <ol>
+                <li>Uni&#243;: A &#8746; B = {1,2,3,4,5}.</li>
+                <li>Metszet: A &#8745; B = {3,4}.</li>
+                <li>K&#252;l&#246;nbs&#233;g: A \ B = {1,2}.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; logikai szita</h4>
+            <p>Feladat: 1 &#233;s 30 k&#246;z&#246;tt h&#225;ny sz&#225;m oszthat&#243; 2-vel vagy 3-mal?</p>
+            <ol>
+                <li>A = 2-vel oszthat&#243;k: 30 / 2 = 15.</li>
+                <li>B = 3-mal oszthat&#243;k: 30 / 3 = 10.</li>
+                <li>K&#246;z&#246;s elemek: LKKT(2,3) = 6, ez&#233;rt 30 / 6 = 5.</li>
+                <li>&#214;sszesen: |A &#8746; B| = 15 + 10 &#8722; 5 = 20.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>A metszetet elfelejted levonni, ez&#233;rt t&#250;l nagy elemsz&#225;m j&#246;n ki.</li>
+                <li>Az alaphalmazt nem tiszt&#225;zod, &#237;gy rossz komplementert sz&#225;molsz.</li>
+                <li>A skatuly&#225;z&#225;sn&#225;l &#246;sszekevered a minimum &#233;s maximum k&#233;rd&#233;s&#233;t.</li>
+                <li>A halmazok elemeit sorrendben kezeled, pedig a sorrend nem sz&#225;m&#237;t.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mit jelent az, hogy A &#8834; B?</li>
+            <li>Sz&#225;mold ki A &#8745; B-t, ha A = {1,2,3,4} &#233;s B = {3,5}.</li>
+            <li>1 &#233;s 24 k&#246;z&#246;tt h&#225;ny sz&#225;m oszthat&#243; 3-mal vagy 4-gyel?</li>
+            <li>5 sz&#237;n&#369; zoknib&#243;l h&#225;nyat kell h&#250;zni, hogy biztosan legyen p&#225;r?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Halmazm&#369;veletekhez mindig tiszt&#225;zd az alaphalmazt.</li>
+            <li>A logikai szita a duplasz&#225;ml&#225;l&#225;st korrig&#225;lja.</li>
+            <li>A skatuly&#225;z&#225;s garant&#225;lt minimumot ad.</li>
+            <li>Jel&#246;l&#233;sek: &#8746; uni&#243;, &#8745; metszet, \ k&#252;l&#246;nbs&#233;g.</li>
+            <li>R&#246;vid, l&#233;p&#233;senk&#233;nti gondolkod&#225;ssal elker&#252;lheted a tipikus hib&#225;kat.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -534,7 +573,7 @@
 
     <div id="teszt" class="tab-content card" role="tabpanel">
         <h2>Teszt</h2>
-        <p>Alt&#233;ma-szint&#369; teszt a Gondolkod&#225;si m&#243;dszerek, Halmazok t&#233;mak&#246;r f&#337; fogalmaib&#243;l.</p>
+        <p>Alt&#233;ma-szint&#369; teszt a Gondolkod&#225;si m&#243;dszerek, Halmazok alt&#233;ma f&#337; fogalmaib&#243;l.</p>
         <div class="learning-hint" data-role="test-help">
             <h3>Megold&#225;si l&#233;p&#233;sek</h3>
             <ul>
@@ -546,7 +585,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="K&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="Norm&#225;l" type="button">Norm&#225;l</button>
@@ -555,11 +594,11 @@
             </div>
         </div>
         <div class="test-intro" id="test-intro">
-            <p><b>Mit tartalmaz a teszt?</b> Alt&#233;ma-szint&#369; teszt Gondolkod&#225;si m&#243;dszerek, Halmazok t&#233;mak&#246;rb&#337;l. 10 k&#233;rd&#233;s neh&#233;zs&#233;gi szintenk&#233;nt.</p>
+            <p><b>Mit tartalmaz a teszt?</b> Alt&#233;ma-szint&#369; teszt a Gondolkod&#225;si m&#243;dszerek, Halmazok alt&#233;m&#225;b&#243;l. 10 k&#233;rd&#233;s neh&#233;zs&#233;gi szintenk&#233;nt.</p>
             <ul>
-                <li>Halmazm&#369;veletek &#233;s Venn-diagram</li>
-<li>Logikai k&#246;vetkeztet&#233;s</li>
-<li>Kombin&#225;l&#243; gondolkod&#225;s alapjai</li>
+                <li>Halmazm&#369;veletek</li>
+                <li>Logikai szita formula</li>
+                <li>Skatulya-elv, p&#225;ros&#237;t&#225;sok</li>
             </ul>
             <button id="start-test-btn" class="btn btn-primary" type="button">Teszt ind&#237;t&#225;sa</button>
         </div>
@@ -596,7 +635,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="K&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="Norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="Neh&#233;z"> Neh&#233;z</label>

@@ -484,52 +484,37 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Parit&#225;s (p&#225;ros, p&#225;ratlan)</h2>
-        <p>A f&#252;ggv&#233;ny akkor p&#225;ros, ha <span class="formula-line">f(-x) = f(x)</span>, &#233;s p&#225;ratlan, ha <span class="formula-line">f(-x) = -f(x)</span>. A parit&#225;s csak akkor &#233;rtelmezhet&#337;, ha az &#233;rtelmez&#233;si tartom&#225;ny szimmetrikus a 0 pontra.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A parit&#225;s azt mutatja meg, hogy a f&#252;ggv&#233;ny grafikonja szimmetrikus-e. P&#225;ros f&#252;ggv&#233;nyn&#233;l a grafikon t&#252;kr&#246;zhet&#337; az y-tengelyre, p&#225;ratlann&#225;l az orig&#243;ra. Ez seg&#237;t gyorsan felismerni a grafikon alakj&#225;t &#233;s egyszer&#369;s&#237;teni a sz&#225;mol&#225;st. Parit&#225;st csak akkor vizsg&#225;lunk, ha a tartom&#225;ny szimmetrikus a 0 pontra.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>P&#225;ros f&#252;ggv&#233;ny:</b> <span class="formula-line">f(-x) = f(x)</span>, tengelyes szimmetria az y-tengelyre.</li>
+            <li><b>P&#225;ratlan f&#252;ggv&#233;ny:</b> <span class="formula-line">f(-x) = -f(x)</span>, orig&#243; szimmetria.</li>
+            <li><b>Szimmetrikus tartom&#225;ny:</b> ha x benne van, akkor -x is benne van.</li>
+            <li><b>Egyik sem:</b> ha egyik felt&#233;tel sem teljes&#252;l.</li>
+            <li><b>Nulla f&#252;ggv&#233;ny:</b> egyszerre p&#225;ros &#233;s p&#225;ratlan.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
-            <ul>
-                <li>P&#225;ros &#233;s p&#225;ratlan defin&#237;ci&#243;k</li>
-                <li>Grafikon szimmetri&#225;k</li>
-                <li>Vegyes tagok: egyik sem</li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>P&#225;ros f&#252;ggv&#233;ny</h3>
-                <ul>
-                    <li><span class="formula-line">f(-x) = f(x)</span></li>
-                    <li>P&#233;lda: <span class="formula-line">x^2</span>, <span class="formula-line">|x|</span>, <span class="formula-line">cos x</span></li>
-                    <li>Szimmetria: y-tengely</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>P&#225;ratlan f&#252;ggv&#233;ny</h3>
-                <ul>
-                    <li><span class="formula-line">f(-x) = -f(x)</span></li>
-                    <li>P&#233;lda: <span class="formula-line">x^3</span>, <span class="formula-line">x</span>, <span class="formula-line">sin x</span></li>
-                    <li>Szimmetria: orig&#243;</li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>Ha p&#225;ros &#233;s p&#225;ratlan tag is van, akkor egyik sem.</li>
-                <li>Az abszol&#250;t&#233;rt&#233;k mindig p&#225;ros.</li>
-                <li>A nulla f&#252;ggv&#233;ny egyszerre p&#225;ros &#233;s p&#225;ratlan.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>f(x) = x&#178; p&#225;ros, g(x) = x&#179; p&#225;ratlan:</p>
+            <h4>1. p&#233;lda &#8211; p&#225;ros f&#252;ggv&#233;ny</h4>
+            <p>Legyen <span class="formula-line">f(x) = x^2 - 4</span>.</p>
             <ol>
-                <li>f(-x) = (-x)&#178; = x&#178; &#8594; p&#225;ros.</li>
-                <li>g(-x) = (-x)&#179; = -x&#179; &#8594; p&#225;ratlan.</li>
+                <li>Sz&#225;mold ki: <span class="formula-line">f(-x) = (-x)^2 - 4</span>.</li>
+                <li>Egyszer&#369;s&#237;tve: <span class="formula-line">f(-x) = x^2 - 4</span>.</li>
+                <li>Mivel <span class="formula-line">f(-x) = f(x)</span>, ez&#233;rt p&#225;ros.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: szimmetria</h3>
+            <h4>2. p&#233;lda &#8211; p&#225;ratlan f&#252;ggv&#233;ny</h4>
+            <p>Legyen <span class="formula-line">g(x) = x^3 - x</span>.</p>
+            <ol>
+                <li><span class="formula-line">g(-x) = (-x)^3 - (-x)</span>.</li>
+                <li>Egyszer&#369;s&#237;tve: <span class="formula-line">g(-x) = -x^3 + x</span>.</li>
+                <li>Ez <span class="formula-line">-(x^3 - x)</span>, ez&#233;rt <span class="formula-line">g(-x) = -g(x)</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (szimmetria)</h3>
             <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <line x1="160" y1="20" x2="160" y2="140" stroke="#4A55A2" stroke-width="2" />
                 <line x1="40" y1="100" x2="280" y2="100" stroke="#4A55A2" stroke-width="2" />
@@ -542,7 +527,34 @@
             </svg>
             <p style="font-size: 0.95em; color: var(--text-light);">P&#225;rosn&#225;l tengelyes, p&#225;ratlann&#225;l orig&#243; szimmetria jelenik meg.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Nem ellen&#337;rz&#246;d, hogy a tartom&#225;ny szimmetrikus-e 0-ra.</li>
+                <li>Nem minden tagban cser&#233;led x-et -x-re.</li>
+                <li>Azt hiszed, hogy eltol&#225;s ut&#225;n is megmarad a parit&#225;s.</li>
+                <li>&#214;sszeadod a p&#225;ros &#233;s p&#225;ratlan tagokat, &#233;s m&#233;gis p&#225;rosnak/p&#225;ratlannak gondolod.</li>
+                <li>Az abszol&#250;t&#233;rt&#233;ket p&#225;ratlannak hiszed.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>P&#225;ros, p&#225;ratlan vagy egyik sem: <span class="formula-line">f(x) = x^4 + 2</span>?</li>
+            <li>P&#225;ros, p&#225;ratlan vagy egyik sem: <span class="formula-line">g(x) = x^3 + x</span>?</li>
+            <li>P&#225;ros, p&#225;ratlan vagy egyik sem: <span class="formula-line">h(x) = x^2 + x</span>?</li>
+            <li>Milyen szimmetri&#225;t v&#225;rsz a <span class="formula-line">|x|</span> grafikonj&#225;n?</li>
+            <li>Mikor nem &#233;rtelmezhet&#337; a parit&#225;s vizsg&#225;lata?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>P&#225;ros: <span class="formula-line">f(-x) = f(x)</span>, y-tengely szimmetria.</li>
+            <li>P&#225;ratlan: <span class="formula-line">f(-x) = -f(x)</span>, orig&#243; szimmetria.</li>
+            <li>A tartom&#225;ny legyen szimmetrikus a 0 pontra.</li>
+            <li>Ha p&#225;ros &#233;s p&#225;ratlan tag is van, gyakran egyik sem.</li>
+            <li>A nulla f&#252;ggv&#233;ny egyszerre p&#225;ros &#233;s p&#225;ratlan.</li>
+        </ul>
+
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -610,7 +622,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -654,7 +666,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

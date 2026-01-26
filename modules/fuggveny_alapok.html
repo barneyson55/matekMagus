@@ -484,53 +484,39 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>&#201;rtelmez&#233;si tartom&#225;ny, &#233;rt&#233;kk&#233;szlet</h2>
-        <p>A f&#252;ggv&#233;ny &#233;rtelmez&#233;si tartom&#225;nya azoknak az x-eknek a halmaza, ahol a szab&#225;ly &#233;rtelmezett. Az &#233;rt&#233;kk&#233;szlet pedig az a tartom&#225;ny, amelyet f(x) felvesz. Ezeket jel&#246;lj&#252;k D(f)-fel &#233;s R(f)-fel.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Az &#233;rtelmez&#233;si tartom&#225;ny megmondja, milyen x-ekre &#233;rtelmes a f&#252;ggv&#233;ny. Az &#233;rt&#233;kk&#233;szlet pedig azt, hogy ezekb&#337;l milyen y-&#233;rt&#233;kek j&#246;hetnek ki. Ezt mindig r&#246;gz&#237;tj&#252;k, miel&#337;tt sz&#225;molunk vagy grafikonr&#243;l olvasunk le adatokat. Val&#243;s helyzetben ez jelenti, hogy meddig haszn&#225;lhat&#243; a k&#233;plet (p&#233;ld&#225;ul nem oszthatsz 0-val, &#233;s nem vehetsz negat&#237;v sz&#225;m gy&#246;k&#233;t).</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>&#201;rtelmez&#233;si tartom&#225;ny:</b> <span class="formula-line">D(f)</span>, az &#246;sszes megengedett x.</li>
+            <li><b>&#201;rt&#233;kk&#233;szlet:</b> <span class="formula-line">R(f)</span>, az &#246;sszes felvett y.</li>
+            <li><b>Tiltott &#233;rt&#233;k:</b> olyan x, ahol a k&#233;plet nem &#233;rtelmezett (pl. 0 nevez&#337;).</li>
+            <li><b>Gy&#246;kfelt&#233;tel:</b> gy&#246;k alatt nem lehet negat&#237;v: <span class="formula-line">x + a &#8805; 0</span>.</li>
+            <li><b>T&#246;rtfelt&#233;tel:</b> nevez&#337; nem lehet 0: <span class="formula-line">x - a &#8800; 0</span>.</li>
+            <li><b>Grafikonolvas&#225;s:</b> D(f) az x-tengelyen, R(f) az y-tengelyen l&#225;tszik.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Jel&#246;l&#233;sek &#233;s alapok</h3>
-            <ul>
-                <li><span class="formula-line">D(f)</span> az &#233;rtelmez&#233;si tartom&#225;ny.</li>
-                <li><span class="formula-line">R(f)</span> az &#233;rt&#233;kk&#233;szlet.</li>
-                <li>Polinomokn&#225;l &#233;s line&#225;ris f&#252;ggv&#233;nyekn&#233;l a tartom&#225;ny &#225;ltal&#225;ban az &#246;sszes val&#243;s sz&#225;m.</li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Gy&#246;k&#246;s f&#252;ggv&#233;ny</h3>
-                <ul>
-                    <li><span class="formula-line">f(x) = sqrt(x + a)</span> eset&#233;n <span class="formula-line">x + a &gt;= 0</span>.</li>
-                    <li>Ez&#233;rt <span class="formula-line">D(f): x &gt;= -a</span>.</li>
-                    <li>Ha <span class="formula-line">f(x) = sqrt(x + a) + b</span>, akkor <span class="formula-line">R(f): y &gt;= b</span>.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>T&#246;rtf&#252;ggv&#233;ny</h3>
-                <ul>
-                    <li><span class="formula-line">f(x) = 1 / (x - a) + b</span> eset&#233;n <span class="formula-line">x != a</span>.</li>
-                    <li>Az &#233;rt&#233;kk&#233;szletb&#337;l is kimarad egy &#233;rt&#233;k: <span class="formula-line">y != b</span>.</li>
-                    <li>Az eltol&#225;sok a tiltott &#233;rt&#233;keket is eltolj&#225;k.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>A nevez&#337; nem lehet 0, a gy&#246;k alatt pedig nem lehet negat&#237;v sz&#225;m.</li>
-                <li>Parabol&#225;kn&#225;l a cs&#250;cs adja a minimumot vagy maximumot.</li>
-                <li>Grafikonr&#243;l gyorsan leolvashat&#243; a tartom&#225;ny &#233;s az &#233;rt&#233;kk&#233;szlet.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>f(x) = 2x + 1 a {0, 1, 2} halmazon:</p>
+            <h4>1. p&#233;lda &#8211; gy&#246;kf&#252;ggv&#233;ny</h4>
+            <p>Legyen <span class="formula-line">f(x) = sqrt(x - 3)</span>.</p>
             <ol>
-                <li>f(0) = 1</li>
-                <li>f(1) = 3</li>
-                <li>f(2) = 5</li>
+                <li>A gy&#246;k alatt nem lehet negat&#237;v: <span class="formula-line">x - 3 &#8805; 0</span>.</li>
+                <li>Innen <span class="formula-line">x &#8805; 3</span>, teh&#225;t <span class="formula-line">D(f): x &#8805; 3</span>.</li>
+                <li>A gy&#246;k &#233;rt&#233;ke nemnegat&#237;v, ez&#233;rt <span class="formula-line">R(f): y &#8805; 0</span>.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: lek&#233;pez&#233;s</h3>
+            <h4>2. p&#233;lda &#8211; t&#246;rtf&#252;ggv&#233;ny eltol&#225;ssal</h4>
+            <p>Legyen <span class="formula-line">g(x) = 2 / (x + 1) - 4</span>.</p>
+            <ol>
+                <li>A nevez&#337; nem lehet 0: <span class="formula-line">x + 1 &#8800; 0</span> &#8594; <span class="formula-line">x &#8800; -1</span>.</li>
+                <li>Ez&#233;rt <span class="formula-line">D(g): x &#8800; -1</span>.</li>
+                <li>A t&#246;rt r&#233;sz sosem 0, ez&#233;rt <span class="formula-line">2 / (x + 1) &#8800; 0</span>.</li>
+                <li>&#205;gy <span class="formula-line">g(x) &#8800; -4</span>, teh&#225;t <span class="formula-line">R(g): y &#8800; -4</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (lek&#233;pez&#233;s)</h3>
             <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <rect x="30" y="30" width="100" height="100" rx="10" fill="none" stroke="#4A55A2" stroke-width="2" />
                 <rect x="190" y="30" width="100" height="100" rx="10" fill="none" stroke="#4A55A2" stroke-width="2" />
@@ -544,9 +530,36 @@
                 <line x1="100" y1="85" x2="190" y2="85" stroke="#7895CB" />
                 <line x1="100" y1="115" x2="190" y2="115" stroke="#7895CB" />
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">Minden bemenethez pontosan egy kimenet tartozik.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">Minden bemenethez pontosan egy kimenet tartozik, innen olvashat&#243; a D(f) &#233;s R(f).</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>&#214;sszekevered a D(f)-et &#233;s az R(f)-et.</li>
+                <li>Gy&#246;k alatt engedsz meg negat&#237;v sz&#225;mot.</li>
+                <li>T&#246;rtf&#252;ggv&#233;nyn&#233;l elfelejted kiz&#225;rni a nevez&#337; z&#233;rus&#225;t.</li>
+                <li>Eltol&#225;s ut&#225;n nem m&#243;dos&#237;tod az &#233;rt&#233;kk&#233;szletet.</li>
+                <li>Diszkr&#233;t tartom&#225;nyn&#225;l folytonos intervallumot &#237;rsz.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi a D(f) &#233;s R(f) a <span class="formula-line">f(x) = sqrt(2x + 1)</span> eset&#233;n?</li>
+            <li>Hol nem &#233;rtelmezett a <span class="formula-line">g(x) = 3 / (x - 5)</span>?</li>
+            <li>Mi a tartom&#225;ny &#233;s az &#233;rt&#233;kk&#233;szlet a <span class="formula-line">h(x) = x^2 - 4</span> f&#252;ggv&#233;nyn&#233;l?</li>
+            <li>Milyen &#233;rt&#233;ket nem vehet fel a <span class="formula-line">p(x) = 1 / x + 2</span>?</li>
+            <li>Mit olvasol le a grafikonr&#243;l: hol kezd&#337;dik &#233;s hol v&#233;gz&#337;dik a g&#246;rbe?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A D(f) az &#246;sszes megengedett x, az R(f) az &#246;sszes lehets&#233;ges y.</li>
+            <li>Gy&#246;k alatt nem lehet negat&#237;v, nevez&#337; nem lehet 0.</li>
+            <li>Eltol&#225;s a tartom&#225;nyt vagy az &#233;rt&#233;kk&#233;szletet is m&#243;dos&#237;thatja.</li>
+            <li>A grafikonr&#243;l mindk&#233;t halmaz gyorsan leolvashat&#243;.</li>
+            <li>Mindig el&#337;sz&#246;r a tiltott &#233;rt&#233;keket keresd.</li>
+        </ul>
+
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -609,7 +622,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -653,7 +666,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

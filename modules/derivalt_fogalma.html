@@ -485,40 +485,72 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>A deriv&#225;lt fogalma</h2>
-        <p>A deriv&#225;lt a f&#252;ggv&#233;ny pillanatnyi v&#225;ltoz&#225;si sebess&#233;ge, az &#233;rint&#337; meredeks&#233;ge. Defin&#237;ci&#243;ja a differenciah&#225;nyados hat&#225;r&#233;rt&#233;ke.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A deriv&#225;lt megmutatja, milyen gyorsan v&#225;ltozik a f&#252;ggv&#233;ny egy adott pillanatban. Ez a pillanatnyi meredeks&#233;g, ez&#233;rt mozg&#225;sn&#225;l (sebess&#233;g), optimaliz&#225;l&#225;sn&#225;l &#233;s g&#246;rbevizsg&#225;latn&#225;l is alapfogalom. Ha a deriv&#225;lt pozit&#237;v, a f&#252;ggv&#233;ny n&#337;; ha negat&#237;v, cs&#246;kken. A defin&#237;ci&#243;ja a differenciah&#225;nyados hat&#225;r&#233;rt&#233;ke.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Differenciah&#225;nyados:</b> <span class="formula-line">(f(x0+h)-f(x0))/h</span>.</li>
+            <li><b>Deriv&#225;lt a pontban:</b> <span class="formula-line">f'(x0) = lim(h&#8594;0) (f(x0+h)-f(x0))/h</span>.</li>
+            <li><b>Deriv&#225;lt f&#252;ggv&#233;ny:</b> az <span class="formula-line">f'(x)</span> minden x-hez megadja a pillanatnyi meredeks&#233;get.</li>
+            <li><b>&#201;rint&#337; meredeks&#233;ge:</b> a deriv&#225;lt &#233;rt&#233;ke a pontban.</li>
+            <li><b>&#201;rint&#337; egyenlete:</b> <span class="formula-line">y = f(a) + f'(a)(x-a)</span>.</li>
+            <li><b>Fizikai jelent&#233;s:</b> pillanatnyi sebess&#233;g vagy v&#225;ltoz&#225;si &#252;tem.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Defin&#237;ci&#243;</h3>
+            <h4>1. p&#233;lda &#8211; deriv&#225;lt sz&#225;m&#237;t&#225;sa defin&#237;ci&#243;b&#243;l</h4>
+            <p>Legyen <span class="formula-line">f(x) = x^2</span>. Sz&#225;mold ki <span class="formula-line">f'(x)</span>-et.</p>
+            <ol>
+                <li>&#205;rd fel: <span class="formula-line">f'(x) = lim(h&#8594;0) (f(x+h)-f(x))/h</span>.</li>
+                <li>Helyettes&#237;t&#233;s: <span class="formula-line">((x+h)^2 - x^2)/h</span>.</li>
+                <li>Egyszer&#369;s&#237;t&#233;s: <span class="formula-line">(2xh + h^2)/h = 2x + h</span>.</li>
+                <li>Hat&#225;r&#233;rt&#233;k: <span class="formula-line">f'(x) = 2x</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; &#233;rt&#233;k egy pontban</h4>
+            <p>Legyen <span class="formula-line">f(x) = 3x + 1</span>. Sz&#225;mold ki <span class="formula-line">f'(2)</span>-t.</p>
+            <ol>
+                <li>A line&#225;ris f&#252;ggv&#233;ny deriv&#225;ltja a meredeks&#233;g: <span class="formula-line">f'(x) = 3</span>.</li>
+                <li>Behelyettes&#237;t&#233;s: <span class="formula-line">f'(2) = 3</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (&#233;rint&#337; meredeks&#233;ge)</h3>
+            <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
+                <line x1="30" y1="120" x2="290" y2="120" stroke="#4A55A2" stroke-width="2" />
+                <line x1="60" y1="140" x2="260" y2="20" stroke="#7895CB" stroke-width="3" />
+                <path d="M40 120 Q160 20 280 120" stroke="#2C3333" stroke-width="2" fill="none" />
+                <circle cx="160" cy="60" r="5" fill="#2C3333" />
+            </svg>
+            <p style="font-size: 0.95em; color: var(--text-light);">Az &#233;rint&#337; meredeks&#233;ge adja meg a pillanatnyi v&#225;ltoz&#225;si sebess&#233;get.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li><span class="formula-line">f'(x0) = lim(h&#8594;0) (f(x0+h)-f(x0))/h</span></li>
-                <li>Geometriai jelent&#233;s: &#233;rint&#337; meredeks&#233;ge.</li>
-                <li>Fizikai jelent&#233;s: pillanatnyi sebess&#233;g.</li>
+                <li>Behelyettes&#237;tesz <span class="formula-line">h=0</span>-t egyszer&#369;s&#237;t&#233;s el&#337;tt.</li>
+                <li>Elfelejted, hogy a deriv&#225;lt hat&#225;r&#233;rt&#233;k.</li>
+                <li>&#214;sszekevered az <span class="formula-line">x</span> &#233;s <span class="formula-line">x0</span> jel&#246;l&#233;st.</li>
+                <li>Rosszul bontod fel a z&#225;r&#243;jeleket a differenciah&#225;nyadosban.</li>
+                <li>A deriv&#225;ltat &#246;sszekevered az &#225;tlagos v&#225;ltoz&#225;ssal.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>Sz&#225;mol&#225;si l&#233;p&#233;sek</h3>
-                <ul>
-                    <li>&#205;rd fel a differenciah&#225;nyadost.</li>
-                    <li>Egyszer&#369;s&#237;ts &#233;s vond &#246;ssze a tagokat.</li>
-                    <li>Vedd a hat&#225;r&#233;rt&#233;ket h &#8594; 0 eset&#233;n.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Gyors p&#233;ld&#225;k</h3>
-                <ul>
-                    <li>f(x) = x^2 &#8594; f'(x) = 2x</li>
-                    <li>f(x) = ax + b &#8594; f'(x) = a</li>
-                    <li>f(x) = x^3 &#8594; f'(x) = 3x^2</li>
-                </ul>
-            </div>
-        </div>
-        <div class="card">
-            <h3>P&#233;ld&#225;k</h3>
-            <ul>
-                <li>f(x) = x^2, x0 = 3 &#8594; f'(3) = 6</li>
-                <li>f(x) = 2x + 1 &#8594; f'(x) = 2</li>
-            </ul>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Sz&#225;mold ki: <span class="formula-line">f'(x)</span>, ha <span class="formula-line">f(x) = x^3</span>.</li>
+            <li>Mi a geometriai jelent&#233;se a deriv&#225;ltnak?</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">f'(1)</span>, ha <span class="formula-line">f(x) = 5x - 2</span>.</li>
+            <li>Mikor nem l&#233;tezik a deriv&#225;lt?</li>
+            <li>&#205;rd fel az &#233;rint&#337; egyenlet&#233;t a <span class="formula-line">x=2</span> pontban, ha <span class="formula-line">f(2)=3</span> &#233;s <span class="formula-line">f'(2)=4</span>.</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A deriv&#225;lt a pillanatnyi v&#225;ltoz&#225;si sebess&#233;get &#237;rja le.</li>
+            <li>A defin&#237;ci&#243; a differenciah&#225;nyados hat&#225;r&#233;rt&#233;ke.</li>
+            <li>Geometriailag az &#233;rint&#337; meredeks&#233;ge.</li>
+            <li>A deriv&#225;lt el&#337;jele megmutatja a n&#246;veked&#233;st vagy cs&#246;kken&#233;st.</li>
+            <li>Az &#233;rint&#337; egyenlete: <span class="formula-line">y = f(a) + f'(a)(x-a)</span>.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -559,7 +591,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -593,7 +625,7 @@
 
     <div id="gyakorlas" class="tab-content card" role="tabpanel">
         <h2>Gyakorl&#225;s</h2>
-        <p class="practice-info">V&#233;gtelen&#237;tett gyakorl&#225;s. XP jutalom: k&#246;nny&#369; = 1 XP, norm&#225;l = 2 XP, neh&#233;z = 3 XP.</p>
+        <p class="practice-info">V&#233;gtelen&#237;tett gyakorl&#225;s. XP jutalom: k&#246;nny&#369; = 1 XP, norm&#225;l = 2 XP, neh&#233;z = 3 XP. A gyakorl&#225;s XP-t ad, de a teszt adja a nagyobb XP-jutalmat, &#233;s az XP-s&#225;vnak van maximuma.</p>
         <div class="learning-hint" data-role="practice-help">
             <h3>Gyakorl&#225;si tipp</h3>
             <ul>
@@ -603,7 +635,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

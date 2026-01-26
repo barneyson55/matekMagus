@@ -484,25 +484,62 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Tengelyes &#233;s k&#246;z&#233;ppontos t&#252;kr&#246;z&#233;s</h2>
-        <p>T&#252;kr&#246;z&#233;sn&#233;l az el&#337;jel v&#225;ltozik, a t&#225;vols&#225;gok megmaradnak.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>K&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">x-tengely: (x, y) &#8594; (x, -y)</span></li>
-<li><span class="formula-line">y-tengely: (x, y) &#8594; (-x, y)</span></li>
-<li><span class="formula-line">orig&#243;: (x, y) &#8594; (-x, -y)</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>Csak az &#233;rintett koordin&#225;ta el&#337;jele v&#225;ltozik.</li>
-<li>Ha 0 a koordin&#225;ta, nem v&#225;ltozik.</li>
-<li>Mindig jel&#246;ld a t&#252;kr&#246;z&#233;si tengelyt.</li>
-                </ul>
-            </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>T&#252;kr&#246;z&#233;sn&#233;l az alakzat a t&#252;k&#246;rtengely vagy a k&#246;z&#233;ppont t&#250;loldal&#225;ra ker&#252;l, mik&#246;zben a t&#225;vols&#225;gok &#233;s sz&#246;gek megmaradnak. Ez egy izometria, vagyis &#8222;nem ny&#250;jtja&#8221; &#233;s &#8222;nem zsugor&#237;tja&#8221; az alakzatot. Koordin&#225;tageometri&#225;ban egyszer&#369; el&#337;jelszab&#225;lyokkal sz&#225;molhatod ki az &#250;j pontokat. Ha ezeket biztosan tudod, gyorsan megoldod a feladatokat.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Tengelyes t&#252;kr&#246;z&#233;s:</b> a t&#252;k&#246;rtengely a <span class="formula-line">PP'</span> szakasz mer&#337;leges felez&#337;je.</li>
+            <li><b>K&#246;z&#233;ppontos t&#252;kr&#246;z&#233;s:</b> a k&#246;z&#233;ppont a <span class="formula-line">PP'</span> szakasz felez&#337;pontja (180&#176;-os forgat&#225;s).</li>
+            <li><b>T&#225;vols&#225;gtart&#225;s:</b> a pont &#233;s a t&#252;k&#246;rtengely t&#225;vols&#225;ga mindk&#233;t oldalon azonos.</li>
+            <li><b>x-tengelyre:</b> <span class="formula-line">(x, y) &#8594; (x, &#8722;y)</span>.</li>
+            <li><b>y-tengelyre:</b> <span class="formula-line">(x, y) &#8594; (&#8722;x, y)</span>.</li>
+            <li><b>orig&#243;ra:</b> <span class="formula-line">(x, y) &#8594; (&#8722;x, &#8722;y)</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; tengelyes t&#252;kr&#246;z&#233;s</h4>
+            <p>Adott: <span class="formula-line">A(3, &#8722;2)</span>, t&#252;kr&#246;z&#233;s az x-tengelyre.</p>
+            <ol>
+                <li>Az x koordin&#225;ta v&#225;ltozatlan: <span class="formula-line">3</span>.</li>
+                <li>Az y el&#337;jele v&#225;lt: <span class="formula-line">&#8722;2 &#8594; 2</span>.</li>
+                <li>&#218;j pont: <span class="formula-line">A'(3, 2)</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; k&#246;z&#233;ppontos t&#252;kr&#246;z&#233;s</h4>
+            <p>Adott: <span class="formula-line">B(&#8722;4, 1)</span>, t&#252;kr&#246;z&#233;s az orig&#243;ra.</p>
+            <ol>
+                <li>Mindk&#233;t el&#337;jel v&#225;ltozik.</li>
+                <li>&#218;j pont: <span class="formula-line">B'(4, &#8722;1)</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat</h3>
+            <p>Rajzolj egy pontot &#233;s a t&#252;k&#246;rtengelyt. A pontb&#243;l h&#250;zz mer&#337;legest a tengelyre, majd ugyanekkora t&#225;vols&#225;gra jel&#246;ld ki a t&#252;k&#246;rpontot a m&#225;sik oldalon. K&#246;z&#233;ppontos t&#252;kr&#246;z&#233;sn&#233;l a k&#246;z&#233;ppont a <span class="formula-line">PP'</span> szakasz felez&#337;pontja.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Mindk&#233;t koordin&#225;t&#225;t megv&#225;ltoztatod tengelyes t&#252;kr&#246;z&#233;sn&#233;l is.</li>
+                <li>Felcser&#233;led az x- &#233;s y-tengelyt.</li>
+                <li>Nem mer&#337;leges ir&#225;nyban m&#233;rsz t&#225;vols&#225;got a tengelyhez.</li>
+                <li>K&#246;z&#233;ppontos t&#252;kr&#246;z&#233;sn&#233;l elfelejted, hogy ez 180&#176;-os forgat&#225;s.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi lesz <span class="formula-line">P(2, 5)</span> k&#233;pe az y-tengelyre?</li>
+            <li>Mi lesz <span class="formula-line">Q(&#8722;3, &#8722;1)</span> k&#233;pe az x-tengelyre?</li>
+            <li>Mi lesz <span class="formula-line">R(4, &#8722;2)</span> k&#233;pe az orig&#243;ra?</li>
+            <li>Mit jelent az, hogy a t&#252;k&#246;rtengely a <span class="formula-line">PP'</span> szakasz mer&#337;leges felez&#337;je?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>T&#252;kr&#246;z&#233;sn&#233;l a hosszok &#233;s sz&#246;gek megmaradnak.</li>
+            <li>x-tengelyre: <span class="formula-line">(x, y) &#8594; (x, &#8722;y)</span>, y-tengelyre: <span class="formula-line">(x, y) &#8594; (&#8722;x, y)</span>.</li>
+            <li>K&#246;z&#233;ppontos t&#252;kr&#246;z&#233;s az orig&#243;ra: <span class="formula-line">(x, y) &#8594; (&#8722;x, &#8722;y)</span>.</li>
+            <li>A t&#252;k&#246;rpont mindig ugyanakkora t&#225;vols&#225;gra van a tengelyt&#337;l.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -542,7 +579,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -586,7 +623,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

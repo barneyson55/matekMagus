@@ -484,61 +484,73 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Monotonit&#225;s, sz&#233;ls&#337;&#233;rt&#233;kek</h2>
-        <p>A monotonit&#225;s megmutatja, hogy egy f&#252;ggv&#233;ny hol n&#337; vagy cs&#246;kken. A sz&#233;ls&#337;&#233;rt&#233;kek (minimum, maximum) pedig azt jelzik, hol veszi fel a f&#252;ggv&#233;ny a legkisebb vagy legnagyobb &#233;rt&#233;ket.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A monotonit&#225;s megmutatja, hogy egy f&#252;ggv&#233;ny hol n&#246;vekszik vagy cs&#246;kken. A sz&#233;ls&#337;&#233;rt&#233;kek (minimum, maximum) pedig azt jelzik, hol veszi fel a f&#252;ggv&#233;ny a legkisebb vagy legnagyobb &#233;rt&#233;ket. Ezeket haszn&#225;ljuk grafikonrajzol&#225;sn&#225;l, egyenl&#337;tlens&#233;gekn&#233;l &#233;s optimaliz&#225;l&#225;si feladatokn&#225;l is. Ha tudod, hol v&#225;lt ir&#225;nyt a f&#252;ggv&#233;ny, gyorsan &#225;tl&#225;tod a viselked&#233;s&#233;t.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Monoton n&#246;vekv&#337;:</b> ha x n&#337;, f(x) is n&#337; az adott intervallumon.</li>
+            <li><b>Monoton cs&#246;kken&#337;:</b> ha x n&#337;, f(x) cs&#246;kken az adott intervallumon.</li>
+            <li><b>Monoton intervallum:</b> olyan x-tartom&#225;ny, ahol a f&#252;ggv&#233;ny v&#233;gig csak n&#337; vagy csak cs&#246;kken.</li>
+            <li><b>Minimum:</b> a legkisebb felvett &#233;rt&#233;k (lok&#225;lis vagy glob&#225;lis).</li>
+            <li><b>Maximum:</b> a legnagyobb felvett &#233;rt&#233;k (lok&#225;lis vagy glob&#225;lis).</li>
+            <li><b>Sz&#233;ls&#337;&#233;rt&#233;k helye:</b> az x, ahol a f&#252;ggv&#233;ny ir&#225;nyt v&#225;lt (pl. cs&#250;cs).</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
-            <ul>
-                <li>Monotonit&#225;s intervallumon</li>
-                <li>Minimum &#233;s maximum</li>
-                <li>Parabola &#233;s abszol&#250;t&#233;rt&#233;k jellemz&#337;i</li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Monotonit&#225;s</h3>
-                <ul>
-                    <li><span class="formula-line">n&#246;vekv&#337;</span>: ha x n&#337;, f(x) is n&#337;.</li>
-                    <li><span class="formula-line">cs&#246;kken&#337;</span>: ha x n&#337;, f(x) cs&#246;kken.</li>
-                    <li>Az intervallumokat mindig hat&#225;rozd meg.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Sz&#233;ls&#337;&#233;rt&#233;k</h3>
-                <ul>
-                    <li><span class="formula-line">minimum</span>: a legkisebb felvett &#233;rt&#233;k.</li>
-                    <li><span class="formula-line">maximum</span>: a legnagyobb felvett &#233;rt&#233;k.</li>
-                    <li>A parabola cs&#250;csa mindig sz&#233;ls&#337;&#233;rt&#233;k.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>A meredeks&#233;g el&#337;jele d&#246;nti el a n&#246;veked&#233;st vagy cs&#246;kken&#233;st.</li>
-                <li>Parabol&#225;n&#225;l a cs&#250;cs x-koordin&#225;t&#225;ja v&#225;lt&#225;spontot jel&#246;l.</li>
-                <li>Abszol&#250;t&#233;rt&#233;kn&#233;l a t&#246;r&#233;spontn&#225;l van a sz&#233;ls&#337;&#233;rt&#233;k.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>f(x) = x&#178; - 4x + 1 jellemz&#233;se:</p>
+            <h4>1. p&#233;lda &#8211; line&#225;ris f&#252;ggv&#233;ny</h4>
+            <p>Legyen <span class="formula-line">f(x) = -2x + 3</span>.</p>
             <ol>
-                <li>Cs&#250;cs: x = 2, f(2) = -3.</li>
-                <li>Cs&#246;kken&#337; (&#8722;&#8734;, 2], n&#246;vekv&#337; [2, &#8734;).</li>
+                <li>A meredeks&#233;g negat&#237;v, ez&#233;rt a f&#252;ggv&#233;ny mindenhol cs&#246;kken.</li>
+                <li>Line&#225;ris f&#252;ggv&#233;nynek nincs maximuma &#233;s minimuma a teljes val&#243;s tartom&#225;nyon.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: monotonit&#225;s</h3>
+            <h4>2. p&#233;lda &#8211; parabola</h4>
+            <p>Legyen <span class="formula-line">g(x) = (x - 1)^2 - 4</span>.</p>
+            <ol>
+                <li>A cs&#250;cs <span class="formula-line">(1, -4)</span>, ez adja a minimumot.</li>
+                <li>Cs&#246;kken&#337; az <span class="formula-line">(-&#8734;, 1]</span> intervallumon.</li>
+                <li>N&#246;vekv&#337; a <span class="formula-line">[1, &#8734;)</span> intervallumon.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (minimum pont)</h3>
             <svg viewBox="0 0 320 120" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <line x1="40" y1="80" x2="280" y2="80" stroke="#4A55A2" stroke-width="2" />
                 <path d="M60 60 Q160 10 260 60" fill="none" stroke="#7895CB" stroke-width="3" />
                 <circle cx="160" cy="20" r="4" fill="#E74C3C" />
                 <text x="150" y="10" font-size="12">min</text>
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A minimum ut&#225;n a f&#252;ggv&#233;ny n&#246;vekedni kezd.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A minimum ut&#225;n a f&#252;ggv&#233;ny n&#246;vekedni kezd, ez&#233;rt k&#233;t monoton szakaszra bontjuk.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Nem bontod fel intervallumokra a parabol&#225;t vagy abszol&#250;t&#233;rt&#233;k f&#252;ggv&#233;nyt.</li>
+                <li>&#214;sszekevered a maximumot/minimumot az y-tengelymetszettel.</li>
+                <li>&#218;gy gondolod, hogy a cs&#250;cs mindig maximum (pedig lehet minimum is).</li>
+                <li>Line&#225;ris f&#252;ggv&#233;nyn&#233;l keresel sz&#233;ls&#337;&#233;rt&#233;ket a teljes tartom&#225;nyon.</li>
+                <li>Nem jel&#246;l&#246;d, hogy z&#225;rt vagy nyitott az intervallum v&#233;ge.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Monoton-e a <span class="formula-line">h(x) = 3x - 5</span> f&#252;ggv&#233;ny? Milyen ir&#225;nyban?</li>
+            <li>Mi a sz&#233;ls&#337;&#233;rt&#233;k &#233;s hol van a <span class="formula-line">p(x) = (x + 2)^2 - 1</span> f&#252;ggv&#233;nynek?</li>
+            <li>Mely intervallumokon cs&#246;kken a <span class="formula-line">q(x) = |x - 4|</span>?</li>
+            <li>Van-e maximuma a <span class="formula-line">r(x) = -x^2 + 6</span> f&#252;ggv&#233;nynek?</li>
+            <li>Mi alapj&#225;n d&#246;nt&#246;d el a monotonit&#225;st egy line&#225;ris f&#252;ggv&#233;nyn&#233;l?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A monotonit&#225;s mindig intervallumhoz k&#246;t&#246;tt.</li>
+            <li>A cs&#250;cs vagy t&#246;r&#233;spont jelzi, hol v&#225;ltozik az ir&#225;ny.</li>
+            <li>Line&#225;ris f&#252;ggv&#233;ny v&#233;gig n&#337; vagy v&#233;gig cs&#246;kken.</li>
+            <li>A sz&#233;ls&#337;&#233;rt&#233;ket a grafikonon is k&#246;nnyen leolvashatod.</li>
+            <li>Mindig &#237;rd le, hol cs&#246;kken &#233;s hol n&#246;vekszik.</li>
+        </ul>
+
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -610,7 +622,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -654,7 +666,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

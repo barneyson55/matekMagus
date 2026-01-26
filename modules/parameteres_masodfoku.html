@@ -484,63 +484,72 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Param&#233;teres m&#225;sodfok&#250; egyenletek</h2>
-        <p>A param&#233;teres egyenletben az egyik egy&#252;tthat&#243; hely&#233;n egy v&#225;ltoz&#243; param&#233;ter (pl. m) &#225;ll. A c&#233;l, hogy a param&#233;tert meghat&#225;rozzuk a felt&#233;telek alapj&#225;n.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Param&#233;teres feladatn&#225;l az egyenlet egy&#252;tthat&#243;i egy ismeretlen param&#233;tert (p&#233;ld&#225;ul m-et) tartalmaznak. A c&#233;l, hogy a param&#233;ter &#233;rt&#233;k&#233;t meghat&#225;rozd a megadott felt&#233;telek alapj&#225;n. Gyakran a diszkrimin&#225;ns vagy a Vi&#232;te-formul&#225;k adj&#225;k a kulcsot. Mindig figyelj arra, hogy a param&#233;terrel a megfelel&#337; tartom&#225;nyt is megkapd.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Param&#233;ter:</b> r&#246;gz&#237;tett, de ismeretlen &#233;rt&#233;k (m).</li>
+            <li><b>Param&#233;teres m&#225;sodfok&#250;:</b> <span class="formula-line">ax<sup>2</sup> + bx + c = 0</span>, ahol a, b vagy c m-et tartalmaz.</li>
+            <li><b>Diszkrimin&#225;ns:</b> <span class="formula-line">D = b<sup>2</sup> &#8722; 4ac</span>.</li>
+            <li><b>Kett&#337;s gy&#246;k:</b> D = 0.</li>
+            <li><b>Felt&#233;tel:</b> adott gy&#246;k, &#246;sszeg vagy szorzat a gy&#246;k&#246;kre.</li>
+            <li><b>Megold&#225;shalmaz:</b> azok az m &#233;rt&#233;kek, amelyek teljes&#237;tik a felt&#233;telt.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapform&#225;k</h3>
-            <ul>
-                <li><span class="formula-line">ax<sup>2</sup> + bx + c = 0</span>, ahol a, b vagy c tartalmazza m-et.</li>
-                <li><span class="formula-line">D = b<sup>2</sup> - 4ac</span></li>
-                <li><span class="formula-line">x<sub>1</sub> + x<sub>2</sub> = -b / a</span></li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Gyakori k&#233;rd&#233;sek</h3>
-                <ul>
-                    <li>Melyik m-re van kett&#337;s gy&#246;k? (D = 0)</li>
-                    <li>Melyik m-re adott az egyik gy&#246;k?</li>
-                    <li>Melyik m-re adott az &#246;sszeg vagy szorzat?</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Strat&#233;gia</h3>
-                <ul>
-                    <li>El&#337;sz&#246;r hat&#225;rozd meg a megfelel&#337; k&#233;pletet.</li>
-                    <li>Helyettes&#237;tsd be a felt&#233;teleket, majd oldd meg m-re.</li>
-                    <li>Mindig ellen&#337;rizd a kapott m-et.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>A Vi&#232;te-formul&#225;k gyorsan adnak felt&#233;teleket.</li>
-                <li>Diszkrimin&#225;nssal d&#246;nthet&#337; el a gy&#246;k&#246;k sz&#225;ma.</li>
-                <li>Tartsd egy helyen a m-es tagokat.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott példa</h3>
-            <p>x² - 2x + m = 0 esetén:</p>
+            <h4>1. p&#233;lda &#8211; gy&#246;k&#246;k sz&#225;ma diszkrimin&#225;nssal</h4>
+            <p>Vizsg&#225;ld: x<sup>2</sup> &#8722; 2x + m = 0.</p>
             <ol>
-                <li>D = b² - 4ac = 4 - 4m.</li>
-                <li>Ha m < 1, két megoldás; ha m = 1, egy megoldás; ha m > 1, nincs valós gyök.</li>
-                <li>Példa: m = 0 → x = 0 és x = 2.</li>
+                <li>D = (&#8722;2)<sup>2</sup> &#8722; 4 &#183; 1 &#183; m = 4 &#8722; 4m.</li>
+                <li>K&#233;t val&#243;s gy&#246;k: D &gt; 0 &#8594; m &lt; 1.</li>
+                <li>Kett&#337;s gy&#246;k: D = 0 &#8594; m = 1. Nincs val&#243;s gy&#246;k: m &gt; 1.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Ábra: diszkrimináns előjel</h3>
+            <h4>2. p&#233;lda &#8211; adott gy&#246;k</h4>
+            <p>Az x = 2 gy&#246;ke az x<sup>2</sup> &#8722; (m + 1)x + m = 0 egyenletnek.</p>
+            <ol>
+                <li>Helyettes&#237;t&#233;s: 4 &#8722; 2(m + 1) + m = 0.</li>
+                <li>Egyszer&#369;s&#237;t&#233;s: 4 &#8722; 2m &#8722; 2 + m = 0 &#8594; 2 &#8722; m = 0.</li>
+                <li>m = 2.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (D el&#337;jele)</h3>
             <svg viewBox="0 0 320 80" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <line x1="40" y1="40" x2="280" y2="40" stroke="#4A55A2" stroke-width="2" />
                 <circle cx="180" cy="40" r="5" fill="#2C3333" />
-                <text x="170" y="65" font-size="12">m = 1</text>
-                <text x="70" y="30" font-size="12">két gyök</text>
-                <text x="210" y="30" font-size="12">nincs gyök</text>
+                <text x="162" y="65" font-size="12">m = 1</text>
+                <text x="65" y="30" font-size="12">m &lt; 1</text>
+                <text x="210" y="30" font-size="12">m &gt; 1</text>
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A határérték m = 1-nél van, ahol a gyökök összeolvadnak.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A hat&#225;r&#233;rt&#233;k m = 1-n&#233;l van, ahol a gy&#246;k&#246;k &#246;sszeolvadnak.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Nem rendezed norm&#225;l alakra az egyenletet.</li>
+                <li>Elfelejted, hogy a nem lehet 0 (k&#252;l&#246;nben nem m&#225;sodfok&#250;).</li>
+                <li>A diszkrimin&#225;ns el&#337;jel&#233;t nem vizsg&#225;lod a gy&#246;k&#246;k sz&#225;m&#225;hoz.</li>
+                <li>Az m-et megkapod, de nem ellen&#337;rz&#246;d vissza.</li>
+                <li>&#214;sszekevered az &#246;sszeg &#233;s szorzat felt&#233;teleket.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Melyik m-re van kett&#337;s gy&#246;k a x<sup>2</sup> + mx + 1 = 0 egyenletben?</li>
+            <li>Melyik m-re nincs val&#243;s gy&#246;k a x<sup>2</sup> + 4x + m = 0 egyenletn&#233;l?</li>
+            <li>Ha x = &#8722;1 gy&#246;k, mennyi m az x<sup>2</sup> + mx + 2 = 0 eset&#233;n?</li>
+            <li>Milyen felt&#233;telhez haszn&#225;lod a Vi&#232;te-formul&#225;kat?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Param&#233;teres feladatn&#225;l a felt&#233;telekb&#337;l egyenletet &#237;rsz m-re.</li>
+            <li>A diszkrimin&#225;ns megmutatja a val&#243;s gy&#246;k&#246;k sz&#225;m&#225;t.</li>
+            <li>Vi&#232;te-formul&#225;k gyorsak &#246;sszeg vagy szorzat eset&#233;n.</li>
+            <li>Mindig ellen&#337;rizd a kapott m &#233;rt&#233;keket.</li>
+        </ul>
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -594,7 +603,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -638,7 +647,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

@@ -498,42 +498,41 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Sz&#225;mrendszerek</h2>
-        <p>A k&#252;l&#246;nb&#246;z&#337; sz&#225;mrendszerek ugyanazt a mennyis&#233;get m&#225;s-m&#225;s jegyekkel &#237;rj&#225;k le. A leggyakoribb a 2-es, 8-as, 10-es &#233;s 16-os alap.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A sz&#225;mrendszerek ugyanazt a mennyis&#233;get k&#252;l&#246;nb&#246;z&#337; jegyekkel &#237;rj&#225;k le. A 10-es a h&#233;tk&#246;znapi, a 2-es a sz&#225;m&#237;t&#243;g&#233;pek&#233;, a 16-os pedig r&#246;videbb, &#225;ttekinthet&#337;bb jel&#246;l&#233;st ad. Ha tudsz &#225;tv&#225;ltani, jobban &#233;rted a helyi&#233;rt&#233;keket &#233;s a k&#243;dol&#225;st. Ez alapvet&#337; az informatik&#225;ban &#233;s sok logikai feladatban is.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Alap (b):</b> ennyi k&#252;l&#246;nb&#246;z&#337; jegyet haszn&#225;lunk (0-t&#243;l b-1-ig).</li>
+            <li><b>Jegy:</b> egy sz&#225;mrendszerben haszn&#225;lhat&#243; szimb&#243;lum.</li>
+            <li><b>Helyi&#233;rt&#233;k:</b> a jegy &#233;rt&#233;ke a poz&#237;ci&#243;t&#243;l f&#252;gg, b hatv&#225;nyai szerint.</li>
+            <li><b>Bin&#225;ris:</b> 2-es sz&#225;mrendszer (0 &#233;s 1).</li>
+            <li><b>Okt&#225;lis:</b> 8-as sz&#225;mrendszer (0&#8211;7).</li>
+            <li><b>Hexadecim&#225;lis:</b> 16-os sz&#225;mrendszer (0&#8211;9, A=10, B=11, C=12, D=13, E=14, F=15).</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapfogalmak</h3>
-            <ul>
-                <li><b>Alap</b>: h&#225;ny k&#252;l&#246;nb&#246;z&#337; jegyet haszn&#225;lunk (2, 8, 10, 16).</li>
-                <li><b>Helyi&#233;rt&#233;k</b>: balr&#243;l jobbra n&#337;vekv&#337; hatv&#225;nyokkal szorozzuk a jegyeket.</li>
-                <li>Hex&#225;ban a bet&#369;k: A=10, B=11, C=12, D=13, E=14, F=15.</li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>T&#237;zesb&#337;l m&#225;s alapba</h3>
-                <ul>
-                    <li>Oszd sorban az alappal, a marad&#233;kok visszafel&#233; adj&#225;k a sz&#225;mot.</li>
-                    <li>P&#233;lda: <span class="formula-line">45 (10) = 101101 (2)</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>M&#225;s alapb&#243;l t&#237;zesbe</h3>
-                <ul>
-                    <li>Sz&#225;mold ki a helyi&#233;rt&#233;kek &#246;sszeg&#233;t.</li>
-                    <li>P&#233;lda: <span class="formula-line">101101 (2) = 32 + 8 + 4 + 1 = 45 (10)</span></li>
-                </ul>
-            </div>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>45 t&#237;zes sz&#225;mrendszerbeli sz&#225;m bin&#225;ris alakja:</p>
+            <h4>1. p&#233;lda - 10-esb&#337;l 2-esbe</h4>
+            <p>V&#225;ltsd &#225;t: 45 (10) = ? (2)</p>
             <ol>
-                <li>45 = 32 + 8 + 4 + 1.</li>
-                <li>A helyi&#233;rt&#233;kek szerint: 1 0 1 1 0 1, azaz 101101&#8322;.</li>
+                <li>45 / 2 = 22, marad&#233;k 1.</li>
+                <li>22 / 2 = 11, marad&#233;k 0.</li>
+                <li>11 / 2 = 5, marad&#233;k 1.</li>
+                <li>5 / 2 = 2, marad&#233;k 1.</li>
+                <li>2 / 2 = 1, marad&#233;k 0.</li>
+                <li>1 / 2 = 0, marad&#233;k 1.</li>
+                <li>A marad&#233;kokat visszafel&#233; olvasva: 101101 (2).</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: helyi&#233;rt&#233;k-t&#225;bla</h3>
+            <h4>2. p&#233;lda - 2-esb&#337;l 10-esbe</h4>
+            <p>V&#225;ltsd &#225;t: 101101 (2) = ? (10)</p>
+            <ol>
+                <li>Helyi&#233;rt&#233;kek: 32, 16, 8, 4, 2, 1.</li>
+                <li>1*32 + 0*16 + 1*8 + 1*4 + 0*2 + 1*1 = 45.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (helyi&#233;rt&#233;k-t&#225;bla)</h3>
             <table style="border-collapse: collapse; width: 100%; max-width: 360px; text-align: center;">
                 <tr>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">32</th>
@@ -552,8 +551,33 @@
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px;">1</td>
                 </tr>
             </table>
-            <p style="font-size: 0.95em; color: var(--text-light);">Ahol 1 &#225;ll, ott az adott helyi&#233;rt&#233;ket &#246;sszeadjuk.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">Ahol 1 &#225;ll, ott az adott helyi&#233;rt&#233;ket hozz&#225;adjuk.</p>
         </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Olyan jegyet &#237;rsz, ami nem l&#233;tezhet az adott alapban (pl. 2-esben a 2-t).</li>
+                <li>10-esb&#337;l &#225;tv&#225;lt&#225;sn&#225;l nem ford&#237;tod meg a marad&#233;kok sorrendj&#233;t.</li>
+                <li>Elfelejted felt&#252;ntetni az alapot, &#233;s &#246;sszekevered a sz&#225;mrendszereket.</li>
+                <li>Hex&#225;ban rossz &#233;rt&#233;ket adsz az A&#8211;F bet&#369;knek.</li>
+                <li>Null&#225;s helyi&#233;rt&#233;ket is hozz&#225;adsz, pedig az 0.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>V&#225;ltsd &#225;t: 1101 (2) -> (10).</li>
+            <li>V&#225;ltsd &#225;t: 58 (10) -> (8).</li>
+            <li>Mennyi az F (16) t&#237;zesben?</li>
+            <li>V&#225;ltsd &#225;t: 1000 (2) -> (10).</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Az alap azt mondja meg, h&#225;ny jegy haszn&#225;lhat&#243;.</li>
+            <li>10-esb&#337;l m&#225;s alapba: oszt&#225;s marad&#233;kkal, marad&#233;kok visszafel&#233;.</li>
+            <li>M&#225;s alapb&#243;l 10-esbe: helyi&#233;rt&#233;kek &#246;sszege.</li>
+            <li>Hex&#225;ban az A&#8211;F bet&#369;k 10&#8211;15 &#233;rt&#233;kek.</li>
+            <li>A helyi&#233;rt&#233;k-t&#225;bla gyors ellen&#337;rz&#233;st ad.</li>
+        </ul>
 </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -610,7 +634,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -654,7 +678,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;gek:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szintek:</span>
             <label><input type="checkbox" class="practice-difficulty" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input type="checkbox" class="practice-difficulty" value="norm&#225;l"> Norm&#225;l</label>
             <label><input type="checkbox" class="practice-difficulty" value="neh&#233;z"> Neh&#233;z</label>
@@ -663,7 +687,7 @@
         <div id="practice-area" class="practice-area is-hidden">
             <div id="practice-question" class="practice-question"></div>
             <input type="text" id="practice-input" class="module-input" placeholder="V&#225;lasz...">
-            <button id="practice-check" class="btn btn-primary" type="button">Ellen&#337;rz&#233;s</button>
+            <button id="practice-check" class="btn btn-primary" type="button">V&#225;lasz elk&#252;ld&#233;se</button>
             <p id="practice-feedback"></p>
         </div>
     </div>

@@ -485,43 +485,71 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Kamatoskamat-sz&#225;m&#237;t&#225;s</h2>
-        <p>A kamatoskamat azt &#237;rja le, hogyan n&#246;vekszik egy t&#337;ke, ha a kamat &#250;jra befektet&#233;sre ker&#252;l.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A kamatoskamat azt &#237;rja le, hogyan n&#337; a t&#337;k&#233;d, amikor a kamatot mindig hozz&#225;adod a t&#337;k&#233;hez. Ilyen helyzet a bankbet&#233;t, a befektet&#233;s vagy ak&#225;r egy hitel teljes k&#246;lts&#233;ge. A k&#233;plet seg&#237;ts&#233;g&#233;vel gyorsan kisz&#225;molod a v&#233;g&#246;sszeget &#233;s a kamatot. Emelt szinten fontos, hogy tudd kezelni a gyakori t&#337;k&#233;s&#237;t&#233;st is.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>T&#337;ke (P):</b> az indul&#243; &#246;sszeg.</li>
+            <li><b>Kamatl&#225;b:</b> <span class="formula-line">p%</span>, tizedesben <span class="formula-line">r = p/100</span>.</li>
+            <li><b>Id&#337; (n):</b> az &#233;vek sz&#225;ma.</li>
+            <li><b>T&#337;k&#233;s&#237;t&#233;sek sz&#225;ma (m):</b> h&#225;nyszor &#237;rj&#225;k j&#243;v&#225; a kamatot &#233;vente.</li>
+            <li><b>V&#233;g&#246;sszeg (A):</b> <span class="formula-line">A = P(1+r)^n</span> (&#233;ves t&#337;k&#233;s&#237;t&#233;s).</li>
+            <li><b>Gyakori t&#337;k&#233;s&#237;t&#233;s:</b> <span class="formula-line">A = P(1+r/m)^{mn}</span>.</li>
+            <li><b>Kamat:</b> <span class="formula-line">Kamat = A - P</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapk&#233;pletek</h3>
+            <h4>1. p&#233;lda &#8211; &#233;ves kamatoz&#225;s</h4>
+            <p><span class="formula-line">P = 100000</span>, <span class="formula-line">p = 5%</span>, <span class="formula-line">n = 2</span>. Sz&#225;mold ki a v&#233;g&#246;sszeget.</p>
+            <ol>
+                <li><span class="formula-line">r = 0,05</span>.</li>
+                <li><span class="formula-line">A = 100000 &#183; (1 + 0,05)^2</span>.</li>
+                <li><span class="formula-line">A = 100000 &#183; 1,1025 = 110250</span>.</li>
+                <li>Kamat: <span class="formula-line">110250 - 100000 = 10250</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; f&#233;l&#233;ves t&#337;k&#233;s&#237;t&#233;s</h4>
+            <p><span class="formula-line">P = 50000</span>, <span class="formula-line">p = 20%</span>, <span class="formula-line">m = 2</span>, <span class="formula-line">n = 1</span>.</p>
+            <ol>
+                <li><span class="formula-line">r = 0,20</span>, ez&#233;rt <span class="formula-line">r/m = 0,10</span>.</li>
+                <li><span class="formula-line">mn = 2</span>, &#237;gy <span class="formula-line">A = 50000 &#183; 1,1^2</span>.</li>
+                <li><span class="formula-line">A = 50000 &#183; 1,21 = 60500</span>.</li>
+                <li>Kamat: <span class="formula-line">60500 - 50000 = 10500</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (n&#246;veked&#233;si l&#233;pcs&#337;)</h3>
+            <p>Minden &#233;vben a t&#337;k&#233;d megszorz&#243;dik ugyanazzal a szorz&#243;val:</p>
+            <div class="formula-line">P &#8594; P(1+r) &#8594; P(1+r)^2 &#8594; P(1+r)^3</div>
+            <p>Min&#233;l gyakoribb a t&#337;k&#233;s&#237;t&#233;s, ann&#225;l kisebb a l&#233;p&#233;s, de t&#246;bb a l&#233;p&#233;s.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li><span class="formula-line">A = P(1+r)^n</span> (&#233;ves kamatoz&#225;s)</li>
-                <li><span class="formula-line">A = P(1+r/m)^{mn}</span> (m-szeri t&#337;k&#233;s&#237;t&#233;s)</li>
-                <li><span class="formula-line">Kamat = A - P</span></li>
-                <li><span class="formula-line">r = p/100</span></li>
+                <li>Nem v&#225;ltod tizedesre a sz&#225;zal&#233;kot (5% helyett 5-tel sz&#225;molsz).</li>
+                <li>&#214;sszekevered <span class="formula-line">n</span>-t &#233;s <span class="formula-line">m</span>-et.</li>
+                <li>A kamatot nem a v&#233;g&#246;sszegb&#337;l sz&#225;molod vissza.</li>
+                <li>Egyszer&#369; kamat k&#233;plet&#233;t haszn&#225;lod kamatoskamat helyett.</li>
+                <li>Nem kerek&#237;tesz a feladatban k&#233;rt m&#243;don.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>Fogalmak</h3>
-                <ul>
-                    <li><strong>P</strong> = indul&#243; t&#337;ke.</li>
-                    <li><strong>r</strong> = &#233;ves kamatl&#225;b tizedesben.</li>
-                    <li><strong>n</strong> = &#233;vek sz&#225;ma.</li>
-                    <li><strong>m</strong> = t&#337;k&#233;s&#237;t&#233;s gyakoris&#225;ga.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>Sz&#225;zal&#233;kot mindig alak&#237;ts tizedess&#233;.</li>
-                    <li>Sz&#225;mol&#225;s v&#233;g&#233;n kerek&#237;ts k&#233;t tizedesre.</li>
-                    <li>Ellen&#337;rizd: A nagyobb legyen P-n&#233;l.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="card">
-            <h3>P&#233;ld&#225;k</h3>
-            <ul>
-                <li>P = 100000, r = 5%, n = 2 &#8594; A = 110250</li>
-                <li>P = 50000, r = 6%, n = 1 &#8594; kamat = 3000</li>
-                <li>Negyed&#233;ves t&#337;k&#233;s&#237;t&#233;sn&#233;l r/4 szerepel a k&#233;pletben.</li>
-            </ul>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mennyi a v&#233;g&#246;sszeg, ha <span class="formula-line">P = 80000</span>, <span class="formula-line">p = 4%</span>, <span class="formula-line">n = 3</span>?</li>
+            <li>Mit jelent, hogy negyed&#233;vente t&#337;k&#233;s&#237;tenek?</li>
+            <li>Sz&#225;mold ki a kamatot, ha <span class="formula-line">A = 121000</span> &#233;s <span class="formula-line">P = 100000</span>.</li>
+            <li>Mekkora <span class="formula-line">r</span>, ha <span class="formula-line">p = 7%</span>?</li>
+            <li>Mi v&#225;ltozik a k&#233;pletben, ha <span class="formula-line">m</span> n&#337;?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A kamatoskamatn&#225;l a kamat is kamatozik.</li>
+            <li>&#201;ves t&#337;k&#233;s&#237;t&#233;s: <span class="formula-line">A = P(1+r)^n</span>.</li>
+            <li>Gyakori t&#337;k&#233;s&#237;t&#233;s: <span class="formula-line">A = P(1+r/m)^{mn}</span>.</li>
+            <li>Mindig tizedesre v&#225;ltod a sz&#225;zal&#233;kot.</li>
+            <li>A kamat: <span class="formula-line">A - P</span>.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -570,7 +598,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -614,7 +642,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

@@ -509,50 +509,82 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Oszthat&#243;s&#225;gi szab&#225;lyok</h2>
-        <p>Az oszthat&#243;s&#225;gi szab&#225;lyok gyors seg&#237;ts&#233;get adnak ahhoz, hogy eld&#246;ntsd: egy sz&#225;m oszthat&#243;-e egy m&#225;sikkal, an&#233;lk&#252;l, hogy hossz&#250; oszt&#225;st v&#233;gezn&#233;l.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Alap szab&#225;lyok</h3>
-                <ul>
-                    <li>2-vel: az utols&#243; sz&#225;mjegy p&#225;ros.</li>
-                    <li>3-mal: a sz&#225;mjegyek &#246;sszege 3-mal oszthat&#243;.</li>
-                    <li>5-tel: az utols&#243; sz&#225;mjegy 0 vagy 5.</li>
-                    <li>10-zel: az utols&#243; sz&#225;mjegy 0.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>K&#246;zepes szab&#225;lyok</h3>
-                <ul>
-                    <li>4-gyel: az utols&#243; k&#233;t sz&#225;mjegy 4-gyel oszthat&#243;.</li>
-                    <li>6-tal: oszthat&#243; 2-vel &#233;s 3-mal is.</li>
-                    <li>8-cal: az utols&#243; h&#225;rom sz&#225;mjegy 8-cal oszthat&#243;.</li>
-                    <li>9-cel: a sz&#225;mjegyek &#246;sszege 9-cel oszthat&#243;.</li>
-                    <li>12-vel: oszthat&#243; 3-mal &#233;s 4-gyel is.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="theory-section">
-            <h3>Halad&#243; szab&#225;lyok</h3>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Az oszthat&#243;s&#225;gi szab&#225;lyok gyors tr&#252;kk&#246;k, amikkel eld&#246;nt&#246;d, hogy egy sz&#225;m oszthat&#243;-e egy m&#225;sikkal marad&#233;k n&#233;lk&#252;l. Nem kell hossz&#250; oszt&#225;st v&#233;gezni, el&#233;g a sz&#225;mjegyeket figyelni. Hasznos egyszer&#369;s&#237;t&#233;sn&#233;l, LNKO/LKKT keres&#233;sn&#233;l &#233;s gyors ellen&#337;rz&#233;sn&#233;l is. A szab&#225;lyok eg&#233;sz sz&#225;mokra vonatkoznak.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Oszthat&#243;:</b> az oszt&#225;s marad&#233;ka 0.</li>
+            <li><b>Oszt&#243;:</b> d oszt&#243;ja n-nek, ha n = d * k (k eg&#233;sz).</li>
+            <li><b>T&#246;bbsz&#246;r&#246;s:</b> n a d t&#246;bbsz&#246;r&#246;se, ha n = d * k.</li>
+            <li><b>Sz&#225;mjegy&#246;sszeg:</b> a sz&#225;mjegyek &#246;sszege (3 &#233;s 9 szab&#225;ly).</li>
+            <li><b>Utols&#243; sz&#225;mjegyek:</b> 2, 4, 5, 8, 10, 25 szab&#225;lyok a v&#233;g&#233;n l&#233;v&#337; sz&#225;mjegyekre &#233;p&#252;lnek.</li>
+            <li><b>V&#225;ltakoz&#243; &#246;sszeg:</b> 11-esn&#233;l a v&#225;ltakoz&#243; &#246;sszeget vizsg&#225;ljuk.</li>
+        </ul>
+        <div class="learning-hint">
+            <h4>Gyors szab&#225;lylista</h4>
             <ul>
-                <li>11-gyel: a sz&#225;mjegyek v&#225;ltakoz&#243; &#246;sszege 11-gyel oszthat&#243;.</li>
+                <li>2-vel: az utols&#243; sz&#225;mjegy p&#225;ros (0, 2, 4, 6, 8).</li>
+                <li>3-mal: a sz&#225;mjegyek &#246;sszege 3-mal oszthat&#243;.</li>
+                <li>4-gyel: az utols&#243; k&#233;t sz&#225;mjegy 4-gyel oszthat&#243;.</li>
+                <li>5-tel: az utols&#243; sz&#225;mjegy 0 vagy 5.</li>
+                <li>6-tal: oszthat&#243; 2-vel &#233;s 3-mal is.</li>
+                <li>8-cal: az utols&#243; h&#225;rom sz&#225;mjegy 8-cal oszthat&#243;.</li>
+                <li>9-cel: a sz&#225;mjegyek &#246;sszege 9-cel oszthat&#243;.</li>
+                <li>10-zel: az utols&#243; sz&#225;mjegy 0.</li>
+                <li>11-gyel: a v&#225;ltakoz&#243; &#246;sszeg 11-gyel oszthat&#243;.</li>
+                <li>12-vel: oszthat&#243; 3-mal &#233;s 4-gyel is.</li>
                 <li>15-tel: oszthat&#243; 3-mal &#233;s 5-tel is.</li>
                 <li>25-tel: az utols&#243; k&#233;t sz&#225;mjegy 00, 25, 50 vagy 75.</li>
             </ul>
         </div>
-    
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>A 4572 oszthat&#243;-e 3-mal &#233;s 9-cel?</p>
+            <h4>1. p&#233;lda - 3-mal &#233;s 9-cel</h4>
+            <p>D&#246;ntsd el: 4572 oszthat&#243;-e 3-mal &#233;s 9-cel?</p>
             <ol>
                 <li>Sz&#225;mjegy&#246;sszeg: 4 + 5 + 7 + 2 = 18.</li>
                 <li>18 oszthat&#243; 9-cel, ez&#233;rt 4572 oszthat&#243; 9-cel &#233;s 3-mal is.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: sz&#225;mjegy&#246;sszeg</h3>
-            <pre style="background-color: var(--bg-main); border: 1px dashed var(--border-color); border-radius: 10px; padding: 10px 12px; font-family: 'Courier New', monospace;">4 + 5 + 7 + 2 = 18</pre>
-            <p style="font-size: 0.95em; color: var(--text-light);">A 3-as &#233;s 9-es oszthat&#243;s&#225;gn&#225;l a sz&#225;mjegy&#246;sszeg a kulcs.</p>
+            <h4>2. p&#233;lda - 25-tel</h4>
+            <p>D&#246;ntsd el: 6200 oszthat&#243;-e 25-tel?</p>
+            <ol>
+                <li>Az utols&#243; k&#233;t sz&#225;mjegy: 00.</li>
+                <li>00 benne van a {00, 25, 50, 75} list&#225;ban, teh&#225;t oszthat&#243; 25-tel.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (sz&#225;mjegy&#246;sszeg)</h3>
+            <pre style="background-color: var(--bg-main); border: 1px dashed var(--border-color); border-radius: 10px; padding: 10px 12px; font-family: 'Courier New', monospace;">4 + 5 + 7 + 2 = 18&#10;18 / 3 = 6, marad&#233;k 0&#10;18 / 9 = 2, marad&#233;k 0</pre>
+            <p style="font-size: 0.95em; color: var(--text-light);">Ha a sz&#225;mjegy&#246;sszeg oszthat&#243; 3-mal vagy 9-cel, akkor az eredeti sz&#225;m is oszthat&#243;.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>4-gyel vagy 8-cal oszthat&#243;s&#225;gn&#225;l csak az utols&#243; sz&#225;mjegyet n&#233;zed.</li>
+                <li>6-tal oszthat&#243;s&#225;gn&#225;l el&#233;gnek gondolod az egyik felt&#233;telt (2 vagy 3), pedig mindkett&#337; kell.</li>
+                <li>11-esn&#233;l sima sz&#225;mjegy&#246;sszeget sz&#225;molsz a v&#225;ltakoz&#243; &#246;sszeg helyett.</li>
+                <li>25-tel oszthat&#243;s&#225;gn&#225;l csak az utols&#243; sz&#225;mjegyre figyelsz.</li>
+                <li>Sz&#225;mjegy&#246;sszegn&#233;l el&#237;rsz vagy rosszul adsz &#246;ssze.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Oszthat&#243;-e 2718 a 9-cel?</li>
+            <li>Oszthat&#243;-e 742 a 4-gyel?</li>
+            <li>Oszthat&#243;-e 1200 a 25-tel?</li>
+            <li>Oszthat&#243;-e 96 a 6-tal?</li>
+            <li>Melyik szab&#225;lyt haszn&#225;lod az 11-gyel val&#243; oszthat&#243;s&#225;ghoz?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Oszthat&#243; akkor, ha az oszt&#225;s marad&#233;ka 0.</li>
+            <li>3 &#233;s 9 eset&#233;n a sz&#225;mjegy&#246;sszeg d&#246;nt.</li>
+            <li>4, 8 &#233;s 25 eset&#233;n az utols&#243; 2-3 sz&#225;mjegyet vizsg&#225;ljuk.</li>
+            <li>&#214;sszetett oszt&#243;kn&#225;l (6, 12, 15) minden felt&#233;telnek teljes&#252;lnie kell.</li>
+            <li>A szab&#225;lyok gyors ellen&#337;rz&#233;st adnak hossz&#250; oszt&#225;s n&#233;lk&#252;l.</li>
+        </ul>
 </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -651,7 +683,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -695,7 +727,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;gek:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szintek:</span>
             <label><input type="checkbox" class="practice-difficulty" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input type="checkbox" class="practice-difficulty" value="norm&#225;l"> Norm&#225;l</label>
             <label><input type="checkbox" class="practice-difficulty" value="neh&#233;z"> Neh&#233;z</label>
@@ -704,7 +736,7 @@
         <div id="practice-area" class="practice-area is-hidden">
             <div id="practice-question" class="practice-question"></div>
             <input type="text" id="practice-input" class="module-input" placeholder="V&#225;lasz...">
-            <button id="practice-check" class="btn btn-primary" type="button">Ellen&#337;rz&#233;s</button>
+            <button id="practice-check" class="btn btn-primary" type="button">V&#225;lasz elk&#252;ld&#233;se</button>
             <p id="practice-feedback"></p>
         </div>
     </div>

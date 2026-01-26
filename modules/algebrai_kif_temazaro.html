@@ -502,33 +502,67 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Algebrai kifejez&#233;sek</h2>
-        <p>Az algebrai kifejez&#233;sek polinomokb&#243;l, nevezetes azonoss&#225;gokb&#243;l &#233;s algebrai t&#246;rtekb&#337;l &#233;p&#252;lnek fel. C&#233;lunk a kifejez&#233;sek rendez&#233;se, egyszer&#369;s&#237;t&#233;se &#233;s &#233;rt&#233;kel&#233;se adott x eset&#233;n.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a t&#233;maz&#225;r&#243; &#246;sszefoglalja az algebrai kifejez&#233;sekkel kapcsolatos legfontosabb m&#369;veleteket. Itt tal&#225;lkozol polinomok &#246;sszevon&#225;s&#225;val, nevezetes azonoss&#225;gokkal &#233;s algebrai t&#246;rtekkel. A c&#233;l, hogy gyorsan rendezz, egyszer&#369;s&#237;ts &#233;s helyettes&#237;ts. Ezek a l&#233;p&#233;sek k&#233;s&#337;bb az egyenletek &#233;s a f&#252;ggv&#233;nyek alapjai.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Algebrai kifejez&#233;s:</b> sz&#225;mok, bet&#369;k &#233;s m&#369;veletek egy&#252;ttese.</li>
+            <li><b>Egy&#252;tthat&#243;:</b> a bet&#369;s tag sz&#225;mszorz&#243;ja.</li>
+            <li><b>Polinom:</b> bet&#369;s tagok &#246;sszege, eg&#233;sz kitev&#337;kkel.</li>
+            <li><b>Foksz&#225;m:</b> a legnagyobb kitev&#337; a polinomban.</li>
+            <li><b>Nevezetes azonoss&#225;g:</b> mindig igaz k&#233;plet, pl. (a + b)&#178;.</li>
+            <li><b>Algebrai t&#246;rt:</b> polinomok h&#225;nyadosa.</li>
+            <li><b>Tiltott &#233;rt&#233;k:</b> ahol a nevez&#337; 0 lenne.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Alapfogalmak</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
-                <li><span class="formula-line">Polinom: ax<sup>2</sup> + bx + c</span></li>
-                <li><span class="formula-line">Algebrai t&#246;rt: (ax + b) / (cx + d), ahol cx + d &#8800; 0</span></li>
-                <li><span class="formula-line">Azonoss&#225;g: mindig igaz, minden x-re &#233;rv&#233;nyes egyenl&#337;s&#233;g</span></li>
+                <li>Polinomok m&#369;veletei &#233;s &#246;sszevon&#225;s</li>
+                <li>Nevezetes azonoss&#225;gok alkalmaz&#225;sa</li>
+                <li>Algebrai t&#246;rtek egyszer&#369;s&#237;t&#233;se &#233;s helyettes&#237;t&#233;se</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Nevezetes azonoss&#225;gok</h3>
-                <ul>
-                    <li><span class="formula-line">(a + b)<sup>2</sup> = a<sup>2</sup> + 2ab + b<sup>2</sup></span></li>
-                    <li><span class="formula-line">(a - b)<sup>2</sup> = a<sup>2</sup> - 2ab + b<sup>2</sup></span></li>
-                    <li><span class="formula-line">(a + b)(a - b) = a<sup>2</sup> - b<sup>2</sup></span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Egyszer&#369;s&#237;t&#233;si tippek</h3>
-                <ul>
-                    <li>Rendezd a polinomot foksz&#225;m szerint.</li>
-                    <li>Faktor&#225;lj, ha ismert azonoss&#225;g felismerhet&#337;.</li>
-                    <li>Algebrai t&#246;rtn&#233;l egyszer&#369;s&#237;ts, miel&#337;tt behelyettes&#237;tesz.</li>
-                </ul>
-            </div>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; polinom &#246;sszevon&#225;sa</h4>
+            <p>Egyszer&#369;s&#237;tsd: 2x&#178; &#8722; 3x + 1 + x&#178; + 5x &#8722; 4.</p>
+            <ol>
+                <li>Azonos fok&#250; tagok: (2x&#178; + x&#178;) + (&#8722;3x + 5x) + (1 &#8722; 4).</li>
+                <li>&#214;sszevon&#225;s: 3x&#178; + 2x &#8722; 3.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; &#246;sszegz&#337; algebrai t&#246;rt</h4>
+            <p>Egyszer&#369;s&#237;tsd: (x&#178; &#8722; 9) / (x + 3).</p>
+            <ol>
+                <li>Szorzatt&#225; alak&#237;t&#225;s: x&#178; &#8722; 9 = (x &#8722; 3)(x + 3).</li>
+                <li>Egyszer&#369;s&#237;t&#233;s: (x + 3) kiesik.</li>
+                <li>Eredm&#233;ny: x &#8722; 3, de x &#8800; &#8722;3.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Nem azonos fok&#250; tagokat is &#246;sszevonsz.</li>
+                <li>Elfelejted a tiltott &#233;rt&#233;ket az algebrai t&#246;rtn&#233;l.</li>
+                <li>Azonoss&#225;gn&#225;l kihagyod a 2ab tagot.</li>
+                <li>Negat&#237;v el&#337;jelet nem kezelsz z&#225;r&#243;jellel.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Egyszer&#369;s&#237;tsd: x&#178; + 4x + 4 &#8722; (x&#178; &#8722; 2x + 1).</li>
+            <li>Mennyi a foksz&#225;ma a 5x&#179; &#8722; x + 7 polinomnak?</li>
+            <li>&#205;rd fel: (a &#8722; b)&#178; kifejtett alakj&#225;t.</li>
+            <li>Egyszer&#369;s&#237;tsd: (x&#178; &#8722; 1) / (x &#8722; 1), &#233;s add meg a tiltott &#233;rt&#233;ket.</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Azonos fok&#250; tagokat vonj &#246;ssze.</li>
+            <li>Nevezetes azonoss&#225;got felismerve gyorsabban sz&#225;molsz.</li>
+            <li>Algebrai t&#246;rtn&#233;l mindig n&#233;zd meg a tiltott &#233;rt&#233;ket.</li>
+            <li>Rendezett alakban k&#246;nnyebb ellen&#337;rizni a hib&#225;kat.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -601,7 +635,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -651,7 +685,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szintek:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

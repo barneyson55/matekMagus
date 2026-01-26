@@ -450,80 +450,40 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>Lineáris függvény alapjai</h2>
-        <p>A lineáris függvény egyenletes változást ír le: ha x egy egységgel nő, f(x) mindig ugyanannyival változik. Ezért sok valós helyzetben használjuk: állandó sebesség, fix díj + változó költség, vagy egy tartály folyamatos töltése.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Definíció és jelölés</h3>
-                <p>A lineáris függvény alakja: <b>f(x) = m * x + b</b>.</p>
-                <ul>
-                    <li><b>m</b> a meredekség: megmutatja, mennyivel változik f(x), ha x 1-et nő.</li>
-                    <li><b>b</b> a tengelymetszet: f(0) értéke.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Meredekség két pontból</h3>
-                <ul>
-                    <li>Ha adott két pont: (x1, y1) és (x2, y2), akkor</li>
-                    <li><b>m = (y2 - y1) / (x2 - x1)</b> (ha x1 ≠ x2).</li>
-                    <li>Ez az egyenes „meredeksége”, vagyis az iránytényező.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="theory-section">
-            <h3>Meredekség (m) értelmezése</h3>
-            <ul>
-                <li>m &gt; 0: a függvény növekszik.</li>
-                <li>m &lt; 0: a függvény csökken.</li>
-                <li>m = 0: állandó függvény (vízszintes egyenes).</li>
-            </ul>
-        </div>
-        <div class="theory-section">
-            <h3>Tengelymetszet és metszéspontok</h3>
-            <ul>
-                <li>Y-tengelymetszet: <b>(0, b)</b>.</li>
-                <li>X-tengelymetszet: ha m ≠ 0, akkor <b>x = -b / m</b>.</li>
-            </ul>
-        </div>
-        <div class="theory-section">
-            <h3>Egyenlet felírása pontból</h3>
-            <p>Ha adott a meredekség és egy pont (x0, y0), akkor <b>b = y0 - m * x0</b>.</p>
-        </div>
-        <div class="theory-section">
-            <h3>Grafikon felrajzolása 3 lépésben</h3>
+        <h2>Lineáris függvény</h2>
+        <h3>Rövid bevezetés (Mi ez? Mire jó?)</h3>
+        <p>A lineáris függvény egyenletes változást ír le: ha x egy egységgel nő, f(x) mindig ugyanannyival változik. Ezért sok valós helyzetben használjuk: állandó sebesség, fix díj + változó költség, vagy egy tartály folyamatos töltése. Ha felismered a meredekséget és a tengelymetszetet, a grafikon gyorsan felrajzolható.</p>
+        <h3>Alapfogalmak / definíciók</h3>
+        <ul>
+            <li><b>Alak:</b> <span class="formula-line">f(x) = m x + b</span>.</li>
+            <li><b>Meredekség (m):</b> megmutatja, mennyivel változik f(x), ha x 1-et nő.</li>
+            <li><b>Tengelymetszet (b):</b> <span class="formula-line">f(0)</span>, az y-tengelyen vett pont.</li>
+            <li><b>X-tengelymetszet:</b> <span class="formula-line">x = -b / m</span> (ha m ≠ 0).</li>
+            <li><b>Monotonitás:</b> m &gt; 0 növekvő, m &lt; 0 csökkenő, m = 0 állandó.</li>
+            <li><b>Meredekség két pontból:</b> <span class="formula-line">m = (y2 - y1) / (x2 - x1)</span>.</li>
+        </ul>
+        <h3>Lépésről lépésre példa (1–2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. példa – egyenletből jellemzők</h4>
+            <p>Legyen <span class="formula-line">f(x) = 2x - 3</span>.</p>
             <ol>
-                <li>Olvasd le m-et és b-t az egyenletből.</li>
-                <li>Jelöld be a (0, b) pontot.</li>
-                <li>Az m meredekséggel lépj: ha x nő 1-et, f(x) m-mel változik.</li>
+                <li>Leolvasás: <span class="formula-line">m = 2</span>, <span class="formula-line">b = -3</span>.</li>
+                <li>Y-tengelymetszet: <span class="formula-line">(0, -3)</span>.</li>
+                <li>X-tengelymetszet: <span class="formula-line">x = -b / m = 1.5</span>.</li>
+                <li>Érték: <span class="formula-line">f(2) = 1</span>.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Példa levezetés</h3>
-            <p>Legyen f(x) = 2x - 3. Ekkor b = -3, tehát a grafikon a (0, -3) pontból indul.</p>
-            <p>Ha x = 2, akkor f(2) = 2 * 2 - 3 = 1. A grafikon átmegy a (2, 1) ponton is.</p>
-            <p>Két pontból: (1, 2) és (3, 6). Ekkor m = (6 - 2) / (3 - 1) = 2, és b = 2 - 2 * 1 = 0, tehát f(x) = 2x.</p>
-        </div>
-        <div class="theory-section">
-            <h3>Mini-ellenőrzés (értékelés nélkül)</h3>
-            <ul>
-                <li>Ha m = 0, milyen a függvény? (Állandó.)</li>
-                <li>Mi a b, ha az egyenes átmegy a (0, 5) ponton? (b = 5)</li>
-                <li>f(x) = -1.5x + 4, mennyi f(2)? (1)</li>
-                <li>Az egyenes átmegy (2, 3) ponton és m = 1.5. Mi b? (b = 0)</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott példa</h3>
-            <p>y = 2x - 1 egyenese:</p>
+            <h4>2. példa – két pontból egyenlet</h4>
+            <p>Adott pontok: <span class="formula-line">(1, 2)</span> és <span class="formula-line">(3, 6)</span>.</p>
             <ol>
-                <li>Meredekség: 2 (ha x nő 1-gyel, y nő 2-vel).</li>
-                <li>Y-tengelymetszet: -1.</li>
-                <li>Pontok: (0, -1) és (1, 1).</li>
+                <li>Meredekség: <span class="formula-line">m = (6 - 2) / (3 - 1) = 2</span>.</li>
+                <li>Számold b-t: <span class="formula-line">b = y0 - m x0 = 2 - 2 · 1 = 0</span>.</li>
+                <li>Így az egyenlet: <span class="formula-line">f(x) = 2x</span>.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Ábra: meredekség-háromszög</h3>
+            <h3>Vizuális magyarázat (meredekség-háromszög)</h3>
             <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <line x1="60" y1="120" x2="260" y2="120" stroke="#4A55A2" stroke-width="2" />
                 <line x1="160" y1="20" x2="160" y2="140" stroke="#4A55A2" stroke-width="2" />
@@ -534,9 +494,36 @@
                 <text x="175" y="135" font-size="12">+1</text>
                 <text x="210" y="105" font-size="12">+2</text>
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A meredekség a „emelkedés / vízszintes elmozdulás”.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A meredekség az emelkedés és a vízszintes elmozdulás aránya.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hibák / tévhitek</h3>
+            <ul>
+                <li>Felcseréled a kivonás sorrendjét a meredekség képletében.</li>
+                <li>Elfelejted ellenőrizni, hogy <span class="formula-line">x1 ≠ x2</span>.</li>
+                <li>A tengelymetszet előjelét rosszul olvasod le.</li>
+                <li>Összekevered az x- és y-tengelymetszetet.</li>
+                <li>Meredekséget és tengelymetszetet felcseréled.</li>
+            </ul>
+        </div>
+        <h3>Mini önellenőrzés (válasz nélkül)</h3>
+        <ul>
+            <li>Mi a meredekség és a tengelymetszet a <span class="formula-line">f(x) = -3x + 6</span> függvénynél?</li>
+            <li>Számold ki: <span class="formula-line">f(4)</span>, ha <span class="formula-line">f(x) = 1.5x - 2</span>.</li>
+            <li>Mekkora az x-tengelymetszet, ha <span class="formula-line">f(x) = 5x - 10</span>?</li>
+            <li>Írd fel az egyenletet a pontokra: <span class="formula-line">(0, -2)</span> és <span class="formula-line">(2, 2)</span>.</li>
+            <li>Mikor állandó a lineáris függvény?</li>
+        </ul>
+        <h3>Összefoglaló</h3>
+        <ul>
+            <li>A lineáris függvény alakja <span class="formula-line">f(x) = m x + b</span>.</li>
+            <li>A meredekség jelzi a növekedést vagy csökkenést.</li>
+            <li>A tengelymetszet <span class="formula-line">f(0)</span>, az x-metszet <span class="formula-line">-b / m</span>.</li>
+            <li>Két pontból mindig kiszámítható az egyenlet.</li>
+            <li>Grafikonhoz elég két pontot felvenni.</li>
+        </ul>
+
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <div class="model-container">
@@ -585,7 +572,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Nehézség:</span>
+                <span class="meta-label">Nehézségi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="könnyű" type="button">Könnyű</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="normál" type="button">Normál</button>
@@ -618,7 +605,7 @@
 
     <div id="gyakorlas" class="tab-content card" role="tabpanel">
         <h2>Gyakorlás</h2>
-        <p class="practice-info">Végtelenített gyakorlás. XP jutalom: könnyű = 1 XP, normál = 2 XP, nehéz = 3 XP.</p>
+        <p class="practice-info">Végtelenített gyakorlás. XP jutalom: könnyű = 1 XP, normál = 2 XP, nehéz = 3 XP. A gyakorlás XP-t ad, de a teszt adja a nagyobb XP-jutalmat, és az XP-sávnak van maximuma.</p>
         <div class="learning-hint" data-role="practice-help">
             <h3>Gyakorlási tipp</h3>
             <ul>
@@ -631,7 +618,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Nehézségek:</span>
+            <span class="meta-label">Nehézségi szint:</span>
             <label><input type="checkbox" class="practice-difficulty" value="könnyű" checked> Könnyű</label>
             <label><input type="checkbox" class="practice-difficulty" value="normál"> Normál</label>
             <label><input type="checkbox" class="practice-difficulty" value="nehéz"> Nehéz</label>
@@ -1318,5 +1305,3 @@
     </script>
 </body>
 </html>
-
-

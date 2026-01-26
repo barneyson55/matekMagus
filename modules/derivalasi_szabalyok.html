@@ -485,38 +485,72 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Deriv&#225;l&#225;si szab&#225;lyok</h2>
-        <p>A deriv&#225;l&#225;si szab&#225;lyokkal gyorsan kisz&#225;m&#237;thatod &#246;sszetettebb f&#252;ggv&#233;nyek deriv&#225;ltj&#225;t is.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A deriv&#225;l&#225;si szab&#225;lyokkal nem kell minden feladatot a hat&#225;r&#233;rt&#233;kes defin&#237;ci&#243;b&#243;l &#250;jra levezetni. Ezek a szab&#225;lyok gyors, megb&#237;zhat&#243; m&#243;dszert adnak &#246;sszetett f&#252;ggv&#233;nyek deriv&#225;ltj&#225;ra. Ha tudod, melyik szab&#225;lyt kell alkalmazni, a sz&#225;mol&#225;s p&#225;r l&#233;p&#233;s alatt elv&#233;gezhet&#337;. A c&#233;l mindig az, hogy egyszer&#369;s&#237;ts &#233;s &#225;tl&#225;that&#243;an dolgozz.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Konstansszorz&#243; szab&#225;ly:</b> <span class="formula-line">(c&#183;f)' = c&#183;f'</span>.</li>
+            <li><b>&#214;sszeg/k&#252;l&#246;nbs&#233;g:</b> <span class="formula-line">(f+g)' = f' + g'</span>.</li>
+            <li><b>Hatv&#225;nyszab&#225;ly:</b> <span class="formula-line">(x^n)' = n&#183;x^(n-1)</span>.</li>
+            <li><b>Szorzatszab&#225;ly:</b> <span class="formula-line">(f&#183;g)' = f'&#183;g + f&#183;g'</span>.</li>
+            <li><b>H&#225;nyadosszab&#225;ly:</b> <span class="formula-line">(f/g)' = (f'&#183;g - f&#183;g')/g^2</span>.</li>
+            <li><b>&#214;sszetett f&#252;ggv&#233;ny:</b> <span class="formula-line">(f&#8728;g)' = f'(g(x))&#183;g'(x)</span>.</li>
+            <li><b>Konstans deriv&#225;ltja:</b> <span class="formula-line">(c)' = 0</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapszab&#225;lyok</h3>
+            <h4>1. p&#233;lda &#8211; polinom deriv&#225;l&#225;sa</h4>
+            <p>Legyen <span class="formula-line">f(x) = 2x^3 - 5x + 4</span>.</p>
+            <ol>
+                <li>Tagonk&#233;nt deriv&#225;lunk: <span class="formula-line">(2x^3)' = 6x^2</span>.</li>
+                <li><span class="formula-line">(-5x)' = -5</span>, <span class="formula-line">(4)' = 0</span>.</li>
+                <li>Eredm&#233;ny: <span class="formula-line">f'(x) = 6x^2 - 5</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; szorzatszab&#225;ly</h4>
+            <p>Legyen <span class="formula-line">f(x) = (x^2 + 1)(x - 3)</span>.</p>
+            <ol>
+                <li>Jel&#246;ld: <span class="formula-line">u = x^2 + 1</span>, <span class="formula-line">v = x - 3</span>.</li>
+                <li>Deriv&#225;ltak: <span class="formula-line">u' = 2x</span>, <span class="formula-line">v' = 1</span>.</li>
+                <li>Szorzatszab&#225;ly: <span class="formula-line">f' = u'&#183;v + u&#183;v'</span>.</li>
+                <li>Eredm&#233;ny: <span class="formula-line">f'(x) = 2x(x-3) + (x^2+1)</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (l&#233;p&#233;ssor)</h3>
             <ul>
-                <li><span class="formula-line">(c&#183;f)' = c&#183;f'</span></li>
-                <li><span class="formula-line">(f+g)' = f' + g'</span></li>
-                <li><span class="formula-line">(x^n)' = n x^{n-1}</span></li>
-                <li><span class="formula-line">(konstans)' = 0</span></li>
+                <li>1. Bontsd fel a f&#252;ggv&#233;nyt &#246;sszegekre/szorzatra.</li>
+                <li>2. V&#225;laszd ki a megfelel&#337; deriv&#225;l&#225;si szab&#225;lyt.</li>
+                <li>3. Deriv&#225;lj tagonk&#233;nt, majd egyszer&#369;s&#237;ts.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>Tipikus hib&#225;k</h3>
-                <ul>
-                    <li>Ne felejtsd el a szorz&#243;t a hatv&#225;nyb&#243;l.</li>
-                    <li>El&#337;sz&#246;r deriv&#225;lj, ut&#225;na helyettes&#237;ts.</li>
-                    <li>&#214;sszegn&#233;l tagonk&#233;nt deriv&#225;lj.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>P&#233;ld&#225;k</h3>
-                <ul>
-                    <li>f(x) = 3x^4 &#8594; f'(x) = 12x^3</li>
-                    <li>f(x) = 2x^3 + 5x &#8594; f'(x) = 6x^2 + 5</li>
-                    <li>f(x) = 7 &#8594; f'(x) = 0</li>
-                </ul>
-            </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Elfelejted a szorzat- vagy h&#225;nyadosszab&#225;lyt.</li>
+                <li>A kitev&#337;t nem szorzod be a hatv&#225;nyszab&#225;lyn&#225;l.</li>
+                <li>&#214;sszetett f&#252;ggv&#233;nyn&#233;l kihagyod a bels&#337; deriv&#225;ltat.</li>
+                <li>A konstans deriv&#225;ltj&#225;t 1-nek gondolod (pedig 0).</li>
+                <li>Nem egyszer&#369;s&#237;tesz a v&#233;g&#233;n, &#237;gy nehezen ellen&#337;rizhet&#337; az eredm&#233;ny.</li>
+            </ul>
         </div>
-        <div class="card">
-            <h3>Gyakorlati tipp</h3>
-            <p>Mindig ellen&#337;rizd az eredm&#233;nyt gyors deriv&#225;l&#225;ssal vagy behelyettes&#237;t&#233;ssel.</p>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Sz&#225;mold ki: <span class="formula-line">(x^5 - 4x^2)'</span>.</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">(3x^2 + 1)'</span>.</li>
+            <li>Deriv&#225;ld: <span class="formula-line">(x^2+2)(x+1)</span>.</li>
+            <li>Deriv&#225;ld: <span class="formula-line">(x^2)/(x+1)</span>.</li>
+            <li>Mi a l&#225;ncszab&#225;ly l&#233;nyege?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A szab&#225;lyok gyorsabbak, mint a defin&#237;ci&#243;b&#243;l val&#243; deriv&#225;l&#225;s.</li>
+            <li>Hatv&#225;nyn&#225;l <span class="formula-line">n&#183;x^(n-1)</span> a minta.</li>
+            <li>Szorzatn&#225;l &#233;s h&#225;nyadosn&#225;l k&#252;l&#246;n szab&#225;lyt kell haszn&#225;lni.</li>
+            <li>&#214;sszetett f&#252;ggv&#233;nyn&#233;l mindig j&#246;n a bels&#337; deriv&#225;lt.</li>
+            <li>A v&#233;g&#233;n egyszer&#369;s&#237;ts, hogy &#225;tl&#225;that&#243; legyen a v&#233;geredm&#233;ny.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -561,7 +595,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -605,7 +639,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

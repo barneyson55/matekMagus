@@ -476,32 +476,73 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Sz&#225;melm&#233;let &#233;s Sz&#225;mrendszerek</h2>
-        <p>T&#233;maz&#225;r&#243; az oszthat&#243;s&#225;g, pr&#237;mek &#233;s sz&#225;mrendszer-&#225;tv&#225;lt&#225;s alapjair&#243;l.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a t&#233;maz&#225;r&#243; a sz&#225;mok tulajdons&#225;gait &#233;s a sz&#225;mrendszerek alapjait foglalja &#246;ssze. Akkor hasznos, amikor gyorsan kell eld&#246;nteni oszthat&#243;s&#225;got, egyszer&#369;s&#237;teni t&#246;rteket vagy &#225;tv&#225;ltani sz&#225;mrendszerek k&#246;z&#246;tt. A t&#233;mak&#246;r&#246;k egym&#225;sra &#233;p&#252;lnek: oszthat&#243;s&#225;g, pr&#237;mt&#233;nyez&#337;k, LNKO/LKKT &#233;s sz&#225;mrendszerek. Ha ezeket biztosan kezeled, sok feladat r&#246;videbb lesz.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Oszthat&#243;s&#225;g:</b> marad&#233;k n&#233;lk&#252;li oszt&#225;s lehet&#337;s&#233;ge.</li>
+            <li><b>Oszt&#243; &#233;s t&#246;bbsz&#246;r&#246;s:</b> a &#233;s b kapcsolata, ha b = a &#183; k.</li>
+            <li><b>Pr&#237;msz&#225;m:</b> csak 1-gyel &#233;s &#246;nmag&#225;val oszthat&#243;.</li>
+            <li><b>Pr&#237;mt&#233;nyez&#337;s felbont&#225;s:</b> sz&#225;m szorzatk&#233;nt pr&#237;msz&#225;mokra bont&#225;sa.</li>
+            <li><b>LNKO:</b> a legnagyobb k&#246;z&#246;s oszt&#243;.</li>
+            <li><b>LKKT:</b> a legkisebb k&#246;z&#246;s t&#246;bbsz&#246;r&#246;s.</li>
+            <li><b>Marad&#233;k:</b> oszt&#225;s ut&#225;n megmarad&#243; r&#233;sz.</li>
+            <li><b>Sz&#225;mrendszer:</b> helyi&#233;rt&#233;kes jel&#246;l&#233;s (p&#233;ld&#225;ul 2-es vagy 10-es).</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
-                <li>Oszthat&#243;s&#225;g &#233;s marad&#233;k</li>
-<li>LNKO / LKKT</li>
-<li>Sz&#225;mrendszer-&#225;tv&#225;lt&#225;s</li>
+                <li>Oszthat&#243;s&#225;gi szab&#225;lyok</li>
+                <li>LNKO, LKKT</li>
+                <li>Pr&#237;mt&#233;nyez&#337;s felbont&#225;s</li>
+                <li>Sz&#225;mrendszerek</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">a = bq + r</span></li>
-<li><span class="formula-line">LNKO(a,b) &#183; LKKT(a,b) = a &#183; b</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tanul&#225;si f&#243;kusz</h3>
-                <ul>
-                    <li>&#201;rtsd a defin&#237;ci&#243;kat &#233;s jel&#246;l&#233;seket.</li>
-                    <li>Gyakorold a tipikus feladatt&#237;pusokat.</li>
-                    <li>Ellen&#337;rizd a m&#233;rt&#233;kegys&#233;geket &#233;s a logik&#225;t.</li>
-                </ul>
-            </div>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; LNKO &#233;s LKKT</h4>
+            <p>Feladat: LNKO(12, 18) &#233;s LKKT(12, 18).</p>
+            <ol>
+                <li>12 = 2 &#183; 2 &#183; 3, 18 = 2 &#183; 3 &#183; 3.</li>
+                <li>LNKO: k&#246;z&#246;s t&#233;nyez&#337;k a legkisebb kitev&#337;vel &#8594; 2 &#183; 3 = 6.</li>
+                <li>LKKT: &#246;sszes t&#233;nyez&#337; a legnagyobb kitev&#337;vel &#8594; 2 &#183; 2 &#183; 3 &#183; 3 = 36.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; sz&#225;mrendszer &#225;tv&#225;lt&#225;s</h4>
+            <p>Feladat: 45 t&#237;zes sz&#225;mrendszerben &#8594; kettes sz&#225;mrendszer.</p>
+            <ol>
+                <li>45 / 2 = 22 marad&#233;k 1.</li>
+                <li>22 / 2 = 11 marad&#233;k 0.</li>
+                <li>11 / 2 = 5 marad&#233;k 1.</li>
+                <li>5 / 2 = 2 marad&#233;k 1.</li>
+                <li>2 / 2 = 1 marad&#233;k 0, majd 1 / 2 = 0 marad&#233;k 1.</li>
+                <li>Alulr&#243;l felfel&#233; olvasva: 101101&#8322;.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Az LNKO-t &#233;s az LKKT-t felcser&#233;led.</li>
+                <li>A pr&#237;mt&#233;nyez&#337;s felbont&#225;sban kihagysz egy t&#233;nyez&#337;t.</li>
+                <li>Sz&#225;mrendszer-&#225;tv&#225;lt&#225;sn&#225;l rossz sorrendben olvasod a marad&#233;kokat.</li>
+                <li>Oszthat&#243;s&#225;gi szab&#225;lyt rossz sz&#225;mjegyekre alkalmazol.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>&#205;rd fel a 60 pr&#237;mt&#233;nyez&#337;s felbont&#225;s&#225;t.</li>
+            <li>Mi az LKKT(8, 12)?</li>
+            <li>Osztja-e 3 a 741-et? Indokold r&#246;viden.</li>
+            <li>&#205;rd &#225;t a 19-et kettes sz&#225;mrendszerbe.</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Pr&#237;mt&#233;nyez&#337;s felbont&#225;sb&#243;l gyorsan sz&#225;molhat&#243; LNKO &#233;s LKKT.</li>
+            <li>Az oszthat&#243;s&#225;gi szab&#225;lyok r&#246;vid&#237;tik a sz&#225;mol&#225;st.</li>
+            <li>Sz&#225;mrendszerv&#225;lt&#225;sn&#225;l a marad&#233;kokat visszafel&#233; olvasd.</li>
+            <li>Mindig ellen&#337;rizd a marad&#233;k &#233;s a helyi&#233;rt&#233;k logik&#225;j&#225;t.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -534,7 +575,7 @@
 
     <div id="teszt" class="tab-content card" role="tabpanel">
         <h2>Teszt</h2>
-        <p>Alt&#233;ma-szint&#369; teszt a Sz&#225;melm&#233;let &#233;s Sz&#225;mrendszerek t&#233;mak&#246;r f&#337; fogalmaib&#243;l.</p>
+        <p>Alt&#233;ma-szint&#369; teszt a Sz&#225;melm&#233;let &#233;s Sz&#225;mrendszerek alt&#233;ma f&#337; fogalmaib&#243;l.</p>
         <div class="learning-hint" data-role="test-help">
             <h3>Megold&#225;si l&#233;p&#233;sek</h3>
             <ul>
@@ -546,7 +587,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="K&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="Norm&#225;l" type="button">Norm&#225;l</button>
@@ -555,11 +596,12 @@
             </div>
         </div>
         <div class="test-intro" id="test-intro">
-            <p><b>Mit tartalmaz a teszt?</b> Alt&#233;ma-szint&#369; teszt Sz&#225;melm&#233;let &#233;s Sz&#225;mrendszerek t&#233;mak&#246;rb&#337;l. 10 k&#233;rd&#233;s neh&#233;zs&#233;gi szintenk&#233;nt.</p>
+            <p><b>Mit tartalmaz a teszt?</b> Alt&#233;ma-szint&#369; teszt a Sz&#225;melm&#233;let &#233;s Sz&#225;mrendszerek alt&#233;m&#225;b&#243;l. 10 k&#233;rd&#233;s neh&#233;zs&#233;gi szintenk&#233;nt.</p>
             <ul>
-                <li>Oszthat&#243;s&#225;g &#233;s marad&#233;k</li>
-<li>LNKO / LKKT</li>
-<li>Sz&#225;mrendszer-&#225;tv&#225;lt&#225;s</li>
+                <li>Oszthat&#243;s&#225;gi szab&#225;lyok</li>
+                <li>LNKO, LKKT</li>
+                <li>Pr&#237;mt&#233;nyez&#337;s felbont&#225;s</li>
+                <li>Sz&#225;mrendszerek</li>
             </ul>
             <button id="start-test-btn" class="btn btn-primary" type="button">Teszt ind&#237;t&#225;sa</button>
         </div>
@@ -596,7 +638,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="K&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="Norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="Neh&#233;z"> Neh&#233;z</label>

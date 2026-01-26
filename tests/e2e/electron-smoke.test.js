@@ -26,6 +26,15 @@ const e2eTest = shouldSkipE2E
   ? (name, fn) => nodeTest(name, { skip: skipReason }, fn)
   : nodeTest;
 
+const MOBILE_QUEST_MODULES = [
+  { id: 'halmazmuveletek', src: 'modules/halmazmuveletek.html' },
+  { id: 'linearis_fuggveny', src: 'modules/linearis_fuggveny.html' },
+  { id: 'terulet_kerulet', src: 'modules/terulet_kerulet.html' },
+  { id: 'kor_helyzetek', src: 'modules/kor_helyzetek.html' },
+  { id: 'permutaciok', src: 'modules/permutaciok.html' },
+  { id: 'hatarertek', src: 'modules/hatarertek.html' },
+];
+
 async function applyE2ERandomSeed(page, seed) {
   if (!Number.isFinite(seed)) return;
   await page.waitForFunction(() => typeof window.__setMatekSeed === 'function');
@@ -72,6 +81,22 @@ async function waitForIframeSrc(page, fragment) {
     const frame = document.getElementById('content-frame');
     return frame && frame.src.includes(frag);
   }, fragment);
+}
+
+async function openQuestDrawer(page) {
+  const isCollapsed = await page.evaluate(() => document.body.classList.contains('quest-collapsed'));
+  if (isCollapsed) {
+    await page.click('#quest-toggle');
+    await page.waitForFunction(() => !document.body.classList.contains('quest-collapsed'));
+  }
+}
+
+async function expandAllQuestDetails(page) {
+  await page.evaluate(() => {
+    document.querySelectorAll('.sidebar details').forEach((detail) => {
+      detail.open = true;
+    });
+  });
 }
 
 async function postTestResult(page, overrides = {}) {
@@ -270,8 +295,7 @@ e2eTest('mobile quest drawer opens and auto-closes', async () => {
     assert.equal(baseState.backdropHidden, 'true');
     assert.equal(Number.parseFloat(baseState.backdropOpacity), 0);
 
-    await page.click('#quest-toggle');
-    await page.waitForFunction(() => !document.body.classList.contains('quest-collapsed'));
+    await openQuestDrawer(page);
 
     const openState = await page.evaluate(() => {
       const sidebar = document.querySelector('.sidebar');
@@ -290,35 +314,29 @@ e2eTest('mobile quest drawer opens and auto-closes', async () => {
     assert.ok(openState.sidebarLeft <= 1);
     assert.ok(openState.sidebarRight > 0);
 
-    await page.evaluate(() => {
-      if (typeof setQuestStatus === 'function') {
-        setQuestStatus('halmazmuveletek', 'ACTIVE');
-      }
-      const outer = document.querySelector('[data-topic-id="alapozo_modulzaro"]')?.closest('details');
-      if (outer) outer.open = true;
-      const inner = document.querySelector('[data-topic-id="gondolkodas_temazaro"]')?.closest('details');
-      if (inner) inner.open = true;
-    });
+    for (const module of MOBILE_QUEST_MODULES) {
+      await openQuestDrawer(page);
+      await expandAllQuestDetails(page);
 
-    const moduleLink = page.locator('[data-topic-id="halmazmuveletek"]');
-    await moduleLink.scrollIntoViewIfNeeded();
-    await moduleLink.click();
-    await waitForIframeSrc(page, 'modules/halmazmuveletek.html');
+      const moduleLink = page.locator(`[data-topic-id="${module.id}"]`).first();
+      await moduleLink.scrollIntoViewIfNeeded();
+      await moduleLink.click();
+      await waitForIframeSrc(page, module.src);
 
-    await page.waitForFunction(() => document.body.classList.contains('quest-collapsed'));
-    const closedState = await page.evaluate(() => {
-      const backdrop = document.getElementById('quest-drawer-backdrop');
-      const backdropStyle = backdrop ? getComputedStyle(backdrop) : null;
-      return {
-        backdropHidden: backdrop ? backdrop.getAttribute('aria-hidden') : '',
-        backdropOpacity: backdropStyle ? backdropStyle.opacity : '',
-      };
-    });
-    assert.equal(closedState.backdropHidden, 'true');
-    assert.equal(Number.parseFloat(closedState.backdropOpacity), 0);
+      await page.waitForFunction(() => document.body.classList.contains('quest-collapsed'));
+      const closedState = await page.evaluate(() => {
+        const backdrop = document.getElementById('quest-drawer-backdrop');
+        const backdropStyle = backdrop ? getComputedStyle(backdrop) : null;
+        return {
+          backdropHidden: backdrop ? backdrop.getAttribute('aria-hidden') : '',
+          backdropOpacity: backdropStyle ? backdropStyle.opacity : '',
+        };
+      });
+      assert.equal(closedState.backdropHidden, 'true');
+      assert.equal(Number.parseFloat(closedState.backdropOpacity), 0);
+    }
 
-    await page.click('#quest-toggle');
-    await page.waitForFunction(() => !document.body.classList.contains('quest-collapsed'));
+    await openQuestDrawer(page);
     await page.click('#quest-drawer-backdrop');
     await page.waitForFunction(() => document.body.classList.contains('quest-collapsed'));
   } finally {

@@ -476,32 +476,63 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Statisztika</h2>
-        <p>T&#233;maz&#225;r&#243; az &#225;tlag, medi&#225;n &#233;s sz&#243;r&#243;d&#225;s t&#233;mak&#246;reib&#337;l.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a t&#233;maz&#225;r&#243; &#246;sszefoglalja, hogyan &#225;br&#225;zoljuk az adatokat, hogyan sz&#225;molunk k&#246;z&#233;p&#233;rt&#233;keket, &#233;s hogyan m&#233;rj&#252;k a sz&#243;r&#243;d&#225;st. A statisztika seg&#237;t nagy adathalmazokat gyorsan meg&#233;rteni. Gyakran tal&#225;lkozol vele jegyekn&#233;l, sporteredm&#233;nyekn&#233;l vagy felm&#233;r&#233;sekn&#233;l. A c&#233;l, hogy &#225;tl&#225;that&#243;, ellen&#337;rizhet&#337; sz&#225;m&#237;t&#225;sokat v&#233;gezz.</p>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
-                <li>&#193;tlag &#233;s medi&#225;n</li>
-<li>Terjedelem &#233;s sz&#243;r&#225;s</li>
-<li>Adatok &#233;rtelmez&#233;se</li>
+                <li>Adatok &#225;br&#225;zol&#225;sa</li>
+                <li>K&#246;z&#233;p&#233;rt&#233;kek</li>
+                <li>Sz&#243;r&#243;d&#225;si mutat&#243;k</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">x&#772; = &#931;x / n</span></li>
-<li><span class="formula-line">s^2 = &#931;(x &#8722; x&#772;)^2 / n</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tanul&#225;si f&#243;kusz</h3>
-                <ul>
-                    <li>&#201;rtsd a defin&#237;ci&#243;kat &#233;s jel&#246;l&#233;seket.</li>
-                    <li>Gyakorold a tipikus feladatt&#237;pusokat.</li>
-                    <li>Ellen&#337;rizd a m&#233;rt&#233;kegys&#233;geket &#233;s a logik&#225;t.</li>
-                </ul>
-            </div>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Adat:</b> egy m&#233;rt vagy megfigyelt &#233;rt&#233;k.</li>
+            <li><b>Gyakoris&#225;g:</b> h&#225;nyszor fordul el&#337; egy &#233;rt&#233;k.</li>
+            <li><b>&#193;tlag (x&#772;):</b> az adatok &#246;sszege osztva a darabsz&#225;mmal.</li>
+            <li><b>Medi&#225;n:</b> a sorba rendezett adatok k&#246;z&#233;ps&#337; &#233;rt&#233;ke.</li>
+            <li><b>M&#243;dusz:</b> a leggyakoribb &#233;rt&#233;k.</li>
+            <li><b>Terjedelem:</b> max &#8722; min.</li>
+            <li><b>Sz&#243;r&#225;s:</b> azt mutatja, mennyire sz&#243;r&#243;dnak az adatok az &#225;tlag k&#246;r&#252;l.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>&#214;sszegz&#337; p&#233;lda &#8211; jegyek</h4>
+            <p>Adatsor: 2, 3, 4, 4, 5. Sz&#225;mold ki az &#225;tlagot, medi&#225;nt, m&#243;duszt &#233;s terjedelmet!</p>
+            <ol>
+                <li>&#193;tlag: (2 + 3 + 4 + 4 + 5) / 5 = 18/5 = 3,6.</li>
+                <li>Medi&#225;n: a k&#246;z&#233;ps&#337; &#233;rt&#233;k 4.</li>
+                <li>M&#243;dusz: a leggyakoribb &#233;rt&#233;k 4.</li>
+                <li>Terjedelem: 5 &#8722; 2 = 3.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Nem rendezed sorba az adatokat a medi&#225;nhoz.</li>
+                <li>&#214;sszekevered a m&#243;duszt &#233;s a medi&#225;nt.</li>
+                <li>Rosszul sz&#225;molod a darabsz&#225;mot az &#225;tlagn&#225;l.</li>
+                <li>Terjedelemn&#233;l nem a legnagyobbat &#233;s legkisebbet haszn&#225;lod.</li>
+                <li>Elfelejted, hogy a sz&#243;r&#225;s az &#225;tlag k&#246;r&#252;li sz&#243;r&#243;d&#225;st m&#233;ri.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi az &#225;tlag k&#233;plete?</li>
+            <li>Mit jelent a medi&#225;n?</li>
+            <li>Mi a terjedelem egy 3, 5, 9, 10 adatsorn&#225;l?</li>
+            <li>Melyik a leggyakoribb &#233;rt&#233;k az 1, 2, 2, 3 sorozatban?</li>
+            <li>Mit m&#233;r a sz&#243;r&#225;s?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Az adatok &#225;br&#225;zol&#225;sa seg&#237;t az &#225;ttekint&#233;sben.</li>
+            <li>A k&#246;z&#233;p&#233;rt&#233;kek (&#225;tlag, medi&#225;n, m&#243;dusz) &#246;sszefoglalj&#225;k az adatsort.</li>
+            <li>A terjedelem &#233;s a sz&#243;r&#225;s a sz&#243;r&#243;d&#225;st mutatja.</li>
+            <li>Mindig ellen&#337;rizd a sz&#225;m&#237;t&#225;sok logik&#225;j&#225;t.</li>
+            <li>A t&#233;maz&#225;r&#243; mindh&#225;rom t&#233;mak&#246;rt egy&#252;tt k&#233;ri sz&#225;mon.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -546,7 +577,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="K&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="Norm&#225;l" type="button">Norm&#225;l</button>
@@ -596,7 +627,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="K&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="Norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="Neh&#233;z"> Neh&#233;z</label>

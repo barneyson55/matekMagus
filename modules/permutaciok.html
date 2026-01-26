@@ -151,6 +151,24 @@
             animation: fadeIn 0.5s;
         }
 
+        @media (max-width: 600px) {
+            .tab-buttons {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                border-bottom: none;
+            }
+
+            .tab-button {
+                text-align: center;
+                padding: 10px 12px;
+            }
+
+            .tab-button::after {
+                bottom: 0;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -307,24 +325,37 @@
         #pagination-dots {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             flex: 1;
+            flex-wrap: wrap;
         }
 
         .dot {
-            width: 14px;
-            height: 14px;
-            background-color: var(--border-color);
+            width: 44px;
+            height: 44px;
+            background-color: transparent;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .dot.answered {
+        .dot::before {
+            content: '';
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .dot.answered::before {
             background-color: var(--success);
         }
 
-        .dot.current {
+        .dot.current::before {
             box-shadow: 0 0 0 4px var(--brand-light);
             transform: scale(1.15);
         }
@@ -484,33 +515,71 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Permut&#225;ci&#243;k</h2>
-        <p>A permut&#225;ci&#243; minden elem sorrendj&#233;t figyelembe veszi, &#233;s minden elem szerepel a sorban.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A permut&#225;ci&#243; akkor ker&#252;l el&#337;, amikor minden elemet sorba kell rendezni. Ilyen feladat az &#252;ltet&#233;s, a sorrendbe rakott k&#225;rty&#225;k vagy a bet&#369;k rendez&#233;se. A sorrend mindig sz&#225;m&#237;t, &#233;s minden elem szerepel. Ha vannak ism&#233;tl&#337;d&#337; elemek, azt k&#252;l&#246;n k&#233;plettel kezelj&#252;k.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Permut&#225;ci&#243;:</b> n k&#252;l&#246;nb&#246;z&#337; elem &#246;sszes sorrendje.</li>
+            <li><b>Faktori&#225;lis:</b> n! = 1&#183;2&#183;...&#183;n, &#233;s 0! = 1.</li>
+            <li><b>Ism&#233;tl&#233;s n&#233;lk&#252;li permut&#225;ci&#243;:</b> minden elem szerepel, a sorrend sz&#225;m&#237;t.</li>
+            <li><b>Ism&#233;tl&#337;d&#233;ses permut&#225;ci&#243;:</b> ha azonos elemek vannak, n!/(n<sub>1</sub>! n<sub>2</sub>! ...).</li>
+            <li><b>Sorrend:</b> ugyanazok az elemek m&#225;s sorrendben k&#252;l&#246;nb&#246;z&#337; permut&#225;ci&#243;t adnak.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapk&#233;plet</h3>
+            <h4>1. p&#233;lda &#8211; ism&#233;tl&#233;s n&#233;lk&#252;l</h4>
+            <p>H&#225;nyf&#233;lek&#233;ppen rendezhetsz sorba 4 k&#252;l&#246;nb&#246;z&#337; k&#246;nyvet?</p>
+            <ol>
+                <li>n = 4, minden elem szerepel, a sorrend sz&#225;m&#237;t.</li>
+                <li>Permut&#225;ci&#243;: 4! = 4&#183;3&#183;2&#183;1.</li>
+                <li>Eredm&#233;ny: 24 k&#252;l&#246;nb&#246;z&#337; sorrend.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; ism&#233;tl&#337;d&#233;ses permut&#225;ci&#243;</h4>
+            <p>H&#225;ny k&#252;l&#246;nb&#246;z&#337; permut&#225;ci&#243;ja van a MAMA sz&#243;nak?</p>
+            <ol>
+                <li>&#214;sszesen 4 bet&#369;, ebb&#337;l M k&#233;tszer, A k&#233;tszer szerepel.</li>
+                <li>Ism&#233;tl&#337;d&#233;ses permut&#225;ci&#243;: 4!/(2!&#183;2!).</li>
+                <li>Eredm&#233;ny: 6 k&#252;l&#246;nb&#246;z&#337; sorrend.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (szorz&#225;si szab&#225;ly)</h3>
             <ul>
-                <li>n k&#252;l&#246;nb&#246;z&#337; elem permut&#225;ci&#243;inak sz&#225;ma: n!</li>
-<li>0! = 1, 1! = 1.</li>
-<li>A sorrend minden l&#233;p&#233;sben sz&#225;m&#237;t.</li>
+                <li>1. helyre 4 lehet&#337;s&#233;g.</li>
+                <li>2. helyre 3 lehet&#337;s&#233;g.</li>
+                <li>3. helyre 2 lehet&#337;s&#233;g.</li>
+                <li>4. helyre 1 lehet&#337;s&#233;g.</li>
+            </ul>
+            <p class="muted">A lehet&#337;s&#233;geket &#246;sszeszorozzuk: 4&#183;3&#183;2&#183;1 = 24.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Elfelejted, hogy a sorrend sz&#225;m&#237;t.</li>
+                <li>Nem szerepeltetsz minden elemet, pedig permut&#225;ci&#243;ban mind benne van.</li>
+                <li>Ism&#233;tl&#337;d&#233;s eset&#233;n nem osztasz az ism&#233;tl&#337;d&#233;sek faktori&#225;lis&#225;val.</li>
+                <li>0! = 0-t &#237;rsz, pedig 0! = 1.</li>
+                <li>Szorz&#225;s helyett &#246;sszeadsz.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Ism&#233;tl&#337;d&#233;ses permut&#225;ci&#243;</h3>
-                <ul>
-                    <li>Ha az elemek k&#246;z&#246;tt ism&#233;tl&#337;d&#233;s van: n!/(n1! n2! ...).</li>
-<li>Az azonos elemek felcser&#233;l&#233;se nem ad &#250;j permut&#225;ci&#243;t.</li>
-<li>Bet&#369;s feladatokn&#225;l gyakori.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Mikor haszn&#225;ljuk?</h3>
-                <ul>
-                    <li>Ha minden elem helyet kap.</li>
-<li>Ha a sorrend sz&#225;m&#237;t.</li>
-<li>Rendez&#233;si, &#252;ltet&#233;si feladatokn&#225;l.</li>
-                </ul>
-            </div>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>H&#225;ny permut&#225;ci&#243;ja van 5 k&#252;l&#246;nb&#246;z&#337; elemnek?</li>
+            <li>H&#225;ny k&#252;l&#246;nb&#246;z&#337; sorrendje van a LEVEL sz&#243;nak?</li>
+            <li>Mi 0! &#233;rt&#233;ke?</li>
+            <li>Igaz vagy hamis: 6 elem permut&#225;ci&#243;inak sz&#225;ma 6^2.</li>
+            <li>H&#225;nyf&#233;lek&#233;ppen &#252;ltetsz le 3 embert 3 helyre?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Permut&#225;ci&#243;n&#225;l minden elem szerepel, a sorrend sz&#225;m&#237;t.</li>
+            <li>Ism&#233;tl&#233;s n&#233;lk&#252;l: n!.</li>
+            <li>Ism&#233;tl&#337;d&#233;ssel: n!/(n<sub>1</sub>! n<sub>2</sub>! ...).</li>
+            <li>0! = 1, ezt mindig tartsd szem el&#337;tt.</li>
+            <li>A szorz&#225;si szab&#225;ly adja a permut&#225;ci&#243;s lehet&#337;s&#233;gek sz&#225;m&#225;t.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -550,7 +619,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -584,7 +653,7 @@
 
     <div id="gyakorlas" class="tab-content card" role="tabpanel">
         <h2>Gyakorl&#225;s</h2>
-        <p class="practice-info">V&#233;gtelen&#237;tett gyakorl&#225;s. XP jutalom: k&#246;nny&#369; = 1 XP, norm&#225;l = 2 XP, neh&#233;z = 3 XP.</p>
+        <p class="practice-info">V&#233;gtelen&#237;tett gyakorl&#225;s. XP jutalom: k&#246;nny&#369; = 1 XP, norm&#225;l = 2 XP, neh&#233;z = 3 XP. A gyakorl&#225;s XP-t ad, de a teszt adja a nagyobb XP-jutalmat, &#233;s az XP-s&#225;vnak van maximuma.</p>
         <div class="learning-hint" data-role="practice-help">
             <h3>Gyakorl&#225;si tipp</h3>
             <ul>
@@ -594,7 +663,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

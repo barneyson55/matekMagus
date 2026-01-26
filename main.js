@@ -17,6 +17,8 @@ const {
   XP_CAP,
 } = require('./xp_config');
 const { BUFF_CATALOG } = require('./buffs_config');
+const BUFF_INDEX = Object.fromEntries(BUFF_CATALOG.map((buff, index) => [buff.id, index]));
+const FOCUS_ACTIVE_MINUTES = 15;
 
 const customUserDataDir = process.env.MATEK_MESTER_USER_DATA;
 if (customUserDataDir) {
@@ -1033,6 +1035,194 @@ function updateAchievements(progress) {
   return updated;
 }
 
+function getTotalPracticeCorrect(progress) {
+  const stats = progress && progress.practice && progress.practice.statsByTopic
+    ? progress.practice.statsByTopic
+    : {};
+  return Object.values(stats).reduce((sum, entry) => {
+    return sum + Number(entry && entry.correctCount ? entry.correctCount : 0);
+  }, 0);
+}
+
+function getDistinctPracticeTopics(progress) {
+  const stats = progress && progress.practice && progress.practice.statsByTopic
+    ? progress.practice.statsByTopic
+    : {};
+  return Object.values(stats).filter((entry) => Number(entry && entry.correctCount) > 0).length;
+}
+
+function getLatestPracticeTimestamp(progress) {
+  const stats = progress && progress.practice && progress.practice.statsByTopic
+    ? progress.practice.statsByTopic
+    : {};
+  let latest = null;
+  Object.values(stats).forEach((entry) => {
+    if (!entry || typeof entry.lastPracticedAt !== 'string') return;
+    if (!latest || new Date(entry.lastPracticedAt) > new Date(latest)) {
+      latest = entry.lastPracticedAt;
+    }
+  });
+  return latest;
+}
+
+function countTestsWithGrade(progress, minGrade) {
+  return getTestHistory(progress).filter((result) => {
+    const grade = Number(result && result.grade);
+    return Number.isFinite(grade) && grade >= minGrade;
+  }).length;
+}
+
+function hasAnyCompletedQuest(progress) {
+  return hasCompletedQuest(progress, 'topics')
+    || hasCompletedQuest(progress, 'subtopics')
+    || hasCompletedQuest(progress, 'mainTopics');
+}
+
+function isRecentTimestamp(timestamp, minutes) {
+  if (!timestamp) return false;
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.valueOf())) return false;
+  const diffMs = Date.now() - date.getTime();
+  return diffMs <= minutes * 60 * 1000;
+}
+
+function addMinutesToTimestamp(timestamp, minutes) {
+  const date = timestamp ? new Date(timestamp) : new Date();
+  if (Number.isNaN(date.valueOf())) {
+    return new Date().toISOString();
+  }
+  date.setMinutes(date.getMinutes() + minutes);
+  return date.toISOString();
+}
+
+function getBuffSortIndex(id) {
+  if (!id) return Number.MAX_SAFE_INTEGER;
+  const index = BUFF_INDEX[id];
+  return typeof index === 'number' ? index : Number.MAX_SAFE_INTEGER;
+}
+
+function buildActiveBuffRecord(id, activatedAt, expiresAt) {
+  const record = { id };
+  if (activatedAt) record.activatedAt = activatedAt;
+  if (expiresAt) record.expiresAt = expiresAt;
+  return record;
+}
+
+function isSameActiveList(prev, next) {
+  const normalize = (list) => (Array.isArray(list) ? list : [])
+    .map((entry) => `${entry && entry.id ? entry.id : ''}:${entry && entry.expiresAt ? entry.expiresAt : ''}`)
+    .filter(Boolean)
+    .sort();
+  const prevKey = normalize(prev);
+  const nextKey = normalize(next);
+  if (prevKey.length !== nextKey.length) return false;
+  return prevKey.every((value, index) => value === nextKey[index]);
+}
+
+function updateBuffs(progress) {
+  if (!progress || typeof progress !== 'object') {
+    return { unlockedChanged: false, activeChanged: false };
+  }
+  if (!progress.buffs || typeof progress.buffs !== 'object') {
+    progress.buffs = createEmptyBuffState();
+  }
+
+  const unlocked = progress.buffs.unlocked && typeof progress.buffs.unlocked === 'object'
+    ? progress.buffs.unlocked
+    : {};
+  const existingActive = Array.isArray(progress.buffs.active) ? progress.buffs.active : [];
+  let unlockedChanged = false;
+
+  const nowIso = new Date().toISOString();
+  const ensureUnlocked = (id) => {
+    if (!id) return null;
+    const existing = unlocked[id];
+    if (existing && existing.isUnlocked) {
+      if (!existing.unlockedAt) {
+        existing.unlockedAt = nowIso;
+        unlockedChanged = true;
+      }
+      return existing;
+    }
+    unlocked[id] = { isUnlocked: true, unlockedAt: nowIso };
+    unlockedChanged = true;
+    return unlocked[id];
+  };
+
+  const totalPracticeCorrect = getTotalPracticeCorrect(progress);
+  const distinctPracticeTopics = getDistinctPracticeTopics(progress);
+  const lastPracticeAt = getLatestPracticeTimestamp(progress);
+  const strongTestCount = countTestsWithGrade(progress, 4);
+  const hardTestSuccess = hasHardTest(progress, 3);
+  const completedQuest = hasAnyCompletedQuest(progress);
+
+  const shouldUnlockFocus = totalPracticeCorrect >= 5;
+  const shouldUnlockKitartas = totalPracticeCorrect >= 30;
+  const shouldUnlockPrecizitas = strongTestCount >= 3;
+  const shouldUnlockKihivas = hardTestSuccess;
+  const shouldUnlockFelfedezo = distinctPracticeTopics >= 4;
+  const shouldUnlockBajnok = completedQuest;
+
+  const knownBuffIds = new Set([
+    'focus',
+    'kitartas',
+    'precizitas',
+    'kihivas',
+    'felfedezo',
+    'bajnok',
+  ]);
+
+  const nextActive = [];
+
+  if (shouldUnlockFocus) {
+    const record = ensureUnlocked('focus');
+    if (isRecentTimestamp(lastPracticeAt, FOCUS_ACTIVE_MINUTES)) {
+      const activatedAt = lastPracticeAt || (record && record.unlockedAt) || nowIso;
+      const expiresAt = addMinutesToTimestamp(activatedAt, FOCUS_ACTIVE_MINUTES);
+      nextActive.push(buildActiveBuffRecord('focus', activatedAt, expiresAt));
+    }
+  }
+
+  if (shouldUnlockKitartas) {
+    const record = ensureUnlocked('kitartas');
+    nextActive.push(buildActiveBuffRecord('kitartas', record && record.unlockedAt ? record.unlockedAt : nowIso));
+  }
+
+  if (shouldUnlockPrecizitas) {
+    const record = ensureUnlocked('precizitas');
+    nextActive.push(buildActiveBuffRecord('precizitas', record && record.unlockedAt ? record.unlockedAt : nowIso));
+  }
+
+  if (shouldUnlockKihivas) {
+    const record = ensureUnlocked('kihivas');
+    nextActive.push(buildActiveBuffRecord('kihivas', record && record.unlockedAt ? record.unlockedAt : nowIso));
+  }
+
+  if (shouldUnlockFelfedezo) {
+    const record = ensureUnlocked('felfedezo');
+    nextActive.push(buildActiveBuffRecord('felfedezo', record && record.unlockedAt ? record.unlockedAt : nowIso));
+  }
+
+  if (shouldUnlockBajnok) {
+    const record = ensureUnlocked('bajnok');
+    nextActive.push(buildActiveBuffRecord('bajnok', record && record.unlockedAt ? record.unlockedAt : nowIso));
+  }
+
+  existingActive.forEach((entry) => {
+    const id = entry && entry.id;
+    if (!id || knownBuffIds.has(id)) return;
+    nextActive.push(entry);
+  });
+
+  nextActive.sort((first, second) => getBuffSortIndex(first.id) - getBuffSortIndex(second.id));
+
+  const activeChanged = !isSameActiveList(existingActive, nextActive);
+  progress.buffs.unlocked = unlocked;
+  progress.buffs.active = nextActive;
+
+  return { unlockedChanged, activeChanged };
+}
+
 function normalizeProgress(raw) {
   const source = raw && typeof raw === 'object' ? raw : {};
   const progress = createEmptyProgress();
@@ -1343,6 +1533,7 @@ ipcMain.on('save-test-result', (event, result) => {
   progress.tests.unshift(normalizedResult);
   grantXpForResult(progress, normalizedResult);
   updateAchievements(progress);
+  updateBuffs(progress);
   saveProgress(progress);
 });
 
@@ -1357,7 +1548,8 @@ ipcMain.handle('get-all-results', async () => {
 ipcMain.handle('get-progress-summary', async () => {
   const { progress, migrated } = normalizeProgress(readProgress());
   const achievementsUpdated = updateAchievements(progress);
-  if (migrated || achievementsUpdated) saveProgress(progress);
+  const buffsUpdated = updateBuffs(progress);
+  if (migrated || achievementsUpdated || buffsUpdated.unlockedChanged) saveProgress(progress);
   return {
     xp: progress.totalXp,
     completions: buildCompletionSummary(progress),
@@ -1396,6 +1588,7 @@ ipcMain.handle('save-practice-xp', async (event, { topicId, xp }) => {
     const { progress } = normalizeProgress(readProgress());
     recordPracticeXp(progress, { topicId, xp });
     updateAchievements(progress);
+    updateBuffs(progress);
     saveProgress(progress);
     return { ok: true };
   } catch (error) {
@@ -1409,6 +1602,7 @@ ipcMain.on('save-quest-state', (event, questState) => {
   try {
     const { progress } = normalizeProgress(readProgress());
     progress.quests = mergeQuestState(progress.quests, questState);
+    updateBuffs(progress);
     saveProgress(progress);
   } catch (error) {
     console.error('Hiba a quest allapot mentese kozben:', error);

@@ -484,27 +484,64 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Has&#225;bok, g&#250;l&#225;k F, V</h2>
-        <p>T&#233;rgeometri&#225;ban a t&#233;rfogat alap &#233;s magass&#225;g szorzat&#225;b&#243;l sz&#225;rmazik.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>K&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">Has&#225;b t&#233;rfogata: V = B * m</span></li>
-<li><span class="formula-line">T&#233;glatest: V = a * b * m</span></li>
-<li><span class="formula-line">G&#250;la: V = B * m / 3</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>B az alap ter&#252;lete.</li>
-<li>A magass&#225;g mindig mer&#337;leges az alapra.</li>
-<li>A g&#250;la t&#233;rfogata harmada a has&#225;b&#233;nak.</li>
-                </ul>
-            </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A has&#225;bok &#233;s g&#250;l&#225;k a t&#233;rgeometria alaptestei. Sok gyakorlati helyzetben dobozokat, &#233;p&#252;leteket, csomagokat k&#246;zel&#237;thetsz ezekkel. A sz&#225;mol&#225;s kulcsa az alaplap ter&#252;lete &#233;s a magass&#225;g. Ha ezt j&#243;l l&#225;tod, a felsz&#237;n &#233;s a t&#233;rfogat gyorsan kij&#246;n.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Alaplap ter&#252;lete:</b> <span class="formula-line">B</span>.</li>
+            <li><b>Magass&#225;g:</b> <span class="formula-line">h</span>, mer&#337;leges t&#225;vols&#225;g az alapt&#243;l.</li>
+            <li><b>Has&#225;b t&#233;rfogata:</b> <span class="formula-line">V = B * h</span>.</li>
+            <li><b>G&#250;la t&#233;rfogata:</b> <span class="formula-line">V = (1/3) * B * h</span>.</li>
+            <li><b>Has&#225;b felsz&#237;ne (der&#233;ksz&#246;g&#369;):</b> <span class="formula-line">F = 2B + K * h</span>, ahol <span class="formula-line">K</span> az alap ker&#252;lete.</li>
+            <li><b>G&#250;la felsz&#237;ne:</b> <span class="formula-line">F = B +</span> oldallapok ter&#252;leteinek &#246;sszege.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; t&#233;glatest</h4>
+            <p>Adott: <span class="formula-line">a = 4</span>, <span class="formula-line">b = 3</span>, <span class="formula-line">h = 5</span>.</p>
+            <ol>
+                <li>Alap: <span class="formula-line">B = a * b = 12</span>.</li>
+                <li>T&#233;rfogat: <span class="formula-line">V = 12 * 5 = 60</span>.</li>
+                <li>Felsz&#237;n: <span class="formula-line">F = 2(ab + ah + bh) = 2(12 + 20 + 15) = 94</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; szab&#225;lyos n&#233;gyzet alap&#250; g&#250;la</h4>
+            <p>Adott: <span class="formula-line">a = 6</span>, <span class="formula-line">h = 4</span>, <span class="formula-line">alkot&#243; = 5</span>.</p>
+            <ol>
+                <li>Alap: <span class="formula-line">B = a^2 = 36</span>.</li>
+                <li>T&#233;rfogat: <span class="formula-line">V = (1/3) * 36 * 4 = 48</span>.</li>
+                <li>Oldallapok: <span class="formula-line">4 * (1/2 * 6 * 5) = 60</span>.</li>
+                <li>Felsz&#237;n: <span class="formula-line">F = 36 + 60 = 96</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (h&#225;l&#243;)</h3>
+            <p>K&#233;pzeld el, hogy a testet &#8222;sz&#233;thajtod&#8221;. Egy has&#225;b h&#225;l&#243;ja egy alaplapb&#243;l &#233;s k&#246;rben t&#233;glalapokb&#243;l &#225;ll. Egy g&#250;la h&#225;l&#243;ja az alaplapb&#243;l &#233;s h&#225;romsz&#246;gekb&#337;l &#225;ll&#243; oldallapokb&#243;l &#225;ll.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Elfelejted a <span class="formula-line">1/3</span> szorz&#243;t a g&#250;l&#225;n&#225;l.</li>
+                <li>Az alap ker&#252;let&#233;t haszn&#225;lod ter&#252;let helyett a t&#233;rfogatn&#225;l.</li>
+                <li>A g&#250;la oldallapj&#225;n&#225;l a magass&#225;got kevered az alkot&#243;val.</li>
+                <li>Csak az oldallapokat sz&#225;molod, &#233;s kimarad az alap.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mennyi egy <span class="formula-line">B = 20</span>, <span class="formula-line">h = 3</span> has&#225;b t&#233;rfogata?</li>
+            <li>&#205;rd fel a g&#250;la t&#233;rfogatk&#233;plet&#233;t.</li>
+            <li>Mekkora egy t&#233;glatest felsz&#237;ne, ha <span class="formula-line">a = 2</span>, <span class="formula-line">b = 5</span>, <span class="formula-line">h = 4</span>?</li>
+            <li>Mire kell figyelni a g&#250;la oldallapjain&#225;l?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Has&#225;b: <span class="formula-line">V = B * h</span>, g&#250;la: <span class="formula-line">V = (1/3) * B * h</span>.</li>
+            <li>Der&#233;ksz&#246;g&#369; has&#225;b felsz&#237;ne: <span class="formula-line">F = 2B + K * h</span>.</li>
+            <li>G&#250;l&#225;n&#225;l az oldallapok ter&#252;let&#233;t is hozz&#225; kell adni az alaphoz.</li>
+        </ul>
     </div>
-
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
         <p>A t&#233;rfogat k&#233;pletek gyors alkalmaz&#225;sa.</p>
@@ -542,7 +579,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -586,7 +623,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

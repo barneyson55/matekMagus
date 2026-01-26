@@ -505,49 +505,37 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Pr&#237;mt&#233;nyez&#337;s felbont&#225;s</h2>
-        <p>A pr&#237;mt&#233;nyez&#337;s felbont&#225;s megmutatja, hogyan &#225;ll el&#337; egy sz&#225;m pr&#237;mek szorzatak&#233;nt. Ez seg&#237;t LNKO, LKKT &#233;s oszthat&#243;s&#225;gi feladatokban is.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A pr&#237;mt&#233;nyez&#337;s felbont&#225;s megmutatja, hogy egy sz&#225;m milyen pr&#237;mekb&#337;l &#233;p&#252;l fel. Ez az alapja az egyszer&#369;s&#237;t&#233;snek, az LNKO/LKKT-nek &#233;s az oszthat&#243;s&#225;g meg&#233;rt&#233;s&#233;nek. Ha ismered a t&#233;nyez&#337;ket, gyorsabban &#225;tl&#225;tod a feladatokat. Minden 1-n&#233;l nagyobb eg&#233;sz sz&#225;mnak egy&#233;rtelm&#369; felbont&#225;sa van.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Pr&#237;msz&#225;m:</b> csak 1-gyel &#233;s &#246;nmag&#225;val oszthat&#243; (1 nem pr&#237;msz&#225;m).</li>
+            <li><b>&#214;sszetett sz&#225;m:</b> t&#246;bb pr&#237;mt&#233;nyez&#337; szorzata.</li>
+            <li><b>Pr&#237;mt&#233;nyez&#337;:</b> a felbont&#225;sban szerepl&#337; pr&#237;m.</li>
+            <li><b>Pr&#237;mt&#233;nyez&#337;s felbont&#225;s:</b> a sz&#225;m fel&#237;r&#225;sa pr&#237;mek hatv&#225;nyak&#233;nt.</li>
+            <li><b>Kitev&#337;:</b> megmutatja, h&#225;nyszor szerepel egy pr&#237;m.</li>
+            <li><b>T&#233;nyez&#337;fa:</b> vizu&#225;lis bont&#225;s, ahol a levelek pr&#237;mek.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapfogalmak</h3>
-            <ul>
-                <li>A <b>pr&#237;msz&#225;m</b> csak 1-gyel &#233;s &#246;nmag&#225;val oszthat&#243;.</li>
-                <li>Minden 1-n&#233;l nagyobb sz&#225;m felbonthat&#243; pr&#237;mek szorzat&#225;ra.</li>
-                <li>A felbont&#225;s egy&#233;rtelm&#369; (a sorrend mindegy).</li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="theory-section">
-                <h3>Hogyan bontunk?</h3>
-                <ul>
-                    <li>Oszd el a sz&#225;mot a legkisebb pr&#237;mmel (2, 3, 5...).</li>
-                    <li>Ha oszthat&#243;, folytasd addig, am&#237;g marad&#233;k n&#233;lk&#252;l nem megy.</li>
-                    <li>Ezut&#225;n l&#233;pj a k&#246;vetkez&#337; pr&#237;mre.</li>
-                </ul>
-            </div>
-            <div class="theory-section">
-                <h3>Jel&#246;l&#233;s</h3>
-                <ul>
-                    <li>P&#233;lda: <span class="formula-line">360 = 2^3 * 3^2 * 5</span></li>
-                    <li>Ugyanez: <span class="formula-line">2 * 2 * 2 * 3 * 3 * 5</span></li>
-                </ul>
-            </div>
-        </div>
-        <div class="theory-section">
-            <h3>Gyakorlat</h3>
-            <p>A feladatokban t&#246;rekedj arra, hogy mindig pr&#237;m t&#233;nyez&#337;k szerepeljenek. A sorrend mindegy.</p>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>84 pr&#237;mt&#233;nyez&#337;s felbont&#225;sa:</p>
+            <h4>1. p&#233;lda - 84 felbont&#225;sa</h4>
             <ol>
-                <li>84 = 2 &#183; 42</li>
-                <li>42 = 2 &#183; 21</li>
-                <li>21 = 3 &#183; 7</li>
-                <li>84 = 2&#178; &#183; 3 &#183; 7</li>
+                <li>84 = 2 * 42.</li>
+                <li>42 = 2 * 21.</li>
+                <li>21 = 3 * 7.</li>
+                <li>84 = 2^2 * 3 * 7.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: t&#233;nyez&#337;fa</h3>
+            <h4>2. p&#233;lda - 360 felbont&#225;sa</h4>
+            <ol>
+                <li>360 = 36 * 10.</li>
+                <li>36 = 2^2 * 3^2, 10 = 2 * 5.</li>
+                <li>360 = 2^3 * 3^2 * 5.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (t&#233;nyez&#337;fa)</h3>
             <svg viewBox="0 0 320 180" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <text x="150" y="20" font-size="16" text-anchor="middle">84</text>
                 <line x1="150" y1="26" x2="90" y2="60" stroke="#4A55A2" stroke-width="2" />
@@ -563,8 +551,33 @@
                 <text x="220" y="180" font-size="16" text-anchor="middle">3</text>
                 <text x="280" y="180" font-size="16" text-anchor="middle">7</text>
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A levelek a pr&#237;mek, ezek szorzata adja vissza a sz&#225;mot.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A levelek pr&#237;mek, ezek szorzata adja vissza az eredeti sz&#225;mot.</p>
         </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>1-et pr&#237;msz&#225;mnak tekinted.</li>
+                <li>Nem bontod le teljesen pr&#237;mekig (pl. 21-n&#233;l meg&#225;llsz).</li>
+                <li>Rosszul sz&#225;molod a kitev&#337;ket.</li>
+                <li>&#218;gy gondolod, hogy a sorrend sz&#225;m&#237;t a felbont&#225;sban.</li>
+                <li>Nem ellen&#337;rz&#246;d vissza szorz&#225;ssal.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>&#205;rd fel 72 pr&#237;mt&#233;nyez&#337;s felbont&#225;s&#225;t.</li>
+            <li>&#205;rd fel 90 pr&#237;mt&#233;nyez&#337;s felbont&#225;s&#225;t.</li>
+            <li>Pr&#237;msz&#225;m-e a 91?</li>
+            <li>Mit jelent a kitev&#337; a felbont&#225;sban?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Minden 1-n&#233;l nagyobb sz&#225;m pr&#237;mek szorzata.</li>
+            <li>A felbont&#225;s egy&#233;rtelm&#369;, a sorrend nem sz&#225;m&#237;t.</li>
+            <li>A kitev&#337;k mutatj&#225;k, h&#225;nyszor szerepel egy pr&#237;m.</li>
+            <li>A t&#233;nyez&#337;fa seg&#237;t vizu&#225;lisan bontani.</li>
+            <li>A v&#233;geredm&#233;nyt mindig ellen&#337;rizheted visszaszorz&#225;ssal.</li>
+        </ul>
 </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -607,7 +620,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -651,7 +664,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;gek:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szintek:</span>
             <label><input type="checkbox" class="practice-difficulty" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input type="checkbox" class="practice-difficulty" value="norm&#225;l"> Norm&#225;l</label>
             <label><input type="checkbox" class="practice-difficulty" value="neh&#233;z"> Neh&#233;z</label>
@@ -660,7 +673,7 @@
         <div id="practice-area" class="practice-area is-hidden">
             <div id="practice-question" class="practice-question"></div>
             <input type="text" id="practice-input" class="module-input" placeholder="V&#225;lasz...">
-            <button id="practice-check" class="btn btn-primary" type="button">Ellen&#337;rz&#233;s</button>
+            <button id="practice-check" class="btn btn-primary" type="button">V&#225;lasz elk&#252;ld&#233;se</button>
             <p id="practice-feedback"></p>
         </div>
     </div>

@@ -430,63 +430,72 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>Elm&#233;let</h2>
-        <p>Az abszol&#250;t&#233;rt&#233;k &#233;s a gy&#246;k f&#252;ggv&#233;nyek alapvet&#337; modelljei a f&#252;ggv&#233;nyek vil&#225;g&#225;nak.
-            Az abszol&#250;t&#233;rt&#233;k V alak&#250; grafikonja a t&#225;vols&#225;g fogalm&#225;t, a gy&#246;k f&#252;ggv&#233;ny pedig egy kezd&#337;pontb&#243;l
-            indul&#243; n&#246;vekv&#337; g&#246;rbe viselked&#233;s&#233;t mutatja.</p>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>Abszol&#250;t&#233;rt&#233;k f&#252;ggv&#233;ny</h3>
-                <p><strong>Alapforma:</strong> <span class="formula-line">f(x) = |x|</span></p>
-                <ul>
-                    <li><strong>Tartom&#225;ny:</strong> R</li>
-                    <li><strong>&#201;rt&#233;kk&#233;szlet:</strong> y &ge; 0</li>
-                    <li><strong>Cs&#250;cs:</strong> (0, 0), tengelye az y-tengely</li>
-                    <li><strong>Parit&#225;s:</strong> p&#225;ros f&#252;ggv&#233;ny</li>
-                </ul>
-                <div class="learning-hint">
-                    <h3>Darabos alak</h3>
-                    <div class="formula-line">|x| = x, ha x &ge; 0; |x| = -x, ha x &lt; 0</div>
-                </div>
-            </div>
-            <div class="card">
-                <h3>Gy&#246;k f&#252;ggv&#233;ny</h3>
-                <p><strong>Alapforma:</strong> <span class="formula-line">f(x) = &radic;x</span></p>
-                <ul>
-                    <li><strong>Tartom&#225;ny:</strong> x &ge; 0</li>
-                    <li><strong>&#201;rt&#233;kk&#233;szlet:</strong> y &ge; 0</li>
-                    <li><strong>Kezd&#337;pont:</strong> (0, 0)</li>
-                    <li><strong>Monotonit&#225;s:</strong> n&#246;vekv&#337;</li>
-                </ul>
-                <p class="muted">A gy&#246;k f&#252;ggv&#233;ny mindig felfel&#233; tart, lassan n&#337;vekszik.</p>
-            </div>
-        </div>
+        <h2>Abszol&#250;t&#233;rt&#233;k &#233;s gy&#246;k f&#252;ggv&#233;nyek</h2>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Az abszol&#250;t&#233;rt&#233;k a t&#225;vols&#225;got m&#233;ri, ez&#233;rt mindig nemnegat&#237;v. A gy&#246;k f&#252;ggv&#233;ny a n&#233;gyzetre emel&#233;s &#8222;visszaford&#237;t&#225;sa&#8221;, &#233;s csak ott &#233;rtelmezett, ahol a gy&#246;k alatt nem negat&#237;v sz&#225;m van. Ezekkel gyakran tal&#225;lkozol egyenletekben, t&#225;vols&#225;gfeladatokban vagy grafikonok rajzol&#225;sakor. Ha tudod a tartom&#225;nyt &#233;s az alap alakot, k&#246;nnyen felismered a grafikon f&#337; r&#233;sz&#233;t.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Abszol&#250;t&#233;rt&#233;k:</b> <span class="formula-line">f(x) = |x|</span>, mindig <span class="formula-line">f(x) &#8805; 0</span>.</li>
+            <li><b>Darabos alak:</b> <span class="formula-line">|x| = x</span>, ha <span class="formula-line">x &#8805; 0</span>, &#233;s <span class="formula-line">|x| = -x</span>, ha <span class="formula-line">x &lt; 0</span>.</li>
+            <li><b>Abszol&#250;t&#233;rt&#233;k tartom&#225;ny:</b> <span class="formula-line">R</span>, &#233;rt&#233;kk&#233;szlet: <span class="formula-line">y &#8805; 0</span>.</li>
+            <li><b>Gy&#246;k f&#252;ggv&#233;ny:</b> <span class="formula-line">f(x) = &#8730;x</span>, csak <span class="formula-line">x &#8805; 0</span> eset&#233;n.</li>
+            <li><b>Gy&#246;k &#233;rt&#233;kk&#233;szlet:</b> <span class="formula-line">y &#8805; 0</span>, kezd&#337;pont <span class="formula-line">(0, 0)</span>.</li>
+            <li><b>Eltol&#225;s/ny&#250;jt&#225;s:</b> <span class="formula-line">a|x - h| + k</span> &#233;s <span class="formula-line">a&#8730;(x - h) + k</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Eltol&#225;sok &#233;s ny&#250;jt&#225;sok</h3>
-            <ul>
-                <li><span class="formula-line">f(x) = a|x - h| + k</span>: cs&#250;cs (h, k), az &#233;rt&#233;kk&#233;szlet a jelt&#337;l f&#252;gg.</li>
-                <li><span class="formula-line">f(x) = a&radic;(x - h) + k</span>: tartom&#225;ny x &ge; h, kezd&#337;pont (h, k).</li>
-                <li>Ha <strong>a &lt; 0</strong>, a grafikon t&#252;kr&#246;z&#337;dik az x-tengelyre.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>Abszol&#250;t&#233;rt&#233;k: |&#8722;3| = 3, |2| = 2.</p>
+            <h4>1. p&#233;lda &#8211; abszol&#250;t&#233;rt&#233;k sz&#225;mol&#225;sa</h4>
+            <p>Sz&#225;mold ki: <span class="formula-line">|x - 3|</span> az <span class="formula-line">x = 1</span> &#233;s <span class="formula-line">x = 5</span> helyeken.</p>
             <ol>
-                <li>Az abszol&#250;t&#233;rt&#233;k mindig nemnegat&#237;v.</li>
-                <li>T&#225;vols&#225;gk&#233;nt &#233;rtelmezz&#252;k az orig&#243;t&#243;l.</li>
+                <li><span class="formula-line">x = 1</span>: <span class="formula-line">|1 - 3| = |-2| = 2</span>.</li>
+                <li><span class="formula-line">x = 5</span>: <span class="formula-line">|5 - 3| = |2| = 2</span>.</li>
+                <li>Ugyanaz az &#233;rt&#233;k, mert az abszol&#250;t&#233;rt&#233;k t&#225;vols&#225;got m&#233;r.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: |x| grafikon</h3>
+            <h4>2. p&#233;lda &#8211; gy&#246;k f&#252;ggv&#233;ny tartom&#225;nya</h4>
+            <p>Legyen <span class="formula-line">f(x) = &#8730;(x - 1) + 2</span>.</p>
+            <ol>
+                <li>A gy&#246;k alatt nem lehet negat&#237;v: <span class="formula-line">x - 1 &#8805; 0</span>.</li>
+                <li>Innen <span class="formula-line">x &#8805; 1</span>, ez a tartom&#225;ny.</li>
+                <li><span class="formula-line">f(5) = &#8730;4 + 2 = 4</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (|x| grafikon)</h3>
             <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <line x1="40" y1="100" x2="280" y2="100" stroke="#4A55A2" stroke-width="2" />
                 <line x1="160" y1="20" x2="160" y2="140" stroke="#4A55A2" stroke-width="2" />
                 <path d="M80 140 L160 100 L240 140" fill="none" stroke="#7895CB" stroke-width="3" />
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A V-alak mutatja, hogy mindk&#233;t oldal pozit&#237;v.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A V-alak mutatja, hogy az abszol&#250;t&#233;rt&#233;k mindenhol nemnegat&#237;v.</p>
         </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>&#218;gy sz&#225;molsz, mintha <span class="formula-line">|x| = x</span> mindig igaz lenne.</li>
+                <li>Negat&#237;v sz&#225;mot engedsz a gy&#246;k al&#225;.</li>
+                <li>Eltol&#225;sn&#225;l &#246;sszekevered a <span class="formula-line">x - h</span> el&#337;jel&#233;t.</li>
+                <li>Elfelejted, hogy <span class="formula-line">a &lt; 0</span> t&#252;kr&#246;z&#233;st okoz.</li>
+                <li>Nem ellen&#337;rz&#246;d a tartom&#225;nyt feladatmegold&#225;skor.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi a tartom&#225;nya a <span class="formula-line">f(x) = &#8730;(x + 2)</span> f&#252;ggv&#233;nynek?</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">| -7 |</span>.</li>
+            <li>Mi a kezd&#337;pontja a <span class="formula-line">f(x) = &#8730;(x - 4)</span> f&#252;ggv&#233;nynek?</li>
+            <li>Hogyan v&#225;ltozik a grafikon, ha <span class="formula-line">a &lt; 0</span> a <span class="formula-line">a|x|</span> alakban?</li>
+            <li>Mi&#233;rt mindig nemnegat&#237;v az abszol&#250;t&#233;rt&#233;k?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li><span class="formula-line">|x|</span> t&#225;vols&#225;got m&#233;r, ez&#233;rt mindig <span class="formula-line">&#8805; 0</span>.</li>
+            <li>A gy&#246;k f&#252;ggv&#233;ny csak ott &#233;rtelmezett, ahol a gy&#246;k alatt nem negat&#237;v sz&#225;m &#225;ll.</li>
+            <li>Eltol&#225;sn&#225;l a <span class="formula-line">x - h</span> hat&#225;rozza meg a kezd&#337;pontot.</li>
+            <li><span class="formula-line">a &lt; 0</span> t&#252;kr&#246;z&#233;st ad, <span class="formula-line">a &gt; 1</span> ny&#250;jt&#225;st.</li>
+            <li>A grafikonok felismer&#233;se seg&#237;t a gyors feladatmegold&#225;sban.</li>
+        </ul>
 </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -570,7 +579,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -614,7 +623,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

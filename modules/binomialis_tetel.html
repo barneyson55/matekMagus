@@ -484,33 +484,67 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Binomi&#225;lis t&#233;tel</h2>
-        <p>A binomi&#225;lis t&#233;tel a (a+b)^n kifejt&#233;s&#233;t &#237;rja le.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A binomi&#225;lis t&#233;tel megmondja, hogyan fejtsd ki a (a+b)^n alak&#250; kifejez&#233;seket. Seg&#237;t gyorsan megtal&#225;lni az egy&#252;tthat&#243;kat &#233;s az egyes tagokat. Gyakran el&#337;ker&#252;l polinomokn&#225;l, sorfejt&#233;sn&#233;l &#233;s val&#243;sz&#237;n&#369;s&#233;gsz&#225;m&#237;t&#225;sn&#225;l is. A Pascal-h&#225;romsz&#246;g vizu&#225;lisan is mutatja az egy&#252;tthat&#243;kat.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Binomi&#225;lis t&#233;tel:</b> (a+b)^n = &#8721;<sub>k=0</sub><sup>n</sup> C(n,k) a<sup>n-k</sup> b<sup>k</sup>.</li>
+            <li><b>Binomi&#225;lis egy&#252;tthat&#243;:</b> C(n,k) = n!/(k!(n-k)!).</li>
+            <li><b>k tartom&#225;nya:</b> k = 0,1,2,...,n.</li>
+            <li><b>Tagalak:</b> minden tagban a hatv&#225;nykitev&#337;k &#246;sszege n.</li>
+            <li><b>Pascal-h&#225;romsz&#246;g:</b> sorai a C(n,k) &#233;rt&#233;keket adj&#225;k.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>&#193;ltal&#225;nos alak</h3>
+            <h4>1. p&#233;lda &#8211; kifejt&#233;s</h4>
+            <p>Fejtsd ki: (x+2)^3.</p>
+            <ol>
+                <li>n = 3, a Pascal-sor: 1, 3, 3, 1.</li>
+                <li>Tagok: x^3 + 3x^2&#183;2 + 3x&#183;2^2 + 2^3.</li>
+                <li>Eredm&#233;ny: x^3 + 6x^2 + 12x + 8.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; egy&#252;tthat&#243; keres&#233;se</h4>
+            <p>Mi az x^2 tag egy&#252;tthat&#243;ja a (x+2)^4 kifejt&#233;s&#233;ben?</p>
+            <ol>
+                <li>Az x^2 taghoz n-k = 2 tartozik, teh&#225;t k = 2.</li>
+                <li>Egy&#252;tthat&#243;: C(4,2)&#183;2^2 = 6&#183;4 = 24.</li>
+                <li>Az x^2 tag: 24x^2.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (Pascal-h&#225;romsz&#246;g sor)</h3>
             <ul>
-                <li>(a+b)^n = &#931; C(n,k) a^{n-k} b^{k}.</li>
-<li>k = 0..n.</li>
-<li>Az egy&#252;tthat&#243;k binomi&#225;lisak.</li>
+                <li>n = 4 sor: 1, 4, 6, 4, 1.</li>
+                <li>Ez adja a (a+b)^4 egy&#252;tthat&#243;it.</li>
+                <li>A sor szimmetrikus.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Egy&#252;tthat&#243;k</h3>
-                <ul>
-                    <li>C(n,k) = n!/(k!(n-k)!).</li>
-<li>A Pascal-h&#225;romsz&#246;g sorai adj&#225;k.</li>
-<li>Szimmetria: C(n,k)=C(n,n-k).</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Gyakorlat</h3>
-                <ul>
-                    <li>Keresd a megfelel&#337; k-t.</li>
-<li>Figyeld a hatv&#225;nyokat.</li>
-<li>Sk&#225;l&#225;zott tagokn&#225;l szorz&#243;k jelennek meg.</li>
-                </ul>
-            </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Elfelejted, hogy a hatv&#225;nykitev&#337;k &#246;sszege mindig n.</li>
+                <li>Nem szorzod meg a megfelel&#337; b^k faktorral.</li>
+                <li>El&#337;jelhib&#225;t v&#233;tesz (pl. b = -1 eset&#233;n).</li>
+                <li>Rosszul v&#225;lasztod meg a k &#233;rt&#233;k&#233;t.</li>
+            </ul>
         </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Fejtsd ki: (a+b)^2.</li>
+            <li>Mi a (x+1)^5 kifejt&#233;s&#233;ben az x^3 tag egy&#252;tthat&#243;ja?</li>
+            <li>Melyik Pascal-h&#225;romsz&#246;g sor tartozik n = 3-hoz?</li>
+            <li>Igaz vagy hamis: C(5,2) = C(5,3).</li>
+            <li>Mi&#233;rt szimmetrikusak a binomi&#225;lis egy&#252;tthat&#243;k?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>(a+b)^n kifejt&#233;se binomi&#225;lis t&#233;tellel t&#246;rt&#233;nik.</li>
+            <li>Az egy&#252;tthat&#243;: C(n,k) = n!/(k!(n-k)!).</li>
+            <li>Minden tag alakja a<sup>n-k</sup>b<sup>k</sup>.</li>
+            <li>A Pascal-h&#225;romsz&#246;g gyors ellen&#337;rz&#233;st ad.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -551,7 +585,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -595,7 +629,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

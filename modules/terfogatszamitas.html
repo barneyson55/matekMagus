@@ -151,6 +151,42 @@
             animation: fadeIn 0.5s;
         }
 
+        @media (max-width: 600px) {
+            .tab-buttons {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                border-bottom: none;
+            }
+
+            .tab-button {
+                text-align: center;
+                padding: 10px 12px;
+            }
+
+            .tab-button::after {
+                bottom: 0;
+            }
+        }
+
+        @media (max-height: 480px) and (orientation: landscape) {
+            body {
+                padding: 24px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .tab-buttons {
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                margin-top: 20px;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -491,37 +527,70 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>T&#233;rfogatsz&#225;m&#237;t&#225;s integr&#225;llal</h2>
-        <p>A forg&#225;stestek t&#233;rfogat&#225;t integr&#225;llal sz&#225;moljuk: a korong m&#243;dszer a leggyakoribb emelt szint&#369; megk&#246;zel&#237;t&#233;s.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ha egy s&#237;kidomot egy tengely k&#246;r&#252;l megforgatsz, forg&#225;stestet kapsz. A t&#233;rfogatot &#250;gy sz&#225;moljuk, hogy az [a,b] intervallumon v&#233;kony korongokra bontjuk a testet, &#233;s &#246;sszegezz&#252;k a t&#233;rfogatukat. Ez a korong m&#243;dszer. Sok feladatban <span class="formula-line">V/&#960;</span>-t k&#233;rnek, ilyenkor az integr&#225;l &#233;rt&#233;k&#233;t kell megadni.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Forg&#225;stest:</b> s&#237;kg&#246;rbe forgat&#225;s&#225;val kapott test.</li>
+            <li><b>Forg&#225;stengely:</b> az a tengely, ami k&#246;r&#252;l forgatunk (pl. x-tengely).</li>
+            <li><b>Sug&#225;r:</b> <span class="formula-line">r = f(x)</span>, a tengelyt&#337;l m&#233;rt t&#225;vols&#225;g.</li>
+            <li><b>Korong m&#243;dszer:</b> <span class="formula-line">V = &#960; &#8747;_a^b (f(x))^2 dx</span>.</li>
+            <li><b>Hat&#225;rok:</b> <span class="formula-line">a</span> &#233;s <span class="formula-line">b</span> az integr&#225;l&#225;s v&#233;gpontjai.</li>
+            <li><b>V/&#960;:</b> ha &#960; n&#233;lk&#252;l k&#233;rik, akkor csak az integr&#225;l &#233;rt&#233;ke kell.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Korong m&#243;dszer</h3>
+            <h4>1. p&#233;lda &#8211; henger</h4>
+            <p>Legyen <span class="formula-line">f(x)=3</span>, <span class="formula-line">[0,2]</span>.</p>
+            <ol>
+                <li>Sug&#225;r: <span class="formula-line">r=3</span>, ez&#233;rt <span class="formula-line">r^2=9</span>.</li>
+                <li>Integr&#225;l: <span class="formula-line">&#8747;_0^2 9 dx = 18</span>.</li>
+                <li>T&#233;rfogat: <span class="formula-line">V = &#960;&#183;18</span>, vagyis <span class="formula-line">V/&#960;=18</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; k&#250;p</h4>
+            <p>Legyen <span class="formula-line">f(x)=x</span>, <span class="formula-line">[0,3]</span>.</p>
+            <ol>
+                <li>Sug&#225;r: <span class="formula-line">r=x</span>, ez&#233;rt <span class="formula-line">r^2=x^2</span>.</li>
+                <li>Integr&#225;l: <span class="formula-line">&#8747;_0^3 x^2 dx = [x^3/3]_0^3 = 9</span>.</li>
+                <li>T&#233;rfogat: <span class="formula-line">V = &#960;&#183;9</span>, vagyis <span class="formula-line">V/&#960;=9</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (korongok &#246;sszege)</h3>
             <ul>
-                <li><span class="formula-line">V = &#960; &#8747;_a^b (f(x))^2 dx</span></li>
-                <li><span class="formula-line">Henger: V = &#960; r^2 (b-a)</span></li>
-                <li><span class="formula-line">K&#250;p: V = &#960; k^2 (b^3-a^3)/3</span></li>
-                <li>Sok feladatban V/&#960;-t k&#233;rnek.</li>
+                <li>K&#233;pzeld el, hogy a testet v&#233;kony korongokra szeleteled.</li>
+                <li>Egy korong t&#233;rfogata: <span class="formula-line">&#960; r^2 dx</span>.</li>
+                <li>Az &#246;sszegz&#233;s integr&#225;ll&#225; v&#225;lik az [a,b] intervallumon.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>L&#233;p&#233;sek</h3>
-                <ul>
-                    <li>&#205;rd fel f(x)-et &#233;s n&#233;gyzet&#233;t.</li>
-                    <li>Integr&#225;ld az intervallumon.</li>
-                    <li>Szorozd meg &#960;-vel a v&#233;g&#233;n.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>P&#233;ld&#225;k</h3>
-                <ul>
-                    <li>r = 3, [0,2] &#8594; V/&#960; = 18</li>
-                    <li>k = 1, [0,3] &#8594; V/&#960; = 9</li>
-                </ul>
-            </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Elfelejted n&#233;gyzetre emelni a sug&#225;rt.</li>
+                <li>Rossz intervallumot haszn&#225;lsz (nem az adott [a,b]-t).</li>
+                <li>A sug&#225;r helyett az &#225;tm&#233;r&#337;t teszed a k&#233;pletbe.</li>
+                <li>Ha <span class="formula-line">V/&#960;</span>-t k&#233;rnek, feleslegesen megszorzod &#960;-vel.</li>
+                <li>Elfelejted, hogy a sug&#225;rnak nem lehet negat&#237;v &#233;rtelme (a n&#233;gyzet ezt am&#250;gy is kezeli).</li>
+            </ul>
         </div>
-        <div class="card">
-            <h3>Megjegyz&#233;s</h3>
-            <p>Ha a feladat V/&#960;-t k&#233;r, el&#233;g az integr&#225;l &#233;rt&#233;k&#233;t megadni.</p>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi a korong m&#243;dszer k&#233;plete?</li>
+            <li>Sz&#225;mold ki <span class="formula-line">V/&#960;</span>-t, ha <span class="formula-line">f(x)=2</span> &#233;s <span class="formula-line">[0,1]</span>.</li>
+            <li>Sz&#225;mold ki <span class="formula-line">V/&#960;</span>-t, ha <span class="formula-line">f(x)=x</span> &#233;s <span class="formula-line">[0,2]</span>.</li>
+            <li>Mit jelent a sug&#225;r a k&#233;pletben?</li>
+            <li>Mi&#233;rt szerepel <span class="formula-line">f(x)^2</span>?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Forg&#225;stestn&#233;l a t&#233;rfogatot korongok &#246;sszeg&#233;b&#337;l kapjuk.</li>
+            <li>Alapformula: <span class="formula-line">V = &#960; &#8747;_a^b (f(x))^2 dx</span>.</li>
+            <li>A sug&#225;r a tengelyt&#337;l m&#233;rt t&#225;vols&#225;g.</li>
+            <li>Ha <span class="formula-line">V/&#960;</span>-t k&#233;rnek, csak az integr&#225;l &#233;rt&#233;ke kell.</li>
+            <li>N&#233;gyzetre emel&#233;s n&#233;lk&#252;l hib&#225;s eredm&#233;nyt kapsz.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -586,7 +655,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -630,7 +699,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

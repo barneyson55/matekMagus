@@ -151,6 +151,24 @@
             animation: fadeIn 0.5s;
         }
 
+        @media (max-width: 600px) {
+            .tab-buttons {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                border-bottom: none;
+            }
+
+            .tab-button {
+                text-align: center;
+                padding: 10px 12px;
+            }
+
+            .tab-button::after {
+                bottom: 0;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -319,24 +337,37 @@
         #pagination-dots {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             flex: 1;
+            flex-wrap: wrap;
         }
 
         .dot {
-            width: 14px;
-            height: 14px;
-            background-color: var(--border-color);
+            width: 44px;
+            height: 44px;
+            background-color: transparent;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .dot.answered {
+        .dot::before {
+            content: '';
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .dot.answered::before {
             background-color: var(--success);
         }
 
-        .dot.current {
+        .dot.current::before {
             box-shadow: 0 0 0 4px var(--brand-light);
             transform: scale(1.15);
         }
@@ -496,66 +527,72 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>M&#369;veletek polinomokkal</h2>
-        <p>A polinomok m&#369;veletei alapozz&#225;k meg az egyenletek, azonoss&#225;gok &#233;s f&#252;ggv&#233;nyek meg&#233;rt&#233;s&#233;t. Itt az azonos fok&#250; tagok &#246;sszevon&#225;sa, a disztributivit&#225;s &#233;s a helyettes&#237;t&#233;s a kulcs.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A polinomok az algebra alapjai: &#246;sszead&#225;ssal, kivon&#225;ssal &#233;s szorz&#225;ssal dolgozol vel&#252;k. Ezek a m&#369;veletek kellenek egyenletek rendez&#233;s&#233;hez &#233;s f&#252;ggv&#233;nyek vizsg&#225;lat&#225;hoz is. A c&#233;l, hogy gyorsan tudd azonos fok&#250; tagokat &#246;sszevonni, &#233;s helyesen bontsd ki a z&#225;r&#243;jeleket. Ha ezek mennek, sok feladat p&#225;r l&#233;p&#233;sre r&#246;vid&#252;l.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Polinom:</b> bet&#369;s tagok &#246;sszege, p&#233;ld&#225;ul P(x) = ax&#178; + bx + c.</li>
+            <li><b>Foksz&#225;m:</b> a legnagyobb kitev&#337; a polinomban.</li>
+            <li><b>Egy&#252;tthat&#243;:</b> a bet&#369;s tag sz&#225;mszorz&#243;ja.</li>
+            <li><b>&#193;lland&#243; tag:</b> bet&#369; n&#233;lk&#252;li tag.</li>
+            <li><b>Azonos fok&#250; tagok:</b> ugyanaz a bet&#369;s r&#233;sz&#252;k, ez&#233;rt &#246;sszevonhat&#243;k.</li>
+            <li><b>Disztributivit&#225;s:</b> (a + b)c = ac + bc.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Fogalmak</h3>
-            <ul>
-                <li><span class="formula-line">P(x) = ax<sup>2</sup> + bx + c</span></li>
-                <li><span class="formula-line">Foksz&#225;m = legnagyobb kitev&#337;</span></li>
-                <li><span class="formula-line">Azonos fok&#250; tagok &#246;sszevonhat&#243;k</span></li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>&#214;sszead&#225;s, kivon&#225;s</h3>
-                <ul>
-                    <li><span class="formula-line">(2x<sup>2</sup> - 3x + 1) + (x<sup>2</sup> + x - 4)</span></li>
-                    <li><span class="formula-line">= 3x<sup>2</sup> - 2x - 3</span></li>
-                    <li>Azonos fok&#250; tagokat csoportos&#237;ts!</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Szorz&#225;s</h3>
-                <ul>
-                    <li><span class="formula-line">(x + 2)(x - 3) = x<sup>2</sup> - x - 6</span></li>
-                    <li>Disztributivit&#225;s: minden tagot szorozz meg.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>El&#337;sz&#246;r rendezd foksz&#225;m szerint a tagokat.</li>
-                <li>Szorz&#225;sn&#225;l nyisd ki a z&#225;r&#243;jeleket l&#233;p&#233;sr&#337;l l&#233;p&#233;sre.</li>
-                <li>Helyettes&#237;t&#233;sn&#233;l figyelj a negat&#237;v el&#337;jelekre.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott példa</h3>
-            <p>(x + 2)(x + 3) szorzata:</p>
+            <h4>1. p&#233;lda &#8211; &#246;sszead&#225;s</h4>
+            <p>Sz&#225;mold ki: (2x&#178; &#8722; 3x + 1) + (x&#178; + x &#8722; 4).</p>
             <ol>
-                <li>x · x = x²</li>
-                <li>x · 3 = 3x</li>
-                <li>2 · x = 2x</li>
-                <li>2 · 3 = 6</li>
-                <li>Összevonás: x² + 5x + 6</li>
+                <li>Azonos fok&#250; tagok: (2x&#178; + x&#178;) + (&#8722;3x + x) + (1 &#8722; 4).</li>
+                <li>&#214;sszevon&#225;s: 3x&#178; &#8722; 2x &#8722; 3.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Ábra: területmodell</h3>
+            <h4>2. p&#233;lda &#8211; szorz&#225;s</h4>
+            <p>Sz&#225;mold ki: (x + 2)(x &#8722; 3).</p>
+            <ol>
+                <li>x&#183;x = x&#178;, x&#183;(&#8722;3) = &#8722;3x.</li>
+                <li>2&#183;x = 2x, 2&#183;(&#8722;3) = &#8722;6.</li>
+                <li>&#214;sszevon&#225;s: x&#178; &#8722; x &#8722; 6.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (ter&#252;letmodell)</h3>
             <svg viewBox="0 0 240 180" style="width: 100%; max-width: 320px; height: auto; display: block; margin: 10px 0;">
                 <rect x="20" y="20" width="140" height="100" fill="rgba(160,191,224,0.3)" stroke="#4A55A2" stroke-width="2" />
                 <line x1="120" y1="20" x2="120" y2="120" stroke="#4A55A2" stroke-width="2" />
                 <line x1="20" y1="90" x2="160" y2="90" stroke="#4A55A2" stroke-width="2" />
-                <text x="60" y="60" font-size="14">x²</text>
+                <text x="60" y="60" font-size="14">x&#178;</text>
                 <text x="130" y="60" font-size="14">3x</text>
                 <text x="60" y="110" font-size="14">2x</text>
                 <text x="130" y="110" font-size="14">6</text>
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A négy rész összege adja a kibontott alakot.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A t&#233;glalapok ter&#252;letei adj&#225;k a kibontott polinom tagjait.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Nem azonos fok&#250; tagokat is &#246;sszevonsz.</li>
+                <li>Szorz&#225;sn&#225;l kihagysz egy tagot a disztributivit&#225;sb&#243;l.</li>
+                <li>El&#337;jelhib&#225;t v&#233;tesz a negat&#237;v tagokn&#225;l.</li>
+                <li>Nem rendezed foksz&#225;m szerint, &#237;gy k&#246;nnyebb elt&#233;veszteni.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Rendezd foksz&#225;m szerint: 4x + x&#179; &#8722; 2x&#178;.</li>
+            <li>Sz&#225;mold ki: (x &#8722; 5)(x + 1).</li>
+            <li>Sz&#225;mold ki P(2)-t, ha P(x) = x&#178; &#8722; 3x + 1.</li>
+            <li>Mi a foksz&#225;ma a 7x&#8308; &#8722; 2x + 3 polinomnak?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Azonos fok&#250; tagokat mindig &#246;sszevonunk.</li>
+            <li>A disztributivit&#225;s minden szorz&#225;s alapja.</li>
+            <li>Rendezett alakban &#225;tl&#225;that&#243;bb a polinom.</li>
+            <li>Az el&#337;jelekre k&#252;l&#246;n figyelj szorz&#225;sn&#225;l.</li>
+        </ul>
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -648,7 +685,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -692,7 +729,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szintek:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

@@ -484,59 +484,45 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Vi&#232;te-formul&#225;k</h2>
-        <p>A Vi&#232;te-formul&#225;k a m&#225;sodfok&#250; egyenlet gy&#246;keinek &#246;sszeg&#233;t &#233;s szorzat&#225;t kapcsolj&#225;k az egy&#252;tthat&#243;khoz. Ezekkel gyorsan ellen&#337;rizhet&#337; a megold&#225;s, vagy k&#246;nnyen meghat&#225;rozhat&#243; egy hi&#225;nyz&#243; gy&#246;k.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A Vi&#232;te-formul&#225;k megadj&#225;k a m&#225;sodfok&#250; egyenlet gy&#246;keinek &#246;sszeg&#233;t &#233;s szorzat&#225;t az egy&#252;tthat&#243;kb&#243;l. &#205;gy gyorsan ellen&#337;rizheted a megold&#225;st, vagy fel&#237;rhatsz egyenletet ismert gy&#246;k&#246;kb&#337;l. Sok feladatban nem is kell a megold&#243;k&#233;plet, el&#233;g az &#246;sszeg &#233;s a szorzat. A l&#233;nyeg, hogy mindig norm&#225;l alakra rendezz.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>M&#225;sodfok&#250; egyenlet:</b> <span class="formula-line">ax<sup>2</sup> + bx + c = 0</span>, ahol <span class="formula-line">a &#8800; 0</span>.</li>
+            <li><b>Gy&#246;k&#246;k:</b> x<sub>1</sub>, x<sub>2</sub> a megold&#225;sok.</li>
+            <li><b>&#214;sszeg:</b> <span class="formula-line">S = x<sub>1</sub> + x<sub>2</sub> = &#8722;b / a</span>.</li>
+            <li><b>Szorzat:</b> <span class="formula-line">P = x<sub>1</sub> &#183; x<sub>2</sub> = c / a</span>.</li>
+            <li><b>Monikus egyenlet:</b> ha a = 1, akkor <span class="formula-line">x<sup>2</sup> &#8722; Sx + P = 0</span>.</li>
+            <li><b>Vi&#232;te-ellen&#337;rz&#233;s:</b> a kapott gy&#246;k&#246;k &#246;sszege &#233;s szorzata egyezik S-sel &#233;s P-vel.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapform&#225;k</h3>
-            <ul>
-                <li><span class="formula-line">ax<sup>2</sup> + bx + c = 0</span>, ahol <span class="formula-line">a &#8800; 0</span></li>
-                <li><span class="formula-line">x<sub>1</sub> + x<sub>2</sub> = -b / a</span></li>
-                <li><span class="formula-line">x<sub>1</sub> &#215; x<sub>2</sub> = c / a</span></li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Egyenlet a gy&#246;k&#246;kb&#337;l</h3>
-                <ul>
-                    <li><span class="formula-line">x<sup>2</sup> - Sx + P = 0</span>, ha <span class="formula-line">a = 1</span></li>
-                    <li>Ha <span class="formula-line">a &#8800; 1</span>, akkor <span class="formula-line">ax<sup>2</sup> - aSx + aP = 0</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Gyakorlati haszn&#225;lat</h3>
-                <ul>
-                    <li>Gyors ellen&#337;rz&#233;s: S = -b/a, P = c/a.</li>
-                    <li>Hi&#225;nyz&#243; gy&#246;k: ha ismered S-t vagy P-t.</li>
-                    <li>Alak&#237;tsd norm&#225;l form&#225;ra az egyenletet, miel&#337;tt alkalmazod.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>Mindig ellen&#337;rizd, hogy <span class="formula-line">a &#8800; 0</span>.</li>
-                <li>Negat&#237;v el&#337;jelekre figyelj, k&#252;l&#246;n&#246;sen a -b/a eset&#233;n.</li>
-                <li>Az &#246;sszeg &#233;s szorzat seg&#237;t a gy&#246;k&#246;k gyors meghat&#225;roz&#225;s&#225;ban.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott példa</h3>
-            <p>x² - 5x + 6 = 0 esetén:</p>
+            <h4>1. p&#233;lda &#8211; gy&#246;k&#246;k keres&#233;se S &#233;s P alapj&#225;n</h4>
+            <p>Legyen: x<sup>2</sup> &#8722; 5x + 6 = 0.</p>
             <ol>
-                <li>x₁ + x₂ = 5 (–b / a).</li>
-                <li>x₁ · x₂ = 6 (c / a).</li>
-                <li>A gyökök: 2 és 3.</li>
+                <li>S = &#8722;b/a = 5, P = c/a = 6.</li>
+                <li>Olyan k&#233;t sz&#225;m kell, amelynek &#246;sszege 5 &#233;s szorzata 6.</li>
+                <li>A gy&#246;k&#246;k: 2 &#233;s 3.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Ábra: együtthatók és gyökök</h3>
+            <h4>2. p&#233;lda &#8211; egyenlet fel&#237;r&#225;sa gy&#246;k&#246;kb&#337;l</h4>
+            <p>Legyenek a gy&#246;k&#246;k 4 &#233;s &#8722;1, &#233;s a = 2.</p>
+            <ol>
+                <li>S = 4 + (&#8722;1) = 3, P = 4 &#183; (&#8722;1) = &#8722;4.</li>
+                <li>b = &#8722;aS = &#8722;6, c = aP = &#8722;8.</li>
+                <li>Az egyenlet: 2x<sup>2</sup> &#8722; 6x &#8722; 8 = 0.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (egy&#252;tthat&#243;k &#8596; gy&#246;k&#246;k)</h3>
             <table style="border-collapse: collapse; width: 100%; max-width: 360px; text-align: center;">
                 <tr>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">a</th>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">b</th>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">c</th>
-                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">x₁ + x₂</th>
-                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">x₁ · x₂</th>
+                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">S</th>
+                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">P</th>
                 </tr>
                 <tr>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px;">1</td>
@@ -546,9 +532,33 @@
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px;">6</td>
                 </tr>
             </table>
-            <p style="font-size: 0.95em; color: var(--text-light);">A gyökök összege és szorzata közvetlenül az együtthatókból olvasható.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">S &#233;s P k&#246;zvetlen&#252;l az egy&#252;tthat&#243;kb&#243;l olvashat&#243;.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Elfelejted elosztani a-t, ha a &#8800; 1.</li>
+                <li>&#214;sszekevered az &#246;sszeget &#233;s a szorzatot.</li>
+                <li>Rossz el&#337;jelet adsz a &#8722;b/a k&#233;pletn&#233;l.</li>
+                <li>Nem hozod norm&#225;l alakra az egyenletet.</li>
+                <li>Csak eg&#233;sz gy&#246;k&#246;kre gondolsz, pedig lehet t&#246;rt is.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Sz&#225;mold ki S &#233;s P &#233;rt&#233;k&#233;t: 3x<sup>2</sup> &#8722; 6x + 1 = 0.</li>
+            <li>&#205;rd fel az egyenletet, ha x<sub>1</sub> = 1, x<sub>2</sub> = 5 &#233;s a = 1.</li>
+            <li>Mi az egyenlet, ha S = 2 &#233;s P = &#8722;3?</li>
+            <li>Ellen&#337;rizd Vi&#232;te-t: x<sub>1</sub> = 1/2, x<sub>2</sub> = 4, a = 2.</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Vi&#232;te-formul&#225;k: S = &#8722;b/a &#233;s P = c/a.</li>
+            <li>Gyors ellen&#337;rz&#233;sre &#233;s egyenlet fel&#237;r&#225;s&#225;ra is j&#243;k.</li>
+            <li>Ha a &#8800; 1, mindig oszd el a-val.</li>
+            <li>Az el&#337;jelekre kiemelten figyelj.</li>
+        </ul>
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -618,7 +628,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -662,7 +672,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

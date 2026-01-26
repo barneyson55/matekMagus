@@ -151,6 +151,42 @@
             animation: fadeIn 0.5s;
         }
 
+        @media (max-width: 600px) {
+            .tab-buttons {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                border-bottom: none;
+            }
+
+            .tab-button {
+                text-align: center;
+                padding: 10px 12px;
+            }
+
+            .tab-button::after {
+                bottom: 0;
+            }
+        }
+
+        @media (max-height: 480px) and (orientation: landscape) {
+            body {
+                padding: 24px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .tab-buttons {
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                margin-top: 20px;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -484,54 +520,41 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>A logaritmus fogalma</h2>
-        <p>A logaritmus az exponenci&#225;lis kapcsolat visszafel&#233; olvas&#225;sa: azt a kitev&#337;t keress&#252;k, amellyel az alapot hatv&#225;nyra emelve a megadott &#233;rt&#233;ket kapjuk.</p>
+        <h3>Rövid bevezetés (Mi ez? Mire jó?)</h3>
+        <p>A logaritmus azt mondja meg, milyen kitevőre kell emelni az alapot, hogy a megadott számot kapjuk. Ez az exponenciális kapcsolat visszafelé olvasása. Logaritmusokkal találkozol növekedési folyamatoknál, skáláknál és egyenletek rendezésénél. Ha tudod, hogy a<sup>x</sup> = b, akkor a kitevő x maga a logaritmus.</p>
+        <h3>Alapfogalmak / definíciók</h3>
+        <ul>
+            <li><b>Definíció:</b> log<sub>a</sub> b = x ⇔ a<sup>x</sup> = b.</li>
+            <li><b>Alap:</b> a, amire hatványozunk.</li>
+            <li><b>Argumentum:</b> b, amit el akarunk érni.</li>
+            <li><b>Értelmezési feltételek:</b> a > 0, a ≠ 1, b > 0.</li>
+            <li><b>Alapértékek:</b> log<sub>a</sub> 1 = 0, log<sub>a</sub> a = 1.</li>
+            <li><b>Szabályok:</b> szorzatnál összeadás, hányadosnál kivonás, hatvány kitevője szorzóvá válik.</li>
+        </ul>
+        <h3>Lépésről lépésre példa (1–2 db)</h3>
         <div class="learning-hint">
-            <h3>Defin&#237;ci&#243;</h3>
-            <ul>
-                <li><span class="formula-line">log<sub>a</sub> b = x &hArr; a<sup>x</sup> = b</span></li>
-                <li><span class="formula-line">a &gt; 0, a &ne; 1, b &gt; 0</span></li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Alap&#233;rt&#233;kek</h3>
-                <ul>
-                    <li><span class="formula-line">log<sub>a</sub> 1 = 0</span></li>
-                    <li><span class="formula-line">log<sub>a</sub> a = 1</span></li>
-                    <li><span class="formula-line">log<sub>a</sub> a<sup>k</sup> = k</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Szab&#225;lyok</h3>
-                <ul>
-                    <li><span class="formula-line">log<sub>a</sub>(mn) = log<sub>a</sub> m + log<sub>a</sub> n</span></li>
-                    <li><span class="formula-line">log<sub>a</sub>(m/n) = log<sub>a</sub> m - log<sub>a</sub> n</span></li>
-                    <li><span class="formula-line">log<sub>a</sub>(m<sup>k</sup>) = k log<sub>a</sub> m</span></li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>P&#233;ld&#225;k</h3>
-            <ul>
-                <li><span class="formula-line">log<sub>2</sub> 32 = 5, mert 2<sup>5</sup> = 32</span></li>
-                <li><span class="formula-line">log<sub>10</sub> 1000 = 3, mert 10<sup>3</sup> = 1000</span></li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>log&#8322;(32) &#233;rt&#233;ke:</p>
+            <h4>1. példa – alapérték</h4>
+            <p>Számold ki: log<sub>2</sub> 32.</p>
             <ol>
-                <li>2&#8309; = 32.</li>
-                <li>Ez&#233;rt log&#8322;(32) = 5.</li>
+                <li>Keressük azt a kitevőt, amire 2-t emelve 32-t kapunk.</li>
+                <li>2<sup>5</sup> = 32, ezért log<sub>2</sub> 32 = 5.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: hatv&#225;nyt&#225;bla</h3>
+            <h4>2. példa – szabály használata</h4>
+            <p>Számold ki: log<sub>10</sub>(1000 / 10).</p>
+            <ol>
+                <li>Hányados szabály: log<sub>10</sub>(1000) - log<sub>10</sub>(10).</li>
+                <li>log<sub>10</sub>(1000) = 3, log<sub>10</sub>(10) = 1.</li>
+                <li>Eredmény: 3 - 1 = 2.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizuális magyarázat (hatványtábla)</h3>
             <table style="border-collapse: collapse; width: 100%; max-width: 320px; text-align: center;">
                 <tr>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">n</th>
-                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">2&#8319;</th>
+                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">2<sup>n</sup></th>
                 </tr>
                 <tr>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px;">1</td>
@@ -554,9 +577,35 @@
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px;">32</td>
                 </tr>
             </table>
-            <p style="font-size: 0.95em; color: var(--text-light);">A logaritmus megadja, melyik sorban van 32.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A logaritmus megmutatja, melyik n-hez tartozik az érték.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hibák / tévhitek</h3>
+            <ul>
+                <li>Felcseréled az alapot és az argumentumot.</li>
+                <li>Logaritmust számolsz nem pozitív számból (b ≤ 0).</li>
+                <li>log<sub>a</sub>(b + c) = log<sub>a</sub>b + log<sub>a</sub>c (hibás).</li>
+                <li>Elfelejted, hogy a ≠ 1.</li>
+                <li>Nem ellenőrzöd hatványalakban az eredményt.</li>
+            </ul>
+        </div>
+        <h3>Mini önellenőrzés (válasz nélkül)</h3>
+        <ul>
+            <li>Számold ki: log<sub>3</sub> 81.</li>
+            <li>Számold ki: log<sub>10</sub> 0.01.</li>
+            <li>Oldd meg: 2<sup>x</sup> = 16.</li>
+            <li>Igaz vagy hamis: log<sub>a</sub>(mn) = log<sub>a</sub>m + log<sub>a</sub>n.</li>
+            <li>Mi a log<sub>5</sub> 1 értéke?</li>
+        </ul>
+        <h3>Összefoglaló</h3>
+        <ul>
+            <li>log<sub>a</sub> b = x ⇔ a<sup>x</sup> = b.</li>
+            <li>Az alap pozitív, nem 1, az argumentum pozitív.</li>
+            <li>Szorzat → összeadás, hányados → kivonás, hatvány → szorzó.</li>
+            <li>Az alapértékek: log<sub>a</sub> 1 = 0, log<sub>a</sub> a = 1.</li>
+            <li>Mindig ellenőrizz hatványalakban.</li>
+        </ul>
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -615,7 +664,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -659,7 +708,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

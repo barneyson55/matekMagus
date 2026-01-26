@@ -125,7 +125,7 @@
             display: grid;
             grid-template-columns: 48px 1fr auto;
             gap: 12px;
-            align-items: center;
+            align-items: start;
         }
 
         .achievement-card.is-locked {
@@ -155,6 +155,7 @@
         .achievement-content {
             display: grid;
             gap: 6px;
+            min-width: 0;
         }
 
         .achievement-title-row {
@@ -168,6 +169,7 @@
             margin: 0;
             font-size: 1.05rem;
             font-weight: 600;
+            overflow-wrap: anywhere;
         }
 
         .achievement-category {
@@ -185,6 +187,7 @@
             margin: 0;
             color: var(--muted);
             font-size: 0.9rem;
+            overflow-wrap: anywhere;
         }
 
         .achievement-meta {
@@ -197,6 +200,7 @@
             font-size: 0.9rem;
             font-weight: 600;
             color: var(--accent);
+            min-width: 0;
         }
 
         .achievement-reward small {
@@ -238,6 +242,8 @@
         button {
             min-height: 44px;
             min-width: 44px;
+            font: inherit;
+            color: inherit;
         }
     </style>
 </head>
@@ -365,7 +371,7 @@
 
         const CATEGORY_LABELS = {
             performance: 'Teljes\u00edtm\u00e9ny',
-            difficulty: 'Neh\u00e9zs\u00e9g',
+            difficulty: 'Neh\u00e9zs\u00e9gi szint',
             structure: 'Strukt\u00fara',
             special: 'Speci\u00e1lis',
         };

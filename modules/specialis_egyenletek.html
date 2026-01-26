@@ -484,50 +484,38 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Speci&#225;lis egyenletek</h2>
-        <p>Ebben a t&#233;mak&#246;rben abszol&#250;t&#233;rt&#233;kes, gy&#246;k&#246;s &#233;s t&#246;rt kifejez&#233;ses egyenleteket oldunk meg. A kulcs az, hogy bontsuk az eseteket, &#233;s mindig ellen&#337;rizz&#252;k a kapott megold&#225;sokat.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Speci&#225;lis egyenletekn&#233;l abszol&#250;t&#233;rt&#233;k, gy&#246;k vagy t&#246;rt is szerepel a kifejez&#233;sben. Itt nem el&#233;g csak &#8222;rendezni&#8221;, hanem a felt&#233;teleket is figyelembe kell venni. Az abszol&#250;t&#233;rt&#233;kn&#233;l eseteket bontunk, gy&#246;k&#246;s egyenletn&#233;l pedig ellen&#337;rizz&#252;k a defin&#237;ci&#243;s tartom&#225;nyt. Mindig sz&#252;ks&#233;ges a visszaellen&#337;rz&#233;s, mert k&#246;nnyen ad&#243;dhat hamis gy&#246;k.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Abszol&#250;t&#233;rt&#233;k:</b> <span class="formula-line">|x &#8722; a|</span> a t&#225;vols&#225;g a-t&#243;l a sz&#225;megyenesen.</li>
+            <li><b>Esetbont&#225;s:</b> <span class="formula-line">|x &#8722; a| = b</span> &#8594; <span class="formula-line">x &#8722; a = b</span> vagy <span class="formula-line">x &#8722; a = &#8722;b</span>.</li>
+            <li><b>Gy&#246;k&#246;s egyenlet:</b> <span class="formula-line">&#8730;(x + a) = b</span>, ahol <span class="formula-line">b &#8805; 0</span>.</li>
+            <li><b>Defin&#237;ci&#243;s tartom&#225;ny:</b> a megengedett x-ek (pl. <span class="formula-line">x + a &#8805; 0</span>).</li>
+            <li><b>T&#246;rt egyenlet:</b> nevez&#337; nem lehet 0 (pl. <span class="formula-line">x &#8800; a</span>).</li>
+            <li><b>Hamis gy&#246;k:</b> a m&#369;veletek ut&#225;n kapott, de visszaellen&#337;rz&#233;skor kies&#337; megold&#225;s.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapform&#225;k</h3>
-            <ul>
-                <li><span class="formula-line">|x - a| = b</span> &rarr; k&#233;t eset</li>
-                <li><span class="formula-line">sqrt(x + a) = b</span> &rarr; <span class="formula-line">b &gt;= 0</span></li>
-                <li><span class="formula-line">1 / (x - a) = b</span> &rarr; <span class="formula-line">x &#8800; a</span></li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Abszol&#250;t&#233;rt&#233;k</h3>
-                <ul>
-                    <li><span class="formula-line">x - a = b</span> vagy <span class="formula-line">x - a = -b</span>.</li>
-                    <li>Ha <span class="formula-line">b &lt; 0</span>, nincs megold&#225;s.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Gy&#246;k&#246;s egyenlet</h3>
-                <ul>
-                    <li><span class="formula-line">sqrt(x + a) = b</span> eset&#233;n <span class="formula-line">x = b^2 - a</span>.</li>
-                    <li>Mindig ellen&#337;rizd, hogy <span class="formula-line">x + a &gt;= 0</span>.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>Az esetbont&#225;s seg&#237;t az abszol&#250;t&#233;rt&#233;kn&#233;l.</li>
-                <li>Ne feledd a tilt&#225;sokat (nevez&#337; nem lehet 0).</li>
-                <li>Mindig ellen&#337;rizd visszahelyettes&#237;t&#233;ssel.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott példa</h3>
-            <p>|x - 3| = 5 megoldása:</p>
+            <h4>1. p&#233;lda &#8211; abszol&#250;t&#233;rt&#233;k</h4>
+            <p>|x &#8722; 3| = 5 megold&#225;sa:</p>
             <ol>
-                <li>x - 3 = 5 → x = 8.</li>
-                <li>x - 3 = -5 → x = -2.</li>
+                <li>x &#8722; 3 = 5 &#8594; x = 8.</li>
+                <li>x &#8722; 3 = &#8722;5 &#8594; x = &#8722;2.</li>
+                <li>Mindkett&#337; j&#243;, mert b = 5 &#8805; 0.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Ábra: távolság a számegyenesen</h3>
+            <h4>2. p&#233;lda &#8211; gy&#246;k&#246;s egyenlet</h4>
+            <p>Oldd meg: &#8730;(x + 1) = 4.</p>
+            <ol>
+                <li>Felt&#233;tel: x + 1 &#8805; 0.</li>
+                <li>N&#233;gyzetre emel&#233;s: x + 1 = 16.</li>
+                <li>x = 15, ami megfelel a felt&#233;telnek.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (t&#225;vols&#225;g a sz&#225;megyenesen)</h3>
             <svg viewBox="0 0 320 80" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <line x1="40" y1="40" x2="280" y2="40" stroke="#4A55A2" stroke-width="2" />
                 <circle cx="120" cy="40" r="4" fill="#2C3333" />
@@ -537,9 +525,33 @@
                 <text x="170" y="60" font-size="12">3</text>
                 <text x="230" y="60" font-size="12">8</text>
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A pontok 5 egységre vannak a 3-tól.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A pontok 5 egys&#233;gre vannak a 3-t&#243;l.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>b &lt; 0 eset&#233;n is pr&#243;b&#225;lsz abszol&#250;t&#233;rt&#233;ket megoldani.</li>
+                <li>Gy&#246;k&#246;s egyenletn&#233;l nem ellen&#337;rz&#246;d a defin&#237;ci&#243;s tartom&#225;nyt.</li>
+                <li>N&#233;gyzetre emel&#233;s ut&#225;n nem ellen&#337;rz&#246;l, &#237;gy hamis gy&#246;k marad.</li>
+                <li>T&#246;rt egyenletn&#233;l nem z&#225;rod ki a nevez&#337; 0-j&#225;t.</li>
+                <li>Elfelejted mindk&#233;t esetet fel&#237;rni abszol&#250;t&#233;rt&#233;kn&#233;l.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Oldd meg: |x + 2| = 7.</li>
+            <li>Oldd meg: &#8730;(x &#8722; 3) = 2.</li>
+            <li>Melyik x &#233;rt&#233;k tiltott a 1/(x &#8722; 4) = 2 egyenletn&#233;l?</li>
+            <li>Mi&#233;rt kell visszaellen&#337;rizni n&#233;gyzetre emel&#233;s ut&#225;n?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Speci&#225;lis egyenletekn&#233;l el&#337;sz&#246;r a felt&#233;teleket n&#233;zd.</li>
+            <li>Abszol&#250;t&#233;rt&#233;k: k&#233;t eset, gy&#246;k&#246;s: tartom&#225;ny + n&#233;gyzetre emel&#233;s.</li>
+            <li>T&#246;rt egyenletn&#233;l z&#225;rd ki a nevez&#337; 0-j&#225;t.</li>
+            <li>Mindig ellen&#337;rizd, hogy nincs hamis gy&#246;k.</li>
+        </ul>
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -602,7 +614,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -646,7 +658,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

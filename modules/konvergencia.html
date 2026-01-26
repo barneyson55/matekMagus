@@ -485,42 +485,68 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Konvergencia</h2>
-        <p>Konvergencia eset&#233;n a sorozat tagjai egy konkr&#233;t sz&#225;mhoz tartanak. A geometriai sorozatok gyorsan eld&#246;nthet&#337;k a h&#225;nyados alapj&#225;n.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Konvergenci&#225;r&#243;l akkor besz&#233;l&#252;nk, ha a sorozat tagjai egy konkr&#233;t sz&#225;mhoz k&#246;zel&#237;tenek. Ezt a sz&#225;mot hat&#225;r&#233;rt&#233;knek h&#237;vjuk. A konvergencia eld&#246;nt&#233;se seg&#237;t felismerni, hogy egy folyamat stabiliz&#225;l&#243;dik-e vagy elsz&#225;ll. Emelt szinten gyakori a geometriai sorozatok hat&#225;r&#233;rt&#233;ke, mert ott gyorsan d&#246;nthet&#337; a k&#233;rd&#233;s.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Hat&#225;r&#233;rt&#233;k:</b> ha <span class="formula-line">a_n &#8594; L</span>, akkor a sorozat L-hez tart.</li>
+            <li><b>Konvergens sorozat:</b> l&#233;tezik hat&#225;r&#233;rt&#233;k.</li>
+            <li><b>Divergens sorozat:</b> nincs hat&#225;r&#233;rt&#233;k, vagy <span class="formula-line">&#177;&#8734;</span>-be tart.</li>
+            <li><b>Korl&#225;tos:</b> a tagok egy tartom&#225;nyon bel&#252;l maradnak.</li>
+            <li><b>Geometriai sorozat:</b> <span class="formula-line">a_n = a_1 q^{n-1}</span>.</li>
+            <li><b>Gyors d&#246;nt&#233;s:</b> ha <span class="formula-line">|q| &lt; 1</span>, akkor <span class="formula-line">a_n &#8594; 0</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Geometriai sorozat</h3>
+            <h4>1. p&#233;lda &#8211; konvergens m&#233;rtani sorozat</h4>
+            <p><span class="formula-line">a_1 = 4</span>, <span class="formula-line">q = 1/2</span>.</p>
+            <ol>
+                <li><span class="formula-line">|q| = 0,5 &lt; 1</span>, ez&#233;rt a sorozat konvergens.</li>
+                <li>A tagok: 4, 2, 1, 0,5, 0,25, ...</li>
+                <li>A hat&#225;r&#233;rt&#233;k: <span class="formula-line">0</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; divergens sz&#225;mtani sorozat</h4>
+            <p><span class="formula-line">a_1 = 1</span>, <span class="formula-line">d = 3</span>.</p>
+            <ol>
+                <li>K&#233;plet: <span class="formula-line">a_n = 1 + (n-1)&#183;3</span>.</li>
+                <li>A tagok n&#337;nek: 1, 4, 7, 10, ...</li>
+                <li>A sorozat <span class="formula-line">+&#8734;</span>-be tart, teh&#225;t divergens.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (k&#246;zel&#237;t&#233;s)</h3>
+            <p>A konvergens sorozat tagjai egyre k&#246;zelebb ker&#252;lnek a hat&#225;r&#233;rt&#233;khez:</p>
+            <div class="formula-line">4 &#8594; 2 &#8594; 1 &#8594; 0,5 &#8594; 0,25 &#8594; 0</div>
+            <p>Egy &#225;lland&#243; sorozat mindig a saj&#225;t &#233;rt&#233;k&#233;hez tart: <span class="formula-line">3, 3, 3, ...</span></p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li><span class="formula-line">a_n = a_1 q^{n-1}</span></li>
-                <li><span class="formula-line">|q| &lt; 1 &#8594; a_n &#8594; 0</span></li>
-                <li><span class="formula-line">q = 1 &#8594; hat&#225;r&#233;rt&#233;k = a_1</span></li>
-                <li><span class="formula-line">|q| &gt; 1 vagy q = -1 &#8594; nincs hat&#225;r&#233;rt&#233;k</span></li>
+                <li>Azt gondolod, hogy <span class="formula-line">q = -1</span> eset&#233;n is van hat&#225;r&#233;rt&#233;k.</li>
+                <li>&#214;sszekevered a hat&#225;r&#233;rt&#233;ket az els&#337; taggal.</li>
+                <li>&#218;gy hiszed, hogy minden korl&#225;tos sorozat konvergens.</li>
+                <li>Nem vizsg&#225;lod a <span class="formula-line">|q|</span> &#233;rt&#233;k&#233;t geometriai sorozatn&#225;l.</li>
+                <li>A hat&#225;r&#233;rt&#233;ket kisz&#225;molod, de nem ellen&#337;rz&#246;d, hogy l&#233;tezik-e.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>Konvergens sorozat</h3>
-                <ul>
-                    <li>A tagok egy &#233;rt&#233;khez k&#246;zel&#237;tenek.</li>
-                    <li>Gyakran korl&#225;tos &#233;s egyir&#225;nyban tart.</li>
-                    <li>Geometriai sorozatn&#225;l |q| &lt; 1 eset&#233;n konvergens.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Divergens sorozat</h3>
-                <ul>
-                    <li>Nincs hat&#225;r&#233;rt&#233;k vagy v&#233;gtelenbe n&#337;.</li>
-                    <li>q = -1 eset&#233;n oszcill&#225;l, ez&#233;rt nincs hat&#225;r&#233;rt&#233;k.</li>
-                    <li>|q| &gt; 1 eset&#233;n abszol&#250;t&#233;rt&#233;kben n&#337;.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="card">
-            <h3>P&#233;ld&#225;k</h3>
-            <ul>
-                <li>a1 = 5, q = 1/2 &#8594; hat&#225;r&#233;rt&#233;k 0</li>
-                <li>a1 = 3, q = 1 &#8594; hat&#225;r&#233;rt&#233;k 3</li>
-                <li>a1 = 2, q = -1 &#8594; nem l&#233;tezik</li>
-            </ul>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Konvergens-e: <span class="formula-line">a_1 = 5</span>, <span class="formula-line">q = 0,8</span>?</li>
+            <li>Mi a hat&#225;r&#233;rt&#233;k, ha <span class="formula-line">q = 1</span>?</li>
+            <li>Divergens-e: <span class="formula-line">a_n = 2n</span>?</li>
+            <li>Mi&#233;rt nincs hat&#225;r&#233;rt&#233;k <span class="formula-line">q = -1</span> eset&#233;n?</li>
+            <li>Mondj p&#233;ld&#225;t &#225;lland&#243; sorozatra.</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Konvergens sorozatn&#225;l l&#233;tezik hat&#225;r&#233;rt&#233;k.</li>
+            <li>Geometriai sorozatn&#225;l <span class="formula-line">|q| &lt; 1</span> eset&#233;n <span class="formula-line">a_n &#8594; 0</span>.</li>
+            <li>Sz&#225;mtani sorozat pozit&#237;v <span class="formula-line">d</span> mellett a v&#233;gtelenbe n&#337;.</li>
+            <li>A korl&#225;toss&#225;g &#246;nmag&#225;ban nem garant&#225;l konvergenci&#225;t.</li>
+            <li>A d&#246;nt&#233;s kulcsa: szab&#225;ly, majd hat&#225;r&#233;rt&#233;k-ellen&#337;rz&#233;s.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -561,7 +587,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -605,7 +631,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

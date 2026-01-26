@@ -476,32 +476,64 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Koordin&#225;tageometria</h2>
-        <p>T&#233;maz&#225;r&#243; a pontok, t&#225;vols&#225;gok &#233;s egyenesek alapjair&#243;l.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a t&#233;maz&#225;r&#243; a koordin&#225;tageometria alapk&#233;pleteit foglalja &#246;ssze: pontok t&#225;vols&#225;g&#225;t, felez&#337;pontot, meredeks&#233;get &#233;s egyszer&#369; eltol&#225;sokat. Ezek seg&#237;ts&#233;g&#233;vel gyorsan sz&#225;molhatsz s&#237;kbeli feladatokat. Ha a k&#233;pletek biztosak, k&#246;nnyen ellen&#337;rizheted, hogy re&#225;lis-e az eredm&#233;ny.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Pont koordin&#225;t&#225;i:</b> <span class="formula-line">P(x, y)</span> a s&#237;kon.</li>
+            <li><b>T&#225;vols&#225;g k&#233;t pont k&#246;z&#246;tt:</b> <span class="formula-line">d = &#8730;((x2 &#8722; x1)^2 + (y2 &#8722; y1)^2)</span>.</li>
+            <li><b>Felez&#337;pont:</b> <span class="formula-line">((x1+x2)/2, (y1+y2)/2)</span>.</li>
+            <li><b>Meredeks&#233;g:</b> <span class="formula-line">m = (y2 &#8722; y1) / (x2 &#8722; x1)</span> (ha <span class="formula-line">x1 &#8800; x2</span>).</li>
+            <li><b>Eltol&#225;s:</b> <span class="formula-line">(x, y) &#8594; (x + a, y + b)</span>.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
                 <li>T&#225;vols&#225;g &#233;s felez&#337;pont</li>
-<li>Meredeks&#233;g</li>
-<li>Egyenes egyenlete</li>
+                <li>Meredeks&#233;g</li>
+                <li>Egyszer&#369; eltol&#225;sok koordin&#225;t&#225;kkal</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">d = &#8730;((x2 &#8722; x1)^2 + (y2 &#8722; y1)^2)</span></li>
-<li><span class="formula-line">Felez&#337;pont: ((x1+x2)/2, (y1+y2)/2)</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tanul&#225;si f&#243;kusz</h3>
-                <ul>
-                    <li>&#201;rtsd a defin&#237;ci&#243;kat &#233;s jel&#246;l&#233;seket.</li>
-                    <li>Gyakorold a tipikus feladatt&#237;pusokat.</li>
-                    <li>Ellen&#337;rizd a m&#233;rt&#233;kegys&#233;geket &#233;s a logik&#225;t.</li>
-                </ul>
-            </div>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; t&#225;vols&#225;g</h4>
+            <p>Adott: <span class="formula-line">P(1, 2)</span> &#233;s <span class="formula-line">Q(4, 6)</span>.</p>
+            <ol>
+                <li>K&#252;l&#246;nbs&#233;gek: <span class="formula-line">&#916;x = 3</span>, <span class="formula-line">&#916;y = 4</span>.</li>
+                <li>T&#225;vols&#225;g: <span class="formula-line">d = &#8730;(3^2 + 4^2) = 5</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; &#246;sszegz&#337; (felez&#337;pont + meredeks&#233;g)</h4>
+            <p>Adott: <span class="formula-line">P(&#8722;2, 1)</span> &#233;s <span class="formula-line">Q(4, 5)</span>.</p>
+            <ol>
+                <li>Felez&#337;pont: <span class="formula-line">((&#8722;2 + 4)/2, (1 + 5)/2) = (1, 3)</span>.</li>
+                <li>Meredeks&#233;g: <span class="formula-line">m = (5 &#8722; 1)/(4 &#8722; (&#8722;2)) = 4/6 = 2/3</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Elfelejted n&#233;gyzetre emelni a k&#252;l&#246;nbs&#233;geket a t&#225;vols&#225;gn&#225;l.</li>
+                <li>A felez&#337;pontn&#225;l csak az egyik koordin&#225;t&#225;t &#225;tlagolod.</li>
+                <li>Meredeks&#233;gn&#233;l felcser&#233;led az <span class="formula-line">x</span> &#233;s <span class="formula-line">y</span> k&#252;l&#246;nbs&#233;geket.</li>
+                <li>Null&#225;val osztasz, ha <span class="formula-line">x1 = x2</span> (f&#252;gg&#337;leges egyenes).</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mekkora a t&#225;vols&#225;g <span class="formula-line">P(0, 0)</span> &#233;s <span class="formula-line">Q(3, 4)</span> k&#246;z&#246;tt?</li>
+            <li>Mi a felez&#337;pont <span class="formula-line">(2, 6)</span> &#233;s <span class="formula-line">(8, 0)</span> k&#246;z&#246;tt?</li>
+            <li>Mekkora a meredeks&#233;g <span class="formula-line">P(1, 1)</span> &#233;s <span class="formula-line">Q(4, 7)</span> k&#246;z&#246;tt?</li>
+            <li>Mi t&#246;rt&#233;nik a meredeks&#233;ggel, ha <span class="formula-line">x1 = x2</span>?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>T&#225;vols&#225;g: <span class="formula-line">d = &#8730;((x2 &#8722; x1)^2 + (y2 &#8722; y1)^2)</span>.</li>
+            <li>Felez&#337;pont: <span class="formula-line">((x1+x2)/2, (y1+y2)/2)</span>.</li>
+            <li>Meredeks&#233;g: <span class="formula-line">m = (y2 &#8722; y1)/(x2 &#8722; x1)</span>.</li>
+            <li>Eltol&#225;s: <span class="formula-line">(x, y) &#8594; (x + a, y + b)</span>.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -546,11 +578,11 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
-                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="K&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
-                    <button class="btn btn-secondary difficulty-btn" data-difficulty="Norm&#225;l" type="button">Norm&#225;l</button>
-                    <button class="btn btn-secondary difficulty-btn" data-difficulty="Neh&#233;z" type="button">Neh&#233;z</button>
+                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="neh&#233;z" type="button">Neh&#233;z</button>
                 </div>
             </div>
         </div>
@@ -588,7 +620,7 @@
         <h2>Gyakorl&#225;s</h2>
         <p class="practice-info">V&#233;gtelen&#237;tett gyakorl&#225;s. XP jutalom: k&#246;nny&#369; = 1 XP, norm&#225;l = 2 XP, neh&#233;z = 3 XP.</p>
         <div class="learning-hint" data-role="practice-help">
-            <h3>Gyakorl&#225;si tipp</h3>
+            <h3>Gyakorl&#225;si tippek</h3>
             <ul>
                 <li>V&#225;lassz legal&#225;bb egy neh&#233;zs&#233;gi szintet.</li>
 <li>Haszn&#225;ld a megfelel&#337; k&#233;pletet a sz&#225;m&#237;t&#225;shoz.</li>
@@ -596,10 +628,10 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
-            <label><input class="practice-difficulty" type="checkbox" value="K&#246;nny&#369;" checked> K&#246;nny&#369;</label>
-            <label><input class="practice-difficulty" type="checkbox" value="Norm&#225;l"> Norm&#225;l</label>
-            <label><input class="practice-difficulty" type="checkbox" value="Neh&#233;z"> Neh&#233;z</label>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
+            <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
+            <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
+            <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>
             <button id="start-practice-btn" class="btn btn-secondary" type="button">Gyakorl&#225;s ind&#237;t&#225;sa</button>
         </div>
         <div id="practice-area" class="practice-area is-hidden">

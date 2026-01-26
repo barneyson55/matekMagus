@@ -482,9 +482,20 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Nevezetes f&#252;ggv&#233;nyek</h2>
-        <p>A nevezetes f&#252;ggv&#233;nyek az algebra leggyakrabban haszn&#225;lt modelljei: a line&#225;ris, m&#225;sodfok&#250;, hatv&#225;ny-, exponenci&#225;lis/logaritmikus, trigonometrikus &#233;s abszol&#250;t&#233;rt&#233;k/gy&#246;k f&#252;ggv&#233;nyek. Ezek alapj&#225;n tudsz gyorsan v&#225;laszolni vizsgafeladatokra.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A nevezetes f&#252;ggv&#233;nyek azok az alapmodellek, amelyek szinte minden feladatban felbukkannak. Ha felismered a t&#237;pust, azonnal tudod a grafikon alakj&#225;t, a tartom&#225;nyt, az &#233;rt&#233;kk&#233;szletet &#233;s a tipikus tulajdons&#225;gokat. Ebben a t&#233;maz&#225;r&#243;ban ezeket foglaljuk &#246;ssze r&#246;vid, vizsg&#225;ra k&#233;sz meg&#225;llap&#237;t&#225;sokkal. &#205;gy gyorsabban tudsz d&#246;nteni, sz&#225;molni &#233;s ellen&#337;rizni.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Line&#225;ris f&#252;ggv&#233;ny:</b> <span class="formula-line">f(x) = ax + b</span>, egyenes grafikon.</li>
+            <li><b>M&#225;sodfok&#250; f&#252;ggv&#233;ny:</b> <span class="formula-line">f(x) = a(x - h)^2 + k</span>, cs&#250;ccsal &#233;s tengellyel.</li>
+            <li><b>Hatv&#225;nyf&#252;ggv&#233;ny:</b> <span class="formula-line">f(x) = x^n</span>, p&#225;ros/ p&#225;ratlan kitev&#337;t&#337;l f&#252;gg&#337; szimmetria.</li>
+            <li><b>Exponenci&#225;lis f&#252;ggv&#233;ny:</b> <span class="formula-line">f(x) = a^x</span>, a &gt; 0, a &#8800; 1.</li>
+            <li><b>Logaritmus f&#252;ggv&#233;ny:</b> <span class="formula-line">f(x) = log_a(x)</span>, csak pozit&#237;v x-re.</li>
+            <li><b>Trigonometrikus f&#252;ggv&#233;ny:</b> sin, cos, tg alap&#233;rt&#233;kek &#233;s periodicit&#225;s.</li>
+            <li><b>Abszol&#250;t&#233;rt&#233;k/gy&#246;k f&#252;ggv&#233;ny:</b> nemnegat&#237;v &#233;rt&#233;kk&#233;szlet, tartom&#225;nyi korl&#225;tok.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
                 <li>Line&#225;ris f&#252;ggv&#233;ny</li>
                 <li>M&#225;sodfok&#250; f&#252;ggv&#233;ny</li>
@@ -494,41 +505,51 @@
                 <li>Abszol&#250;t&#233;rt&#233;k &#233;s gy&#246;k f&#252;ggv&#233;nyek</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Line&#225;ris &#233;s m&#225;sodfok&#250;</h3>
-                <ul>
-                    <li><span class="formula-line">f(x) = ax + b</span> line&#225;ris alapalak.</li>
-                    <li>Z&#233;rushely: <span class="formula-line">x_0 = -b/a</span>.</li>
-                    <li><span class="formula-line">f(x) = a(x - h)^2 + k</span> &#8211; cs&#250;csalak.</li>
-                    <li>Cs&#250;cs: <span class="formula-line">(h, k)</span>, tengely: <span class="formula-line">x = h</span>.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Hatv&#225;ny, exponenci&#225;lis, logaritmus</h3>
-                <ul>
-                    <li><span class="formula-line">f(x) = x^n</span> hatv&#225;nyf&#252;ggv&#233;ny.</li>
-                    <li><span class="formula-line">f(x) = a^x</span> exponenci&#225;lis f&#252;ggv&#233;ny.</li>
-                    <li><span class="formula-line">log_a(b) = x</span> akkor, ha <span class="formula-line">a^x = b</span>.</li>
-                </ul>
-            </div>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>&#214;sszegz&#337; p&#233;lda &#8211; t&#237;pus &#233;s jellemz&#337;</h4>
+            <p>Legyen <span class="formula-line">f(x) = -3(x - 2)^2 + 1</span>.</p>
+            <ol>
+                <li>Ez m&#225;sodfok&#250; f&#252;ggv&#233;ny, cs&#250;csalakban.</li>
+                <li>A cs&#250;cs <span class="formula-line">(2, 1)</span>, ez&#233;rt maximuma 1.</li>
+                <li>Az &#233;rt&#233;kk&#233;szlet: <span class="formula-line">y &#8804; 1</span>.</li>
+            </ol>
         </div>
         <div class="learning-hint">
-            <h3>Trigonometrikus &#233;s abszol&#250;t&#233;rt&#233;k</h3>
-            <ul>
-                <li><span class="formula-line">-1 &#8804; sin(x) &#8804; 1</span>, <span class="formula-line">-1 &#8804; cos(x) &#8804; 1</span>.</li>
-                <li><span class="formula-line">f(x) = |x|</span> mindig nemnegat&#237;v.</li>
-                <li><span class="formula-line">f(x) = &#8730;x</span> csak <span class="formula-line">x &#8805; 0</span> eset&#233;n &#233;rtelmezett.</li>
-            </ul>
+            <h4>2. p&#233;lda &#8211; exponenci&#225;lis &#233;s logaritmus</h4>
+            <p>Oldd meg: <span class="formula-line">2^x = 8</span>.</p>
+            <ol>
+                <li>Felismerj&#252;k, hogy <span class="formula-line">8 = 2^3</span>.</li>
+                <li>Ez&#233;rt <span class="formula-line">x = 3</span>, azaz <span class="formula-line">log_2(8) = 3</span>.</li>
+            </ol>
         </div>
         <div class="learning-hint">
-            <h3>Tippek</h3>
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li>Mindig azonos&#237;tsd a f&#252;ggv&#233;ny t&#237;pus&#225;t, ebb&#337;l j&#246;nnek a tulajdons&#225;gok.</li>
-                <li>Exponenci&#225;lis f&#252;ggv&#233;nyn&#233;l az alap d&#246;nti el a monotonit&#225;st.</li>
-                <li>Trigonometrikus f&#252;ggv&#233;nyn&#233;l haszn&#225;ld a nevezetes sz&#246;gek &#233;rt&#233;keit.</li>
+                <li>Line&#225;risnak n&#233;zed azt, ami exponenci&#225;lis (mert gyorsan n&#337;).</li>
+                <li>Logaritmusn&#225;l elfelejted: csak pozit&#237;v a bemenet, &#233;s az alap nem lehet 1.</li>
+                <li>Trigonometrikus f&#252;ggv&#233;nyekn&#233;l elt&#233;veszted a tartom&#225;nyt (sin, cos [-1, 1]).</li>
+                <li>M&#225;sodfok&#250; f&#252;ggv&#233;nyn&#233;l &#246;sszekevered a cs&#250;csot &#233;s a gy&#246;k&#246;ket.</li>
+                <li>Abszol&#250;t&#233;rt&#233;kn&#233;l negat&#237;v &#233;rt&#233;ket engedsz meg az &#233;rt&#233;kk&#233;szletben.</li>
             </ul>
         </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Milyen t&#237;pus&#250; f&#252;ggv&#233;ny az <span class="formula-line">f(x) = 5x - 10</span>?</li>
+            <li>Mi a cs&#250;cs a <span class="formula-line">g(x) = (x + 1)^2 - 4</span> f&#252;ggv&#233;nyben?</li>
+            <li>Mi a <span class="formula-line">log_3(27)</span> &#233;rt&#233;ke?</li>
+            <li>Mekkora a <span class="formula-line">sin(x)</span> &#233;s <span class="formula-line">cos(x)</span> &#233;rt&#233;kk&#233;szlete?</li>
+            <li>Hol nem &#233;rtelmezett a <span class="formula-line">h(x) = sqrt(x - 5)</span>?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Ismerd fel a f&#252;ggv&#233;nyt&#237;pust, ez adja a f&#337; tulajdons&#225;gokat.</li>
+            <li>Line&#225;risn&#225;l a meredeks&#233;g, m&#225;sodfok&#250;n&#225;l a cs&#250;cs a kulcs.</li>
+            <li>Exponenci&#225;lis &#233;s logaritmus egym&#225;s inverzei.</li>
+            <li>Trigonometrikus f&#252;ggv&#233;nyek &#233;rt&#233;ke korl&#225;tos, ez&#233;rt az &#233;rt&#233;kk&#233;szlet sz&#369;k.</li>
+            <li>Abszol&#250;t&#233;rt&#233;k &#233;s gy&#246;k f&#252;ggv&#233;nyekn&#233;l figyelj a tartom&#225;nyra.</li>
+        </ul>
+
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -619,7 +640,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -669,7 +690,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

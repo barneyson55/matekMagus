@@ -484,33 +484,73 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Geometriai val&#243;sz&#237;n&#369;s&#233;g</h2>
-        <p>Geometriai modellekben a val&#243;sz&#237;n&#369;s&#233;g a kedvez&#337; &#233;s &#246;sszes hossz vagy ter&#252;let ar&#225;nya.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Geometriai val&#243;sz&#237;n&#369;s&#233;gn&#233;l nem darabokat sz&#225;molunk, hanem hosszt, ter&#252;letet vagy t&#233;rfogatot. Akkor haszn&#225;ljuk, ha egy pontot, szakaszt vagy fel&#252;letet egyenletesen v&#225;lasztunk ki. A val&#243;sz&#237;n&#369;s&#233;g ilyenkor a kedvez&#337; r&#233;sz ar&#225;nya az eg&#233;szhez k&#233;pest. Ez seg&#237;t p&#233;ld&#225;ul darts, hibas&#225;v vagy v&#233;letlen pont feladatokn&#225;l.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Mintaalakzat:</b> az az alakzat, amelyb&#337;l egyenletesen v&#225;lasztunk (szakasz, t&#233;glalap, k&#246;r).</li>
+            <li><b>Kedvez&#337; r&#233;sz:</b> az alakzat azon r&#233;sze, amely teljes&#237;ti a felt&#233;telt.</li>
+            <li><b>M&#233;rt&#233;k:</b> hossz, ter&#252;let vagy t&#233;rfogat (a feladat t&#237;pus&#225;t&#243;l f&#252;gg&#337;en).</li>
+            <li><b>Egyenletes v&#225;laszt&#225;s:</b> minden pont azonos es&#233;llyel v&#225;laszthat&#243;.</li>
+            <li><b>Geometriai val&#243;sz&#237;n&#369;s&#233;g:</b> P = kedvez&#337; m&#233;rt&#233;k / teljes m&#233;rt&#233;k.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Hossz ar&#225;ny</h3>
+            <h4>1. p&#233;lda &#8211; szakasz</h4>
+            <p>Egy 10 cm-es szakaszon v&#233;letlen pontot v&#225;lasztunk. Mi a val&#243;sz&#237;n&#369;s&#233;ge, hogy a pont a 2 cm &#233;s 6 cm k&#246;z&#233; esik?</p>
+            <ol>
+                <li>Teljes hossz: 10 cm.</li>
+                <li>Kedvez&#337; hossz: 6 - 2 = 4 cm.</li>
+                <li>P = 4/10 = 0,4.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; ter&#252;let</h4>
+            <p>Egy 4&#215;4-es n&#233;gyzetbe egy r = 2 sugar&#250; k&#246;rt rajzolunk. Mi a val&#243;sz&#237;n&#369;s&#233;ge, hogy a v&#233;letlen pont a k&#246;rbe esik?</p>
+            <ol>
+                <li>N&#233;gyzet ter&#252;lete: 4&#183;4 = 16.</li>
+                <li>K&#246;r ter&#252;lete: &#960;&#183;2<sup>2</sup> = 4&#960;.</li>
+                <li>P = 4&#960; / 16 = &#960;/4 (&#8776; 0,785).</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (kedvez&#337; szakasz)</h3>
+            <svg viewBox="0 0 260 60" style="width: 100%; max-width: 320px; height: auto; display: block; margin: 10px 0;">
+                <line x1="20" y1="30" x2="240" y2="30" stroke="#4A55A2" stroke-width="4" stroke-linecap="round" />
+                <line x1="70" y1="30" x2="170" y2="30" stroke="#4A55A2" stroke-width="8" stroke-linecap="round" opacity="0.4" />
+                <text x="20" y="50" font-size="12">0</text>
+                <text x="65" y="50" font-size="12">2</text>
+                <text x="165" y="50" font-size="12">6</text>
+                <text x="235" y="50" font-size="12">10</text>
+            </svg>
+            <p class="muted">A vastag&#237;tott r&#233;sz a kedvez&#337; szakasz (hossz 4), a teljes hossz 10.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li>P = kedvez&#337; hossz / &#246;sszhossz.</li>
-<li>Szakaszok, k&#246;r&#237;vek esete.</li>
-<li>Egyenletes eloszl&#225;s.</li>
+                <li>Hossz helyett ker&#252;letet hasonl&#237;tasz (rossz m&#233;rt&#233;k).</li>
+                <li>Ter&#252;letet sz&#225;molsz, amikor csak szakaszr&#243;l van sz&#243;.</li>
+                <li>Nem ellen&#337;rz&#246;d, hogy egyenletes-e a v&#225;laszt&#225;s.</li>
+                <li>Nem ugyanabban a m&#233;rt&#233;kegys&#233;gben sz&#225;molsz.</li>
+                <li>Elfelejted egyszer&#369;s&#237;teni az ar&#225;nyt.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Ter&#252;let ar&#225;ny</h3>
-                <ul>
-                    <li>P = kedvez&#337; ter&#252;let / &#246;sszter&#252;let.</li>
-<li>T&#233;glalap, k&#246;r, soksz&#246;g.</li>
-<li>Ar&#225;nyk&#233;nt &#233;rtelmezz&#252;k.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Megk&#246;zel&#237;t&#233;s</h3>
-                <ul>
-                    <li>Rajzolj v&#225;zlatot.</li>
-<li>Sz&#225;mold ki az ar&#225;nyt.</li>
-<li>Egyszer&#369;s&#237;tsd a t&#246;rtet.</li>
-                </ul>
-            </div>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Egy 12 cm-es szakaszon mekkora a P, ha a kedvez&#337; r&#233;sz 3 cm?</li>
+            <li>Melyik m&#233;rt&#233;ket haszn&#225;lod: hossz, ter&#252;let vagy t&#233;rfogat?</li>
+            <li>Egy 6&#215;8-as t&#233;glalapb&#243;l kiv&#225;gott 3&#215;4-es r&#233;sz val&#243;sz&#237;n&#369;s&#233;ge?</li>
+            <li>Mi a P, ha a kedvez&#337; ter&#252;let fele a teljesnek?</li>
+            <li>Mikor nem haszn&#225;lhat&#243; a geometriai modell?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Geometriai modelln&#233;l ar&#225;nyt sz&#225;molunk, nem darabokat.</li>
+            <li>A m&#233;rt&#233;k lehet hossz, ter&#252;let vagy t&#233;rfogat.</li>
+            <li>Felt&#233;tel: egyenletes v&#225;laszt&#225;s az alakzaton.</li>
+            <li>P = kedvez&#337; m&#233;rt&#233;k / teljes m&#233;rt&#233;k.</li>
+            <li>Mindig ellen&#337;rizd, hogy ugyanazt a m&#233;rt&#233;ket hasonl&#237;tod.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -550,7 +590,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -594,7 +634,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

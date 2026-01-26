@@ -483,59 +483,70 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>N&#233;gyzetgy&#246;k, n-edik gy&#246;k</h2>
-        <p>A gy&#246;kvon&#225;s a hatv&#225;nyoz&#225;s ford&#237;tott m&#369;velete: azt a sz&#225;mot keress&#252;k, amelyet megfelel&#337; hatv&#225;nyra emelve megkapjuk a gy&#246;k alatti sz&#225;mot.</p>
+        <h2>Négyzetgyök, n-edik gyök</h2>
+        <h3>Rövid bevezetés (Mi ez? Mire jó?)</h3>
+        <p>A gyökvonás a hatványozás „visszafelé” olvasása: azt a számot keressük, amelynek megfelelő hatványa a gyök alatti szám. Gyakran használjuk terület- és hosszszámításnál, illetve képletekben. Ha tudod, hogy melyik hatvány adja az eredményt, a gyököt gyorsan megkapod. A lényeg mindig az index (hányadik gyök) és a főgyök fogalma.</p>
+        <h3>Alapfogalmak / definíciók</h3>
+        <ul>
+            <li><b>Négyzetgyök:</b> √b = a, ha a<sup>2</sup> = b és a ≥ 0.</li>
+            <li><b>n-edik gyök:</b> n-edik gyök(b) = a, ha a<sup>n</sup> = b.</li>
+            <li><b>Gyök alatti szám:</b> a gyökjel alatt álló b.</li>
+            <li><b>Gyök indexe:</b> n, megmutatja, hányadik hatványt keresünk.</li>
+            <li><b>Teljes hatvány:</b> olyan szám, ami valamely egész szám n-edik hatványa.</li>
+        </ul>
+        <h3>Lépésről lépésre példa (1–2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapfogalmak</h3>
-            <ul>
-                <li><span class="formula-line">Ha a<sup>2</sup> = b, akkor &#8730;b = a (a &#8805; 0)</span></li>
-                <li><span class="formula-line">Ha a<sup>n</sup> = b, akkor n-edik gy&#246;k(b) = a</span></li>
-                <li><span class="formula-line">&#8730;0 = 0, n-edik gy&#246;k(1) = 1</span></li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>P&#233;ld&#225;k n&#233;gyzetgy&#246;kre</h3>
-                <ul>
-                    <li><span class="formula-line">&#8730;81 = 9, mert 9<sup>2</sup> = 81</span></li>
-                    <li><span class="formula-line">&#8730;144 = 12, mert 12<sup>2</sup> = 144</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>P&#233;ld&#225;k n-edik gy&#246;kre</h3>
-                <ul>
-                    <li><span class="formula-line">3. gy&#246;k(125) = 5, mert 5<sup>3</sup> = 125</span></li>
-                    <li><span class="formula-line">4. gy&#246;k(16) = 2, mert 2<sup>4</sup> = 16</span></li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>Mindig ellen&#337;rizd a kapott eredm&#233;nyt hatv&#225;nyoz&#225;ssal.</li>
-                <li>Ha a gy&#246;k alatti sz&#225;m teljes hatv&#225;ny, akkor a gy&#246;k eredm&#233;nye eg&#233;sz sz&#225;m.</li>
-                <li>Az index megmutatja, h&#225;nyadik hatv&#225;nyt keress&#252;k.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>&#8730;196 meghat&#225;roz&#225;sa:</p>
+            <h4>1. példa – négyzetgyök</h4>
+            <p>Számold ki: √196.</p>
             <ol>
-                <li>14&#178; = 14 &#183; 14 = 196.</li>
-                <li>Ez&#233;rt &#8730;196 = 14.</li>
+                <li>Olyan számot keresünk, amelynek négyzete 196.</li>
+                <li>14 · 14 = 196, ezért √196 = 14.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: n&#233;gyzet ter&#252;lete</h3>
+            <h4>2. példa – n-edik gyök</h4>
+            <p>Számold ki: 3. gyök(125).</p>
+            <ol>
+                <li>Olyan számot keresünk, amelynek köbe 125.</li>
+                <li>5<sup>3</sup> = 125, ezért a 3. gyök(125) = 5.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizuális magyarázat (négyzet területe)</h3>
             <svg viewBox="0 0 160 160" style="width: 100%; max-width: 200px; height: auto; display: block; margin: 10px 0;">
                 <rect x="20" y="20" width="120" height="120" fill="rgba(160,191,224,0.3)" stroke="#4A55A2" stroke-width="2" />
                 <text x="80" y="90" font-size="16" text-anchor="middle">A = 196</text>
                 <text x="80" y="15" font-size="14" text-anchor="middle">oldal = 14</text>
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A gy&#246;k a n&#233;gyzet oldalhossz&#225;t adja vissza.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A gyök visszaadja a négyzet oldalhosszát: √196 = 14.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hibák / tévhitek</h3>
+            <ul>
+                <li>√(a + b) = √a + √b (ez nem igaz).</li>
+                <li>Páros gyöknél negatív számot is elfogadsz (nem megengedett).</li>
+                <li>Elfelejted, hogy a főgyök mindig nemnegatív.</li>
+                <li>Összekevered az indexet és a kitevőt.</li>
+                <li>Nem ellenőrzöd vissza hatványozással.</li>
+            </ul>
+        </div>
+        <h3>Mini önellenőrzés (válasz nélkül)</h3>
+        <ul>
+            <li>Számold ki: √81.</li>
+            <li>Számold ki: 4. gyök(16).</li>
+            <li>Melyik szám négyzete 225?</li>
+            <li>Igaz vagy hamis: √(49 + 16) = √49 + √16.</li>
+            <li>Számold ki: 5. gyök(32).</li>
+        </ul>
+        <h3>Összefoglaló</h3>
+        <ul>
+            <li>A gyök a hatványozás inverze: a<sup>n</sup> = b ⇔ n-edik gyök(b) = a.</li>
+            <li>Páros gyöknél a főgyök nemnegatív.</li>
+            <li>Az index megmutatja, hányadik hatványt keresünk.</li>
+            <li>Teljes hatványok gyöke egész szám.</li>
+            <li>Mindig ellenőrizz vissza hatványozással.</li>
+        </ul>
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -599,7 +610,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -643,7 +654,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

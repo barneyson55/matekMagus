@@ -100,6 +100,7 @@
             display: flex;
             border-bottom: 1px solid var(--border-color);
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
 
         .tab-button {
@@ -141,6 +142,24 @@
         .tab-content.active {
             display: block;
             animation: fadeIn 0.5s;
+        }
+
+        @media (max-width: 600px) {
+            .tab-buttons {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                border-bottom: none;
+            }
+
+            .tab-button {
+                text-align: center;
+                padding: 10px 12px;
+            }
+
+            .tab-button::after {
+                bottom: 0;
+            }
         }
 
         @keyframes fadeIn {
@@ -283,24 +302,37 @@
         #pagination-dots {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             flex: 1;
+            flex-wrap: wrap;
         }
 
         .dot {
-            width: 14px;
-            height: 14px;
-            background-color: var(--border-color);
+            width: 44px;
+            height: 44px;
+            background-color: transparent;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .dot.answered {
+        .dot::before {
+            content: '';
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .dot.answered::before {
             background-color: var(--success);
         }
 
-        .dot.current {
+        .dot.current::before {
             box-shadow: 0 0 0 4px var(--brand-light);
             transform: scale(1.2);
         }
@@ -526,60 +558,84 @@
 </head>
 <body>
     <div class="tab-buttons">
-        <button class="tab-button active" onclick="openTab('miert')">Kulcsfogalmak</button>
+        <button class="tab-button active" onclick="openTab('miert')">Elmélet</button>
         <button class="tab-button" onclick="openTab('hogyan')">Vizuális modell</button>
         <button class="tab-button" onclick="openTab('teszt')">Teszt</button>
         <button class="tab-button" onclick="openTab('gyakorlas')">Gyakorlás</button>
     </div>
 
-    <!-- Kulcsfogalmak tab -->
+    <!-- Elmélet tab -->
     <div id="miert" class="tab-content active card">
-        <h2>Miért fontos?</h2>
-        <p>A <b>halmaz</b> a matematikában különböző dolgok, elemek egyértelműen meghatározott összessége. A halmaz elemeit
-            kapcsos zárójelek `{}` között, vesszővel elválasztva soroljuk fel, például: $A = \{1, 2, 3\}$.</p>
-        <p>A halmazműveletek segítségével logikai kapcsolatokat hozhatunk létre két vagy több halmaz között. Ezek a
-            műveletek a logika, a valószínűségszámítás és az informatika alapkövei.</p>
-        <h3>Kulcsfogalmak</h3>
+        <h2>Halmazműveletek</h2>
+        <h3>Rövid bevezetés (Mi ez? Mire jó?)</h3>
+        <p>A halmazműveletek segítenek rendszerezni, hogy mi tartozik egy feltételhez, és mi nem. Ha két vagy több feltételt hasonlítasz össze, az unió és a metszet adja a választ. A Venn-diagram vizuálisan is megmutatja, hol van az átfedés. Ez az alapja sok logikai és valószínűségi feladatnak.</p>
+        <h3>Alapfogalmak / definíciók</h3>
         <ul>
-            <li><b>Elem:</b> A halmazt alkotó objektum.</li>
-            <li><b>Alaphalmaz (U):</b> A vizsgált kontextusban lehetséges összes elemet tartalmazó halmaz.</li>
-            <li><b>Üres halmaz (∅):</b> Az a halmaz, amelynek egyetlen eleme sincs.</li>
-            <li><b>Részhalmaz:</b> 'A' minden eleme 'B'-nek is eleme.</li>
-            <li><b>Diszjunkt halmazok:</b> Két halmaz, melyeknek nincs közös elemük.</li>
+            <li><b>Elem:</b> egy objektum a halmazban, jelölés: $x &#92;in A$.</li>
+            <li><b>Alaphalmaz (U):</b> a vizsgálat összes lehetséges eleme.</li>
+            <li><b>Üres halmaz:</b> nincs eleme, jele: $&#92;emptyset$.</li>
+            <li><b>Részhalmaz:</b> $A &#92;subset B$, ha A minden eleme B-ben is benne van.</li>
+            <li><b>Unió:</b> $A &#92;cup B$, ami A-ban vagy B-ben benne van.</li>
+            <li><b>Metszet:</b> $A &#92;cap B$, ami mindkettőben közös.</li>
+            <li><b>Különbség:</b> $A &#92;setminus B$, ami A-ban van, de B-ben nincs.</li>
+            <li><b>Komplementer:</b> $&#92;overline{A}$, ami az alaphalmazban van, de A-ban nincs.</li>
         </ul>
-        <h3>Jelölések</h3>
-        <ul>
-            <li>$2 \in A$: 2 <b>eleme</b> az A halmaznak.</li>
-            <li>$A \subset B$: A <b>részhalmaza</b> B-nek.</li>
-            <li>$A \cup B$: A és B halmazok <b>uniója</b> (egyesítése).</li>
-            <li>$A \cap B$: A és B halmazok <b>metszete</b> (közös része).</li>
-            <li>$A \setminus B$: A és B halmazok <b>különbsége</b>.</li>
-            <li>$\bar{A}$: Az A halmaz <b>komplementere</b> (az alaphalmazhoz képest).</li>
-            <li>$A \cap B = \emptyset$: A és B halmazok <b>diszjunktak</b>.</li>
-        </ul>
-    
+        <h3>Lépésről lépésre példa (1–2 db)</h3>
         <div class="learning-hint">
-            <h3>Kidolgozott példa</h3>
-            <p>Legyenek A = {1, 2, 3, 4} és B = {3, 4, 5, 6}.</p>
+            <h4>1. példa – unió és metszet</h4>
+            <p>Legyen A = {1,2,3} és B = {3,4}.</p>
             <ol>
-                <li>Unió: A ∪ B = {1, 2, 3, 4, 5, 6}.</li>
-                <li>Metszet: A ∩ B = {3, 4}.</li>
-                <li>Különbség: A \ B = {1, 2}.</li>
+                <li>Unió: A ∪ B = {1,2,3,4}.</li>
+                <li>Metszet: A ∩ B = {3}.</li>
+                <li>Különbség: A &#92; B = {1,2}.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Ábra: Venn-diagram számolással</h3>
+            <h4>2. példa – alaphalmazzal</h4>
+            <p>Legyen U = {1,2,...,12}, A a párosak halmaza, B a 3-mal oszthatók halmaza.</p>
+            <ol>
+                <li>A = {2,4,6,8,10,12}.</li>
+                <li>B = {3,6,9,12}.</li>
+                <li>Metszet: A ∩ B = {6,12}.</li>
+                <li>Unió: A ∪ B = {2,3,4,6,8,9,10,12}.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizuális magyarázat (Venn-diagram)</h3>
             <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <circle cx="130" cy="80" r="55" fill="rgba(160,191,224,0.25)" stroke="#4A55A2" stroke-width="2" />
                 <circle cx="190" cy="80" r="55" fill="rgba(120,149,203,0.25)" stroke="#4A55A2" stroke-width="2" />
                 <text x="100" y="86" font-size="16" fill="#2C3333">1, 2</text>
-                <text x="155" y="86" font-size="16" fill="#2C3333">3, 4</text>
-                <text x="215" y="86" font-size="16" fill="#2C3333">5, 6</text>
+                <text x="155" y="86" font-size="16" fill="#2C3333">3</text>
+                <text x="215" y="86" font-size="16" fill="#2C3333">4</text>
                 <text x="110" y="30" font-size="14" font-weight="600">A</text>
                 <text x="200" y="30" font-size="14" font-weight="600">B</text>
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A bal kör A csak elemei, középen a metszet, jobbra B csak elemei.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">Két kör átfedése a metszet, a teljes lefedett terület az unió.</p>
         </div>
+        <div class="learning-hint">
+            <h3>Gyakori hibák / tévhitek</h3>
+            <ul>
+                <li>Összekevered az uniót a metszettel.</li>
+                <li>Felcseréled a különbséget: A &#92; B és B &#92; A nem ugyanaz.</li>
+                <li>Komplementernél nem tisztázod az alaphalmazt.</li>
+                <li>A halmaz elemeit sorrendben kezeled, pedig a sorrend nem számít.</li>
+            </ul>
+        </div>
+        <h3>Mini önellenőrzés (válasz nélkül)</h3>
+        <ul>
+            <li>Mi az A ∩ B, ha A = {2,4,6} és B = {1,2,3,4}?</li>
+            <li>Írd fel A &#92; B-t, ha A = {1,2,3,4}, B = {2,4}.</li>
+            <li>Mi az üres halmaz jele?</li>
+            <li>Mit jelent az, hogy A ⊂ B?</li>
+        </ul>
+        <h3>Összefoglaló</h3>
+        <ul>
+            <li>Az unió és a metszet a két legfontosabb halmazművelet.</li>
+            <li>A különbség iránya számít, mindig figyeld a sorrendet.</li>
+            <li>Komplementernél az alaphalmazt mindig rögzítsd.</li>
+            <li>A Venn-diagram segít vizuálisan ellenőrizni a választ.</li>
+        </ul>
 </div>
 
     <!-- Vizuális modell tab -->
@@ -648,7 +704,7 @@
         </div>
         <div class="test-controls">
             <div class="difficulty-selector">
-                <b>Nehézség:</b>
+                <b>Nehézségi szint:</b>
                 <button class="difficulty-btn active" data-difficulty="könnyű">Könnyű</button>
                 <button class="difficulty-btn" data-difficulty="normál">Normál</button>
                 <button class="difficulty-btn" data-difficulty="nehéz">Nehéz</button>
@@ -681,9 +737,9 @@
         <h2>Gyakorolj!</h2>
         <!-- XP reward explanation for practice questions -->
         <p class="practice-info" style="margin-top:-10px;">
-            <strong>XP Jutalom:</strong> Könnyű kérdésért 1 XP, Normál kérdésért 2 XP,
-            Nehéz kérdésért 3 XP. Válassz több nehézségi szintet egyszerre, hogy nagyobb
-            jutalmat szerezz!
+            <strong>XP jutalom:</strong> Könnyű kérdésért 1 XP, normál kérdésért 2 XP,
+            nehéz kérdésért 3 XP. A gyakorlás XP-t ad, de a teszt adja a nagyobb XP-jutalmat,
+            és az XP-sávnak van maximuma.
         </p>
         <div class="learning-hint" data-role="practice-help">
             <h3>Gyakorlási segítség</h3>
@@ -694,7 +750,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span><b>Nehézségek:</b></span>
+            <span><b>Nehézségi szintek:</b></span>
             <label><input type="checkbox" class="practice-difficulty" value="könnyű" checked> Könnyű</label>
             <label><input type="checkbox" class="practice-difficulty" value="normál"> Normál</label>
             <label><input type="checkbox" class="practice-difficulty" value="nehéz"> Nehéz</label>
@@ -720,7 +776,7 @@
     <script>
         const TOPIC_ID = 'halmazmuveletek';
         const TAB_LABELS = {
-            miert: 'Kulcsfogalmak',
+            miert: 'Elmélet',
             hogyan: 'Vizuális modell',
             teszt: 'Teszt',
             gyakorlas: 'Gyakorlás'
@@ -1273,4 +1329,3 @@
     </script>
 </body>
 </html>
-

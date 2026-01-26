@@ -151,6 +151,24 @@
             animation: fadeIn 0.5s;
         }
 
+        @media (max-width: 600px) {
+            .tab-buttons {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                border-bottom: none;
+            }
+
+            .tab-button {
+                text-align: center;
+                padding: 10px 12px;
+            }
+
+            .tab-button::after {
+                bottom: 0;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -310,20 +328,32 @@
         }
 
         .dot {
-            width: 10px;
-            height: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: transparent;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dot::before {
+            content: '';
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
             background-color: var(--border-color);
             transition: all 0.2s ease;
-            cursor: pointer;
         }
 
-        .dot.current {
+        .dot.current::before {
             background-color: var(--brand-primary);
             transform: scale(1.2);
         }
 
-        .dot.answered {
+        .dot.answered::before {
             background-color: var(--success);
         }
 
@@ -485,36 +515,70 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>A hat&#225;rozott integr&#225;l</h2>
-        <p>A hat&#225;rozott integr&#225;l egy intervallumon vett &#246;sszegz&#233;s, amely ter&#252;letet vagy nett&#243; v&#225;ltoz&#225;st ad meg.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A hat&#225;rozott integr&#225;l azt mutatja meg, mekkora a f&#252;ggv&#233;ny nett&#243; hat&#225;sa egy adott [a,b] intervallumon. Ezt ter&#252;letk&#233;nt is &#233;rtelmezheted: ami az x-tengely felett van, pozit&#237;v, ami alatta, negat&#237;v. &#205;gy nemcsak ter&#252;letet, hanem &#246;sszv&#225;ltoz&#225;st (pl. megtett &#250;t, &#246;sszesen befolyt mennyis&#233;g) is sz&#225;molhatsz. A sz&#225;m&#237;t&#225;shoz a primit&#237;v f&#252;ggv&#233;nyt haszn&#225;ljuk, &#233;s a k&#233;t hat&#225;r&#233;rt&#233;k k&#252;l&#246;nbs&#233;g&#233;t vessz&#252;k.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Hat&#225;rozott integr&#225;l:</b> <span class="formula-line">&#8747;_a^b f(x) dx</span> az [a,b] intervallum nett&#243; ter&#252;let&#233;t/&#246;sszv&#225;ltoz&#225;s&#225;t adja.</li>
+            <li><b>Als&#243; &#233;s fels&#337; hat&#225;r:</b> <span class="formula-line">a</span> az als&#243;, <span class="formula-line">b</span> a fels&#337; v&#233;gpont.</li>
+            <li><b>Primit&#237;v f&#252;ggv&#233;ny:</b> <span class="formula-line">F'(x)=f(x)</span>.</li>
+            <li><b>Newton&#8211;Leibniz formula:</b> <span class="formula-line">&#8747;_a^b f(x) dx = F(b) - F(a)</span>.</li>
+            <li><b>El&#337;jel:</b> az x-tengely alatti r&#233;sz negat&#237;v ter&#252;letk&#233;nt sz&#225;m&#237;t.</li>
+            <li><b>Hat&#225;rcsere:</b> <span class="formula-line">&#8747;_a^b f(x) dx = -&#8747;_b^a f(x) dx</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapk&#233;pletek</h3>
+            <h4>1. p&#233;lda &#8211; line&#225;ris f&#252;ggv&#233;ny</h4>
+            <p>Sz&#225;mold ki: <span class="formula-line">&#8747;_0^2 (x+1) dx</span>.</p>
+            <ol>
+                <li>Primit&#237;v: <span class="formula-line">F(x) = x^2/2 + x</span>.</li>
+                <li>Ki&#233;rt&#233;kel&#233;s: <span class="formula-line">F(2)=2+2=4</span>, <span class="formula-line">F(0)=0</span>.</li>
+                <li>Eredm&#233;ny: <span class="formula-line">4-0=4</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; egyszer&#369; polinom</h4>
+            <p>Sz&#225;mold ki: <span class="formula-line">&#8747;_1^3 2x dx</span>.</p>
+            <ol>
+                <li>Primit&#237;v: <span class="formula-line">F(x)=x^2</span>.</li>
+                <li>Ki&#233;rt&#233;kel&#233;s: <span class="formula-line">F(3)=9</span>, <span class="formula-line">F(1)=1</span>.</li>
+                <li>Eredm&#233;ny: <span class="formula-line">9-1=8</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (nett&#243; ter&#252;let)</h3>
             <ul>
-                <li><span class="formula-line">&#8747;_a^b f(x) dx = F(b) - F(a)</span></li>
-                <li><span class="formula-line">&#8747;_a^b (mx+c) dx = m/2 (b^2-a^2) + c(b-a)</span></li>
-                <li>Ha a &gt; b, az eredm&#233;ny negat&#237;v.</li>
+                <li>Rajzold fel <span class="formula-line">f(x)</span>-et az [a,b] intervallumon.</li>
+                <li>A tengely feletti r&#233;sz pozit&#237;v, az alatti negat&#237;v.</li>
+                <li>Ha a g&#246;rbe metszi az x-tengelyt, bontsd fel szakaszokra, &#233;s add &#246;ssze a r&#233;szintegr&#225;lokat.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>L&#233;p&#233;sek</h3>
-                <ul>
-                    <li>Tal&#225;ld meg a primit&#237;v f&#252;ggv&#233;nyt.</li>
-                    <li>Sz&#225;mold ki F(b) &#233;s F(a) &#233;rt&#233;k&#233;t.</li>
-                    <li>Vond ki &#337;ket: F(b) - F(a).</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>P&#233;ld&#225;k</h3>
-                <ul>
-                    <li>&#8747;_0^2 (x+1) dx = 4</li>
-                    <li>&#8747;_1^3 2x dx = 8</li>
-                </ul>
-            </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Felcser&#233;led a hat&#225;rokat, de nem v&#225;ltasz el&#337;jelet.</li>
+                <li>Nem a primit&#237;v f&#252;ggv&#233;nyt, hanem az <span class="formula-line">f(x)</span>-et helyettes&#237;ted be.</li>
+                <li>Az x-tengely alatti r&#233;szt is pozit&#237;vnak veszed.</li>
+                <li>Elfelejted, hogy ha <span class="formula-line">a=b</span>, akkor az integr&#225;l 0.</li>
+                <li>A <span class="formula-line">+C</span>-t benne hagyod (pedig kiesik a kivon&#225;sban).</li>
+            </ul>
         </div>
-        <div class="card">
-            <h3>Ter&#252;let &#233;rtelmez&#233;s</h3>
-            <p>A pozit&#237;v &#233;s negat&#237;v ter&#252;letek &#246;sszead&#243;dnak, &#237;gy nett&#243; ter&#252;letet kapsz.</p>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Sz&#225;mold ki: <span class="formula-line">&#8747;_0^1 (2x+1) dx</span>.</li>
+            <li>Mikor lesz negat&#237;v a hat&#225;rozott integr&#225;l?</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">&#8747;_1^2 x^2 dx</span>.</li>
+            <li>Mi t&#246;rt&#233;nik, ha felcser&#233;led a hat&#225;rokat?</li>
+            <li>Mi a Newton&#8211;Leibniz formula l&#233;nyege?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A hat&#225;rozott integr&#225;l nett&#243; ter&#252;letet/&#246;sszv&#225;ltoz&#225;st ad az [a,b] intervallumon.</li>
+            <li>Sz&#225;m&#237;t&#225;s: primit&#237;v, majd <span class="formula-line">F(b)-F(a)</span>.</li>
+            <li>A tengely alatti r&#233;sz negat&#237;v el&#337;jellel sz&#225;m&#237;t.</li>
+            <li>Hat&#225;rcsere el&#337;jelet v&#225;lt.</li>
+            <li>Ha <span class="formula-line">a=b</span>, az eredm&#233;ny 0.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -562,7 +626,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -606,7 +670,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

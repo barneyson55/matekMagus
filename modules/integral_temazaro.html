@@ -476,32 +476,72 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Integr&#225;lsz&#225;m&#237;t&#225;s</h2>
-        <p>T&#233;maz&#225;r&#243; a hat&#225;rozatlan &#233;s hat&#225;rozott integr&#225;l alapjaib&#243;l.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a t&#233;maz&#225;r&#243; az integr&#225;lsz&#225;m&#237;t&#225;s f&#337; fogalmait foglalja &#246;ssze: primit&#237;v f&#252;ggv&#233;nyek, hat&#225;rozott integr&#225;l &#233;s alkalmaz&#225;sok. Az integr&#225;l a deriv&#225;l&#225;s &#8222;visszafel&#233;&#8221; olvas&#225;sa, &#233;s ter&#252;letek, &#225;tlag&#233;rt&#233;kek, mennyis&#233;gek &#246;sszegz&#233;s&#233;re haszn&#225;ljuk. Ha biztosan ismered az alapk&#233;pleteket &#233;s a Newton&#8211;Leibniz formul&#225;t, a feladatok nagy r&#233;sze gyorsan megoldhat&#243;.</p>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
-                <li>Alap integr&#225;lk&#233;pletek</li>
-<li>Hat&#225;rozott integr&#225;l</li>
-<li>Ter&#252;let sz&#225;m&#237;t&#225;sa</li>
+                <li>A hat&#225;rozatlan integr&#225;l</li>
+                <li>A hat&#225;rozott integr&#225;l</li>
+                <li>Newton&#8211;Leibniz formula</li>
+                <li>T&#233;rfogatsz&#225;m&#237;t&#225;s integr&#225;llal</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">&#8747; x^n dx = x^(n+1)/(n+1) + C</span></li>
-<li><span class="formula-line">&#8747;_a^b f(x) dx = F(b) &#8722; F(a)</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tanul&#225;si f&#243;kusz</h3>
-                <ul>
-                    <li>&#201;rtsd a defin&#237;ci&#243;kat &#233;s jel&#246;l&#233;seket.</li>
-                    <li>Gyakorold a tipikus feladatt&#237;pusokat.</li>
-                    <li>Ellen&#337;rizd a m&#233;rt&#233;kegys&#233;geket &#233;s a logik&#225;t.</li>
-                </ul>
-            </div>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Hat&#225;rozatlan integr&#225;l:</b> <span class="formula-line">&#8747; f(x) dx = F(x) + C</span>.</li>
+            <li><b>Primit&#237;v f&#252;ggv&#233;ny:</b> olyan <span class="formula-line">F(x)</span>, amelynek deriv&#225;ltja <span class="formula-line">f(x)</span>.</li>
+            <li><b>Hat&#225;rozott integr&#225;l:</b> <span class="formula-line">&#8747;_a^b f(x) dx = F(b) - F(a)</span>.</li>
+            <li><b>Newton&#8211;Leibniz formula:</b> a primit&#237;v f&#252;ggv&#233;ny &#233;rt&#233;keinek k&#252;l&#246;nbs&#233;ge.</li>
+            <li><b>Integr&#225;l&#225;si &#225;lland&#243;:</b> <span class="formula-line">+C</span>, mert a primit&#237;v f&#252;ggv&#233;nyek csal&#225;dot alkotnak.</li>
+            <li><b>Integr&#225;l&#225;si hat&#225;rok:</b> <span class="formula-line">a</span> &#233;s <span class="formula-line">b</span>, amelyek k&#246;z&#246;tt ter&#252;letet sz&#225;molunk.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>&#214;sszegz&#337; p&#233;lda &#8211; hat&#225;rozott integr&#225;l</h4>
+            <p>Sz&#225;mold ki: <span class="formula-line">&#8747;_0^2 (x^2 + 1) dx</span>.</p>
+            <ol>
+                <li>Primit&#237;v: <span class="formula-line">F(x) = x^3/3 + x</span>.</li>
+                <li>Behelyettes&#237;t&#233;s: <span class="formula-line">F(2) = 8/3 + 2</span>, <span class="formula-line">F(0) = 0</span>.</li>
+                <li>Eredm&#233;ny: <span class="formula-line">&#8747;_0^2 (x^2 + 1) dx = 14/3</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (ter&#252;let)</h3>
+            <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
+                <line x1="40" y1="120" x2="290" y2="120" stroke="#4A55A2" stroke-width="2" />
+                <line x1="60" y1="140" x2="60" y2="20" stroke="#4A55A2" stroke-width="2" />
+                <line x1="60" y1="110" x2="260" y2="60" stroke="#2C3333" stroke-width="2" />
+                <polygon points="60,120 260,120 260,60 60,110" fill="rgba(160,191,224,0.35)" />
+            </svg>
+            <p style="font-size: 0.95em; color: var(--text-light);">A hat&#225;rozott integr&#225;l a g&#246;rbe alatti (el&#337;jeles) ter&#252;letet adja meg a k&#233;t hat&#225;r k&#246;z&#246;tt.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Elfelejted a <span class="formula-line">+C</span>-t hat&#225;rozatlan integr&#225;ln&#225;l.</li>
+                <li>Felcser&#233;led a hat&#225;rokat, &#233;s elrontod az el&#337;jelet.</li>
+                <li>Nem a primit&#237;v f&#252;ggv&#233;nyt sz&#225;molod ki el&#337;sz&#246;r.</li>
+                <li>Nem egyszer&#369;s&#237;tesz a v&#233;g&#233;n, &#237;gy hib&#225;s marad a sz&#225;mol&#225;s.</li>
+                <li>&#214;sszekevered a hat&#225;rozatlan &#233;s hat&#225;rozott integr&#225;lt.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>&#205;rd fel a <span class="formula-line">f(x)=x^2</span> primit&#237;v f&#252;ggv&#233;ny&#233;t.</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">&#8747;_1^3 x dx</span>.</li>
+            <li>Mikor kell <span class="formula-line">+C</span>-t &#237;rni?</li>
+            <li>Mi a Newton&#8211;Leibniz formula l&#233;nyege?</li>
+            <li>Mire ad v&#225;laszt a hat&#225;rozott integr&#225;l?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A t&#233;maz&#225;r&#243; az integr&#225;lsz&#225;m&#237;t&#225;s teljes alapj&#225;t lefedi.</li>
+            <li>A primit&#237;v f&#252;ggv&#233;ny deriv&#225;ltja az integrandus.</li>
+            <li>Hat&#225;rozott integr&#225;ln&#225;l <span class="formula-line">F(b) - F(a)</span> a kulcsl&#233;p&#233;s.</li>
+            <li>A <span class="formula-line">+C</span> a primit&#237;vek csal&#225;dj&#225;t jel&#246;li.</li>
+            <li>A ter&#252;letsz&#225;m&#237;t&#225;s alapja a hat&#225;rozott integr&#225;l.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -534,7 +574,7 @@
 
     <div id="teszt" class="tab-content card" role="tabpanel">
         <h2>Teszt</h2>
-        <p>Alt&#233;ma-szint&#369; teszt a Integr&#225;lsz&#225;m&#237;t&#225;s t&#233;mak&#246;r f&#337; fogalmaib&#243;l.</p>
+        <p>Alt&#233;ma-szint&#369; teszt az Integr&#225;lsz&#225;m&#237;t&#225;s alt&#233;ma f&#337; fogalmaib&#243;l.</p>
         <div class="learning-hint" data-role="test-help">
             <h3>Megold&#225;si l&#233;p&#233;sek</h3>
             <ul>
@@ -546,20 +586,21 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
-                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="K&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
-                    <button class="btn btn-secondary difficulty-btn" data-difficulty="Norm&#225;l" type="button">Norm&#225;l</button>
-                    <button class="btn btn-secondary difficulty-btn" data-difficulty="Neh&#233;z" type="button">Neh&#233;z</button>
+                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="neh&#233;z" type="button">Neh&#233;z</button>
                 </div>
             </div>
         </div>
         <div class="test-intro" id="test-intro">
-            <p><b>Mit tartalmaz a teszt?</b> Alt&#233;ma-szint&#369; teszt Integr&#225;lsz&#225;m&#237;t&#225;s t&#233;mak&#246;rb&#337;l. 10 k&#233;rd&#233;s neh&#233;zs&#233;gi szintenk&#233;nt.</p>
-            <ul>
-                <li>Alap integr&#225;lk&#233;pletek</li>
-<li>Hat&#225;rozott integr&#225;l</li>
-<li>Ter&#252;let sz&#225;m&#237;t&#225;sa</li>
+            <p><b>Mit tartalmaz a teszt?</b> Alt&#233;ma-szint&#369; teszt az Integr&#225;lsz&#225;m&#237;t&#225;s alt&#233;ma f&#337; fogalmaib&#243;l. 10 k&#233;rd&#233;s neh&#233;zs&#233;gi szintenk&#233;nt.</p>
+                        <ul>
+                <li>Hat&#225;rozatlan integr&#225;l</li>
+                <li>Hat&#225;rozott integr&#225;l</li>
+                <li>Newton&#8211;Leibniz formula</li>
+                <li>T&#233;rfogatsz&#225;m&#237;t&#225;s integr&#225;llal</li>
             </ul>
             <button id="start-test-btn" class="btn btn-primary" type="button">Teszt ind&#237;t&#225;sa</button>
         </div>
@@ -596,10 +637,10 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
-            <label><input class="practice-difficulty" type="checkbox" value="K&#246;nny&#369;" checked> K&#246;nny&#369;</label>
-            <label><input class="practice-difficulty" type="checkbox" value="Norm&#225;l"> Norm&#225;l</label>
-            <label><input class="practice-difficulty" type="checkbox" value="Neh&#233;z"> Neh&#233;z</label>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
+            <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
+            <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
+            <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>
             <button id="start-practice-btn" class="btn btn-secondary" type="button">Gyakorl&#225;s ind&#237;t&#225;sa</button>
         </div>
         <div id="practice-area" class="practice-area is-hidden">

@@ -484,33 +484,75 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Sz&#243;r&#243;d&#225;si mutat&#243;k</h2>
-        <p>A sz&#243;r&#243;d&#225;si mutat&#243;k azt m&#233;rik, mennyire sz&#243;r&#243;dnak az adatok.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A sz&#243;r&#243;d&#225;si mutat&#243;k azt mutatj&#225;k meg, mennyire &#8222;sz&#233;tsz&#243;rtak&#8221; az adatok az &#225;tlag k&#246;r&#252;l. K&#233;t adatsor lehet ugyanazzal az &#225;tlaggal, de teljesen m&#225;s sz&#243;r&#243;d&#225;ssal. Ezek a mutat&#243;k ez&#233;rt fontosak az &#246;sszehasonl&#237;t&#225;sn&#225;l. A leggyakoribbak: terjedelem, variancia &#233;s sz&#243;r&#225;s.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Terjedelem:</b> max &#8722; min, gyors sz&#233;ls&#337;-&#246;sszehasonl&#237;t&#225;s.</li>
+            <li><b>Elt&#233;r&#233;s:</b> egy adat &#233;s az &#225;tlag k&#252;l&#246;nbs&#233;ge (x &#8722; x&#772;).</li>
+            <li><b>Variancia:</b> az elt&#233;r&#233;sek n&#233;gyzet&#233;nek &#225;tlaga (itt n-nel osztunk).</li>
+            <li><b>Sz&#243;r&#225;s:</b> a variancia n&#233;gyzetgy&#246;ke, az eredeti m&#233;rt&#233;kegys&#233;gben.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Terjedelem</h3>
+            <h4>1. p&#233;lda &#8211; terjedelem</h4>
+            <p>Adatsor: 2, 5, 9. Mennyi a terjedelem?</p>
+            <ol>
+                <li>Max = 9, min = 2.</li>
+                <li>Terjedelem = 9 &#8722; 2 = 7.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; variancia &#233;s sz&#243;r&#225;s</h4>
+            <p>Adatsor: 4, 4, 6, 6. Sz&#225;mold ki a varianci&#225;t &#233;s a sz&#243;r&#225;st!</p>
+            <ol>
+                <li>&#193;tlag: (4 + 4 + 6 + 6) / 4 = 5.</li>
+                <li>Elt&#233;r&#233;sek: -1, -1, 1, 1.</li>
+                <li>N&#233;gyzetek: 1, 1, 1, 1.</li>
+                <li>Variancia: (1 + 1 + 1 + 1) / 4 = 1.</li>
+                <li>Sz&#243;r&#225;s: &#8730;1 = 1.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (azonos &#225;tlag, elt&#233;r&#337; sz&#243;r&#225;s)</h3>
+            <svg viewBox="0 0 260 100" style="width: 100%; max-width: 320px; height: auto; display: block; margin: 10px 0;">
+                <line x1="30" y1="30" x2="230" y2="30" stroke="#4A55A2" stroke-width="2" />
+                <circle cx="110" cy="30" r="5" fill="#4A55A2" />
+                <circle cx="130" cy="30" r="5" fill="#4A55A2" />
+                <circle cx="150" cy="30" r="5" fill="#4A55A2" />
+                <line x1="30" y1="70" x2="230" y2="70" stroke="#4A55A2" stroke-width="2" />
+                <circle cx="70" cy="70" r="5" fill="#4A55A2" />
+                <circle cx="130" cy="70" r="5" fill="#4A55A2" />
+                <circle cx="190" cy="70" r="5" fill="#4A55A2" />
+            </svg>
+            <p class="muted">Fent kicsi sz&#243;r&#225;s, lent nagyobb sz&#243;r&#225;s &#8211; az &#225;tlag lehet ugyanaz.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li>max - min.</li>
-<li>Gyors becsl&#233;s.</li>
-<li>Csak a sz&#233;ls&#337; &#233;rt&#233;keket haszn&#225;lja.</li>
+                <li>Elfelejted n&#233;gyzetre emelni az elt&#233;r&#233;seket.</li>
+                <li>Nem vonod gy&#246;k al&#225; a varianci&#225;t a sz&#243;r&#225;shoz.</li>
+                <li>&#214;sszekevered a terjedelmet a sz&#243;r&#225;ssal.</li>
+                <li>Rosszul sz&#225;molod az &#225;tlagot, ez&#233;rt minden l&#233;p&#233;s hib&#225;s lesz.</li>
+                <li>Nem ugyanazzal az oszt&#243;val sz&#225;molsz (itt n-nel osztunk).</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Variancia</h3>
-                <ul>
-                    <li>&#193;tlagt&#243;l vett n&#233;gyzetes elt&#233;r&#233;sek &#225;tlaga.</li>
-<li>N&#233;pess&#233;g eset&#233;n n-nel osztunk.</li>
-<li>M&#233;rt&#233;kegys&#233;ge n&#233;gyzetes.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Sz&#243;r&#225;s</h3>
-                <ul>
-                    <li>A variancia gy&#246;ke.</li>
-<li>Az adatok eredeti m&#233;rt&#233;kegys&#233;g&#233;ben.</li>
-<li>Nagyobb sz&#243;r&#225;s = nagyobb sz&#233;tter&#252;l&#233;s.</li>
-                </ul>
-            </div>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi a terjedelem a 3, 7, 8, 10 adatsorn&#225;l?</li>
+            <li>Mit jelent az elt&#233;r&#233;s fogalma?</li>
+            <li>Mi&#233;rt n&#233;gyzetre emelj&#252;k az elt&#233;r&#233;seket?</li>
+            <li>Mi a k&#252;l&#246;nbs&#233;g a variancia &#233;s a sz&#243;r&#225;s k&#246;z&#246;tt?</li>
+            <li>Melyik mutat&#243; csak a sz&#233;ls&#337; &#233;rt&#233;keket haszn&#225;lja?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A sz&#243;r&#243;d&#225;s azt mutatja, mennyire sz&#233;tsz&#243;rtak az adatok.</li>
+            <li>Terjedelem = max &#8722; min.</li>
+            <li>Variancia = n&#233;gyzetes elt&#233;r&#233;sek &#225;tlaga (n-nel osztva).</li>
+            <li>Sz&#243;r&#225;s = a variancia n&#233;gyzetgy&#246;ke.</li>
+            <li>Az &#225;tlag &#246;nmag&#225;ban nem &#237;rja le a sz&#243;r&#243;d&#225;st.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -550,7 +592,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -594,7 +636,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

@@ -484,27 +484,61 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>K&#246;r egyenlete</h2>
-        <p>A k&#246;r egyenlete a k&#246;z&#233;ppont &#233;s a sug&#225;r seg&#237;ts&#233;g&#233;vel &#237;rhat&#243; le.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>K&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">(x - a)^2 + (y - b)^2 = r^2</span></li>
-<li><span class="formula-line">K&#246;z&#233;ppont: (a, b)</span></li>
-<li><span class="formula-line">Sug&#225;r: r = &#8730;(r^2)</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>El&#337;sz&#246;r az r^2 &#233;rt&#233;ket keresd.</li>
-<li>A t&#225;vols&#225;g n&#233;gyzete gyorsabban sz&#225;molhat&#243;.</li>
-<li>K&#246;z&#233;ppontot mindig (a,b) form&#225;ban olvasd.</li>
-                </ul>
-            </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A k&#246;r azoknak a pontoknak a halmaza, amelyek ugyanakkora t&#225;vols&#225;gra vannak a k&#246;z&#233;ppontt&#243;l. A k&#246;r egyenlete seg&#237;t gyorsan meghat&#225;rozni a k&#246;z&#233;ppontot &#233;s a sugarat. Sok feladatban k&#246;r &#233;s egyenes metsz&#233;spontj&#225;t, illetve &#233;rint&#233;st keresel. Ha tudod a k&#246;r egyenlet&#233;t, ezek a feladatok l&#233;p&#233;sr&#337;l l&#233;p&#233;sre megoldhat&#243;k.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>K&#246;z&#233;ppont:</b> <span class="formula-line">K(a, b)</span>.</li>
+            <li><b>Sug&#225;r:</b> <span class="formula-line">r</span>, a k&#246;z&#233;ppont &#233;s a k&#246;r pontjai k&#246;zti t&#225;vols&#225;g.</li>
+            <li><b>K&#246;r egyenlete:</b> <span class="formula-line">(x - a)^2 + (y - b)^2 = r^2</span>.</li>
+            <li><b>&#193;ltal&#225;nos alak:</b> <span class="formula-line">x^2 + y^2 + A * x + B * y + C = 0</span>.</li>
+            <li><b>N&#233;gyzetre eg&#233;sz&#237;t&#233;s:</b> az &#225;ltal&#225;nos alakb&#243;l &#237;gy kapod meg <span class="formula-line">a</span>, <span class="formula-line">b</span>, <span class="formula-line">r</span> &#233;rt&#233;keit.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; k&#246;z&#233;ppont &#233;s sug&#225;r adott</h4>
+            <p>Adott: <span class="formula-line">K(2, -1)</span>, <span class="formula-line">r = 3</span>.</p>
+            <ol>
+                <li>Behelyettes&#237;t&#233;s a k&#233;pletbe.</li>
+                <li>Egyenlet: <span class="formula-line">(x - 2)^2 + (y + 1)^2 = 9</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; &#225;ltal&#225;nos alak &#225;talak&#237;t&#225;sa</h4>
+            <p>Adott: <span class="formula-line">x^2 + y^2 - 4x + 6y + 4 = 0</span>.</p>
+            <ol>
+                <li>Csoportos&#237;t&#225;s: <span class="formula-line">(x^2 - 4x) + (y^2 + 6y) = -4</span>.</li>
+                <li>N&#233;gyzetre eg&#233;sz&#237;t&#233;s: <span class="formula-line">(x - 2)^2 + (y + 3)^2 = 9</span>.</li>
+                <li>K&#246;z&#233;ppont: <span class="formula-line">K(2, -3)</span>, sug&#225;r: <span class="formula-line">r = 3</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (t&#225;vols&#225;g)</h3>
+            <p>Gondolj a k&#246;rre &#250;gy, mint egy ponthalmazra: minden pont t&#225;vols&#225;ga a k&#246;z&#233;ppontt&#243;l ugyanannyi, pontosan <span class="formula-line">r</span>. Ha egy pont t&#225;vols&#225;ga kisebb, akkor bel&#252;l van, ha nagyobb, akkor k&#237;v&#252;l.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Elfelejted, hogy a sug&#225;r a n&#233;gyzetes alakban <span class="formula-line">r^2</span>-k&#233;nt szerepel.</li>
+                <li>Rosszul kezeled az el&#337;jelet: <span class="formula-line">(y - b)^2</span> helyett <span class="formula-line">(y + b)^2</span>.</li>
+                <li>A sug&#225;r helyett az &#225;tm&#233;r&#337;t haszn&#225;lod.</li>
+                <li>N&#233;gyzetre eg&#233;sz&#237;t&#233;sn&#233;l csak az egyik tagot m&#243;dos&#237;tod.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>&#205;rd fel a k&#246;r egyenlet&#233;t: <span class="formula-line">K(-1, 4)</span>, <span class="formula-line">r = 2</span>.</li>
+            <li>Mi a k&#246;z&#233;ppontja ennek a k&#246;rnek: <span class="formula-line">(x - 3)^2 + (y + 2)^2 = 16</span>?</li>
+            <li>Alak&#237;tsd &#225;t: <span class="formula-line">x^2 + y^2 + 2x - 8y + 7 = 0</span>.</li>
+            <li>Ellen&#337;rizd: rajta van-e a <span class="formula-line">P(5, 1)</span> pont a <span class="formula-line">(x - 2)^2 + (y - 1)^2 = 10</span> k&#246;r&#246;n?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>K&#246;r egyenlete: <span class="formula-line">(x - a)^2 + (y - b)^2 = r^2</span>.</li>
+            <li>&#193;ltal&#225;nos alakb&#243;l n&#233;gyzetre eg&#233;sz&#237;t&#233;ssel kapsz k&#246;z&#233;ppontot &#233;s sugarat.</li>
+            <li>A sug&#225;r mindig pozit&#237;v, &#233;s <span class="formula-line">r^2</span> szerepel a k&#233;pletben.</li>
+        </ul>
     </div>
-
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
         <p>A k&#246;r egyenlet&#233;b&#337;l kiolvashat&#243; a k&#246;z&#233;ppont &#233;s a sug&#225;r.</p>
@@ -542,7 +576,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -586,7 +620,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

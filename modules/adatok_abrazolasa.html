@@ -484,33 +484,77 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Adatok &#225;br&#225;zol&#225;sa</h2>
-        <p>Az adatok bemutat&#225;s&#225;hoz gyakoris&#225;gi t&#225;bl&#225;zatot &#233;s diagramokat haszn&#225;lunk.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Az adatok &#225;br&#225;zol&#225;sa seg&#237;t gyorsan meg&#233;rteni, mi a jellemz&#337; egy adatsorra. T&#225;bl&#225;zatokkal &#233;s diagramokkal &#246;sszehasonl&#237;that&#243;k a kateg&#243;ri&#225;k, &#233;s k&#246;nnyen &#233;szrevehet&#337;k a trendek. A j&#243; &#225;bra &#225;ttekinthet&#337; &#233;s pontos. Mindig a feladat c&#233;lj&#225;hoz v&#225;lassz diagramt&#237;pust.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Adat:</b> egy m&#233;rt vagy megfigyelt &#233;rt&#233;k.</li>
+            <li><b>Abszol&#250;t gyakoris&#225;g:</b> h&#225;nyszor fordul el&#337; egy &#233;rt&#233;k.</li>
+            <li><b>Relat&#237;v gyakoris&#225;g:</b> ar&#225;ny vagy sz&#225;zal&#233;k (darab / &#246;sszes).</li>
+            <li><b>Kumulat&#237;v gyakoris&#225;g:</b> az addig &#246;sszegzett gyakoris&#225;g.</li>
+            <li><b>Gyakoris&#225;gi t&#225;bl&#225;zat:</b> &#233;rt&#233;k + darabsz&#225;m p&#225;rok list&#225;ja.</li>
+            <li><b>Oszlopdiagram:</b> kateg&#243;ri&#225;k &#246;sszehasonl&#237;t&#225;s&#225;ra.</li>
+            <li><b>Hisztogram:</b> intervallumokra bontott adatokhoz.</li>
+            <li><b>K&#246;rdiagram:</b> r&#233;szek ar&#225;ny&#225;nak bemutat&#225;s&#225;ra.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Gyakoris&#225;gok</h3>
+            <h4>1. p&#233;lda &#8211; gyakoris&#225;gi t&#225;bl&#225;zat</h4>
+            <p>Adatok: A, B, A, C, B, B. K&#233;sz&#237;ts gyakoris&#225;gi t&#225;bl&#225;zatot!</p>
+            <ol>
+                <li>&#214;sszes adat: 6.</li>
+                <li>Darabsz&#225;mok: A = 2, B = 3, C = 1.</li>
+                <li>Relat&#237;v gyakoris&#225;g: A = 2/6, B = 3/6, C = 1/6.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; diagramv&#225;laszt&#225;s</h4>
+            <p>&#214;t nap h&#337;m&#233;rs&#233;klete: 2&#176;C, 4&#176;C, 3&#176;C, 6&#176;C, 5&#176;C. Milyen diagramot v&#225;lasztasz?</p>
+            <ol>
+                <li>Id&#337;sorr&#243;l van sz&#243;, ez&#233;rt a v&#225;ltoz&#225;st kell l&#225;tni.</li>
+                <li>Legjobb v&#225;laszt&#225;s: vonaldiagram.</li>
+                <li>Az oszlopdiagram is j&#243; lehet, de a trend kev&#233;sb&#233; l&#225;tszik.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (oszlopdiagram)</h3>
+            <svg viewBox="0 0 220 140" style="width: 100%; max-width: 280px; height: auto; display: block; margin: 10px 0;">
+                <line x1="30" y1="120" x2="200" y2="120" stroke="#4A55A2" stroke-width="2" />
+                <rect x="45" y="70" width="30" height="50" fill="rgba(74,85,162,0.35)" />
+                <rect x="95" y="40" width="30" height="80" fill="rgba(74,85,162,0.35)" />
+                <rect x="145" y="90" width="30" height="30" fill="rgba(74,85,162,0.35)" />
+                <text x="55" y="135" font-size="12">A</text>
+                <text x="105" y="135" font-size="12">B</text>
+                <text x="155" y="135" font-size="12">C</text>
+            </svg>
+            <p class="muted">Az oszlopok magass&#225;ga a gyakoris&#225;got mutatja: B a leggyakoribb.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li>Abszol&#250;t gyakoris&#225;g: darabsz&#225;m.</li>
-<li>Relat&#237;v gyakoris&#225;g: ar&#225;ny vagy %.</li>
-<li>Kumulat&#237;v gyakoris&#225;g: &#246;sszegezve.</li>
+                <li>Nem az &#246;sszes adattal sz&#225;molsz a relat&#237;v gyakoris&#225;gn&#225;l.</li>
+                <li>&#214;sszekevered az oszlopdiagramot &#233;s a hisztogramot.</li>
+                <li>Nem egys&#233;ges a tengely sk&#225;l&#225;ja.</li>
+                <li>T&#250;l sok kateg&#243;ri&#225;t teszel k&#246;rdiagramra.</li>
+                <li>Nem jel&#246;l&#246;d a tengelyeket vagy az egys&#233;geket.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Diagramok</h3>
-                <ul>
-                    <li>Oszlopdiagram (kateg&#243;ri&#225;k).</li>
-<li>Hisztogram (intervallumok).</li>
-<li>K&#246;rdiagram (r&#233;szek ar&#225;nya).</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Feldolgoz&#225;s</h3>
-                <ul>
-                    <li>Rendezd az adatokat.</li>
-<li>K&#233;sz&#237;ts t&#225;bl&#225;zatot.</li>
-<li>V&#225;laszd a megfelel&#337; diagramot.</li>
-                </ul>
-            </div>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi a k&#252;l&#246;nbs&#233;g az abszol&#250;t &#233;s relat&#237;v gyakoris&#225;g k&#246;z&#246;tt?</li>
+            <li>Melyik diagramt&#237;pus val&#243; intervallumokra bontott adatokhoz?</li>
+            <li>H&#225;ny sz&#225;zal&#233;k a relat&#237;v gyakoris&#225;g, ha 5 adatb&#243;l 2 kedvez&#337;?</li>
+            <li>Mikor haszn&#225;ln&#225;l k&#246;rdiagramot?</li>
+            <li>Mit kell mindig felt&#252;ntetni egy diagramon?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A t&#225;bl&#225;zat &#233;s a diagram az adatok gyors &#225;ttekint&#233;s&#233;t seg&#237;ti.</li>
+            <li>Relat&#237;v gyakoris&#225;g = darab / &#246;sszes, gyakran sz&#225;zal&#233;kban.</li>
+            <li>Oszlopdiagram kateg&#243;ri&#225;khoz, hisztogram intervallumokhoz.</li>
+            <li>Mindig egys&#233;ges sk&#225;l&#225;t &#233;s jel&#246;l&#233;seket haszn&#225;lj.</li>
+            <li>A megfelel&#337; diagram v&#225;laszt&#225;sa a feladat c&#233;lj&#225;t&#243;l f&#252;gg.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -550,7 +594,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -594,7 +638,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

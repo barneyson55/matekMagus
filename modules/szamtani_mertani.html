@@ -491,42 +491,69 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Sz&#225;mtani &#233;s m&#233;rtani sorozatok</h2>
-        <p>A sorozatokn&#225;l a k&#246;vetkez&#337; tag &#233;s az &#246;sszeg k&#233;plete adja a gyors sz&#225;mol&#225;s alapj&#225;t. Emelt szinten k&#252;l&#246;n&#246;sen fontos a k&#233;pletek biztos haszn&#225;lata.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A sorozat egy sz&#225;mokb&#243;l &#225;ll&#243; lista, ahol van szab&#225;ly, hogyan kapod a k&#246;vetkez&#337; tagot. A sz&#225;mtani sorozatn&#225;l mindig ugyanannyit adsz hozz&#225;, a m&#233;rtanin&#225;l ugyanazzal a sz&#225;mmal szorzol. Ezekkel gyorsan tudsz n-edik tagot &#233;s &#246;sszeget sz&#225;molni, ami gyakori feladat emelt szinten. Ha a jel&#246;l&#233;seket j&#243;l kezeled, a feladatok jelent&#337;sen ler&#246;vid&#252;lnek.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Sorozat:</b> rendezett sz&#225;mlista, tagjai: <span class="formula-line">a_1, a_2, ..., a_n</span>.</li>
+            <li><b>Sz&#225;mtani sorozat:</b> <span class="formula-line">a_n = a_1 + (n-1)d</span>, ahol <b>d</b> az &#225;lland&#243; k&#252;l&#246;nbs&#233;g.</li>
+            <li><b>M&#233;rtani sorozat:</b> <span class="formula-line">a_n = a_1 q^{n-1}</span>, ahol <b>q</b> az &#225;lland&#243; h&#225;nyados.</li>
+            <li><b>n-edik tag:</b> a sorozat <b>n</b>-edik eleme (nem &#246;sszeg!).</li>
+            <li><b>&#214;sszeg (sz&#225;mtani):</b> <span class="formula-line">S_n = n/2 (2a_1 + (n-1)d)</span>.</li>
+            <li><b>&#214;sszeg (m&#233;rtani):</b> <span class="formula-line">S_n = a_1 (q^n - 1)/(q-1)</span>, ha <span class="formula-line">q &#8800; 1</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapk&#233;pletek</h3>
+            <h4>1. p&#233;lda &#8211; sz&#225;mtani n-edik tag</h4>
+            <p>Adott: <span class="formula-line">a_1 = 5</span>, <span class="formula-line">d = 2</span>, <span class="formula-line">n = 7</span>. Sz&#225;mold ki <span class="formula-line">a_7</span>-et.</p>
+            <ol>
+                <li>Haszn&#225;ld a k&#233;pletet: <span class="formula-line">a_n = a_1 + (n-1)d</span>.</li>
+                <li><span class="formula-line">n-1 = 6</span>, &#237;gy <span class="formula-line">a_7 = 5 + 6 &#183; 2</span>.</li>
+                <li><span class="formula-line">a_7 = 5 + 12 = 17</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; m&#233;rtani sorozat &#246;sszege</h4>
+            <p>Adott: <span class="formula-line">a_1 = 3</span>, <span class="formula-line">q = 2</span>, <span class="formula-line">n = 4</span>. Sz&#225;mold ki <span class="formula-line">S_4</span>-et.</p>
+            <ol>
+                <li>K&#233;plet: <span class="formula-line">S_n = a_1 (q^n - 1)/(q-1)</span>.</li>
+                <li><span class="formula-line">q^4 = 16</span>, ez&#233;rt <span class="formula-line">S_4 = 3 &#183; (16 - 1)/(2-1)</span>.</li>
+                <li><span class="formula-line">S_4 = 3 &#183; 15 = 45</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (l&#233;pcs&#337; vs. szorz&#243;)</h3>
+            <p>A sz&#225;mtani sorozat l&#233;pcs&#337;k&#233;nt n&#337;: mindig ugyanannyit l&#233;psz.</p>
+            <div class="formula-line">2 &#8594; 5 &#8594; 8 &#8594; 11 (d = 3)</div>
+            <p>A m&#233;rtani sorozatn&#225;l minden tagot ugyanazzal szorzol.</p>
+            <div class="formula-line">3 &#8594; 6 &#8594; 12 &#8594; 24 (q = 2)</div>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li><span class="formula-line">a_n = a_1 + (n-1)d</span> (sz&#225;mtani)</li>
-                <li><span class="formula-line">S_n = n/2 (2a_1 + (n-1)d)</span></li>
-                <li><span class="formula-line">a_n = a_1 &#183; q^{n-1}</span> (m&#233;rtani)</li>
-                <li><span class="formula-line">S_n = a_1 (q^n - 1)/(q-1)</span>, ha <span class="formula-line">q &#8800; 1</span></li>
+                <li>&#214;sszekevered a k&#252;l&#246;nbs&#233;get (<span class="formula-line">d</span>) &#233;s a h&#225;nyadost (<span class="formula-line">q</span>).</li>
+                <li>Elfelejted, hogy <span class="formula-line">n-1</span> szerepel a k&#233;pletben.</li>
+                <li>A m&#233;rtani &#246;sszegk&#233;pletet <span class="formula-line">q = 1</span> eset&#233;n is haszn&#225;lod.</li>
+                <li>Az n-edik tagot &#246;sszegk&#233;nt sz&#225;molod.</li>
+                <li>Nem ellen&#337;rz&#246;d, hogy a kapott tag beleillik-e a sorozatba.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>Sz&#225;mtani sorozat</h3>
-                <ul>
-                    <li>K&#252;l&#246;nbs&#233;g: <strong>d</strong> minden tag k&#246;z&#246;tt azonos.</li>
-                    <li>Ha <strong>d &gt; 0</strong>, akkor a sorozat n&#246;vekv&#337;.</li>
-                    <li>&#214;sszeghez mindig haszn&#225;ld a z&#225;r&#243;jel helyes sz&#225;mol&#225;s&#225;t.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>M&#233;rtani sorozat</h3>
-                <ul>
-                    <li>H&#225;nyados: <strong>q</strong> minden tag k&#246;z&#246;tt azonos.</li>
-                    <li>Ha <strong>|q| &lt; 1</strong>, a sorozat 0-hoz tart.</li>
-                    <li>Az &#246;sszegk&#233;plet csak <strong>q &#8800; 1</strong> eset&#233;n &#233;rv&#233;nyes.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="card">
-            <h3>P&#233;ld&#225;k</h3>
-            <ul>
-                <li>a1 = 3, d = 2, n = 5 &#8594; a5 = 11</li>
-                <li>a1 = 2, q = 3, n = 4 &#8594; a4 = 54</li>
-                <li>a1 = 1, q = 2, n = 3 &#8594; S3 = 7</li>
-            </ul>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Sz&#225;mold ki: <span class="formula-line">a_1 = 4</span>, <span class="formula-line">d = -1</span>, <span class="formula-line">n = 6</span>.</li>
+            <li>Mi az els&#337; 4 tag, ha <span class="formula-line">a_1 = 2</span>, <span class="formula-line">q = 3</span>?</li>
+            <li>Mikor nem haszn&#225;lhat&#243; a m&#233;rtani &#246;sszegk&#233;plet?</li>
+            <li>Mekkora <span class="formula-line">d</span>, ha <span class="formula-line">a_1 = 7</span>, <span class="formula-line">a_4 = 16</span>?</li>
+            <li>Mi a k&#252;l&#246;nbs&#233;g az n-edik tag &#233;s az &#246;sszeg k&#246;z&#246;tt?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Sz&#225;mtani sorozat: &#225;lland&#243; k&#252;l&#246;nbs&#233;g, <span class="formula-line">a_n = a_1 + (n-1)d</span>.</li>
+            <li>M&#233;rtani sorozat: &#225;lland&#243; h&#225;nyados, <span class="formula-line">a_n = a_1 q^{n-1}</span>.</li>
+            <li>Az &#246;sszegk&#233;plet m&#225;s sz&#225;mtanin&#225;l &#233;s m&#233;rtanin&#225;l.</li>
+            <li>Mindig ellen&#337;rizd a jel&#246;l&#233;seket (<span class="formula-line">a_1, n, d, q</span>).</li>
+            <li>A j&#243; k&#233;pletv&#225;laszt&#225;s a feladat fele.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -593,7 +620,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -637,7 +664,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

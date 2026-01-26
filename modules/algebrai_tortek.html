@@ -484,57 +484,67 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Algebrai t&#246;rtek</h2>
-        <p>Az algebrai t&#246;rt olyan kifejez&#233;s, ahol a sz&#225;ml&#225;l&#243; &#233;s a nevez&#337; is polinom. A legfontosabb szab&#225;ly: a nevez&#337; nem lehet nulla.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Az algebrai t&#246;rt olyan kifejez&#233;s, ahol a sz&#225;ml&#225;l&#243; &#233;s a nevez&#337; is polinom. A legfontosabb szab&#225;ly, hogy a nevez&#337; nem lehet nulla, ez&#233;rt mindig meg kell adni a tiltott &#233;rt&#233;keket. Algebrai t&#246;rteket egyszer&#369;s&#237;t&#233;sn&#233;l, egyenletekn&#233;l &#233;s f&#252;ggv&#233;nyekn&#233;l is haszn&#225;lsz. A c&#233;l, hogy biztosan tudd a t&#233;nyez&#337;kre bont&#225;st &#233;s az egyszer&#369;s&#237;t&#233;st.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Algebrai t&#246;rt:</b> polinomok h&#225;nyadosa.</li>
+            <li><b>Sz&#225;ml&#225;l&#243;:</b> a t&#246;rt fels&#337; r&#233;sze.</li>
+            <li><b>Nevez&#337;:</b> a t&#246;rt als&#243; r&#233;sze, nem lehet 0.</li>
+            <li><b>Tiltott &#233;rt&#233;k:</b> az x &#233;rt&#233;ke, ahol a nevez&#337; 0 lenne.</li>
+            <li><b>K&#246;z&#246;s t&#233;nyez&#337;:</b> ugyanaz a szorz&#243; a sz&#225;ml&#225;l&#243;ban &#233;s nevez&#337;ben.</li>
+            <li><b>Egyszer&#369;s&#237;t&#233;s:</b> k&#246;z&#246;s t&#233;nyez&#337;vel val&#243; oszt&#225;s.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapfogalmak</h3>
-            <ul>
-                <li><span class="formula-line">T(x) = (ax + b) / (cx + d)</span></li>
-                <li><span class="formula-line">cx + d &#8800; 0</span> (tiltott x)</li>
-                <li>Egyszer&#369;s&#237;tsd, ha van k&#246;z&#246;s t&#233;nyez&#337;!</li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Egyszer&#369;s&#237;t&#233;s</h3>
-                <ul>
-                    <li><span class="formula-line">(2x + 4)/(x + 2) = 2</span> ha x &#8800; -2.</li>
-                    <li>Ha k&#246;z&#246;s t&#233;nyez&#337; van, oszd ki!</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Helyettes&#237;t&#233;s</h3>
-                <ul>
-                    <li>El&#337;sz&#246;r sz&#225;mold ki a nevez&#337;t, nehogy 0 legyen.</li>
-                    <li>Majd sz&#225;molj a sz&#225;ml&#225;l&#243;val is.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>Mindig jel&#246;ld meg a tiltott x-et.</li>
-                <li>T&#246;rt alakban adj meg v&#225;laszt, ha nem eg&#233;sz sz&#225;m.</li>
-                <li>Negat&#237;v el&#337;jelet z&#225;r&#243;jelben kezelj.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott példa</h3>
-            <p>(x² - 9) / (x² - 3x) egyszerűsítése:</p>
+            <h4>1. p&#233;lda &#8211; egyszer&#369;s&#237;t&#233;s</h4>
+            <p>Egyszer&#369;s&#237;tsd: (2x + 4) / (x + 2).</p>
             <ol>
-                <li>Szorzattá alakítás: x² - 9 = (x - 3)(x + 3), x² - 3x = x(x - 3).</li>
-                <li>Egyszerűsítés: (x - 3) kiesik.</li>
-                <li>Eredmény: (x + 3) / x, ahol x ≠ 0 és x ≠ 3.</li>
+                <li>T&#233;nyez&#337;re bont&#225;s: 2x + 4 = 2(x + 2).</li>
+                <li>Egyszer&#369;s&#237;t&#233;s: 2(x + 2) / (x + 2) = 2.</li>
+                <li>Tiltott &#233;rt&#233;k: x &#8800; &#8722;2.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Ábra: kieső tényező</h3>
-            <pre style="background-color: var(--bg-main); border: 1px dashed var(--border-color); border-radius: 10px; padding: 10px 12px; font-family: 'Courier New', monospace;">(x - 3)(x + 3)
------------------  →  (x + 3) / x
-x(x - 3)</pre>
-            <p style="font-size: 0.95em; color: var(--text-light);">Csak közös tényezőt szabad egyszerűsíteni.</p>
+            <h4>2. p&#233;lda &#8211; &#246;sszegz&#337; helyettes&#237;t&#233;s</h4>
+            <p>Sz&#225;mold ki: (x&#178; &#8722; 1) / (x &#8722; 1) &#233;rt&#233;k&#233;t x = 3 eset&#233;n.</p>
+            <ol>
+                <li>T&#233;nyez&#337;re bont&#225;s: x&#178; &#8722; 1 = (x &#8722; 1)(x + 1).</li>
+                <li>Egyszer&#369;s&#237;t&#233;s: (x &#8722; 1)(x + 1) / (x &#8722; 1) = x + 1.</li>
+                <li>Helyettes&#237;t&#233;s: x = 3 &#8594; 3 + 1 = 4, &#233;s x &#8800; 1.</li>
+            </ol>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (kies&#337; t&#233;nyez&#337;)</h3>
+            <pre style="background-color: var(--bg-main); border: 1px dashed var(--border-color); border-radius: 10px; padding: 10px 12px; font-family: 'Courier New', monospace;">(x &#8722; 3)(x + 3)
+-----------------  &#8594;  (x + 3) / x
+x(x &#8722; 3)</pre>
+            <p style="font-size: 0.95em; color: var(--text-light);">Csak k&#246;z&#246;s t&#233;nyez&#337;t szabad egyszer&#369;s&#237;teni, tagokat nem.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Nem adod meg a tiltott &#233;rt&#233;ket.</li>
+                <li>Tagot egyszer&#369;s&#237;tesz, nem t&#233;nyez&#337;t.</li>
+                <li>Elfelejted a z&#225;r&#243;jelez&#233;st, &#237;gy hib&#225;san esik ki egy tag.</li>
+                <li>Helyettes&#237;t&#233;sn&#233;l nem ellen&#337;rz&#246;d el&#337;re a nevez&#337;t.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Egyszer&#369;s&#237;tsd: (x&#178; &#8722; 9) / (x &#8722; 3).</li>
+            <li>Add meg a tiltott &#233;rt&#233;ket: (3x + 6) / (x + 2).</li>
+            <li>Sz&#225;mold ki: (x&#178; &#8722; 4) / (x &#8722; 2) x = 5 eset&#233;n.</li>
+            <li>Mi&#233;rt nem lehet a nevez&#337; 0?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A nevez&#337; nem lehet nulla, ez&#233;rt mindig jel&#246;ld a tiltott &#233;rt&#233;keket.</li>
+            <li>Egyszer&#369;s&#237;teni csak k&#246;z&#246;s t&#233;nyez&#337;vel szabad.</li>
+            <li>Helyettes&#237;t&#233;s el&#337;tt ellen&#337;rizd a nevez&#337;t.</li>
+            <li>T&#233;nyez&#337;re bont&#225;s sok feladatot leegyszer&#369;s&#237;t.</li>
+        </ul>
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -597,7 +607,7 @@ x(x - 3)</pre>
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -641,7 +651,7 @@ x(x - 3)</pre>
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szintek:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

@@ -491,41 +491,74 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Hat&#225;r&#233;rt&#233;k, folytonoss&#225;g</h2>
-        <p>A hat&#225;r&#233;rt&#233;k a f&#252;ggv&#233;ny viselked&#233;s&#233;t mutatja meg egy pont k&#246;zel&#233;ben vagy a v&#233;gtelenben. A folytonoss&#225;g akkor teljes&#252;l, ha a hat&#225;r&#233;rt&#233;k megegyezik a f&#252;ggv&#233;ny&#233;rt&#233;kkel.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A hat&#225;r&#233;rt&#233;k azt mutatja meg, hogy a f&#252;ggv&#233;ny hov&#225; tart, amikor x egy ponthoz k&#246;zel&#237;t. &#205;gy akkor is tudunk &#233;rt&#233;ket becs&#252;lni, ha a f&#252;ggv&#233;ny &#233;pp nincs &#233;rtelmezve a pontban. Folytonos akkor lesz a f&#252;ggv&#233;ny, ha a k&#246;zel&#237;tett &#233;rt&#233;k egybeesik a t&#233;nyleges f&#252;ggv&#233;ny&#233;rt&#233;kkel. A hat&#225;r&#233;rt&#233;kekkel dolgozol p&#233;ld&#225;ul sebess&#233;gn&#233;l, &#225;tlagos v&#225;ltoz&#225;sn&#225;l &#233;s g&#246;rb&#233;k vizsg&#225;lat&#225;n&#225;l is.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Hat&#225;r&#233;rt&#233;k:</b> <span class="formula-line">lim(x&#8594;a) f(x) = L</span> azt jelenti, hogy x a-hoz tartva f(x) L-hez k&#246;zel&#237;t.</li>
+            <li><b>Bal oldali hat&#225;r&#233;rt&#233;k:</b> <span class="formula-line">lim(x&#8594;a-)</span> a bal oldalr&#243;l k&#246;zel&#237;t.</li>
+            <li><b>Jobb oldali hat&#225;r&#233;rt&#233;k:</b> <span class="formula-line">lim(x&#8594;a+)</span> a jobb oldalr&#243;l k&#246;zel&#237;t.</li>
+            <li><b>V&#233;gtelenbeli hat&#225;r&#233;rt&#233;k:</b> <span class="formula-line">lim(x&#8594;&#8734;) f(x)</span> a f&#252;ggv&#233;ny viselked&#233;s&#233;t &#237;rja le nagy x-ekn&#233;l.</li>
+            <li><b>Folytonoss&#225;g a pontban:</b> ha <span class="formula-line">lim(x&#8594;a) f(x) = f(a)</span>.</li>
+            <li><b>Hat&#225;rozatlans&#225;g:</b> p&#233;ld&#225;ul <span class="formula-line">0/0</span> vagy <span class="formula-line">&#8734;/&#8734;</span>, amikor el&#337;bb egyszer&#369;s&#237;teni kell.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Gyors k&#233;pletek</h3>
+            <h4>1. p&#233;lda &#8211; egyszer&#369;s&#237;thet&#337; t&#246;rt</h4>
+            <p>Sz&#225;mold ki: <span class="formula-line">lim(x&#8594;2) (x^2 - 4)/(x - 2)</span>.</p>
+            <ol>
+                <li>Szorzatt&#233;nyez&#337;s felbont&#225;s: <span class="formula-line">x^2 - 4 = (x-2)(x+2)</span>.</li>
+                <li>Egyszer&#369;s&#237;t&#233;s: <span class="formula-line">(x-2)</span> kiesik.</li>
+                <li>Helyettes&#237;t&#233;s: <span class="formula-line">lim(x&#8594;2) (x+2) = 4</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; v&#233;gtelenbeli hat&#225;r&#233;rt&#233;k</h4>
+            <p>Sz&#225;mold ki: <span class="formula-line">lim(x&#8594;&#8734;) (3x+1)/(6x-2)</span>.</p>
+            <ol>
+                <li>Oszt&#225;s x-szel: <span class="formula-line">(3 + 1/x)/(6 - 2/x)</span>.</li>
+                <li>V&#233;gtelenben <span class="formula-line">1/x &#8594; 0</span>.</li>
+                <li>Eredm&#233;ny: <span class="formula-line">3/6 = 1/2</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (bal- &#233;s jobboldali k&#246;zel&#237;t&#233;s)</h3>
+            <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
+                <line x1="30" y1="120" x2="290" y2="120" stroke="#4A55A2" stroke-width="2" />
+                <line x1="160" y1="20" x2="160" y2="140" stroke="#4A55A2" stroke-width="2" stroke-dasharray="6 4" />
+                <circle cx="160" cy="70" r="5" fill="#2C3333" />
+                <line x1="70" y1="105" x2="160" y2="70" stroke="#7895CB" stroke-width="3" />
+                <line x1="250" y1="95" x2="160" y2="70" stroke="#7895CB" stroke-width="3" />
+                <text x="145" y="150" font-size="12">x = a</text>
+            </svg>
+            <p style="font-size: 0.95em; color: var(--text-light);">Ha a bal &#233;s jobb oldalr&#243;l ugyanahhoz az &#233;rt&#233;khez tartunk, a hat&#225;r&#233;rt&#233;k l&#233;tezik.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li><span class="formula-line">lim(x&#8594;&#8734;) (ax+b)/(cx+d) = a/c</span></li>
-                <li><span class="formula-line">lim(x&#8594;a) (x^2-a^2)/(x-a) = 2a</span></li>
-                <li>Egyszer&#369;s&#237;t&#233;s ut&#225;n helyettes&#237;ts.</li>
-                <li>A nevez&#337;ben ne legyen 0.</li>
+                <li>Azonnal behelyettes&#237;tesz, &#233;s 0/0-t kapsz egyszer&#369;s&#237;t&#233;s n&#233;lk&#252;l.</li>
+                <li>Csak az egyik oldalr&#243;l n&#233;zed a hat&#225;r&#233;rt&#233;ket.</li>
+                <li>Elfelejted ellen&#337;rizni, hogy a nevez&#337; nem lesz 0.</li>
+                <li>V&#233;gtelenben rossz foksz&#225;m-szab&#225;lyt haszn&#225;lsz.</li>
+                <li>&#214;sszekevered a hat&#225;r&#233;rt&#233;ket a f&#252;ggv&#233;ny&#233;rt&#233;kkel.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>V&#233;gtelenbeli hat&#225;r&#233;rt&#233;k</h3>
-                <ul>
-                    <li>A legmagasabb foksz&#225;mok sz&#225;m&#237;tanak.</li>
-                    <li>Az ar&#225;ny az egy&#252;tthat&#243;k h&#225;nyadosa.</li>
-                    <li>Ha a foksz&#225;mok elt&#233;rnek, lehet 0 vagy v&#233;gtelen.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Helyettes&#237;t&#233;s &#233;s egyszer&#369;s&#237;t&#233;s</h3>
-                <ul>
-                    <li>Szorzatt&#233;nyez&#337;kkel egyszer&#369;s&#237;ts.</li>
-                    <li>Ne felejtsd el a z&#225;r&#243;jeleket.</li>
-                    <li>Hat&#225;r&#233;rt&#233;khez el&#233;g a legegyszer&#369;bb alak.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="card">
-            <h3>P&#233;ld&#225;k</h3>
-            <ul>
-                <li>lim(x&#8594;&#8734;) (3x+1)/(6x-2) = 1/2</li>
-                <li>lim(x&#8594;2) (x^2-4)/(x-2) = 4</li>
-            </ul>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Sz&#225;mold ki: <span class="formula-line">lim(x&#8594;3) (x^2-9)/(x-3)</span>.</li>
+            <li>Mi a felt&#233;tele a folytonoss&#225;gnak a pontban?</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">lim(x&#8594;&#8734;) (5x-2)/(x+4)</span>.</li>
+            <li>Mit jelent a bal oldali hat&#225;r&#233;rt&#233;k?</li>
+            <li>Mikor kapunk hat&#225;rozatlans&#225;got?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A hat&#225;r&#233;rt&#233;k azt &#237;rja le, hova tart a f&#252;ggv&#233;ny egy pont k&#246;zel&#233;ben.</li>
+            <li>Folytonos a pontban, ha a hat&#225;r&#233;rt&#233;k megegyezik a f&#252;ggv&#233;ny&#233;rt&#233;kkel.</li>
+            <li>0/0 eset&#233;n egyszer&#369;s&#237;ts, majd helyettes&#237;ts.</li>
+            <li>V&#233;gtelenben a legmagasabb foksz&#225;m d&#246;nt.</li>
+            <li>A bal- &#233;s jobboldali hat&#225;r&#233;rt&#233;knek egyeznie kell.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -586,7 +619,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -630,7 +663,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

@@ -476,32 +476,70 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Sorozatok</h2>
-        <p>T&#233;maz&#225;r&#243; a sz&#225;mtani &#233;s m&#233;rtani sorozatok alapk&#233;pleteib&#337;l.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a t&#233;maz&#225;r&#243; a sorozatok legfontosabb r&#233;szeit foglalja &#246;ssze: sz&#225;mtani &#233;s m&#233;rtani sorozat, valamint rekurzi&#243;. A c&#233;l, hogy biztosan tudd kiv&#225;lasztani a megfelel&#337; k&#233;pletet. Sok feladat az n-edik tag &#233;s az &#246;sszeg gyors kisz&#225;m&#237;t&#225;s&#225;r&#243;l sz&#243;l. Ha j&#243;l kezeled a jel&#246;l&#233;seket, a vegyes feladatok is &#225;tl&#225;that&#243;k lesznek.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Sz&#225;mtani sorozat:</b> &#225;lland&#243; k&#252;l&#246;nbs&#233;g <span class="formula-line">d</span>.</li>
+            <li><b>M&#233;rtani sorozat:</b> &#225;lland&#243; h&#225;nyados <span class="formula-line">q</span>.</li>
+            <li><b>Rekurzi&#243;:</b> a k&#246;vetkez&#337; tag az el&#337;z&#337;b&#337;l sz&#225;molhat&#243;.</li>
+            <li><b>n-edik tag:</b> <span class="formula-line">a_n</span>.</li>
+            <li><b>&#214;sszeg:</b> <span class="formula-line">S_n</span>, az els&#337; <span class="formula-line">n</span> tag &#246;sszege.</li>
+            <li><b>Alapk&#233;p:</b> sz&#225;mtani: <span class="formula-line">a_n = a_1 + (n-1)d</span>, m&#233;rtani: <span class="formula-line">a_n = a_1 q^{n-1}</span>.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett alt&#233;m&#225;k &#233;s t&#233;mak&#246;r&#246;k</h3>
             <ul>
                 <li>Sz&#225;mtani sorozat</li>
-<li>M&#233;rtani sorozat</li>
-<li>Rekurzi&#243;</li>
+                <li>M&#233;rtani sorozat</li>
+                <li>Rekurzi&#243;</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">a_n = a_1 + (n&#8722;1)d</span></li>
-<li><span class="formula-line">a_n = a_1 &#183; r^(n&#8722;1)</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tanul&#225;si f&#243;kusz</h3>
-                <ul>
-                    <li>&#201;rtsd a defin&#237;ci&#243;kat &#233;s jel&#246;l&#233;seket.</li>
-                    <li>Gyakorold a tipikus feladatt&#237;pusokat.</li>
-                    <li>Ellen&#337;rizd a m&#233;rt&#233;kegys&#233;geket &#233;s a logik&#225;t.</li>
-                </ul>
-            </div>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; rekurzi&#243;b&#243;l tagok</h4>
+            <p><span class="formula-line">a_1 = 2</span>, <span class="formula-line">a_{n+1} = a_n + 3</span>. Sz&#225;mold ki <span class="formula-line">a_4</span>-et.</p>
+            <ol>
+                <li><span class="formula-line">a_2 = 2 + 3 = 5</span>.</li>
+                <li><span class="formula-line">a_3 = 5 + 3 = 8</span>.</li>
+                <li><span class="formula-line">a_4 = 8 + 3 = 11</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; &#246;sszegz&#337; feladat</h4>
+            <p>Sz&#225;mtani sorozat: <span class="formula-line">a_1 = 7</span>, <span class="formula-line">d = 4</span>, <span class="formula-line">n = 5</span>. Sz&#225;mold ki <span class="formula-line">a_5</span>-&#246;t &#233;s <span class="formula-line">S_5</span>-&#246;t.</p>
+            <ol>
+                <li><span class="formula-line">a_5 = 7 + (5-1)&#183;4 = 23</span>.</li>
+                <li><span class="formula-line">S_5 = 5/2 &#183; (2&#183;7 + (5-1)&#183;4)</span>.</li>
+                <li><span class="formula-line">S_5 = 5/2 &#183; (14 + 16) = 75</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Felcser&#233;led a sz&#225;mtani &#233;s a m&#233;rtani k&#233;pleteket.</li>
+                <li>Elfelejted, hogy <span class="formula-line">n-1</span> szerepel a k&#233;pletben.</li>
+                <li>Rekurzi&#243;n&#225;l nem sz&#225;molod ki sorban a tagokat.</li>
+                <li>Azt gondolod, hogy az n-edik tag az &#246;sszeg.</li>
+                <li>Nem ellen&#337;rz&#246;d, hogy a jel&#246;l&#233;sekhez j&#243; k&#233;pletet &#237;rt&#225;l-e fel.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi az els&#337; 4 tag, ha <span class="formula-line">a_1 = 3</span> &#233;s <span class="formula-line">d = -2</span>?</li>
+            <li>Sz&#225;mold ki <span class="formula-line">a_6</span>-ot, ha <span class="formula-line">a_1 = 2</span> &#233;s <span class="formula-line">q = 3</span>?</li>
+            <li>&#205;rd fel a rekurzi&#243;t, ha minden tag 5-tel nagyobb az el&#337;z&#337;n&#233;l.</li>
+            <li>Mikor nem haszn&#225;lhat&#243; a m&#233;rtani &#246;sszegk&#233;plet?</li>
+            <li>Mi a k&#252;l&#246;nbs&#233;g a <span class="formula-line">d</span> &#233;s a <span class="formula-line">q</span> k&#246;z&#246;tt?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Sz&#225;mtani sorozat: &#225;lland&#243; k&#252;l&#246;nbs&#233;g, m&#233;rtani sorozat: &#225;lland&#243; h&#225;nyados.</li>
+            <li>Rekurzi&#243;n&#225;l mindig l&#233;p&#233;senk&#233;nt haladsz.</li>
+            <li>Az n-edik tag &#233;s az &#246;sszeg k&#233;t k&#252;l&#246;n feladat.</li>
+            <li>A helyes k&#233;pletv&#225;laszt&#225;s d&#246;nt&#337;.</li>
+            <li>A t&#233;maz&#225;r&#243; vegyes feladatokat is tartalmaz.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -546,11 +584,11 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
-                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="K&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
-                    <button class="btn btn-secondary difficulty-btn" data-difficulty="Norm&#225;l" type="button">Norm&#225;l</button>
-                    <button class="btn btn-secondary difficulty-btn" data-difficulty="Neh&#233;z" type="button">Neh&#233;z</button>
+                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="neh&#233;z" type="button">Neh&#233;z</button>
                 </div>
             </div>
         </div>
@@ -596,10 +634,10 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
-            <label><input class="practice-difficulty" type="checkbox" value="K&#246;nny&#369;" checked> K&#246;nny&#369;</label>
-            <label><input class="practice-difficulty" type="checkbox" value="Norm&#225;l"> Norm&#225;l</label>
-            <label><input class="practice-difficulty" type="checkbox" value="Neh&#233;z"> Neh&#233;z</label>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
+            <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
+            <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
+            <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>
             <button id="start-practice-btn" class="btn btn-secondary" type="button">Gyakorl&#225;s ind&#237;t&#225;sa</button>
         </div>
         <div id="practice-area" class="practice-area is-hidden">

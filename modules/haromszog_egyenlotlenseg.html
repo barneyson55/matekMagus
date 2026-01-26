@@ -484,41 +484,60 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>H&#225;romsz&#246;g-egyenl&#337;tlens&#233;g</h2>
-        <p>A h&#225;romsz&#246;g-egyenl&#337;tlens&#233;g kimondja, hogy b&#225;rmelyik k&#233;t oldal &#246;sszege nagyobb a harmadik oldaln&#225;l. Ezt minden sz&#225;m&#237;t&#225;sn&#225;l ellen&#337;rizni kell, miel&#337;tt tov&#225;bbl&#233;psz.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A h&#225;romsz&#246;g-egyenl&#337;tlens&#233;g egy gyors ellen&#337;rz&#233;s: megadott oldalhosszakb&#243;l lehet-e h&#225;romsz&#246;get &#233;p&#237;teni. Minden geometriai sz&#225;m&#237;t&#225;s el&#337;tt &#233;rdemes ezt ellen&#337;rizni, k&#252;l&#246;nben a feladatnak nincs megold&#225;sa. Ha az &#246;sszeg &#233;s a k&#252;l&#246;nbs&#233;g k&#246;z&#233; esik a harmadik oldal, akkor a h&#225;romsz&#246;g l&#233;tezhet.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>H&#225;romsz&#246;g-egyenl&#337;tlens&#233;g:</b> <span class="formula-line">a + b &gt; c</span>, <span class="formula-line">a + c &gt; b</span>, <span class="formula-line">b + c &gt; a</span>.</li>
+            <li><b>Harmadik oldal tartom&#225;nya:</b> <span class="formula-line">|a - b| &lt; c &lt; a + b</span>.</li>
+            <li><b>Degener&#225;lt eset:</b> ha <span class="formula-line">a + b = c</span>, nincs val&#243;di h&#225;romsz&#246;g.</li>
+            <li><b>Eg&#233;sz oldalakn&#225;l:</b> <span class="formula-line">c<sub>min</sub> = |a - b| + 1</span>, <span class="formula-line">c<sub>max</sub> = a + b - 1</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapt&#233;telek</h3>
-            <ul>
-                <li><span class="formula-line">a + b &gt; c</span></li>
-                <li><span class="formula-line">a + c &gt; b</span></li>
-                <li><span class="formula-line">b + c &gt; a</span></li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Harmadik oldal tartom&#225;nya</h3>
-                <ul>
-                    <li><span class="formula-line">|a - b| &lt; c &lt; a + b</span></li>
-                    <li><span class="formula-line">c<sub>min</sub> = |a - b| + 1</span></li>
-                    <li><span class="formula-line">c<sub>max</sub> = a + b - 1</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Hasznos megjegyz&#233;s</h3>
-                <ul>
-                    <li>Eg&#233;sz oldalhosszakn&#225;l mindig a legk&#246;zelebbi eg&#233;sz tartom&#225;nyt keresd.</li>
-                    <li>A legnagyobb oldal mindig kisebb, mint a k&#233;t m&#225;sik &#246;sszege.</li>
-                    <li>Ha a felt&#233;tel nem teljes&#252;l, nincs h&#225;romsz&#246;g.</li>
-                </ul>
-            </div>
+            <h4>1. p&#233;lda &#8211; l&#233;tezik-e a h&#225;romsz&#246;g?</h4>
+            <p>Oldalak: <span class="formula-line">2</span>, <span class="formula-line">3</span>, <span class="formula-line">5</span>.</p>
+            <ol>
+                <li>&#214;sszeg: <span class="formula-line">2 + 3 = 5</span>.</li>
+                <li>Egyenl&#337;s&#233;g van, ez&#233;rt nincs val&#243;di h&#225;romsz&#246;g.</li>
+            </ol>
         </div>
         <div class="learning-hint">
-            <h3>Tippek</h3>
+            <h4>2. p&#233;lda &#8211; lehets&#233;ges tartom&#225;ny</h4>
+            <p>Adott: <span class="formula-line">a = 8</span>, <span class="formula-line">b = 13</span>. Keresd <span class="formula-line">c</span> lehets&#233;ges &#233;rt&#233;keit (eg&#233;sz sz&#225;m).</p>
+            <ol>
+                <li>K&#252;l&#246;nbs&#233;g: <span class="formula-line">|8 - 13| = 5</span>.</li>
+                <li>&#214;sszeg: <span class="formula-line">8 + 13 = 21</span>.</li>
+                <li>Tartom&#225;ny: <span class="formula-line">5 &lt; c &lt; 21</span>, eg&#233;sz sz&#225;mk&#233;nt <span class="formula-line">6</span>&#8211;<span class="formula-line">20</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat</h3>
+            <p>K&#233;pzeld el, hogy k&#233;t oldalt &#246;sszecsuksz, mint egy &#8222;V&#8221; alakot. A harmadik oldal hossza csak akkor f&#233;r bele, ha hosszabb, mint a k&#252;l&#246;nbs&#233;g, &#233;s r&#246;videbb, mint az &#246;sszeg. Ha pont egyenl&#337; az &#246;sszeggel, a h&#225;romsz&#246;g &#8222;sz&#233;tlapul&#8221;.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li>El&#337;sz&#246;r a legnagyobb oldalt vizsg&#225;ld meg.</li>
-                <li>T&#225;rolj el egy gyors szab&#225;lyt: a harmadik oldal mindig a k&#252;l&#246;nbs&#233;g &#233;s az &#246;sszeg k&#246;z&#246;tt van.</li>
-                <li>Sz&#225;mol&#225;sn&#225;l mindig egys&#233;get is jel&#246;lj.</li>
+                <li>Csak egy egyenl&#337;tlens&#233;get ellen&#337;rz&#246;l, pedig mindh&#225;rom kell.</li>
+                <li>&#214;sszekevered a <span class="formula-line">|a - b|</span> kifejez&#233;st az <span class="formula-line">a - b</span>-vel.</li>
+                <li>Elfogadod az egyenl&#337;s&#233;get, pedig az nem val&#243;di h&#225;romsz&#246;g.</li>
+                <li>Eg&#233;sz oldalhosszakat k&#233;r a feladat, de nem igaz&#237;tasz 1-et a hat&#225;rokon.</li>
             </ul>
         </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Alkot-e h&#225;romsz&#246;get: <span class="formula-line">4</span>, <span class="formula-line">7</span>, <span class="formula-line">10</span>?</li>
+            <li>Mi a <span class="formula-line">c</span> tartom&#225;nya, ha <span class="formula-line">a = 9</span> &#233;s <span class="formula-line">b = 12</span>?</li>
+            <li>Mi&#233;rt nem h&#225;romsz&#246;g, ha <span class="formula-line">a + b = c</span>?</li>
+            <li>H&#225;ny eg&#233;sz &#233;rt&#233;k lehets&#233;ges, ha <span class="formula-line">a = 5</span> &#233;s <span class="formula-line">b = 11</span>?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A h&#225;romsz&#246;g-egyenl&#337;tlens&#233;g minden oldalra igaz.</li>
+            <li>A harmadik oldal mindig az &#246;sszeg &#233;s a k&#252;l&#246;nbs&#233;g k&#246;z&#246;tt van.</li>
+            <li>Egyenl&#337;s&#233;g eset&#233;n nincs val&#243;di h&#225;romsz&#246;g.</li>
+            <li>Eg&#233;sz oldalakn&#225;l figyelj a minimum &#233;s maximum l&#233;p&#233;sre.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -583,7 +602,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -627,7 +646,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

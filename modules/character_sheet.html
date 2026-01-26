@@ -110,7 +110,7 @@
             border-radius: 12px;
             padding: 12px 14px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
             gap: 12px;
             cursor: pointer;
@@ -120,8 +120,12 @@
             transform: translateY(-1px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
-        .item-title { font-weight: 600; }
-        .item-meta { color: var(--muted); font-size: 0.9rem; }
+        .list-item:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+        .item-title { font-weight: 600; overflow-wrap: anywhere; }
+        .item-meta { color: var(--muted); font-size: 0.9rem; line-height: 1.35; overflow-wrap: anywhere; }
         .empty-state {
             padding: 16px;
             border-radius: 12px;
@@ -329,12 +333,13 @@
             border-radius: 999px;
             font-size: 0.75rem;
             font-weight: 600;
+            align-self: flex-start;
         }
         .trend-pill.up { background: rgba(46, 204, 113, 0.18); color: var(--success); }
         .trend-pill.down { background: rgba(231, 76, 60, 0.18); color: #c0392b; }
         .trend-pill.flat { background: rgba(243, 156, 18, 0.2); color: var(--warning); }
         .trend-note { margin-top: 10px; color: var(--muted); font-size: 0.85rem; }
-        .item-details { display: grid; gap: 4px; }
+        .item-details { display: grid; gap: 4px; flex: 1; min-width: 0; }
         .item-details .item-meta { font-size: 0.85rem; }
 
         @media (max-width: 960px) {
@@ -370,6 +375,12 @@
         button {
             min-height: 44px;
             min-width: 44px;
+            font: inherit;
+            color: inherit;
+        }
+        .tab-button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
         }
 </style>
 </head>
@@ -817,7 +828,7 @@
                 button.className = 'list-item';
                 const scopeLabel = getScopeLabel(entry.scope);
                 const metaText = `Aktív küldetés · ${scopeLabel}`;
-                button.innerHTML = `<span class="item-title">${getTopicLabel(entry.topicId)}</span><span class="item-meta">${metaText}</span>`;
+                button.innerHTML = `<div class="item-details"><span class="item-title">${getTopicLabel(entry.topicId)}</span><span class="item-meta">${metaText}</span></div>`;
                 button.addEventListener('click', () => navigateToTopic(entry.topicId));
                 li.appendChild(button);
                 return li;
@@ -841,7 +852,7 @@
                 }
                 metaParts.push(scopeLabel);
                 const metaText = metaParts.join(' · ');
-                button.innerHTML = `<span class="item-title">${getTopicLabel(entry.topicId)}</span><span class="item-meta">${metaText}</span>`;
+                button.innerHTML = `<div class="item-details"><span class="item-title">${getTopicLabel(entry.topicId)}</span><span class="item-meta">${metaText}</span></div>`;
                 button.addEventListener('click', () => navigateToTopic(entry.topicId));
                 li.appendChild(button);
                 return li;
@@ -859,7 +870,7 @@
                     ? Number(result.grade)
                     : Number.NaN;
                 const gradeText = Number.isFinite(gradeValue) ? formatNumber(gradeValue, '-') : '-';
-                button.innerHTML = `<span class="item-title">${getTopicLabel(result.topicId || '')}</span><span class="item-meta">Jegy: ${gradeText}</span>`;
+                button.innerHTML = `<div class="item-details"><span class="item-title">${getTopicLabel(result.topicId || '')}</span><span class="item-meta">Jegy: ${gradeText}</span></div>`;
                 if (result.topicId) {
                     button.addEventListener('click', () => navigateToTopic(result.topicId));
                 }

@@ -483,50 +483,37 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>Sz&#225;zal&#233;ksz&#225;m&#237;t&#225;s</h2>
-        <p>A sz&#225;zal&#233;k azt mutatja meg, hogy egy r&#233;sz mekkora h&#225;nyada az eg&#233;sznek. A l&#233;nyeges &#246;sszef&#252;gg&#233;sek: r&#233;sz = eg&#233;sz &#215; sz&#225;zal&#233;k, sz&#225;zal&#233;k = r&#233;sz / eg&#233;sz, eg&#233;sz = r&#233;sz / sz&#225;zal&#233;k.</p>
+        <h2>Százalékszámítás</h2>
+        <h3>Rövid bevezetés (Mi ez? Mire jó?)</h3>
+        <p>A százalék azt mutatja meg, hogy a rész hány század része az egésznek. Kedvezményeknél, kamatoknál, statisztikáknál és arányoknál folyamatosan használod. A legfontosabb, hogy mindig tudd, mi az egész (alap), és mi a rész. Ha ez világos, a képletek egyenesek.</p>
+        <h3>Alapfogalmak / definíciók</h3>
+        <ul>
+            <li><b>Százalék:</b> p% = p/100 (pl. 25% = 0.25).</li>
+            <li><b>Egész (alap):</b> az a mennyiség, aminek a százalékát számolod.</li>
+            <li><b>Rész:</b> az egész százalékos része.</li>
+            <li><b>Százalékos arány:</b> rész / egész · 100%.</li>
+            <li><b>Tizedes alak:</b> 15% = 0.15, 5% = 0.05.</li>
+            <li><b>Szorzótényező:</b> növekedésnél 1 + p, csökkenésnél 1 - p (p tizedesben).</li>
+        </ul>
+        <h3>Lépésről lépésre példa (1–2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapfogalmak</h3>
-            <ul>
-                <li><b>Sz&#225;zal&#233;k jel</b>: 25% = 25/100 = 0.25.</li>
-                <li><b>Sz&#225;zal&#233;k a sz&#225;mhoz</b>: 20% 300-nak = 300 &#215; 0.2.</li>
-                <li><b>Sz&#225;zal&#233;kos ar&#225;ny</b>: r&#233;sz / eg&#233;sz &#215; 100%.</li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Sz&#225;zal&#233;kos n&#246;veked&#233;s</h3>
-                <ul>
-                    <li>&#218;j &#233;rt&#233;k = eredeti &#215; (1 + p).</li>
-                    <li>P&#233;lda: <span class="formula-line">120 + 15% = 120 &#215; 1.15 = 138</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Sz&#225;zal&#233;kos cs&#246;kken&#233;s</h3>
-                <ul>
-                    <li>&#218;j &#233;rt&#233;k = eredeti &#215; (1 - p).</li>
-                    <li>P&#233;lda: <span class="formula-line">200 - 10% = 200 &#215; 0.9 = 180</span></li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>10% = oszt&#225;s 10-zel, 1% = oszt&#225;s 100-zal.</li>
-                <li>Gondolkodj ar&#225;nyokban: 25% = 1/4, 50% = 1/2.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott példa</h3>
-            <p>15% a 240-ből:</p>
+            <h4>1. példa – rész kiszámítása</h4>
+            <p>Mennyi a 15% a 240-ből?</p>
             <ol>
-                <li>10% = 24, 5% = 12.</li>
-                <li>15% = 24 + 12 = 36.</li>
+                <li>15% = 0.15.</li>
+                <li>Rész = 240 · 0.15 = 36.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Ábra: 15% sáv</h3>
+            <h4>2. példa – százalék meghatározása</h4>
+            <p>Az egész 72, a rész 18. Ez hány százalék?</p>
+            <ol>
+                <li>Arány: 18 / 72 = 0.25.</li>
+                <li>Százalék: 0.25 · 100% = 25%.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizuális magyarázat (15% sáv)</h3>
             <svg viewBox="0 0 320 40" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <rect x="0" y="8" width="300" height="20" fill="none" stroke="#4A55A2" stroke-width="2" />
                 <rect x="0" y="8" width="45" height="20" fill="#A0BFE0" />
@@ -534,7 +521,33 @@
             </svg>
             <p style="font-size: 0.95em; color: var(--text-light);">A teljes sáv 100%, a kitöltött rész 15%.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hibák / tévhitek</h3>
+            <ul>
+                <li>15%-ot 15-tel szorzol, nem 0.15-tel.</li>
+                <li>Nem az egészből számolsz, hanem egy rossz alapból.</li>
+                <li>Összekevered a százalékot és a százalékpontot.</li>
+                <li>Százalék számításakor elfelejted a 100-zal való szorzást/osztást.</li>
+                <li>Növekedés/csökkenésnél nem használod az 1 ± p szorzót.</li>
+            </ul>
+        </div>
+        <h3>Mini önellenőrzés (válasz nélkül)</h3>
+        <ul>
+            <li>Mennyi a 8% a 350-ből?</li>
+            <li>48 a 120-nak hány százaléka?</li>
+            <li>10%-os emelés után mennyi lesz 90?</li>
+            <li>25%-os csökkenés után mennyi marad 160-ból?</li>
+            <li>Melyik nagyobb: 0.2 vagy 20%?</li>
+        </ul>
+        <h3>Összefoglaló</h3>
+        <ul>
+            <li>Százalék = rész/egész · 100%.</li>
+            <li>Rész = egész · százalék (tizedes alakban).</li>
+            <li>15% = 0.15, ezért mindig oszd/szorozd 100-zal.</li>
+            <li>Növekedés: 1 + p, csökkenés: 1 - p.</li>
+            <li>Mindig tisztázd, mi az egész (alap).</li>
+        </ul>
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -593,7 +606,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -637,7 +650,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

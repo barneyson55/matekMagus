@@ -23,24 +23,49 @@
             --success: #2ECC71;
             --danger: #E74C3C;
             --panel-bg: var(--bg-card);
+            --overlay: rgba(255, 255, 255, 0.8);
         }
         html, body { background-color: transparent; }
-        body { font-family: var(--font-main); color: var(--text-dark); padding: 40px; margin: 0; }
+        body {
+            font-family: var(--font-main);
+            color: var(--text-dark);
+            padding: 40px;
+            margin: 0;
+            min-height: 100vh;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .results-shell {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 24px;
+        }
         h1 { font-size: 2.5em; color: var(--text-dark); font-weight: 700; margin-bottom: 30px; border-bottom: 2px solid var(--brand-background); padding-bottom: 15px; }
         #results-container { display: grid; gap: 20px; }
         .result-item { background-color: var(--panel-bg); border-radius: 12px; padding: 20px; box-shadow: 0 5px 20px -10px rgba(0,0,0,0.1); border: 1px solid var(--border-color); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 20px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
         .result-item:hover { transform: translateY(-3px); box-shadow: 0 8px 25px -8px rgba(0,0,0,0.15); }
         .grade-badge { font-size: 1.8em; font-weight: 700; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
         .grade-1 { background-color: var(--grade-1); } .grade-2 { background-color: var(--grade-2); } .grade-3 { background-color: var(--grade-3); } .grade-4 { background-color: var(--grade-4); } .grade-5 { background-color: var(--grade-5); }
-        .result-details h3 { margin: 0 0 5px 0; font-size: 1.2em; color: var(--brand-primary); }
-        .result-details p { margin: 0; color: var(--text-light); font-size: 0.9em; }
-        .result-actions button { padding: 10px 18px; border: none; background-color: var(--brand-secondary); color: white; font-weight: 500; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; }
+        .result-details { min-width: 0; }
+        .result-details h3 { margin: 0 0 5px 0; font-size: 1.2em; color: var(--brand-primary); overflow-wrap: anywhere; }
+        .result-details p { margin: 0; color: var(--text-light); font-size: 0.9em; overflow-wrap: anywhere; }
+        .result-actions { display: flex; justify-content: flex-end; }
+        .result-actions button { padding: 10px 18px; border: none; background-color: var(--brand-secondary); color: white; font-weight: 500; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; white-space: nowrap; }
         .result-actions button:hover { background-color: var(--brand-primary); }
         .no-results { text-align: center; padding: 50px; color: #7f8c8d; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
         .modal.active { display: flex; align-items: center; justify-content: center; }
         .modal-content { background-color: var(--panel-bg); margin: auto; padding: 30px; border: 1px solid var(--border-color); border-radius: 15px; width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; }
-        .modal-close { color: #aaa; position: absolute; top: 15px; right: 25px; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .modal-close { color: #aaa; position: absolute; top: 15px; right: 25px; font-size: 28px; font-weight: bold; cursor: pointer; background: none; border: none; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .modal-close:focus-visible { outline: 2px solid var(--brand-primary); outline-offset: 2px; }
         .question-review { border-bottom: 1px solid var(--border-color); padding: 15px 0; }
         .question-review:last-child { border-bottom: none; }
         .user-answer { padding: 8px; border-radius: 5px; margin-top: 5px; border: 2px solid; }
@@ -68,74 +93,86 @@
         .trend-chip.flat { background-color: rgba(241, 196, 15, 0.18); color: #b9770e; }
         .trend-note { margin-top: 10px; color: var(--text-light); font-size: 0.9em; }
         .topic-list { display: grid; gap: 10px; }
-        .topic-item { border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background-color: rgba(255, 255, 255, 0.6); }
-        .topic-info { display: grid; gap: 4px; }
-        .topic-info strong { font-size: 1rem; }
+        .topic-item { border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 14px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; background-color: rgba(255, 255, 255, 0.6); }
+        .topic-info { display: grid; gap: 4px; min-width: 0; }
+        .topic-info strong { font-size: 1rem; overflow-wrap: anywhere; }
         .topic-meta { color: var(--text-light); font-size: 0.85em; }
         .insight-empty { text-align: center; padding: 16px; color: var(--text-light); border: 1px dashed var(--border-color); border-radius: 12px; background: rgba(255, 255, 255, 0.4); }
 
         @media (max-width: 700px) {
             .metric-grid { grid-template-columns: 1fr; }
         }
+
+        @media (max-width: 900px) {
+            .result-item { grid-template-columns: auto 1fr; }
+            .result-actions { grid-column: 1 / -1; justify-content: flex-start; }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px; }
+        }
     
         /* Touch targets */
         button {
             min-height: 44px;
             min-width: 44px;
+            font: inherit;
         }
 </style>
 </head>
 <body>
-    <div class="xp-summary">
-        <div class="xp-meta">
-            <span>Szint <span id="results-level">1</span></span>
-            <span id="results-total-xp">0 XP</span>
+    <div class="results-shell">
+        <div class="xp-summary">
+            <div class="xp-meta">
+                <span>Szint <span id="results-level">1</span></span>
+                <span id="results-total-xp">0 XP</span>
+            </div>
+            <div class="xp-progress">
+                <div class="xp-progress-fill" id="results-xp-progress"></div>
+            </div>
+            <p id="results-xp-text">Következő szint: 50 XP</p>
         </div>
-        <div class="xp-progress">
-            <div class="xp-progress-fill" id="results-xp-progress"></div>
+        <div class="insights-grid">
+            <div class="insight-card" id="trend-card">
+                <div class="insight-header">
+                    <h2>Trend &ouml;sszegz&eacute;s</h2>
+                    <span class="insight-sub" id="trend-window-label">Ut&oacute;bbi 10 teszt alapj&aacute;n</span>
+                </div>
+                <div class="metric-grid" id="trend-metrics">
+                    <div class="metric">
+                        <span>Ut&oacute;bbi 5 teszt &aacute;tlaga</span>
+                        <strong id="trend-last-avg">-</strong>
+                        <span id="trend-last-count">0 teszt</span>
+                    </div>
+                    <div class="metric">
+                        <span>El&#337;z&#337; 5 teszt &aacute;tlaga</span>
+                        <strong id="trend-prev-avg">-</strong>
+                        <span id="trend-prev-count">0 teszt</span>
+                    </div>
+                    <div class="metric">
+                        <span>Trend</span>
+                        <strong id="trend-delta">-</strong>
+                        <span id="trend-direction" class="trend-chip flat">Nincs adat</span>
+                    </div>
+                </div>
+                <div class="trend-note" id="trend-note"></div>
+                <div class="insight-empty" id="trend-empty" style="display:none;">M&eacute;g nincs elegend&#337; teszteredm&eacute;ny trendhez.</div>
+            </div>
+            <div class="insight-card" id="topic-card">
+                <div class="insight-header">
+                    <h2>T&eacute;mak&ouml;r betekint&eacute;s</h2>
+                    <span class="insight-sub" id="topic-summary">Legut&oacute;bbi aktivit&aacute;s alapj&aacute;n</span>
+                </div>
+                <div class="topic-list" id="topic-insights-list"></div>
+                <div class="insight-empty" id="topic-insights-empty" style="display:none;">M&eacute;g nincsenek t&eacute;mak&ouml;r adatok.</div>
+            </div>
         </div>
-        <p id="results-xp-text">Következő szint: 50 XP</p>
+        <div id="results-container"></div>
     </div>
-    <div class="insights-grid">
-        <div class="insight-card" id="trend-card">
-            <div class="insight-header">
-                <h2>Trend &ouml;sszegz&eacute;s</h2>
-                <span class="insight-sub" id="trend-window-label">Ut&oacute;bbi 10 teszt alapj&aacute;n</span>
-            </div>
-            <div class="metric-grid" id="trend-metrics">
-                <div class="metric">
-                    <span>Ut&oacute;bbi 5 teszt &aacute;tlaga</span>
-                    <strong id="trend-last-avg">-</strong>
-                    <span id="trend-last-count">0 teszt</span>
-                </div>
-                <div class="metric">
-                    <span>El&#337;z&#337; 5 teszt &aacute;tlaga</span>
-                    <strong id="trend-prev-avg">-</strong>
-                    <span id="trend-prev-count">0 teszt</span>
-                </div>
-                <div class="metric">
-                    <span>Trend</span>
-                    <strong id="trend-delta">-</strong>
-                    <span id="trend-direction" class="trend-chip flat">Nincs adat</span>
-                </div>
-            </div>
-            <div class="trend-note" id="trend-note"></div>
-            <div class="insight-empty" id="trend-empty" style="display:none;">M&eacute;g nincs elegend&#337; teszteredm&eacute;ny trendhez.</div>
-        </div>
-        <div class="insight-card" id="topic-card">
-            <div class="insight-header">
-                <h2>T&eacute;mak&ouml;r betekint&eacute;s</h2>
-                <span class="insight-sub" id="topic-summary">Legut&oacute;bbi aktivit&aacute;s alapj&aacute;n</span>
-            </div>
-            <div class="topic-list" id="topic-insights-list"></div>
-            <div class="insight-empty" id="topic-insights-empty" style="display:none;">M&eacute;g nincsenek t&eacute;mak&ouml;r adatok.</div>
-        </div>
-    </div>
-    <div id="results-container"></div>
 
     <div id="details-modal" class="modal">
         <div class="modal-content">
-            <span class="modal-close" id="modal-close-btn">&times;</span>
+            <button class="modal-close" id="modal-close-btn" type="button" aria-label="Bezárás">&times;</button>
             <div id="modal-body"></div>
         </div>
     </div>
@@ -194,6 +231,71 @@
             if (!Number.isFinite(value)) return fallback;
             const sign = value > 0 ? '+' : value < 0 ? '' : '';
             return `${sign}${formatNumber(value, fallback)}`;
+        }
+
+        function parseHexColor(hex) {
+            const match = (hex || '').trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+            if (!match) return null;
+            const raw = match[1];
+            const full = raw.length === 3 ? raw.split('').map(ch => ch + ch).join('') : raw;
+            return {
+                r: parseInt(full.slice(0, 2), 16),
+                g: parseInt(full.slice(2, 4), 16),
+                b: parseInt(full.slice(4, 6), 16),
+            };
+        }
+
+        function isDarkColor(hex) {
+            const rgb = parseHexColor(hex);
+            if (!rgb) return false;
+            const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+            return luminance < 0.5;
+        }
+
+        function normalizeOverlayColor(value) {
+            const minAlpha = 0.35;
+            const fallback = `rgba(15, 18, 22, ${minAlpha})`;
+            if (!value || typeof value !== 'string') return fallback;
+            const trimmed = value.trim();
+            const rgbaMatch = trimmed.match(/^rgba?\\(([^)]+)\\)$/i);
+            if (rgbaMatch) {
+                const parts = rgbaMatch[1].split(',').map(part => part.trim());
+                const r = Number(parts[0]);
+                const g = Number(parts[1]);
+                const b = Number(parts[2]);
+                if ([r, g, b].some(Number.isNaN)) return fallback;
+                const alpha = parts.length > 3 ? Number(parts[3]) : minAlpha;
+                const safeAlpha = Math.min(0.9, Math.max(minAlpha, Number.isNaN(alpha) ? minAlpha : alpha));
+                return `rgba(${r}, ${g}, ${b}, ${safeAlpha})`;
+            }
+            const hexMatch = trimmed.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+            if (hexMatch) {
+                const rgb = parseHexColor(trimmed);
+                if (!rgb) return fallback;
+                return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${minAlpha})`;
+            }
+            return fallback;
+        }
+
+        function applySettings(settings) {
+            if (!settings) return;
+            const contentBg = settings.contentBg || '#f5f7fb';
+            const isDark = isDarkColor(contentBg);
+            const rawOpacity = Number(settings.moduleCardOpacity);
+            const panelAlpha = Number.isFinite(rawOpacity) ? Math.min(1, Math.max(0.5, rawOpacity)) : 0.92;
+            const panelRgb = isDark ? '20, 24, 30' : '255, 255, 255';
+            const panelBg = `rgba(${panelRgb}, ${panelAlpha})`;
+            const accent = settings.buttonBg || '#4A55A2';
+            document.documentElement.style.setProperty('--brand-primary', accent);
+            document.documentElement.style.setProperty('--brand-secondary', accent);
+            document.documentElement.style.setProperty('--text-dark', isDark ? '#f3f4f6' : '#2C3333');
+            document.documentElement.style.setProperty('--text-light', isDark ? '#cbd5f5' : '#576574');
+            document.documentElement.style.setProperty('--border-color', isDark ? 'rgba(255, 255, 255, 0.12)' : '#EAEFF2');
+            document.documentElement.style.setProperty('--bg-card', panelBg);
+            document.documentElement.style.setProperty('--panel-bg', panelBg);
+            document.documentElement.style.setProperty('--overlay', normalizeOverlayColor(settings.contentOverlay));
+            document.body.style.backgroundColor = 'transparent';
+            document.body.style.backgroundImage = 'none';
         }
 
         function normalizeDifficultyKey(value) {
@@ -423,9 +525,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            container.innerHTML = `<div class="no-results"><p>Eredmények betöltése...</p></div>`;
+            container.innerHTML = `<div class="no-results"><p>Eredményeim betöltése...</p></div>`;
             window.parent.postMessage({ type: 'get-all-results' }, '*');
             window.parent.postMessage({ type: 'request-xp-summary' }, '*');
+            window.parent.postMessage({ type: 'request-settings' }, '*');
             window.addEventListener('message', (event) => {
                 if (event.data.type === 'all-results-response') {
                     resultsData = Array.isArray(event.data.results) ? event.data.results : [];
@@ -433,6 +536,9 @@
                 }
                 if (event.data.type === 'xp-summary') {
                     updateXpSummary(event.data.summary);
+                }
+                if (event.data.type === 'apply-settings') {
+                    applySettings(event.data.settings);
                 }
             });
         });
@@ -500,6 +606,7 @@
             });
             modalBody.innerHTML = detailsHTML;
             modal.classList.add('active');
+            modalCloseBtn.focus();
             renderAllMath();
         }
 

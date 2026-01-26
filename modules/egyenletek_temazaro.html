@@ -482,43 +482,68 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Egyenletek, egyenl&#337;tlens&#233;gek</h2>
-        <p>Az egyenletek megold&#225;sa az ismeretlenek meghat&#225;roz&#225;s&#225;r&#243;l sz&#243;l. A line&#225;ris egyenletek az alapok, a m&#225;sodfok&#250; egyenletek pedig m&#225;r diszkrimin&#225;nst &#233;s gy&#246;k&#246;ket haszn&#225;lnak.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a t&#233;maz&#225;r&#243; az egyenletek megold&#225;s&#225;nak f&#337; l&#233;p&#233;seit foglalja &#246;ssze. A line&#225;ris egyenletek adj&#225;k az alapot, a m&#225;sodfok&#250; egyenletek pedig m&#225;r diszkrimin&#225;nst &#233;s gy&#246;k&#246;ket haszn&#225;lnak. A c&#233;l, hogy magabiztosan rendezz, sz&#225;molj &#233;s ellen&#337;rizz. Ha ezek stabilak, a param&#233;teres &#233;s speci&#225;lis feladatok sem lesznek ijeszt&#337;k.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Egyenlet:</b> olyan &#225;ll&#237;t&#225;s, ami csak bizonyos x-ekre igaz.</li>
+            <li><b>Megold&#225;s:</b> az az x, amire az egyenlet igaz.</li>
+            <li><b>Line&#225;ris egyenlet:</b> ax + b = c alak.</li>
+            <li><b>M&#225;sodfok&#250; egyenlet:</b> ax&#178; + bx + c = 0 alak.</li>
+            <li><b>Diszkrimin&#225;ns:</b> D = b&#178; &#8722; 4ac, ebb&#337;l l&#225;tod a gy&#246;k&#246;k sz&#225;m&#225;t.</li>
+            <li><b>Vi&#232;te-formul&#225;k:</b> a gy&#246;k&#246;k &#246;sszege &#233;s szorzata.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
                 <li>Line&#225;ris egyenletek</li>
                 <li>M&#225;sodfok&#250; egyenlet</li>
-                <li>Vi&#233;te-formul&#225;k</li>
+                <li>Vi&#232;te-formul&#225;k</li>
                 <li>Param&#233;teres m&#225;sodfok&#250; egyenletek</li>
                 <li>Speci&#225;lis egyenletek</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Fontos k&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">ax + b = c</span></li>
-                    <li><span class="formula-line">D = b<sup>2</sup> - 4ac</span></li>
-                    <li><span class="formula-line">x = (-b &plusmn; &radic;D) / (2a)</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Megold&#225;si l&#233;p&#233;sek</h3>
-                <ul>
-                    <li>Rendezd az egyenletet norm&#225;l alakra.</li>
-                    <li>Sz&#225;mold ki a diszkrimin&#225;nst.</li>
-                    <li>Ellen&#337;rizd a gy&#246;k&#246;ket visszahelyettes&#237;t&#233;ssel.</li>
-                </ul>
-            </div>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; line&#225;ris egyenlet</h4>
+            <p>Oldd meg: 3x &#8722; 7 = 11.</p>
+            <ol>
+                <li>Add hozz&#225; 7-et: 3x = 18.</li>
+                <li>Oszt&#225;s 3-mal: x = 6.</li>
+            </ol>
         </div>
         <div class="learning-hint">
-            <h3>Tippek</h3>
+            <h4>2. p&#233;lda &#8211; m&#225;sodfok&#250; egyenlet</h4>
+            <p>Oldd meg: x&#178; &#8722; 5x + 6 = 0.</p>
+            <ol>
+                <li>a = 1, b = &#8722;5, c = 6 &#8594; D = b&#178; &#8722; 4ac = 25 &#8722; 24 = 1.</li>
+                <li>x = (5 &#177; &#8730;1) / 2 = (5 &#177; 1) / 2.</li>
+                <li>Gy&#246;k&#246;k: x&#8321; = 2, x&#8322; = 3.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li>Ha t&#246;rt a megold&#225;s, egyszer&#369;s&#237;ts.</li>
-                <li>Figyelj a negat&#237;v el&#337;jelekre z&#225;r&#243;jelekben.</li>
-                <li>Vi&#233;te-formul&#225;kkal gyorsan ellen&#337;rizheted a gy&#246;k&#246;ket.</li>
+                <li>Elfelejted norm&#225;l alakra hozni az egyenletet.</li>
+                <li>Rossz el&#337;jelet haszn&#225;lsz a diszkrimin&#225;ns k&#233;plet&#233;ben.</li>
+                <li>Nem osztasz le az a egy&#252;tthat&#243;val a gy&#246;k k&#233;pletben.</li>
+                <li>Vi&#232;te-ellen&#337;rz&#233;sn&#233;l &#246;sszekevered az &#246;sszeget &#233;s a szorzatot.</li>
             </ul>
         </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Oldd meg: 5x + 4 = 24.</li>
+            <li>Sz&#225;mold ki a diszkrimin&#225;nst: x&#178; + 2x &#8722; 3 = 0.</li>
+            <li>Mikor van k&#233;t val&#243;s gy&#246;ke a m&#225;sodfok&#250; egyenletnek?</li>
+            <li>Mi a gy&#246;k&#246;k &#246;sszege a x&#178; &#8722; 7x + 10 = 0 egyenletn&#233;l?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Rendezd az egyenletet norm&#225;l alakra, miel&#337;tt sz&#225;molsz.</li>
+            <li>Line&#225;risn&#225;l izol&#225;ld az x-et, m&#225;sodfok&#250;n&#225;l sz&#225;mold D-t.</li>
+            <li>Vi&#232;te-formul&#225;k gyors ellen&#337;rz&#233;sre j&#243;k.</li>
+            <li>Az el&#337;jelekre k&#252;l&#246;n figyelj.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -592,7 +617,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -642,7 +667,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szintek:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

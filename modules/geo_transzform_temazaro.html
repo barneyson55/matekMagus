@@ -475,33 +475,70 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>Geometriai Transzform&#225;ci&#243;k</h2>
-        <p>T&#233;maz&#225;r&#243; az eltol&#225;s, forgat&#225;s &#233;s t&#252;kr&#246;z&#233;s alapfogalmair&#243;l.</p>
+        <h2>Geometriai transzform&#225;ci&#243;k</h2>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a t&#233;maz&#225;r&#243; az alakzatok eltol&#225;s&#225;t, forgat&#225;s&#225;t, t&#252;kr&#246;z&#233;s&#233;t &#233;s hasonl&#243;s&#225;g&#225;t foglalja &#246;ssze. A c&#233;l az, hogy gyorsan felismerd, milyen transzform&#225;ci&#243; t&#246;rt&#233;nt, &#233;s tudd kisz&#225;molni az &#250;j koordin&#225;t&#225;kat. A vektorok, sz&#246;gek &#233;s ar&#225;nyok ismerete itt kulcsfontoss&#225;g&#250;. Ha ezek biztosak, a feladatok r&#246;viden megoldhat&#243;k.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Eltol&#225;s:</b> vektorral tolunk: <span class="formula-line">(x, y) &#8594; (x + a, y + b)</span>.</li>
+            <li><b>Forgat&#225;s:</b> adott k&#246;z&#233;ppont k&#246;r&#252;l, adott sz&#246;ggel; pozit&#237;v ir&#225;ny az &#243;ramutat&#243; j&#225;r&#225;s&#225;val ellent&#233;tes.</li>
+            <li><b>Tengelyes t&#252;kr&#246;z&#233;s:</b> a t&#252;k&#246;rtengely a <span class="formula-line">PP'</span> szakasz mer&#337;leges felez&#337;je.</li>
+            <li><b>K&#246;z&#233;ppontos t&#252;kr&#246;z&#233;s:</b> a k&#246;z&#233;ppont a <span class="formula-line">PP'</span> szakasz felez&#337;pontja (180&#176;-os forgat&#225;s).</li>
+            <li><b>Hasonl&#243;s&#225;gi ar&#225;ny (k):</b> hosszok ar&#225;nya <span class="formula-line">k</span>, ter&#252;letek ar&#225;nya <span class="formula-line">k^2</span>.</li>
+            <li><b>Seg&#233;dk&#233;pletek:</b> t&#225;vols&#225;g: <span class="formula-line">d = &#8730;((x2 &#8722; x1)^2 + (y2 &#8722; y1)^2)</span>, felez&#337;pont: <span class="formula-line">((x1+x2)/2, (y1+y2)/2)</span>.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
                 <li>Eltol&#225;s &#233;s forgat&#225;s</li>
-<li>Tengelyes &#233;s k&#246;z&#233;ppontos t&#252;kr&#246;z&#233;s</li>
-<li>Hasonl&#243;s&#225;g &#233;s ar&#225;nyoss&#225;g</li>
+                <li>Tengelyes &#233;s k&#246;z&#233;ppontos t&#252;kr&#246;z&#233;s</li>
+                <li>Hasonl&#243;s&#225;g, m&#233;retar&#225;ny</li>
+                <li>Koordin&#225;t&#225;s seg&#233;dk&#233;pletek (t&#225;vols&#225;g, felez&#337;pont)</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">P&#39;(x + a, y + b)</span></li>
-<li><span class="formula-line">T&#252;k&#246;r: (x, y) &#8594; (&#8722;x, y)</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tanul&#225;si f&#243;kusz</h3>
-                <ul>
-                    <li>&#201;rtsd a defin&#237;ci&#243;kat &#233;s jel&#246;l&#233;seket.</li>
-                    <li>Gyakorold a tipikus feladatt&#237;pusokat.</li>
-                    <li>Ellen&#337;rizd a m&#233;rt&#233;kegys&#233;geket &#233;s a logik&#225;t.</li>
-                </ul>
-            </div>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; eltol&#225;s</h4>
+            <p>Adott: <span class="formula-line">P(2, &#8722;1)</span>, <span class="formula-line">v = (3, 4)</span>.</p>
+            <ol>
+                <li>x koordin&#225;ta: <span class="formula-line">2 + 3 = 5</span>.</li>
+                <li>y koordin&#225;ta: <span class="formula-line">&#8722;1 + 4 = 3</span>.</li>
+                <li>&#218;j pont: <span class="formula-line">P'(5, 3)</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; &#246;sszegz&#337; (hasonl&#243;s&#225;g)</h4>
+            <p>Adott: hasonl&#243;s&#225;gi ar&#225;ny <span class="formula-line">k = 3/2</span>, eredeti oldal <span class="formula-line">8 cm</span>.</p>
+            <ol>
+                <li>&#218;j oldal: <span class="formula-line">8 &#183; 3/2 = 12 cm</span>.</li>
+                <li>Ter&#252;letar&#225;ny: <span class="formula-line">k^2 = 9/4</span> (ha ter&#252;letet k&#233;rdeznek).</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Eltol&#225;sn&#225;l elfelejted mindk&#233;t koordin&#225;t&#225;hoz hozz&#225;adni a vektort.</li>
+                <li>Forgat&#225;sn&#225;l rossz ir&#225;nyt v&#225;lasztasz (&#243;rair&#225;ny helyett ellenkez&#337;).</li>
+                <li>Hasonl&#243;s&#225;gn&#225;l <span class="formula-line">k</span> &#233;s <span class="formula-line">1/k</span> felcser&#233;l&#337;dik.</li>
+                <li>Ter&#252;letn&#233;l <span class="formula-line">k</span> helyett <span class="formula-line">k^2</span>-t kell haszn&#225;lni.</li>
+                <li>T&#252;kr&#246;z&#233;sn&#233;l nem mer&#337;leges ir&#225;nyban m&#233;rsz t&#225;vols&#225;got.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi lesz <span class="formula-line">P(1, 2)</span> k&#233;pe <span class="formula-line">v = (&#8722;3, 5)</span> eltol&#225;s ut&#225;n?</li>
+            <li>Mikor mondjuk, hogy k&#233;t alakzat hasonl&#243;?</li>
+            <li>Ha <span class="formula-line">k = 2</span>, mennyi a ter&#252;letar&#225;ny?</li>
+            <li>Mit jelent a k&#246;z&#233;ppontos t&#252;kr&#246;z&#233;s?</li>
+            <li>Melyik ir&#225;ny sz&#225;m&#237;t pozit&#237;v forgat&#225;snak?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Eltol&#225;sn&#225;l koordin&#225;t&#225;nk&#233;nt hozz&#225;adsz: <span class="formula-line">(x, y) &#8594; (x + a, y + b)</span>.</li>
+            <li>Forgat&#225;s &#233;s t&#252;kr&#246;z&#233;s izometri&#225;k: a hossz &#233;s sz&#246;g megmarad.</li>
+            <li>Hasonl&#243;s&#225;gn&#225;l a hosszar&#225;ny <span class="formula-line">k</span>, a ter&#252;letar&#225;ny <span class="formula-line">k^2</span>.</li>
+            <li>A seg&#233;dk&#233;pletek (t&#225;vols&#225;g, felez&#337;pont) gyors&#237;tj&#225;k a sz&#225;mol&#225;st.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -546,11 +583,11 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
-                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="K&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
-                    <button class="btn btn-secondary difficulty-btn" data-difficulty="Norm&#225;l" type="button">Norm&#225;l</button>
-                    <button class="btn btn-secondary difficulty-btn" data-difficulty="Neh&#233;z" type="button">Neh&#233;z</button>
+                    <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
+                    <button class="btn btn-secondary difficulty-btn" data-difficulty="neh&#233;z" type="button">Neh&#233;z</button>
                 </div>
             </div>
         </div>
@@ -559,7 +596,8 @@
             <ul>
                 <li>Eltol&#225;s &#233;s forgat&#225;s</li>
 <li>Tengelyes &#233;s k&#246;z&#233;ppontos t&#252;kr&#246;z&#233;s</li>
-<li>Hasonl&#243;s&#225;g &#233;s ar&#225;nyoss&#225;g</li>
+<li>Hasonl&#243;s&#225;g, m&#233;retar&#225;ny</li>
+<li>Koordin&#225;t&#225;s seg&#233;dk&#233;pletek (t&#225;vols&#225;g, felez&#337;pont)</li>
             </ul>
             <button id="start-test-btn" class="btn btn-primary" type="button">Teszt ind&#237;t&#225;sa</button>
         </div>
@@ -588,7 +626,7 @@
         <h2>Gyakorl&#225;s</h2>
         <p class="practice-info">V&#233;gtelen&#237;tett gyakorl&#225;s. XP jutalom: k&#246;nny&#369; = 1 XP, norm&#225;l = 2 XP, neh&#233;z = 3 XP.</p>
         <div class="learning-hint" data-role="practice-help">
-            <h3>Gyakorl&#225;si tipp</h3>
+            <h3>Gyakorl&#225;si tippek</h3>
             <ul>
                 <li>V&#225;lassz legal&#225;bb egy neh&#233;zs&#233;gi szintet.</li>
 <li>Haszn&#225;ld a megfelel&#337; k&#233;pletet a sz&#225;m&#237;t&#225;shoz.</li>
@@ -596,10 +634,10 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
-            <label><input class="practice-difficulty" type="checkbox" value="K&#246;nny&#369;" checked> K&#246;nny&#369;</label>
-            <label><input class="practice-difficulty" type="checkbox" value="Norm&#225;l"> Norm&#225;l</label>
-            <label><input class="practice-difficulty" type="checkbox" value="Neh&#233;z"> Neh&#233;z</label>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
+            <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
+            <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
+            <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>
             <button id="start-practice-btn" class="btn btn-secondary" type="button">Gyakorl&#225;s ind&#237;t&#225;sa</button>
         </div>
         <div id="practice-area" class="practice-area is-hidden">

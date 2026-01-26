@@ -475,34 +475,72 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>Emelt Szint&#369; Kieg&#233;sz&#237;t&#233;sek</h2>
-        <p>Modulz&#225;r&#243; az emelt szint&#369; sorozatok, deriv&#225;lt &#233;s integr&#225;l alapjair&#243;l.</p>
+        <h2>Emelt szint&#369; kieg&#233;sz&#237;t&#233;sek</h2>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a modulz&#225;r&#243; az emelt szint&#369; anal&#237;zis t&#233;m&#225;it foglalja &#246;ssze: sorozatok, hat&#225;r&#233;rt&#233;kek, deriv&#225;lt &#233;s integr&#225;l. A c&#233;l, hogy l&#225;sd az &#246;sszk&#233;pet &#233;s gyorsan felismerd, melyik eszk&#246;zt kell haszn&#225;lnod. Sok feladat t&#246;bb t&#233;m&#225;t is &#246;sszek&#246;t, ez&#233;rt fontos a biztos alap. Ha a jel&#246;l&#233;sek &#233;s a k&#233;pletek a hely&#252;k&#246;n vannak, a vegyes feladatok is kezelhet&#337;k.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Hat&#225;r&#233;rt&#233;k:</b> <span class="formula-line">a_n &#8594; L</span> vagy <span class="formula-line">f(x) &#8594; L</span> egy pontban.</li>
+            <li><b>Konvergencia:</b> a sorozatnak van hat&#225;r&#233;rt&#233;ke.</li>
+            <li><b>Deriv&#225;lt:</b> pillanatnyi v&#225;ltoz&#225;si sebess&#233;g, az &#233;rint&#337; meredeks&#233;ge.</li>
+            <li><b>Alapk&#233;plet:</b> <span class="formula-line">(x^n)' = n x^{n-1}</span>.</li>
+            <li><b>Integr&#225;l:</b> ter&#252;let vagy &#246;sszegz&#233;s; primit&#237;v f&#252;ggv&#233;ny keres&#233;se.</li>
+            <li><b>Hat&#225;rozott integr&#225;l:</b> <span class="formula-line">&#8747;_a^b f(x) dx</span> a g&#246;rbe alatti ter&#252;let jelezve.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Modulz&#225;r&#243; t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett alt&#233;m&#225;k &#233;s t&#233;mak&#246;r&#246;k</h3>
             <ul>
                 <li>Sorozatok &#233;s konvergencia</li>
-<li>Deriv&#225;lt &#233;s f&#252;ggv&#233;nyvizsg&#225;lat</li>
-<li>Integr&#225;l &#233;s ter&#252;let</li>
+                <li>Hat&#225;r&#233;rt&#233;kek</li>
+                <li>Deriv&#225;lt &#233;s f&#252;ggv&#233;nyvizsg&#225;lat</li>
+                <li>Integr&#225;l &#233;s ter&#252;letsz&#225;m&#237;t&#225;s</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">a_n = a_1 &#183; r^(n&#8722;1)</span></li>
-<li><span class="formula-line">d/dx x^n = n x^(n&#8722;1)</span></li>
-<li><span class="formula-line">&#8747; x^n dx = x^(n+1)/(n+1) + C</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tanul&#225;si f&#243;kusz</h3>
-                <ul>
-                    <li>&#201;rtsd a defin&#237;ci&#243;kat &#233;s jel&#246;l&#233;seket.</li>
-                    <li>Gyakorold a tipikus feladatt&#237;pusokat.</li>
-                    <li>Ellen&#337;rizd a m&#233;rt&#233;kegys&#233;geket &#233;s a logik&#225;t.</li>
-                </ul>
-            </div>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; sorozat hat&#225;r&#233;rt&#233;ke</h4>
+            <p><span class="formula-line">a_1 = 3</span>, <span class="formula-line">q = 1/3</span>. Mi a hat&#225;r&#233;rt&#233;k?</p>
+            <ol>
+                <li><span class="formula-line">|q| = 1/3 &lt; 1</span>, ez&#233;rt konvergens.</li>
+                <li>A tagok egyre kisebbek: 3, 1, 1/3, 1/9, ...</li>
+                <li>A hat&#225;r&#233;rt&#233;k: <span class="formula-line">0</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; &#246;sszegz&#337; feladat (deriv&#225;lt + integr&#225;l)</h4>
+            <p>Legyen <span class="formula-line">f(x) = x^2 + 1</span>. Sz&#225;mold ki <span class="formula-line">f'(x)</span>-et &#233;s a <span class="formula-line">&#8747;_0^2 f(x) dx</span> &#233;rt&#233;k&#233;t.</p>
+            <ol>
+                <li>Deriv&#225;lt: <span class="formula-line">f'(x) = 2x</span>.</li>
+                <li>Primit&#237;v: <span class="formula-line">F(x) = x^3/3 + x</span>.</li>
+                <li><span class="formula-line">F(2) - F(0) = (8/3 + 2) - 0 = 14/3</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Hat&#225;r&#233;rt&#233;kn&#233;l nem vizsg&#225;lod a felt&#233;teleket (pl. <span class="formula-line">|q| &lt; 1</span>).</li>
+                <li>Deriv&#225;l&#225;sn&#225;l rosszul kezeled a kitev&#337;t.</li>
+                <li>Integr&#225;l&#225;sn&#225;l elfelejted a <span class="formula-line">+ C</span>-t hat&#225;rozatlan integr&#225;ln&#225;l.</li>
+                <li>Hat&#225;rozott integr&#225;ln&#225;l nem sz&#225;molod ki a fels&#337; &#233;s als&#243; hat&#225;rt.</li>
+                <li>&#214;sszekevered, hogy mikor kell deriv&#225;lni &#233;s mikor integr&#225;lni.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Konvergens-e: <span class="formula-line">a_1 = 2</span>, <span class="formula-line">q = -1/2</span>?</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">(3x^3)'</span>.</li>
+            <li>Mi a <span class="formula-line">&#8747;_0^1 x dx</span> &#233;rt&#233;ke?</li>
+            <li>Mikor haszn&#225;lod a hat&#225;rozott integr&#225;lt?</li>
+            <li>Mit jelent, hogy egy sorozat divergens?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Az emelt modulz&#225;r&#243; t&#246;bb t&#233;mak&#246;rt fog &#246;ssze, ez&#233;rt j&#243; k&#233;pletv&#225;laszt&#225;s kell.</li>
+            <li>Konvergencia: l&#233;tezik hat&#225;r&#233;rt&#233;k, gyakran <span class="formula-line">|q| &lt; 1</span> d&#246;nt.</li>
+            <li>Deriv&#225;lt = v&#225;ltoz&#225;si sebess&#233;g, integr&#225;l = ter&#252;let/&#246;sszegz&#233;s.</li>
+            <li>Hat&#225;rozott integr&#225;ln&#225;l mindig behelyettes&#237;tesz.</li>
+            <li>A vegyes feladatokn&#225;l l&#233;p&#233;senk&#233;nt haladj.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -587,10 +625,10 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
-            <label><input class="practice-difficulty" type="checkbox" value="K&#246;nny&#369;" checked> K&#246;nny&#369;</label>
-            <label><input class="practice-difficulty" type="checkbox" value="Norm&#225;l"> Norm&#225;l</label>
-            <label><input class="practice-difficulty" type="checkbox" value="Neh&#233;z"> Neh&#233;z</label>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
+            <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
+            <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
+            <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>
             <button id="start-practice-btn" class="btn btn-secondary" type="button">Gyakorl&#225;s ind&#237;t&#225;sa</button>
         </div>
         <div id="practice-area" class="practice-area is-hidden">

@@ -485,63 +485,79 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>M&#225;sodfok&#250; f&#252;ggv&#233;ny</h2>
-        <p>A m&#225;sodfok&#250; f&#252;ggv&#233;ny grafikonja parabola. A f&#337; param&#233;terek az <span class="formula-line">a</span>, <span class="formula-line">b</span>, <span class="formula-line">c</span> egy&#252;tthat&#243;k, amelyek meghat&#225;rozz&#225;k a nyitotts&#225;got, a cs&#250;cspontot &#233;s a tengelyt.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A m&#225;sodfok&#250; f&#252;ggv&#233;ny grafikonja parabola, ami sok mozg&#225;sos &#233;s optimaliz&#225;l&#225;si helyzetben el&#337;j&#246;n. Ilyen p&#233;ld&#225;ul egy labda r&#246;pp&#225;ly&#225;ja vagy egy ter&#252;let maximaliz&#225;l&#225;sa. A h&#225;rom egy&#252;tthat&#243; (a, b, c) megmutatja, merre ny&#237;lik a parabola &#233;s hol van a cs&#250;csa. Ha ezeket gyorsan leolvasod, k&#246;nnyebben rajzolsz grafikont &#233;s oldasz feladatot.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>&#193;ltal&#225;nos alak:</b> <span class="formula-line">f(x) = ax^2 + bx + c</span>, ahol <span class="formula-line">a &#8800; 0</span>.</li>
+            <li><b>Cs&#250;cs x-koordin&#225;t&#225;ja:</b> <span class="formula-line">x_v = -b / (2a)</span>.</li>
+            <li><b>Cs&#250;cs y-koordin&#225;t&#225;ja:</b> <span class="formula-line">y_v = f(x_v)</span>.</li>
+            <li><b>Tengely:</b> <span class="formula-line">x = x_v</span> (szimmetriatengely).</li>
+            <li><b>Nyitotts&#225;g:</b> <span class="formula-line">a &gt; 0</span> felfel&#233;, <span class="formula-line">a &lt; 0</span> lefel&#233;.</li>
+            <li><b>Diszkrimin&#225;ns:</b> <span class="formula-line">D = b^2 - 4ac</span> (z&#233;rushelyek sz&#225;ma).</li>
+            <li><b>Z&#233;rushelyek:</b> <span class="formula-line">D &gt; 0</span> k&#233;t, <span class="formula-line">D = 0</span> egy, <span class="formula-line">D &lt; 0</span> nincs val&#243;s.</li>
+            <li><b>Y-metszet:</b> <span class="formula-line">f(0) = c</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapform&#225;k</h3>
-            <ul>
-                <li><span class="formula-line">f(x) = ax<sup>2</sup> + bx + c</span>, ahol <span class="formula-line">a &#8800; 0</span></li>
-                <li><span class="formula-line">x<sub>cs&#250;cs</sub> = -b / (2a)</span></li>
-                <li><span class="formula-line">y<sub>cs&#250;cs</sub> = f(x<sub>cs&#250;cs</sub>)</span></li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Nyitotts&#225;g &#233;s sz&#233;ls&#337;&#233;rt&#233;k</h3>
-                <ul>
-                    <li><span class="formula-line">a &gt; 0</span> &rarr; felfel&#233; ny&#237;lik, minimum a cs&#250;csban.</li>
-                    <li><span class="formula-line">a &lt; 0</span> &rarr; lefel&#233; ny&#237;lik, maximum a cs&#250;csban.</li>
-                    <li>&#201;rt&#233;kk&#233;szlet: <span class="formula-line">y &#8805; y<sub>cs&#250;cs</sub></span> vagy <span class="formula-line">y &#8804; y<sub>cs&#250;cs</sub></span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Z&#233;rushelyek</h3>
-                <ul>
-                    <li><span class="formula-line">D = b<sup>2</sup> - 4ac</span> jelzi, hogy van-e metsz&#233;s az x-tengellyel.</li>
-                    <li><span class="formula-line">D &gt; 0</span> &rarr; k&#233;t z&#233;rushely.</li>
-                    <li><span class="formula-line">D = 0</span> &rarr; egy z&#233;rushely (&#233;rinti).</li>
-                    <li><span class="formula-line">D &lt; 0</span> &rarr; nincs val&#243;s z&#233;rushely.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Gyors ellen&#337;rz&#233;s</h3>
-            <ul>
-                <li>A tengely: <span class="formula-line">x = -b/(2a)</span>.</li>
-                <li>Y-metszet: <span class="formula-line">f(0) = c</span>.</li>
-                <li>Sz&#225;mold ki n&#233;h&#225;ny pontot a g&#246;rbe rajz&#225;hoz.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>y = (x - 1)&#178; - 4:</p>
+            <h4>1. p&#233;lda &#8211; cs&#250;cs &#233;s tengely</h4>
+            <p>Legyen <span class="formula-line">f(x) = 2x^2 - 4x - 6</span>.</p>
             <ol>
-                <li>Cs&#250;cs: (1, -4).</li>
-                <li>Tengely: x = 1.</li>
-                <li>A parabola felfel&#233; ny&#237;lik.</li>
+                <li>Olvasd le: <span class="formula-line">a = 2</span>, <span class="formula-line">b = -4</span>, <span class="formula-line">c = -6</span>.</li>
+                <li><span class="formula-line">x_v = -b/(2a) = 4/4 = 1</span>.</li>
+                <li><span class="formula-line">y_v = f(1) = 2 - 4 - 6 = -8</span>, teh&#225;t a cs&#250;cs <span class="formula-line">(1, -8)</span>.</li>
+                <li>Mivel <span class="formula-line">a &gt; 0</span>, felfel&#233; ny&#237;lik (minimum a cs&#250;csban).</li>
+                <li>Y-metszet: <span class="formula-line">(0, -6)</span>.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: cs&#250;cs &#233;s tengely</h3>
-            <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
-                <line x1="160" y1="20" x2="160" y2="140" stroke="#4A55A2" stroke-width="2" />
-                <line x1="40" y1="100" x2="280" y2="100" stroke="#4A55A2" stroke-width="2" />
-                <path d="M80 120 Q160 40 240 120" fill="none" stroke="#7895CB" stroke-width="3" />
-                <circle cx="180" cy="80" r="4" fill="#E74C3C" />
-                <text x="190" y="75" font-size="12">(1, -4)</text>
-            </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A cs&#250;csform&#225;b&#243;l azonnal leolvashat&#243; a cs&#250;cs.</p>
+            <h4>2. p&#233;lda &#8211; cs&#250;csalakb&#243;l</h4>
+            <p>Legyen <span class="formula-line">f(x) = -(x - 2)^2 + 3</span>.</p>
+            <ol>
+                <li>A cs&#250;cs: <span class="formula-line">(2, 3)</span>.</li>
+                <li><span class="formula-line">a = -1</span>, ez&#233;rt lefel&#233; ny&#237;lik (maximum 3).</li>
+                <li>A tengely: <span class="formula-line">x = 2</span>.</li>
+                <li>Plusz pont: <span class="formula-line">f(0) = -4 + 3 = -1</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (cs&#250;cs &#233;s tengely)</h3>
+            <svg viewBox="0 0 320 160" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
+                <line x1="40" y1="120" x2="280" y2="120" stroke="#4A55A2" stroke-width="2" />
+                <line x1="160" y1="20" x2="160" y2="140" stroke="#4A55A2" stroke-width="2" />
+                <line x1="200" y1="20" x2="200" y2="140" stroke="#7895CB" stroke-width="2" stroke-dasharray="4 4" />
+                <path d="M80 140 Q200 40 280 140" fill="none" stroke="#7895CB" stroke-width="3" />
+                <circle cx="200" cy="40" r="4" fill="#E74C3C" />
+                <text x="210" y="35" font-size="12">(h, k)</text>
+            </svg>
+            <p style="font-size: 0.95em; color: var(--text-light);">A parabola szimmetrikus a tengelyre, a cs&#250;cs a minimum vagy maximum pont.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Elfelejted, hogy <span class="formula-line">a &#8800; 0</span>.</li>
+                <li>Hib&#225;s el&#337;jelet &#237;rsz a <span class="formula-line">-b/(2a)</span> k&#233;pletben.</li>
+                <li>&#214;sszekevered a cs&#250;cs koordin&#225;t&#225;it a tengely egyenlet&#233;vel.</li>
+                <li>&#218;gy gondolod, hogy <span class="formula-line">D &lt; 0</span> eset&#233;n is van z&#233;rushely.</li>
+                <li>Elfelejted leolvasni az y-metszetet (<span class="formula-line">c</span>).</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi a tengely &#233;s a cs&#250;cs a <span class="formula-line">f(x) = x^2 + 4x + 1</span> f&#252;ggv&#233;nyn&#233;l?</li>
+            <li>Felfel&#233; vagy lefel&#233; ny&#237;lik a <span class="formula-line">f(x) = -2x^2 + 3x + 1</span> parabola?</li>
+            <li>Mennyi a y-metszet a <span class="formula-line">f(x) = 3x^2 - 7</span> f&#252;ggv&#233;nyn&#233;l?</li>
+            <li>H&#225;ny z&#233;rushely van, ha <span class="formula-line">D &lt; 0</span>?</li>
+            <li>Mi a cs&#250;cs a <span class="formula-line">f(x) = 2(x - 3)^2 + 1</span> alakn&#225;l?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A m&#225;sodfok&#250; f&#252;ggv&#233;ny alakja <span class="formula-line">f(x) = ax^2 + bx + c</span>.</li>
+            <li>A cs&#250;cs: <span class="formula-line">x_v = -b/(2a)</span>, <span class="formula-line">y_v = f(x_v)</span>.</li>
+            <li><span class="formula-line">a</span> el&#337;jele d&#246;nti el a nyitotts&#225;got.</li>
+            <li>A diszkrimin&#225;ns mutatja a z&#233;rushelyek sz&#225;m&#225;t.</li>
+            <li>Y-metszet: <span class="formula-line">f(0) = c</span>.</li>
+        </ul>
 </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -601,7 +617,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -645,7 +661,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

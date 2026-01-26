@@ -7,6 +7,47 @@ Ez a dokumentum a felület **kötelezően használandó** magyar szövegeit és 
 - Állapot- és hibaszövegek végén pont, kivéve a rövid visszajelzéseket (pl. „Helyes!”).
 - Rendszer-visszajelzésekben ne használj emojit.
 - Felhasználói instrukciókban **„nehézségi szint”** szerepeljen (nem „nehézség”).
+- Az app neve: **MatekMester** (egybeírt, nagy M betűvel).
+- Modulfülek fix címei: **Elmélet**, **Vizuális modell**, **Teszt**, **Gyakorlás**.
+- Quest Log megnevezése: **Küldetésnapló**.
+
+## Kulcsfogalmak és UI-címkék
+| Fogalom | Kötelező forma | Megjegyzés |
+| --- | --- | --- |
+| App név | MatekMester | Egybeírt, nagy M betűkkel. |
+| Quest Log | Küldetésnapló | Kerüld a „Quest log” formát. |
+| Quest | Küldetés | Küldetés elfogadása / aktív küldetés / kimaxolt küldetés. |
+| Character Sheet | Karakterlap | Avatarra kattintásnál ezt a címet használd. |
+| Settings | Beállítások | Settings overlay címe + gomb. |
+| Results | Eredményeim | Bal oldali gyorslink. |
+| Achievements | Achievementek | A többes szám így szerepel a UI-ban. |
+| Buffs | Buffok | Maradjon angol „buff”, magyar többessel. |
+| XP bar | XP sáv | „XP” mindig nagybetűvel. |
+
+## Modulhierarchia
+| Szint | Kötelező forma | Megjegyzés |
+| --- | --- | --- |
+| Main topic | Főtéma | Példa: „Geometria”. |
+| Subtopic | Altéma | Példa: „Alapfogalmak és Háromszögek”. |
+| Topic | Témakör | Egy konkrét modul címe. |
+| Modulzáró | Modulzáró | Főtéma záró tesztje. |
+| Témazáró | Témazáró | Altéma záró tesztje. |
+
+## Modulfülek
+| Fül | Kötelező forma | Megjegyzés |
+| --- | --- | --- |
+| Theory tab | Elmélet | Nem „Kulcsfogalmak”, nem „Miért”. |
+| Visual model tab | Vizuális modell | Diakritikával. |
+| Test tab | Teszt | Egységes felirat. |
+| Practice tab | Gyakorlás | Egységes felirat. |
+
+## Nehézségi szintek
+| Szint | Kötelező forma | Megjegyzés |
+| --- | --- | --- |
+| Easy | Könnyű | Kisbetűs változat állapotokban is ok. |
+| Normal | Normál | Magyar ékezet nélkül. |
+| Hard | Nehéz | Magyar ékezetekkel. |
+| Label | Nehézségi szint | Mindig így hivatkozz rá. |
 
 ## Gombfeliratok
 | Kulcs | Felirat | Megjegyzés |

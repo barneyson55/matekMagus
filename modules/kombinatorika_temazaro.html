@@ -476,32 +476,69 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Kombinatorika</h2>
-        <p>T&#233;maz&#225;r&#243; a permut&#225;ci&#243;k, vari&#225;ci&#243;k &#233;s kombin&#225;ci&#243;k t&#233;mak&#246;r&#233;b&#337;l.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a t&#233;maz&#225;r&#243; a kombinatorika legfontosabb eszk&#246;zeit foglalja &#246;ssze. A c&#233;l, hogy felismerd, mikor melyik k&#233;pletet kell haszn&#225;lni. A feladatok vegyesek, ez&#233;rt a d&#246;nt&#233;si l&#233;p&#233;sek kulcsfontoss&#225;g&#250;ak. Ha biztosan eld&#246;nt&#246;d a sorrendet &#233;s az ism&#233;tl&#233;st, k&#246;nnyebb lesz sz&#225;molni.</p>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett t&#233;mak&#246;r&#246;k</h3>
             <ul>
-                <li>Permut&#225;ci&#243;</li>
-<li>Vari&#225;ci&#243;</li>
-<li>Kombin&#225;ci&#243;</li>
+                <li>Permut&#225;ci&#243;k</li>
+                <li>Vari&#225;ci&#243;k (ism&#233;tl&#233;s n&#233;lk&#252;l &#233;s ism&#233;tl&#233;ssel)</li>
+                <li>Kombin&#225;ci&#243;k (ism&#233;tl&#233;s n&#233;lk&#252;l &#233;s ism&#233;tl&#233;ssel)</li>
+                <li>Binomi&#225;lis t&#233;tel &#233;s binomi&#225;lis egy&#252;tthat&#243;k</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">n! = 1&#183;2&#183;...&#183;n</span></li>
-<li><span class="formula-line">C(n,k) = n!/(k!(n&#8722;k)!)</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tanul&#225;si f&#243;kusz</h3>
-                <ul>
-                    <li>&#201;rtsd a defin&#237;ci&#243;kat &#233;s jel&#246;l&#233;seket.</li>
-                    <li>Gyakorold a tipikus feladatt&#237;pusokat.</li>
-                    <li>Ellen&#337;rizd a m&#233;rt&#233;kegys&#233;geket &#233;s a logik&#225;t.</li>
-                </ul>
-            </div>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Faktori&#225;lis:</b> n! = 1&#183;2&#183;...&#183;n, &#233;s 0! = 1.</li>
+            <li><b>Permut&#225;ci&#243;:</b> minden elem szerepel, a sorrend sz&#225;m&#237;t.</li>
+            <li><b>Vari&#225;ci&#243;:</b> k elemet v&#225;lasztasz &#233;s sorba rendezel, sorrend sz&#225;m&#237;t.</li>
+            <li><b>Kombin&#225;ci&#243;:</b> k elemet v&#225;lasztasz, sorrend nem sz&#225;m&#237;t.</li>
+            <li><b>Binomi&#225;lis egy&#252;tthat&#243;:</b> C(n,k) = n!/(k!(n-k)!).</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>&#214;sszegz&#337; p&#233;lda</h4>
+            <p>Egy 6 f&#337;s csapatb&#243;l kijel&#246;lsz 3 helyezettet (1., 2., 3.). H&#225;nyf&#233;lek&#233;ppen?</p>
+            <ol>
+                <li>A sorrend sz&#225;m&#237;t, ism&#233;tl&#233;s nincs.</li>
+                <li>Vari&#225;ci&#243; ism&#233;tl&#233;s n&#233;lk&#252;l: V(6,3) = 6&#183;5&#183;4.</li>
+                <li>Eredm&#233;ny: 120 lehet&#337;s&#233;g.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (d&#246;nt&#233;si l&#233;tr&#225;)</h3>
+            <ul>
+                <li>Minden elem szerepel? &#8594; Permut&#225;ci&#243;.</li>
+                <li>Csak k elemet v&#225;lasztasz? &#8594; Vari&#225;ci&#243; vagy kombin&#225;ci&#243;.</li>
+                <li>Sorrend sz&#225;m&#237;t? &#8594; Vari&#225;ci&#243;.</li>
+                <li>Sorrend nem sz&#225;m&#237;t? &#8594; Kombin&#225;ci&#243;.</li>
+            </ul>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Nem d&#246;nt&#246;d el, hogy a sorrend sz&#225;m&#237;t-e.</li>
+                <li>Ism&#233;tl&#233;ses feladatn&#225;l is a sima k&#233;pletet haszn&#225;lod.</li>
+                <li>Felcser&#233;led n &#233;s k szerep&#233;t.</li>
+                <li>Elfelejted a faktori&#225;lis oszt&#225;st (k! vagy ism&#233;tl&#337;d&#233;sek).</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mikor haszn&#225;lsz permut&#225;ci&#243;t?</li>
+            <li>Mi a k&#252;l&#246;nbs&#233;g vari&#225;ci&#243; &#233;s kombin&#225;ci&#243; k&#246;z&#246;tt?</li>
+            <li>Sz&#225;mold ki: V(8,2).</li>
+            <li>Mikor kell ism&#233;tl&#233;ses kombin&#225;ci&#243;t haszn&#225;lni?</li>
+            <li>Mit adnak a Pascal-h&#225;romsz&#246;g sorai?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A d&#246;nt&#233;s alapja: sorrend sz&#225;m&#237;t-e &#233;s van-e ism&#233;tl&#233;s.</li>
+            <li>Permut&#225;ci&#243;: minden elem, sorrend sz&#225;m&#237;t.</li>
+            <li>Vari&#225;ci&#243;: k elem, sorrend sz&#225;m&#237;t.</li>
+            <li>Kombin&#225;ci&#243;: k elem, sorrend nem sz&#225;m&#237;t.</li>
+            <li>A binomi&#225;lis egy&#252;tthat&#243;k C(n,k) alakban jelennek meg.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -546,7 +583,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="K&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="Norm&#225;l" type="button">Norm&#225;l</button>
@@ -596,7 +633,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="K&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="Norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="Neh&#233;z"> Neh&#233;z</label>

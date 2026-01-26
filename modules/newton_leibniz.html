@@ -485,36 +485,70 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Newton&#8211;Leibniz formula</h2>
-        <p>A Newton&#8211;Leibniz formula kapcsolatot teremt a deriv&#225;l&#225;s &#233;s az integr&#225;l&#225;s k&#246;z&#246;tt.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A Newton&#8211;Leibniz formula a hat&#225;rozott integr&#225;l kisz&#225;m&#237;t&#225;s&#225;nak kulcsa. Azt mondja ki, hogy ha ismered az integrandus primit&#237;v f&#252;ggv&#233;ny&#233;t, akkor el&#233;g a k&#233;t v&#233;gpontban ki&#233;rt&#233;kelni. &#205;gy a ter&#252;let- vagy &#246;sszv&#225;ltoz&#225;s-sz&#225;m&#237;t&#225;s gyors &#233;s biztos lesz. A formula a deriv&#225;l&#225;s &#233;s az integr&#225;l&#225;s kapcsolat&#225;t is megmutatja.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Newton&#8211;Leibniz formula:</b> <span class="formula-line">&#8747;_a^b f(x) dx = F(b) - F(a)</span>, ha <span class="formula-line">F'(x)=f(x)</span>.</li>
+            <li><b>Primit&#237;v f&#252;ggv&#233;ny:</b> az a <span class="formula-line">F(x)</span>, amelynek deriv&#225;ltja <span class="formula-line">f(x)</span>.</li>
+            <li><b>Integrandus:</b> az integr&#225;ljel alatt &#225;ll&#243; <span class="formula-line">f(x)</span>.</li>
+            <li><b>Als&#243;/fels&#337; hat&#225;r:</b> <span class="formula-line">a</span> &#233;s <span class="formula-line">b</span> a ki&#233;rt&#233;kel&#233;s v&#233;gpontjai.</li>
+            <li><b>&#193;lland&#243;:</b> a <span class="formula-line">+C</span> kiesik a kivon&#225;sban.</li>
+            <li><b>Nett&#243; ter&#252;let:</b> a tengely feletti r&#233;sz pozit&#237;v, alatta negat&#237;v.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapk&#233;plet</h3>
+            <h4>1. p&#233;lda &#8211; n&#233;gyzetes f&#252;ggv&#233;ny</h4>
+            <p>Sz&#225;mold ki: <span class="formula-line">&#8747;_0^2 x^2 dx</span>.</p>
+            <ol>
+                <li>Primit&#237;v: <span class="formula-line">F(x)=x^3/3</span>.</li>
+                <li>Ki&#233;rt&#233;kel&#233;s: <span class="formula-line">F(2)=8/3</span>, <span class="formula-line">F(0)=0</span>.</li>
+                <li>Eredm&#233;ny: <span class="formula-line">8/3</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; line&#225;ris f&#252;ggv&#233;ny</h4>
+            <p>Sz&#225;mold ki: <span class="formula-line">&#8747;_1^3 2x dx</span>.</p>
+            <ol>
+                <li>Primit&#237;v: <span class="formula-line">F(x)=x^2</span>.</li>
+                <li>Ki&#233;rt&#233;kel&#233;s: <span class="formula-line">F(3)=9</span>, <span class="formula-line">F(1)=1</span>.</li>
+                <li>Eredm&#233;ny: <span class="formula-line">9-1=8</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (mi&#233;rt el&#233;g a v&#233;gpont?)</h3>
             <ul>
-                <li><span class="formula-line">&#8747;_a^b f(x) dx = F(b) - F(a)</span>, ha <span class="formula-line">F'(x)=f(x)</span></li>
-                <li>A konstans kiesik a kivon&#225;sn&#225;l.</li>
-                <li>Csak a primit&#237;v &#233;rt&#233;k&#233;t sz&#225;moljuk.</li>
+                <li>K&#233;pzeld el, hogy az integr&#225;l sok kicsi t&#233;glalapot &#246;sszegez a g&#246;rbe alatt.</li>
+                <li>A primit&#237;v f&#252;ggv&#233;ny ezt az &#246;sszegz&#233;st "felhalmozza" egy magasabb g&#246;rb&#233;be.</li>
+                <li>A k&#233;t v&#233;gpont k&#252;l&#246;nbs&#233;ge pont ezt a felhalmozott &#246;sszeget adja vissza.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>Gyakorlati l&#233;p&#233;sek</h3>
-                <ul>
-                    <li>Adott a primit&#237;v f&#252;ggv&#233;ny F(x).</li>
-                    <li>Sz&#225;mold ki F(b) &#233;s F(a) &#233;rt&#233;k&#233;t.</li>
-                    <li>Vond ki &#337;ket: F(b) - F(a).</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>P&#233;ld&#225;k</h3>
-                <ul>
-                    <li>F(x)=x^2, [1,3] &#8594; 9 - 1 = 8</li>
-                    <li>F(x)=2x^3, [0,2] &#8594; 16</li>
-                </ul>
-            </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Az <span class="formula-line">f(x)</span>-et helyettes&#237;ted be <span class="formula-line">F(x)</span> helyett.</li>
+                <li>Csak az egyik v&#233;gpontot &#233;rt&#233;keled ki.</li>
+                <li>Felcser&#233;led a hat&#225;rokat, &#233;s rossz el&#337;jelet kapsz.</li>
+                <li>Benne hagyod a <span class="formula-line">+C</span>-t, pedig kiesik.</li>
+                <li>Nem ellen&#337;rz&#246;d, hogy a kiv&#225;lasztott <span class="formula-line">F</span> t&#233;nyleg primit&#237;v-e.</li>
+            </ul>
         </div>
-        <div class="card">
-            <h3>Megjegyz&#233;s</h3>
-            <p>A formula a hat&#225;rozott integr&#225;l leggyorsabb sz&#225;mol&#225;si m&#243;dszere.</p>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Sz&#225;mold ki: <span class="formula-line">&#8747;_1^3 2x dx</span>.</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">&#8747;_0^2 x^2 dx</span>.</li>
+            <li>Mi&#233;rt t&#369;nik el a <span class="formula-line">+C</span>?</li>
+            <li>Mit mutat meg a Newton&#8211;Leibniz formula a deriv&#225;l&#225;s &#233;s integr&#225;l&#225;s kapcsolat&#225;r&#243;l?</li>
+            <li>Mit jelent a nett&#243; ter&#252;let?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A Newton&#8211;Leibniz formula gyors&#237;tja a hat&#225;rozott integr&#225;l kisz&#225;m&#237;t&#225;s&#225;t.</li>
+            <li>Mindig primit&#237;v f&#252;ggv&#233;nyt haszn&#225;lsz, majd <span class="formula-line">F(b)-F(a)</span>-t sz&#225;molsz.</li>
+            <li>A <span class="formula-line">+C</span> kiesik a k&#252;l&#246;nbs&#233;gben.</li>
+            <li>A nett&#243; ter&#252;let figyelembe veszi az el&#337;jeleket.</li>
+            <li>A hat&#225;rok felcser&#233;l&#233;se el&#337;jelet v&#225;lt.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -566,7 +600,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -610,7 +644,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

@@ -499,50 +499,40 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>Tizedes t&#246;rtek, &#225;tv&#225;lt&#225;sok</h2>
-        <p>A tizedes t&#246;rtben a vessz&#337; ut&#225;ni helyi&#233;rt&#233;kek tizedek, sz&#225;zadok, ezredek. Ezeket b&#225;rmikor vissza tudjuk alak&#237;tani t&#246;rt alakba, vagy sz&#225;zal&#233;kban is kifejezhetj&#252;k.</p>
+        <h2>Tizedes törtek, átváltások</h2>
+        <h3>Rövid bevezetés (Mi ez? Mire jó?)</h3>
+        <p>A tizedes tört a törtek egyik hétköznapi formája: a tizedesjegyek a tized-, század- és ezredrészeket jelölik. Pénznél, méréseknél és arányoknál szinte mindig tizedes számot látsz. Ugyanazt az értéket tizedesben, törtben és százalékban is leírhatod. Ha biztosan tudod a helyiértékeket és az átváltás lépéseit, a feladatok gyorsan mennek.</p>
+        <h3>Alapfogalmak / definíciók</h3>
+        <ul>
+            <li><b>Tizedes tört:</b> tizedespontos szám, pl. 0.375.</li>
+            <li><b>Tizedesjegy:</b> a tizedespont utáni számjegyek.</li>
+            <li><b>Helyiérték:</b> tized (0.1), század (0.01), ezred (0.001).</li>
+            <li><b>Véges tizedes:</b> a tört nevezője csak 2 és 5 prímtényezőkből áll.</li>
+            <li><b>Végtelen szakaszos tizedes:</b> ismétlődő mintázatú tizedes (pl. 1/3 = 0.333...).</li>
+            <li><b>Átváltás tizedesből törtbe:</b> a tizedesjegyek száma adja a nevezőt (10, 100, 1000).</li>
+            <li><b>Százalék:</b> p% = p/100, ezért tizedesből százalékhoz szorozz 100-zal.</li>
+        </ul>
+        <h3>Lépésről lépésre példa (1–2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapfogalmak</h3>
-            <ul>
-                <li><b>Helyi&#233;rt&#233;k</b>: 0.3 = 3 tized, 0.07 = 7 sz&#225;zad.</li>
-                <li><b>Tizedesb&#337;l t&#246;rt</b>: a tizedesjegyek sz&#225;ma adja a nevez&#337;t (10, 100, 1000).</li>
-                <li><b>Sz&#225;zal&#233;k</b>: a tizedest 100-zal szorozzuk.</li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Tizedes &#8594; t&#246;rt</h3>
-                <ul>
-                    <li>Szorozd fel 10, 100 vagy 1000-rel, majd egyszer&#369;s&#237;ts.</li>
-                    <li>P&#233;lda: <span class="formula-line">0.375 = 375/1000 = 3/8</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Kerek&#237;t&#233;s</h3>
-                <ul>
-                    <li>N&#233;zd meg a k&#246;vetkez&#337; jegyet: 0-4 lefel&#233;, 5-9 felfel&#233; kerek&#237;t.</li>
-                    <li>P&#233;lda: <span class="formula-line">0.376 &#8594; 0.38 (k&#233;t tizedes)</span></li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>V&#233;ges vagy v&#233;gtelen?</h3>
-            <ul>
-                <li>V&#233;ges tizedes akkor lesz, ha a t&#246;rt nevez&#337;je csak 2-es &#233;s 5-&#246;s pr&#237;mt&#233;nyez&#337;kb&#337;l &#225;ll.</li>
-                <li>P&#233;lda: <span class="formula-line">3/20 = 0.15</span>, de <span class="formula-line">1/3 = 0.333...</span></li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott példa</h3>
-            <p>0,375 átalakítása tört alakba:</p>
+            <h4>1. példa – tizedes -> tört</h4>
+            <p>Alakítsd át: 0.375 tört alakba.</p>
             <ol>
-                <li>0,375 = 375/1000.</li>
+                <li>Három tizedesjegy van, ezért a nevező 1000.</li>
+                <li>0.375 = 375/1000.</li>
                 <li>Egyszerűsítés: 375/1000 = 3/8.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>Ábra: tized–század–ezred</h3>
+            <h4>2. példa – tört -> tizedes -> százalék</h4>
+            <p>Alakítsd át: 7/20 tizedesre és százalékra.</p>
+            <ol>
+                <li>Bővítés 100-ra: 7/20 = 35/100.</li>
+                <li>Tizedes alak: 35/100 = 0.35.</li>
+                <li>Százalék: 0.35 = 35%.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizuális magyarázat (helyiérték tábla)</h3>
             <table style="border-collapse: collapse; width: 100%; max-width: 360px; text-align: center;">
                 <tr>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">Egész</th>
@@ -551,15 +541,41 @@
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">Ezred</th>
                 </tr>
                 <tr>
-                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">0</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">2</td>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px;">3</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">4</td>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px;">7</td>
-                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">5</td>
                 </tr>
             </table>
-            <p style="font-size: 0.95em; color: var(--text-light);">A 0,375-ben a 3 tized, 7 század, 5 ezred.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A 2.347-ben a 2 az egész, a 3 tized, a 4 század, a 7 ezred.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hibák / tévhitek</h3>
+            <ul>
+                <li>Rosszul számolod a tizedesjegyeket, ezért hibás nevezőt kapsz.</li>
+                <li>Nem egyszerűsíted a törtet az átváltás végén.</li>
+                <li>Kerekítésnél nem a következő jegyet nézed.</li>
+                <li>0.3-at 3%-nak gondolod (valójában 30%).</li>
+                <li>A feladatokban tizedest ponttal írunk (pl. 0.75), ezt ne keverd a vesszővel.</li>
+            </ul>
+        </div>
+        <h3>Mini önellenőrzés (válasz nélkül)</h3>
+        <ul>
+            <li>Írd fel tört alakban: 0.48.</li>
+            <li>Írd fel tizedesben: 3/8.</li>
+            <li>Kerekítsd 12.346-ot két tizedesre.</li>
+            <li>Melyik nagyobb: 0.6 vagy 0.58?</li>
+            <li>Írd fel százalékban: 0.075.</li>
+        </ul>
+        <h3>Összefoglaló</h3>
+        <ul>
+            <li>A tizedesjegyek a helyiértékeket mutatják (tized, század, ezred).</li>
+            <li>Tizedesből törtbe: nevező 10<sup>n</sup>, majd egyszerűsítés.</li>
+            <li>Százalékhoz szorozz 100-zal, tizedeshez oszd 100-zal.</li>
+            <li>Véges tizedes akkor lesz, ha a nevező csak 2 és 5 prímtényezős.</li>
+            <li>Kerekítésnél mindig a következő jegy dönt.</li>
+        </ul>
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -624,7 +640,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -668,7 +684,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

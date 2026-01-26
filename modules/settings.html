@@ -80,6 +80,7 @@
             display: flex;
             gap: 20px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         .theme-option {
             padding: 15px;
@@ -87,10 +88,18 @@
             border-radius: 8px;
             cursor: pointer;
             transition: border-color 0.2s;
+            background: #fff;
+            text-align: left;
+            min-width: 180px;
+            flex: 1 1 180px;
         }
         .theme-option.selected {
             border-color: #4338ca;
             background: #eef2ff;
+        }
+        .theme-option:focus-visible {
+            outline: 2px solid #4338ca;
+            outline-offset: 2px;
         }
         .theme-option h3 {
             margin: 0 0 5px 0;
@@ -139,20 +148,25 @@
         .save-btn:hover {
             background: #3730a3;
         }
-        .reset-btn {
-            background: #dc2626;
-            color: white;
-            border: none;
+        .cancel-btn {
+            background: #eef2ff;
+            color: #312e81;
+            border: 1px solid #c7d2fe;
             padding: 12px 24px;
             border-radius: 8px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
-            margin-left: 10px;
+            transition: background 0.2s, border-color 0.2s;
         }
-        .reset-btn:hover {
-            background: #b91c1c;
+        .cancel-btn:hover {
+            background: #e0e7ff;
+            border-color: #a5b4fc;
+        }
+        .settings-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
         }
     
         /* Touch targets */
@@ -166,29 +180,37 @@
     <div class="card">
         <div class="pill"> Beállítások</div>
         <p>
-            Testreszabhatja a Matek Mester megjelenését saját ízlése szerint. Válasszon színsémát, témát vagy töltse fel saját hátterét.
+            Testreszabhatod a MatekMester megjelenését saját ízlésed szerint. Válassz témát, majd finomhangold a színeket vagy tölts fel saját hátteret.
         </p>
 
         <div class="settings-section">
-            <h2>Témák</h2>
-            <div class="theme-selector">
-                <div class="theme-option" data-theme="default">
-                    <h3>Alapértelmezett</h3>
-                    <p>Világos téma, klasszikus színek</p>
-                </div>
-                <div class="theme-option" data-theme="dark">
-                    <h3>Sötét mód</h3>
-                    <p>Könnyebb a szemnek sötét környezetben</p>
-                </div>
-                <div class="theme-option" data-theme="math">
-                    <h3>Matematikai</h3>
-                    <p>Zöld-kék színséma matematikai érzéssel</p>
-                </div>
+            <h2>Skin &amp; Téma</h2>
+            <div class="theme-selector" role="list">
+                <button class="theme-option" type="button" data-theme="pergamen" aria-pressed="false" role="listitem">
+                    <h3>Pergamen</h3>
+                    <p>Meleg, klasszikus hangulat</p>
+                </button>
+                <button class="theme-option" type="button" data-theme="galaxis" aria-pressed="false" role="listitem">
+                    <h3>Galaxis</h3>
+                    <p>Mély kék, kozmikus akcentus</p>
+                </button>
+                <button class="theme-option" type="button" data-theme="futurisztikus" aria-pressed="false" role="listitem">
+                    <h3>Futurisztikus</h3>
+                    <p>Letisztult, neon jelleg</p>
+                </button>
+                <button class="theme-option" type="button" data-theme="dark" aria-pressed="false" role="listitem">
+                    <h3>Sötét / Éjszakai</h3>
+                    <p>Alacsony fény, fókuszált tanulás</p>
+                </button>
+                <button class="theme-option" type="button" data-theme="custom" aria-pressed="false" role="listitem">
+                    <h3>Egyéni</h3>
+                    <p>Saját színbeállításokkal</p>
+                </button>
             </div>
         </div>
 
         <div class="settings-section">
-            <h2>Szín testreszabás</h2>
+            <h2>Egyéni színek</h2>
             <div class="color-picker">
                 <label for="sidebar-bg">Oldalsáv háttér:</label>
                 <input type="color" id="sidebar-bg" value="#1e2124">
@@ -198,11 +220,11 @@
                 <input type="color" id="content-bg" value="#ffffff">
             </div>
             <div class="color-picker">
-                <label for="button-bg">Gomb háttér:</label>
+                <label for="button-bg">Elsődleges gomb:</label>
                 <input type="color" id="button-bg" value="#5865f2">
             </div>
             <div class="color-picker">
-                <label for="button-text">Gomb szöveg:</label>
+                <label for="button-text">Elsődleges szöveg:</label>
                 <input type="color" id="button-text" value="#ffffff">
             </div>
             <div class="color-picker">
@@ -224,8 +246,10 @@
             </div>
         </div>
 
-        <button class="save-btn" id="save-btn">Mentés</button>
-        <button class="reset-btn" id="reset-btn">Alaphelyzet</button>
+        <div class="settings-actions">
+            <button class="cancel-btn" id="cancel-btn">Mégse</button>
+            <button class="save-btn" id="save-btn">Mentés</button>
+        </div>
     </div>
 
     <script>
@@ -233,37 +257,57 @@
             return str.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase());
         }
 
-        const themes = {
-            default: {
-                sidebarBg: '#1e2124',
-                contentBg: '#ffffff',
-                buttonBg: '#5865f2',
+        const THEME_TOKENS = {
+            pergamen: {
+                themeId: 'pergamen',
+                sidebarBg: '#2f2a24',
+                contentBg: '#f6f1e7',
+                buttonBg: '#9b6b3d',
                 buttonText: '#ffffff',
-                linkColor: '#b9bbbe',
-                contentOverlay: 'rgba(255, 255, 255, 0.8)',
+                linkColor: '#d9c4a4',
+                contentOverlay: 'rgba(248, 242, 228, 0.75)',
+                contentBgImage: 'none'
+            },
+            galaxis: {
+                themeId: 'galaxis',
+                sidebarBg: '#141525',
+                contentBg: '#f5f7fb',
+                buttonBg: '#4f46e5',
+                buttonText: '#ffffff',
+                linkColor: '#9ea7ff',
+                contentOverlay: 'rgba(18, 20, 38, 0.7)',
+                contentBgImage: 'none'
+            },
+            futurisztikus: {
+                themeId: 'futurisztikus',
+                sidebarBg: '#1a1f26',
+                contentBg: '#f4f7fb',
+                buttonBg: '#19c37d',
+                buttonText: '#0b1016',
+                linkColor: '#7bdac0',
+                contentOverlay: 'rgba(235, 240, 244, 0.75)',
                 contentBgImage: 'none'
             },
             dark: {
-                sidebarBg: '#121212',
-                contentBg: '#1e2124',
-                buttonBg: '#bb86fc',
+                themeId: 'dark',
+                sidebarBg: '#1e2124',
+                contentBg: '#f5f7fb',
+                buttonBg: '#5865f2',
                 buttonText: '#ffffff',
-                linkColor: '#ffffff',
-                contentOverlay: 'rgba(30, 33, 36, 0.8)',
-                contentBgImage: 'none'
-            },
-            math: {
-                sidebarBg: '#f0f8ff',
-                contentBg: '#ffffff',
-                buttonBg: '#008000',
-                buttonText: '#ffffff',
-                linkColor: '#000080',
-                contentOverlay: 'rgba(255, 255, 255, 0.8)',
+                linkColor: '#b9bbbe',
+                contentOverlay: 'rgba(15, 18, 22, 0.7)',
                 contentBgImage: 'none'
             }
         };
+        const DEFAULT_THEME_ID = 'dark';
+        const BASE_SETTINGS = {
+            ...THEME_TOKENS[DEFAULT_THEME_ID],
+            themeId: DEFAULT_THEME_ID,
+            contentBgImage: 'none'
+        };
 
-        let currentSettings = {};
+        let savedSettings = { ...BASE_SETTINGS };
+        let draftSettings = { ...BASE_SETTINGS };
         let bgImageData = null;
 
         // Load settings on page load via parent window
@@ -273,20 +317,23 @@
 
         window.addEventListener('message', (event) => {
             if (event.data.type === 'apply-settings' && event.data.settings) {
-                currentSettings = { ...event.data.settings };
-                applySettingsToUI(currentSettings);
+                savedSettings = normalizeSettings(event.data.settings);
+                draftSettings = { ...savedSettings };
+                applySettingsToUI(draftSettings);
             }
         });
 
         // Theme selection
         document.querySelectorAll('.theme-option').forEach(option => {
             option.addEventListener('click', () => {
-                document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('selected'));
-                option.classList.add('selected');
-                const theme = themes[option.dataset.theme];
-                applyThemeToUI(theme);
-                currentSettings = { ...theme };
-                bgImageData = null;
+                const themeId = option.dataset.theme;
+                if (!themeId) return;
+                if (themeId === 'custom') {
+                    setThemeSelection('custom');
+                    draftSettings = { ...draftSettings, themeId: 'custom' };
+                    return;
+                }
+                applyThemeSelection(themeId);
             });
         });
 
@@ -295,8 +342,8 @@
             picker.addEventListener('input', (e) => {
                 const key = toCamelCase(e.target.id);
                 console.log('Color picker changed:', key, e.target.value);
-                currentSettings[key] = e.target.value;
-                document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('selected'));
+                draftSettings = { ...draftSettings, [key]: e.target.value, themeId: 'custom' };
+                setThemeSelection('custom');
             });
         });
 
@@ -309,7 +356,8 @@
                     bgImageData = event.target.result;
                     document.getElementById('bg-preview').style.backgroundImage = `url(${bgImageData})`;
                     document.getElementById('bg-preview').textContent = '';
-                    currentSettings.contentBgImage = `url(${bgImageData})`;
+                    draftSettings = { ...draftSettings, contentBgImage: `url(${bgImageData})`, themeId: 'custom' };
+                    setThemeSelection('custom');
                 };
                 reader.readAsDataURL(file);
             }
@@ -317,20 +365,32 @@
 
         // Save button
         document.getElementById('save-btn').addEventListener('click', () => {
-            console.log('Saving settings:', currentSettings);
-            window.parent.postMessage({ type: 'save-settings', settings: currentSettings }, '*');
-            alert('Beállítások elmentve!');
+            console.log('Saving settings:', draftSettings);
+            window.parent.postMessage({ type: 'save-settings', settings: draftSettings }, '*');
+            savedSettings = { ...draftSettings };
+            alert('Beállítások elmentve.');
         });
 
-        // Reset button
-        document.getElementById('reset-btn').addEventListener('click', () => {
-            currentSettings = { ...themes.default };
-            applySettingsToUI(currentSettings);
+        // Cancel button
+        document.getElementById('cancel-btn').addEventListener('click', () => {
+            draftSettings = { ...savedSettings };
             bgImageData = null;
-            document.getElementById('bg-preview').style.backgroundImage = 'none';
-            document.getElementById('bg-preview').textContent = 'Nincs háttérkép kiválasztva.';
-            document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('selected'));
+            applySettingsToUI(draftSettings);
+            const bgInput = document.getElementById('bg-file');
+            if (bgInput) bgInput.value = '';
         });
+
+        function normalizeSettings(settings) {
+            if (!settings || typeof settings !== 'object') {
+                return { ...BASE_SETTINGS };
+            }
+            const themeBase = settings.themeId && THEME_TOKENS[settings.themeId]
+                ? THEME_TOKENS[settings.themeId]
+                : BASE_SETTINGS;
+            const merged = { ...themeBase, ...settings };
+            if (!merged.contentBgImage) merged.contentBgImage = 'none';
+            return merged;
+        }
 
         function applySettingsToUI(settings) {
             document.getElementById('sidebar-bg').value = settings.sidebarBg || '#1e2124';
@@ -339,23 +399,32 @@
             document.getElementById('button-text').value = settings.buttonText || '#ffffff';
             document.getElementById('link-color').value = settings.linkColor || '#b9bbbe';
             document.getElementById('content-overlay').value = settings.contentOverlay || 'rgba(255, 255, 255, 0.8)';
+            const preview = document.getElementById('bg-preview');
             if (settings.contentBgImage && settings.contentBgImage !== 'none') {
-                document.getElementById('bg-preview').style.backgroundImage = settings.contentBgImage;
-                document.getElementById('bg-preview').textContent = '';
+                preview.style.backgroundImage = settings.contentBgImage;
+                preview.textContent = '';
+            } else {
+                preview.style.backgroundImage = 'none';
+                preview.textContent = 'Nincs háttérkép kiválasztva.';
             }
+            const themeId = settings.themeId && THEME_TOKENS[settings.themeId] ? settings.themeId : 'custom';
+            setThemeSelection(themeId);
         }
 
-        function applyThemeToUI(theme) {
-            document.getElementById('sidebar-bg').value = theme.sidebarBg;
-            document.getElementById('content-bg').value = theme.contentBg;
-            document.getElementById('button-bg').value = theme.buttonBg;
-            document.getElementById('button-text').value = theme.buttonText;
-            document.getElementById('link-color').value = theme.linkColor;
-            document.getElementById('content-overlay').value = theme.contentOverlay;
-            document.getElementById('bg-preview').style.backgroundImage = theme.bgImage;
-            if (theme.bgImage === 'none') {
-                document.getElementById('bg-preview').textContent = 'Nincs háttérkép kiválasztva.';
-            }
+        function setThemeSelection(themeId) {
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                const isSelected = opt.dataset.theme === themeId;
+                opt.classList.toggle('selected', isSelected);
+                opt.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+            });
+        }
+
+        function applyThemeSelection(themeId) {
+            const theme = THEME_TOKENS[themeId];
+            if (!theme) return;
+            const preservedBg = draftSettings.contentBgImage || 'none';
+            draftSettings = { ...draftSettings, ...theme, themeId, contentBgImage: preservedBg };
+            applySettingsToUI(draftSettings);
         }
     </script>
 </body>

@@ -174,11 +174,29 @@ details[open] > summary::before { transform: rotate(90deg); }
 details details { margin-left: 15px; }
 details details ul { margin-left: 15px; }
 details > ul { list-style: none; margin-left: 20px; margin-top: 5px; padding-left: 5px; border-left: 1px solid var(--bg-medium); }
-.module-link { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; color: var(--link-color); text-decoration: none; border-radius: 5px; margin-bottom: 4px; font-size: 15px; transition: background-color 0.2s, color 0.2s; width: 100%; min-height: var(--touch-target-size); }
+.module-link {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 8px;
+    padding: 8px 10px;
+    color: var(--link-color);
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 4px;
+    font-size: 15px;
+    transition: background-color 0.2s, color 0.2s;
+    width: 100%;
+    min-height: var(--touch-target-size);
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
 .module-link.main-topic { color: var(--text-primary); font-weight: 500; padding: 10px 5px; margin-bottom: 0; justify-content: flex-start; }
 .module-link.main-topic:hover { background-color: transparent; }
 .module-link:hover { background-color: var(--bg-medium); color: var(--text-primary); }
 .module-link.active { background-color: var(--button-bg); color: var(--button-text) !important; }
+.quick-link { place-items: center; text-align: center; }
+summary .module-link { flex: 1 1 auto; min-width: 0; }
 .status { width: 14px; height: 14px; border-radius: 50%; transition: background-color 0.3s, box-shadow 0.3s; flex-shrink: 0; margin-left: 10px; }
 .grade-0 { background-color: var(--grade-0); box-shadow: none; }
 .grade-1 { background-color: var(--grade-1); box-shadow: 0 0 6px var(--grade-1-shadow); }

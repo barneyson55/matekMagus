@@ -476,32 +476,71 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Algebra &#233;s F&#252;ggv&#233;nyek</h2>
-        <p>Modulz&#225;r&#243; &#246;sszefoglal&#243; az algebrai m&#369;veletekr&#337;l, egyenletekr&#337;l &#233;s f&#252;ggv&#233;nyfogalmakr&#243;l.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Ez a modulz&#225;r&#243; &#246;sszefoglalja az algebrai kifejez&#233;sek, egyenletek &#233;s f&#252;ggv&#233;nyek legfontosabb l&#233;p&#233;seit. A c&#233;l, hogy gyorsan felismerd, mit kell egyszer&#369;s&#237;teni, mit kell megoldani, &#233;s hogyan ellen&#337;rizd az eredm&#233;nyt. A feladatokban gyakran keverednek a polinomok, a nevezetes azonoss&#225;gok &#233;s a f&#252;ggv&#233;ny&#233;rt&#233;kek. Ha ezt az &#246;sszefoglal&#243;t stabilan tudod, k&#246;nnyebben &#237;rsz &#246;sszetett tesztfeladatokat is.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Algebrai kifejez&#233;s:</b> sz&#225;mok, bet&#369;k &#233;s m&#369;veletek egy&#252;ttese.</li>
+            <li><b>Polinom:</b> &#246;sszead&#225;sb&#243;l &#225;ll&#243; kifejez&#233;s, nemnegat&#237;v eg&#233;sz kitev&#337;kkel.</li>
+            <li><b>Azonoss&#225;g:</b> minden x-re igaz egyenl&#337;s&#233;g.</li>
+            <li><b>Egyenlet:</b> csak bizonyos x-ekre igaz, ezek a megold&#225;sok.</li>
+            <li><b>Diszkrimin&#225;ns:</b> D = b&#178; &#8722; 4ac a m&#225;sodfok&#250; egyenletn&#233;l.</li>
+            <li><b>F&#252;ggv&#233;ny:</b> hozz&#225;rendel&#233;s, ami minden x-hez egy f(x) &#233;rt&#233;ket ad.</li>
+            <li><b>Z&#233;rushely:</b> ahol f(x) = 0.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Modulz&#225;r&#243; t&#233;mak&#246;r&#246;k</h3>
+            <h3>Lefedett alt&#233;m&#225;k &#233;s t&#233;mak&#246;r&#246;k</h3>
             <ul>
-                <li>Algebrai kifejez&#233;sek &#233;s azonoss&#225;gok</li>
-<li>Egyenletek, egyenl&#337;tlens&#233;gek</li>
-<li>F&#252;ggv&#233;nyek alapfogalmai</li>
+                <li><b>Algebrai kifejez&#233;sek &#233;s azonoss&#225;gok:</b> polinomok, nevezetes azonoss&#225;gok, algebrai t&#246;rtek.</li>
+                <li><b>Egyenletek &#233;s egyenl&#337;tlens&#233;gek:</b> line&#225;ris, m&#225;sodfok&#250;, param&#233;teres, speci&#225;lis egyenletek.</li>
+                <li><b>F&#252;ggv&#233;nyek:</b> alapfogalmak, jellemz&#233;s, transzform&#225;ci&#243;k, nevezetes f&#252;ggv&#233;nyek.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Kulcsk&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">ax + b = c</span></li>
-<li><span class="formula-line">(a + b)^2 = a^2 + 2ab + b^2</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tanul&#225;si f&#243;kusz</h3>
-                <ul>
-                    <li>&#201;rtsd a defin&#237;ci&#243;kat &#233;s jel&#246;l&#233;seket.</li>
-                    <li>Gyakorold a tipikus feladatt&#237;pusokat.</li>
-                    <li>Ellen&#337;rizd a m&#233;rt&#233;kegys&#233;geket &#233;s a logik&#225;t.</li>
-                </ul>
-            </div>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; azonoss&#225;g + egyenlet</h4>
+            <p>Oldd meg: (x + 2)&#178; &#8722; (x &#8722; 2)&#178; = 16.</p>
+            <ol>
+                <li>Bontsd ki: (x&#178; + 4x + 4) &#8722; (x&#178; &#8722; 4x + 4) = 8x.</li>
+                <li>&#205;gy 8x = 16.</li>
+                <li>Oszt&#225;s 8-cal: x = 2.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; f&#252;ggv&#233;ny&#233;rt&#233;k &#233;s z&#233;rushely</h4>
+            <p>Adott f(x) = 2x &#8722; 6. Sz&#225;mold ki f(4)-et &#233;s a z&#233;rushelyet.</p>
+            <ol>
+                <li>Helyettes&#237;t&#233;s: f(4) = 2&#183;4 &#8722; 6 = 2.</li>
+                <li>Z&#233;rushely: 2x &#8722; 6 = 0.</li>
+                <li>2x = 6 &#8594; x = 3.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Azonoss&#225;got egyenletk&#233;nt kezeled, &#233;s feleslegesen keresel megold&#225;st.</li>
+                <li>Kibont&#225;sn&#225;l elrontod az el&#337;jeleket, f&#337;leg (a &#8722; b)&#178; eset&#233;n.</li>
+                <li>M&#225;sodfok&#250;n&#225;l hib&#225;san sz&#225;molod a diszkrimin&#225;nst (b&#178; &#8722; 4ac).</li>
+                <li>F&#252;ggv&#233;ny z&#233;rushely&#233;n&#233;l nem &#225;ll&#237;tod f(x) = 0-ra.</li>
+                <li>Algebrai t&#246;rtn&#233;l elfelejted a tiltott &#233;rt&#233;ket.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Egyszer&#369;s&#237;tsd: (x + 3)&#178; &#8722; (x &#8722; 3)&#178;.</li>
+            <li>Oldd meg: 3x &#8722; 7 = 11.</li>
+            <li>Mi a z&#233;rushelye f(x) = &#8722;2x + 8 f&#252;ggv&#233;nynek?</li>
+            <li>Mikor van k&#233;t val&#243;s gy&#246;ke a m&#225;sodfok&#250; egyenletnek?</li>
+            <li>Melyik azonoss&#225;g illik a&#178; &#8722; b&#178; alakra?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Ismerd fel, hogy azonoss&#225;ggal, egyenlettel vagy f&#252;ggv&#233;nnyel dolgozol.</li>
+            <li>Rendezd a polinomokat azonos fok szerint, majd egyszer&#369;s&#237;ts.</li>
+            <li>M&#225;sodfok&#250;n&#225;l sz&#225;mold a diszkrimin&#225;nst, &#233;s ellen&#337;rizd a gy&#246;k&#246;ket.</li>
+            <li>F&#252;ggv&#233;nyn&#233;l sz&#225;molj &#233;rt&#233;ket &#233;s keresd a z&#233;rushelyet.</li>
+            <li>Figyelj az el&#337;jelekre &#233;s a tiltott &#233;rt&#233;kekre.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -586,7 +625,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szintek:</span>
             <label><input class="practice-difficulty" type="checkbox" value="K&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="Norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="Neh&#233;z"> Neh&#233;z</label>

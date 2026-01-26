@@ -484,27 +484,66 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>K&#233;t alakzat metsz&#233;spontja</h2>
-        <p>A metsz&#233;spont koordin&#225;t&#225;i az egyenletek egyidej&#369; megold&#225;s&#225;val ad&#243;dnak.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>K&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">K&#233;t egyenes: egyenletrendszer megold&#225;sa.</span></li>
-<li><span class="formula-line">F&#252;gg&#337;leges egyenes: x = c, helyettes&#237;tsd be.</span></li>
-<li><span class="formula-line">Elt&#233;r&#337; meredeks&#233;g &#8594; egy metsz&#233;spont.</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>El&#337;sz&#246;r x-et vagy y-t fejezz ki.</li>
-<li>Ha m1 = m2 &#233;s b1 &#8800; b2, nincs metsz&#233;spont.</li>
-<li>Az x koordin&#225;t&#225;t mindig vissza kell helyettes&#237;teni.</li>
-                </ul>
-            </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Metsz&#233;spontnak azt a pontot nevezz&#252;k, ami mindk&#233;t alakzaton rajta van. Koordin&#225;tageometri&#225;ban ezt &#225;ltal&#225;ban &#250;gy tal&#225;lod meg, hogy az alakzatok egyenleteit egy&#252;tt oldod meg. Az eredm&#233;ny lehet 0, 1 vagy 2 pont, att&#243;l f&#252;gg&#337;en, hogyan helyezkednek el az alakzatok. Ez a tud&#225;s kell egyenes&#8211;egyenes, egyenes&#8211;k&#246;r &#233;s k&#246;r&#8211;k&#246;r feladatokhoz.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Metsz&#233;spont:</b> k&#246;z&#246;s pont, amely mindk&#233;t egyenletet kiel&#233;g&#237;ti.</li>
+            <li><b>Egyenletrendszer:</b> a k&#233;t alakzat egyenleteit egyszerre oldod meg.</li>
+            <li><b>Helyettes&#237;t&#233;s:</b> az egyik egyenletb&#337;l kifejezett <span class="formula-line">y</span>-t be&#237;rod a m&#225;sikba.</li>
+            <li><b>Metsz&#233;spontok sz&#225;ma:</b> lehet 0 (nincs), 1 (&#233;rint&#233;s) vagy 2 (metsz&#233;s).</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; k&#233;t egyenes metsz&#233;se</h4>
+            <p>Adott: <span class="formula-line">y = 2x + 1</span> &#233;s <span class="formula-line">y = -x + 4</span>.</p>
+            <ol>
+                <li>Egyenl&#337;v&#233; tessz&#252;k: <span class="formula-line">2x + 1 = -x + 4</span>.</li>
+                <li>Megold&#225;s: <span class="formula-line">3x = 3</span> &#8594; <span class="formula-line">x = 1</span>.</li>
+                <li>Behelyettes&#237;t&#233;s: <span class="formula-line">y = 2 * 1 + 1 = 3</span>.</li>
+                <li>Metsz&#233;spont: <span class="formula-line">(1, 3)</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; egyenes &#233;s k&#246;r</h4>
+            <p>Adott: <span class="formula-line">y = 1</span> &#233;s <span class="formula-line">x^2 + y^2 = 5</span>.</p>
+            <ol>
+                <li>Helyettes&#237;t&#233;s: <span class="formula-line">x^2 + 1 = 5</span>.</li>
+                <li>Megold&#225;s: <span class="formula-line">x^2 = 4</span> &#8594; <span class="formula-line">x = 2</span> vagy <span class="formula-line">x = -2</span>.</li>
+                <li>Metsz&#233;spontok: <span class="formula-line">(2, 1)</span> &#233;s <span class="formula-line">(-2, 1)</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (lehets&#233;ges esetek)</h3>
+            <ul>
+                <li><b>K&#233;t egyenes:</b> p&#225;rhuzamos &#8594; 0 pont, metsz&#337; &#8594; 1 pont, azonos &#8594; v&#233;gtelen pont.</li>
+                <li><b>Egyenes &#233;s k&#246;r:</b> k&#237;v&#252;l &#8594; 0 pont, &#233;rint&#337; &#8594; 1 pont, metsz&#337; &#8594; 2 pont.</li>
+                <li><b>K&#233;t k&#246;r:</b> k&#252;l&#246;n &#8594; 0 pont, &#233;rint&#337; &#8594; 1 pont, metsz&#337; &#8594; 2 pont.</li>
+            </ul>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Csak egy megold&#225;st &#237;rsz fel, pedig kett&#337; is lehet.</li>
+                <li>Nem ellen&#337;rz&#246;d a kapott pontot mindk&#233;t egyenletben.</li>
+                <li>Elrontod az el&#337;jeleket a helyettes&#237;t&#233;sn&#233;l.</li>
+                <li>Nem veszed &#233;szre, ha nincs val&#243;s metsz&#233;spont.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Keresd meg: <span class="formula-line">y = x</span> &#233;s <span class="formula-line">y = -x + 2</span> metsz&#233;spontja.</li>
+            <li>Metszik-e egym&#225;st: <span class="formula-line">x^2 + y^2 = 4</span> &#233;s <span class="formula-line">y = 3</span>?</li>
+            <li>H&#225;ny metsz&#233;spont lehet k&#233;t k&#246;r k&#246;z&#246;tt?</li>
+            <li>Mit jelent az, hogy k&#233;t egyenes azonos?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Metsz&#233;spontot egyenletrendszer megold&#225;s&#225;val kapsz.</li>
+            <li>Az eredm&#233;ny lehet 0, 1 vagy 2 pont (n&#233;ha v&#233;gtelen).</li>
+            <li>Mindig ellen&#337;rizd a kapott pontokat mindk&#233;t alakzatban.</li>
+        </ul>
     </div>
-
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
         <p>A metsz&#233;spont gyors kisz&#225;mol&#225;sa egyenletekb&#337;l.</p>
@@ -542,7 +581,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -586,7 +625,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

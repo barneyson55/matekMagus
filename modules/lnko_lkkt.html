@@ -505,77 +505,91 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>LNKO &#233;s LKKT</h2>
-        <p>A legnagyobb k&#246;z&#246;s oszt&#243; (LNKO) &#233;s a legkisebb k&#246;z&#246;s t&#246;bbsz&#246;r&#246;s (LKKT) gyorsan megmutatja, hogyan viszonyul k&#233;t sz&#225;m egym&#225;shoz. A j&#243; megold&#225;shoz el&#337;sz&#246;r megtal&#225;ljuk a k&#246;z&#246;s oszt&#243;kat, majd ebb&#337;l k&#246;vetkezik a k&#246;z&#246;s t&#246;bbsz&#246;r&#246;s.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A legnagyobb k&#246;z&#246;s oszt&#243; (LNKO) &#233;s a legkisebb k&#246;z&#246;s t&#246;bbsz&#246;r&#246;s (LKKT) seg&#237;t, ha t&#246;rteket egyszer&#369;s&#237;tesz, k&#246;z&#246;s nevez&#337;t keresel, vagy id&#337;pontokat egyeztetsz. Az LNKO a k&#246;z&#246;s oszt&#243;k k&#246;z&#252;l a legnagyobb, az LKKT a k&#246;z&#246;s t&#246;bbsz&#246;r&#246;s&#246;k k&#246;z&#252;l a legkisebb. K&#233;t megb&#237;zhat&#243; m&#243;dszered van: pr&#237;mt&#233;nyez&#337;s felbont&#225;s &#233;s az euklideszi algoritmus. A k&#233;t &#233;rt&#233;k k&#246;z&#246;tt egyszer&#369; ellen&#337;rz&#337; kapcsolat is van.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Oszt&#243;:</b> d oszt&#243;ja n-nek, ha n = d * k (k eg&#233;sz).</li>
+            <li><b>T&#246;bbsz&#246;r&#246;s:</b> n a d t&#246;bbsz&#246;r&#246;se, ha n = d * k.</li>
+            <li><b>LNKO(a,b):</b> a legnagyobb k&#246;z&#246;s oszt&#243;.</li>
+            <li><b>LKKT(a,b):</b> a legkisebb k&#246;z&#246;s t&#246;bbsz&#246;r&#246;s.</li>
+            <li><b>Relat&#237;v pr&#237;m:</b> ha LNKO(a,b) = 1.</li>
+            <li><b>Pr&#237;mt&#233;nyez&#337;s felbont&#225;s:</b> a sz&#225;m pr&#237;mek szorzatak&#233;nt &#237;rhat&#243; fel.</li>
+            <li><b>Kapcsolat:</b> pozit&#237;v sz&#225;mokra LNKO(a,b) * LKKT(a,b) = a * b.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapfogalmak</h3>
-            <ul>
-                <li><b>LNKO(a,b)</b>: a legnagyobb olyan sz&#225;m, ami mindkett&#337;t osztja.</li>
-                <li><b>LKKT(a,b)</b>: a legkisebb olyan pozit&#237;v sz&#225;m, amit mindkett&#337; oszt.</li>
-                <li>Ha egyik sz&#225;m oszt&#243;ja a m&#225;siknak, akkor az LNKO a kisebbik, az LKKT a nagyobbik.</li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="theory-section">
-                <h3>Kapcsolatuk</h3>
-                <ul>
-                    <li>Pozit&#237;v sz&#225;mokra igaz: <span class="formula-line">LNKO(a,b) * LKKT(a,b) = a * b</span>.</li>
-                    <li>Ez seg&#237;t ellen&#337;rizni az eredm&#233;nyt: ha a szorzat stimmel, j&#243; es&#233;llyel helyes a p&#225;ros.</li>
-                </ul>
-            </div>
-            <div class="theory-section">
-                <h3>Euklideszi algoritmus</h3>
-                <ol>
-                    <li>Oszd el a nagyobbik sz&#225;mot a kisebbikkel.</li>
-                    <li>Ha a marad&#233;k 0, k&#233;sz vagy: a kisebbik az LNKO.</li>
-                    <li>Ha nem 0, akkor a marad&#233;kot oszd a kor&#225;bbi oszt&#243;val, &#233;s ism&#233;teld.</li>
-                </ol>
-            </div>
-        </div>
-        <div class="theory-section">
-            <h3>P&#233;lda</h3>
-            <p><span class="formula-line">a = 48, b = 18</span></p>
-            <ul>
-                <li>LNKO(48,18) = 6</li>
-                <li>LKKT(48,18) = 144</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>18 &#233;s 24 k&#246;z&#246;s oszt&#243;i k&#246;z&#252;l a legnagyobb &#233;s a legkisebb k&#246;z&#246;s t&#246;bbsz&#246;r&#246;s:</p>
+            <h4>1. p&#233;lda - pr&#237;mt&#233;nyez&#337;s felbont&#225;s</h4>
+            <p>Sz&#225;mold ki: LNKO(48, 18) &#233;s LKKT(48, 18).</p>
             <ol>
-                <li>18 = 2 &#183; 3&#178;, 24 = 2&#179; &#183; 3.</li>
-                <li>LNKO = 2&#185; &#183; 3&#185; = 6.</li>
-                <li>LKKT = 2&#179; &#183; 3&#178; = 72.</li>
+                <li>48 = 2^4 * 3, 18 = 2^1 * 3^2.</li>
+                <li>LNKO: a kisebb kitev&#337;k -> 2^1 * 3^1 = 6.</li>
+                <li>LKKT: a nagyobb kitev&#337;k -> 2^4 * 3^2 = 144.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: pr&#237;mt&#233;nyez&#337;s kitev&#337;k</h3>
+            <h4>2. p&#233;lda - euklideszi algoritmus</h4>
+            <p>Sz&#225;mold ki: LNKO(84, 30) &#233;s LKKT(84, 30).</p>
+            <ol>
+                <li>84 = 30 * 2 + 24.</li>
+                <li>30 = 24 * 1 + 6.</li>
+                <li>24 = 6 * 4 + 0, ez&#233;rt LNKO = 6.</li>
+                <li>LKKT = (84 * 30) / 6 = 420.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (pr&#237;mt&#233;nyez&#337;s t&#225;bl&#225;zat)</h3>
             <table style="border-collapse: collapse; width: 100%; max-width: 360px;">
                 <tr>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">Pr&#237;m</th>
+                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">48</th>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">18</th>
-                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">24</th>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">LNKO (min)</th>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">LKKT (max)</th>
                 </tr>
                 <tr>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">2</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">4</td>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">1</td>
-                    <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">3</td>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">1</td>
-                    <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">3</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">4</td>
                 </tr>
                 <tr>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">3</td>
-                    <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">2</td>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">1</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">2</td>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">1</td>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px; text-align: center;">2</td>
                 </tr>
             </table>
             <p style="font-size: 0.95em; color: var(--text-light);">LNKO-hoz a kisebb, LKKT-hez a nagyobb kitev&#337;t v&#225;lasztjuk.</p>
         </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Felcser&#233;led az LNKO-t &#233;s az LKKT-t.</li>
+                <li>Pr&#237;mt&#233;nyez&#337;kn&#233;l a nagyobb kitev&#337;t haszn&#225;lod LNKO-hoz.</li>
+                <li>Elfelejted ellen&#337;rizni: LNKO * LKKT = a * b.</li>
+                <li>Az euklideszi algoritmusban nem v&#225;rod meg a marad&#233;k 0-t.</li>
+                <li>0-val vagy negat&#237;v sz&#225;mmal sz&#225;molsz, pedig itt pozit&#237;v eg&#233;szekkel dolgozunk.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi az LNKO(36, 60)?</li>
+            <li>Mi az LKKT(12, 18)?</li>
+            <li>Mit jelent az, hogy k&#233;t sz&#225;m relat&#237;v pr&#237;m?</li>
+            <li>Sz&#225;mold ki LNKO(84, 30)-at euklideszi algoritmussal.</li>
+            <li>Hogyan ellen&#337;rz&#246;d gyorsan az LNKO &#233;s LKKT eredm&#233;ny&#233;t?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>LNKO: legnagyobb k&#246;z&#246;s oszt&#243;, LKKT: legkisebb k&#246;z&#246;s t&#246;bbsz&#246;r&#246;s.</li>
+            <li>Pr&#237;mt&#233;nyez&#337;s felbont&#225;ssal a kitev&#337;k min/max v&#225;laszt&#225;sa a kulcs.</li>
+            <li>Az euklideszi algoritmus gyors LNKO-m&#243;dszer.</li>
+            <li>Pozit&#237;v sz&#225;mokra LNKO * LKKT = a * b.</li>
+            <li>Az eredm&#233;nyt mindig &#233;rdemes visszaellen&#337;rizni.</li>
+        </ul>
 </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -627,7 +641,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -671,7 +685,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;gek:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szintek:</span>
             <label><input type="checkbox" class="practice-difficulty" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input type="checkbox" class="practice-difficulty" value="norm&#225;l"> Norm&#225;l</label>
             <label><input type="checkbox" class="practice-difficulty" value="neh&#233;z"> Neh&#233;z</label>
@@ -680,7 +694,7 @@
         <div id="practice-area" class="practice-area is-hidden">
             <div id="practice-question" class="practice-question"></div>
             <input type="text" id="practice-input" class="module-input" placeholder="V&#225;lasz...">
-            <button id="practice-check" class="btn btn-primary" type="button">Ellen&#337;rz&#233;s</button>
+            <button id="practice-check" class="btn btn-primary" type="button">V&#225;lasz elk&#252;ld&#233;se</button>
             <p id="practice-feedback"></p>
         </div>
     </div>

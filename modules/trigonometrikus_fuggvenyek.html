@@ -151,6 +151,42 @@
             animation: fadeIn 0.5s;
         }
 
+        @media (max-width: 600px) {
+            .tab-buttons {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                border-bottom: none;
+            }
+
+            .tab-button {
+                text-align: center;
+                padding: 10px 12px;
+            }
+
+            .tab-button::after {
+                bottom: 0;
+            }
+        }
+
+        @media (max-height: 480px) and (orientation: landscape) {
+            body {
+                padding: 24px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .tab-buttons {
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                margin-top: 20px;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -463,54 +499,36 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Trigonometrikus f&#252;ggv&#233;nyek</h2>
-        <p>A szinusz, koszinusz &#233;s tangens f&#252;ggv&#233;nyek periodikus modellek. A nevezetes sz&#246;gek &#233;rt&#233;kei seg&#237;tenek gyorsan megoldani a feladatokat.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A szinusz, koszinusz &#233;s tangens f&#252;ggv&#233;nyek periodikusak, ez&#233;rt hull&#225;mokat &#233;s forg&#225;sokat &#237;rnak le. Ilyen p&#233;ld&#225;ul a hang, a f&#233;ny vagy egy k&#246;rmozg&#225;s. A trigonometria alapja az egys&#233;gk&#246;r, ahol a sz&#246;gekhez &#233;rt&#233;keket rendel&#252;nk. Ha a nevezetes sz&#246;geket ismered, sok feladat gyorsan megoldhat&#243;.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Alap f&#252;ggv&#233;nyek:</b> <span class="formula-line">sin x</span>, <span class="formula-line">cos x</span>, <span class="formula-line">tan x = sin x / cos x</span>.</li>
+            <li><b>&#201;rt&#233;kk&#233;szlet:</b> <span class="formula-line">-1 &#8804; sin x &#8804; 1</span>, <span class="formula-line">-1 &#8804; cos x &#8804; 1</span>.</li>
+            <li><b>Peri&#243;dus:</b> <span class="formula-line">sin</span> &#233;s <span class="formula-line">cos</span> &#8211; 360&#176;, <span class="formula-line">tan</span> &#8211; 180&#176;.</li>
+            <li><b>Parit&#225;s:</b> <span class="formula-line">sin</span> &#233;s <span class="formula-line">tan</span> p&#225;ratlan, <span class="formula-line">cos</span> p&#225;ros.</li>
+            <li><b>Nem &#233;rtelmezett:</b> <span class="formula-line">tan x</span>, ha <span class="formula-line">cos x = 0</span>.</li>
+            <li><b>Nevezetes sz&#246;gek:</b> <span class="formula-line">30&#176;</span>, <span class="formula-line">45&#176;</span>, <span class="formula-line">60&#176;</span> &#8211; ezek &#233;rt&#233;kei alapok.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alap defin&#237;ci&#243;k</h3>
-            <ul>
-                <li><span class="formula-line">sin x</span> &#8211; szinusz, <span class="formula-line">cos x</span> &#8211; koszinusz, <span class="formula-line">tan x = sin x / cos x</span>.</li>
-                <li><span class="formula-line">-1 &#8804; sin x &#8804; 1</span>, <span class="formula-line">-1 &#8804; cos x &#8804; 1</span>.</li>
-                <li>A tangens ott nem &#233;rtelmezett, ahol <span class="formula-line">cos x = 0</span>.</li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>F&#337; tulajdons&#225;gok</h3>
-                <ul>
-                    <li>Peri&#243;dus: <strong>sin</strong> &#233;s <strong>cos</strong> &#8211; 360&deg;, <strong>tan</strong> &#8211; 180&deg;.</li>
-                    <li>Parit&#225;s: <span class="formula-line">sin</span> &#233;s <span class="formula-line">tan</span> p&#225;ratlan, <span class="formula-line">cos</span> p&#225;ros.</li>
-                    <li>Z&#233;rushelyek: <span class="formula-line">sin x = 0</span> akkor, ha <span class="formula-line">x = k&#183;180&deg;</span>.</li>
-                    <li><span class="formula-line">cos x = 0</span> ha <span class="formula-line">x = 90&deg; + k&#183;180&deg;</span>.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Nevezetes sz&#246;gek</h3>
-                <ul>
-                    <li><span class="formula-line">sin 30&deg; = 1/2</span>, <span class="formula-line">cos 60&deg; = 1/2</span>.</li>
-                    <li><span class="formula-line">sin 45&deg; = cos 45&deg; = &#8730;2/2</span>.</li>
-                    <li><span class="formula-line">tan 45&deg; = 1</span>, <span class="formula-line">tan 60&deg; = &#8730;3</span>.</li>
-                    <li>Negat&#237;v sz&#246;gekn&#233;l haszn&#225;ld a parit&#225;st.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Gyakorlati tippek</h3>
-            <ul>
-                <li>Ha nem eml&#233;kszel egy &#233;rt&#233;kre, bontsd fel 30&#8211;60&#8211;90 vagy 45&#8211;45&#8211;90 h&#225;romsz&#246;gre.</li>
-                <li>Peri&#243;dussal egyszer&#369;s&#237;tsd a nagy sz&#246;geket: <span class="formula-line">sin(390&deg;) = sin(30&deg;)</span>.</li>
-                <li>Tan f&#252;ggv&#233;nyn&#233;l figyelj az aszimpt&#243;t&#225;kra.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>sin(&#960;/6) &#233;rt&#233;ke:</p>
+            <h4>1. p&#233;lda &#8211; nevezetes sz&#246;g</h4>
+            <p>Sz&#225;mold ki: <span class="formula-line">sin 30&#176;</span> &#233;s <span class="formula-line">cos 60&#176;</span>.</p>
             <ol>
-                <li>&#960;/6 = 30&#176;.</li>
-                <li>sin(30&#176;) = 1/2.</li>
+                <li>Nevezetes sz&#246;gek t&#225;bl&#225;zata szerint <span class="formula-line">sin 30&#176; = 1/2</span>.</li>
+                <li>Ugyan&#237;gy <span class="formula-line">cos 60&#176; = 1/2</span>.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: egys&#233;gk&#246;r</h3>
+            <h4>2. p&#233;lda &#8211; peri&#243;dus haszn&#225;lata</h4>
+            <p>Sz&#225;mold ki: <span class="formula-line">sin(390&#176;)</span>.</p>
+            <ol>
+                <li>A peri&#243;dus 360&#176;, ez&#233;rt <span class="formula-line">390&#176; = 360&#176; + 30&#176;</span>.</li>
+                <li><span class="formula-line">sin(390&#176;) = sin(30&#176;) = 1/2</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (egys&#233;gk&#246;r)</h3>
             <svg viewBox="0 0 200 200" style="width: 100%; max-width: 260px; height: auto; display: block; margin: 10px 0;">
                 <circle cx="100" cy="100" r="70" fill="none" stroke="#4A55A2" stroke-width="2" />
                 <line x1="30" y1="100" x2="170" y2="100" stroke="#4A55A2" stroke-width="1" />
@@ -519,8 +537,34 @@
                 <circle cx="160" cy="65" r="4" fill="#E74C3C" />
                 <text x="150" y="55" font-size="12">30&#176;</text>
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">A pont y-koordin&#225;t&#225;ja adja a sin &#233;rt&#233;k&#233;t.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A pont y-koordin&#225;t&#225;ja adja a <span class="formula-line">sin</span> &#233;rt&#233;k&#233;t.</p>
         </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>&#214;sszekevered a fokot &#233;s a radi&#225;nt.</li>
+                <li>Elfelejted, hogy a <span class="formula-line">tan</span> nincs &#233;rtelmezve, ha <span class="formula-line">cos x = 0</span>.</li>
+                <li>Rossz el&#337;jelet adsz a m&#225;sodik vagy harmadik s&#237;knegyedben.</li>
+                <li>Nem haszn&#225;lod a peri&#243;dust nagy sz&#246;gekn&#233;l.</li>
+                <li>Azt hiszed, hogy a <span class="formula-line">sin</span> &#233;s <span class="formula-line">cos</span> &#233;rt&#233;ke nagyobb lehet 1-n&#233;l.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mennyi <span class="formula-line">tan 45&#176;</span>?</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">cos(300&#176;)</span> (cs&#246;kkentsd nevezetes sz&#246;gre).</li>
+            <li>Mikor z&#233;rus a <span class="formula-line">sin x</span>?</li>
+            <li>Melyik f&#252;ggv&#233;ny p&#225;ros &#233;s melyik p&#225;ratlan?</li>
+            <li>Mit jelent a peri&#243;dus a trigonometrikus f&#252;ggv&#233;nyekn&#233;l?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A <span class="formula-line">sin</span> &#233;s <span class="formula-line">cos</span> &#233;rt&#233;ke mindig -1 &#233;s 1 k&#246;z&#246;tt van.</li>
+            <li>A <span class="formula-line">tan</span> a <span class="formula-line">sin/cos</span> h&#225;nyadosa, ez&#233;rt vannak tiltott pontjai.</li>
+            <li>A periodicit&#225;s seg&#237;t nagy sz&#246;gek egyszer&#369;s&#237;t&#233;s&#233;ben.</li>
+            <li>Nevezetes sz&#246;gek gyors &#233;rt&#233;ket adnak.</li>
+            <li>Az egys&#233;gk&#246;r j&#243;l mutatja a szinusz &#233;s koszinusz jelent&#233;s&#233;t.</li>
+        </ul>
 </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -593,7 +637,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -637,7 +681,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

@@ -489,41 +489,79 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>Hatv&#225;ny, Gy&#246;k, Logaritmus</h2>
-        <p>A hatv&#225;nyoz&#225;s r&#246;vid&#237;ti az ism&#233;telt szorz&#225;st, a gy&#246;kvon&#225;s ennek inverze, a logaritmus pedig megadja, hogy milyen kitev&#337;re kell emelni az alapot egy adott sz&#225;mhoz.</p>
+        <h2>Hatvány, Gyök, Logaritmus</h2>
+        <h3>Rövid bevezetés (Mi ez? Mire jó?)</h3>
+        <p>Ebben az altémában három összetartozó műveletet tanulsz: a hatványozást, a gyökvonást és a logaritmust. A hatványozás ismételt szorzás, a gyökvonás ennek a visszafelé olvasása, a logaritmus pedig a kitevőt keresi. Sok feladatban egymásra épülnek, ezért fontos látni a kapcsolatot köztük. Ha az összefüggéseket érted, a számolás gyors és biztos lesz.</p>
+        <h3>Alapfogalmak / definíciók</h3>
+        <ul>
+            <li><b>Hatvány:</b> a<sup>n</sup> = a · a · ... · a (n-szer).</li>
+            <li><b>Alap és kitevő:</b> az alap a, a kitevő n.</li>
+            <li><b>Gyök:</b> n-edik gyök(b) = a, ha a<sup>n</sup> = b.</li>
+            <li><b>Logaritmus:</b> log<sub>a</sub> b = x, ha a<sup>x</sup> = b.</li>
+            <li><b>Kapcsolat:</b> a<sup>n</sup> = b ⇔ n-edik gyök(b) = a ⇔ log<sub>a</sub> b = n.</li>
+        </ul>
         <div class="learning-hint">
-            <h3>Alt&#233;ma t&#233;mak&#246;r&#246;k</h3>
+            <h4>Lefedett témakörök</h4>
             <ul>
-                <li>Hatv&#225;nyoz&#225;s azonoss&#225;gai</li>
-                <li>N&#233;gyzetgy&#246;k, n-edik gy&#246;k</li>
+                <li>Hatványozás azonosságai</li>
+                <li>Négyzetgyök, n-edik gyök</li>
                 <li>A logaritmus fogalma</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Hatv&#225;nyoz&#225;si szab&#225;lyok</h3>
-                <ul>
-                    <li><span class="formula-line">a^m &#215; a^n = a^(m+n)</span></li>
-                    <li><span class="formula-line">a^m / a^n = a^(m-n)</span></li>
-                    <li><span class="formula-line">(a^m)^n = a^(m&#183;n)</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Gy&#246;k &#233;s logaritmus</h3>
-                <ul>
-                    <li><span class="formula-line">n-edik gy&#246;k(a) = b</span> akkor, ha <span class="formula-line">b^n = a</span></li>
-                    <li><span class="formula-line">log_a(b) = x</span> akkor, ha <span class="formula-line">a^x = b</span></li>
-                </ul>
-            </div>
+        <h3>Lépésről lépésre példa (1–2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. példa – hatványozási szabály</h4>
+            <p>Számold ki: 2<sup>3</sup> · 2<sup>5</sup> / 2<sup>4</sup>.</p>
+            <ol>
+                <li>Az alap azonos, ezért a kitevőket összeadjuk/kivonjuk.</li>
+                <li>2<sup>3</sup> · 2<sup>5</sup> / 2<sup>4</sup> = 2<sup>3+5-4</sup> = 2<sup>4</sup>.</li>
+                <li>2<sup>4</sup> = 16.</li>
+            </ol>
         </div>
         <div class="learning-hint">
-            <h3>Tippek</h3>
+            <h4>2. példa – összegző kapcsolat</h4>
+            <p>Adott: 2<sup>5</sup> = 32. Írd fel gyök és logaritmus alakban.</p>
+            <ol>
+                <li>5. gyök(32) = 2, mert 2<sup>5</sup> = 32.</li>
+                <li>log<sub>2</sub> 32 = 5, mert 2<sup>5</sup> = 32.</li>
+                <li>Ugyanazt az összefüggést három alakban írtuk le.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizuális magyarázat (három alak)</h3>
             <ul>
-                <li>A hatv&#225;nyokhoz keresd a k&#246;z&#246;s alapot.</li>
-                <li>Gy&#246;kvon&#225;sn&#225;l ellen&#337;rizd: visszaemelve megkapod-e az eredeti sz&#225;mot.</li>
-                <li>Logaritmusn&#225;l mindig ellen&#337;rizd az alapot &#233;s az argumentumot.</li>
+                <li><span class="formula-line">a<sup>n</sup> = b</span></li>
+                <li><span class="formula-line">n-edik gyök(b) = a</span></li>
+                <li><span class="formula-line">log<sub>a</sub> b = n</span></li>
+            </ul>
+            <p style="font-size: 0.95em; color: var(--text-light);">Ugyanaz az információ, csak más nézőpontból.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hibák / tévhitek</h3>
+            <ul>
+                <li>Azonos alap helyett különböző alapokra is összeadod a kitevőket.</li>
+                <li>√(a + b) = √a + √b (hibás).</li>
+                <li>Logaritmusnál felcseréled az alapot és az argumentumot.</li>
+                <li>Páros gyöknél negatív számot is elfogadsz.</li>
+                <li>Nem ellenőrzöd vissza hatványalakban a logaritmust.</li>
             </ul>
         </div>
+        <h3>Mini önellenőrzés (válasz nélkül)</h3>
+        <ul>
+            <li>Számold ki: 3<sup>2</sup> · 3<sup>4</sup> / 3<sup>3</sup>.</li>
+            <li>Számold ki: √81.</li>
+            <li>Számold ki: 3. gyök(64).</li>
+            <li>Számold ki: log<sub>2</sub> 16.</li>
+            <li>Írd fel: 5<sup>3</sup> = 125 logaritmus alakban.</li>
+        </ul>
+        <h3>Összefoglaló</h3>
+        <ul>
+            <li>A hatvány, gyök és logaritmus egymás inverz műveletei.</li>
+            <li>Azonos alapnál a kitevőkkel számolunk.</li>
+            <li>a<sup>n</sup> = b ⇔ n-edik gyök(b) = a ⇔ log<sub>a</sub> b = n.</li>
+            <li>Mindig ellenőrizd vissza hatványalakban.</li>
+            <li>A három témakör együtt adja a teljes képet.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -601,7 +639,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -651,7 +689,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

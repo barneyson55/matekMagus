@@ -151,6 +151,24 @@
             animation: fadeIn 0.5s;
         }
 
+        @media (max-width: 600px) {
+            .tab-buttons {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                border-bottom: none;
+            }
+
+            .tab-button {
+                text-align: center;
+                padding: 10px 12px;
+            }
+
+            .tab-button::after {
+                bottom: 0;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -307,24 +325,37 @@
         #pagination-dots {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             flex: 1;
+            flex-wrap: wrap;
         }
 
         .dot {
-            width: 14px;
-            height: 14px;
-            background-color: var(--border-color);
+            width: 44px;
+            height: 44px;
+            background-color: transparent;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .dot.answered {
+        .dot::before {
+            content: '';
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .dot.answered::before {
             background-color: var(--success);
         }
 
-        .dot.current {
+        .dot.current::before {
             box-shadow: 0 0 0 4px var(--brand-light);
             transform: scale(1.15);
         }
@@ -484,27 +515,62 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Vektorok (skal&#225;ris szorzat)</h2>
-        <p>A vektorok komponensei seg&#237;tenek az &#246;sszead&#225;sban &#233;s a skal&#225;ris szorzat sz&#225;m&#237;t&#225;s&#225;ban.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>K&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">v + w = (a+c, b+d)</span></li>
-<li><span class="formula-line">v &#183; w = a*c + b*d</span></li>
-<li><span class="formula-line">|v|^2 = a^2 + b^2</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>Komponensenk&#233;nt sz&#225;mold a m&#369;veleteket.</li>
-<li>A skal&#225;ris szorzat eredm&#233;nye egy sz&#225;m.</li>
-<li>El&#337;jelekre figyelj.</li>
-                </ul>
-            </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A vektor ir&#225;nyt &#233;s hossz&#250;s&#225;got &#237;r le, p&#233;ld&#225;ul elmozdul&#225;st a koordin&#225;tas&#237;kon. A vektorokkal k&#246;nnyen sz&#225;molsz ered&#337; ir&#225;nyt, er&#337;hat&#225;sokat vagy mozg&#225;sokat. A skal&#225;ris szorzat megmutatja, mennyire &#8222;egy ir&#225;nyba&#8221; mutat k&#233;t vektor. Ezt haszn&#225;lod der&#233;ksz&#246;g ellen&#337;rz&#233;s&#233;re &#233;s sz&#246;gek sz&#225;m&#237;t&#225;s&#225;ra is.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Vektor:</b> rendezett p&#225;r, pl. <span class="formula-line">v = (a, b)</span>.</li>
+            <li><b>Hossz:</b> <span class="formula-line">|v| = &#8730;(a^2 + b^2)</span>.</li>
+            <li><b>&#214;sszead&#225;s:</b> <span class="formula-line">v + w = (a + c, b + d)</span>.</li>
+            <li><b>Skal&#225;rszorz&#225;s:</b> <span class="formula-line">k &#183; v = (k &#183; a, k &#183; b)</span>.</li>
+            <li><b>Skal&#225;ris szorzat:</b> <span class="formula-line">v &#183; w = a &#183; c + b &#183; d</span>.</li>
+            <li><b>Mer&#337;legess&#233;g:</b> <span class="formula-line">v &#183; w = 0</span> &#8594; der&#233;ksz&#246;g.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; &#246;sszead&#225;s</h4>
+            <p>Adott: <span class="formula-line">v = (2, -1)</span>, <span class="formula-line">w = (3, 4)</span>.</p>
+            <ol>
+                <li>&#214;sszead&#225;s koordin&#225;t&#225;nk&#233;nt: <span class="formula-line">(2+3, -1+4)</span>.</li>
+                <li>Eredm&#233;ny: <span class="formula-line">v + w = (5, 3)</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; skal&#225;ris szorzat</h4>
+            <p>Adott: <span class="formula-line">v = (2, 3)</span>, <span class="formula-line">w = (-1, 4)</span>.</p>
+            <ol>
+                <li>Szorzat: <span class="formula-line">v &#183; w = 2 &#183; (-1) + 3 &#183; 4</span>.</li>
+                <li>Sz&#225;mol&#225;s: <span class="formula-line">-2 + 12 = 10</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (paralelogramma)</h3>
+            <p>K&#233;t vektort k&#246;z&#246;s kezd&#337;pontb&#243;l rajzolj. Az &#246;sszead&#225;s eredm&#233;nye az a ny&#237;l, amely a paralelogramma &#225;tellenes cs&#250;cs&#225;ba mutat. A skal&#225;ris szorzatn&#225;l azt figyeled, mennyire &#8222;egym&#225;s fel&#233;&#8221; mutatnak: ha mer&#337;legesek, a szorzat 0.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>&#214;sszead&#225;sn&#225;l felcser&#233;led a koordin&#225;t&#225;kat.</li>
+                <li>A skal&#225;ris szorzatot vektornak gondolod (pedig sz&#225;m).</li>
+                <li>Elfelejted a negat&#237;v el&#337;jeleket a szorz&#225;sn&#225;l.</li>
+                <li>A hossz helyett a hossz n&#233;gyzet&#233;t haszn&#225;lod.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Sz&#225;mold ki: <span class="formula-line">(1, -2) + (4, 5)</span>.</li>
+            <li>Mi a <span class="formula-line">(3, 4)</span> vektor hossza?</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">(2, -1) &#183; (5, 0)</span>.</li>
+            <li>Mikor mer&#337;leges k&#233;t vektor?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A vektor ir&#225;nyt &#233;s hossz&#250;s&#225;got &#237;r le.</li>
+            <li>&#214;sszead&#225;s koordin&#225;t&#225;nk&#233;nt t&#246;rt&#233;nik.</li>
+            <li>Skal&#225;ris szorzat: <span class="formula-line">v &#183; w = a &#183; c + b &#183; d</span>.</li>
+            <li>Mer&#337;legess&#233;g: <span class="formula-line">v &#183; w = 0</span>.</li>
+        </ul>
     </div>
-
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
         <p>R&#246;vid p&#233;ld&#225;k az &#246;sszead&#225;sra &#233;s a skal&#225;ris szorzatra.</p>
@@ -542,7 +608,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -586,7 +652,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

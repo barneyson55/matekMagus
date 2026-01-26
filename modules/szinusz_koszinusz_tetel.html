@@ -484,32 +484,62 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Szinuszt&#233;tel &#233;s Koszinuszt&#233;tel</h2>
-        <p>A szinuszt&#233;tel &#233;s koszinuszt&#233;tel seg&#237;t&#233;s&#233;vel b&#225;rmilyen h&#225;romsz&#246;g oldala &#233;s sz&#246;ge kisz&#225;m&#237;that&#243;, akkor is, ha nem der&#233;ksz&#246;g&#369;.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A szinusz- &#233;s koszinuszt&#233;tel lehet&#337;v&#233; teszi, hogy tetsz&#337;leges h&#225;romsz&#246;gben kisz&#225;mold a hi&#225;nyz&#243; oldalakat vagy sz&#246;geket, akkor is, ha nem der&#233;ksz&#246;g&#369;. Ezek a t&#233;telek akkor hasznosak, ha k&#233;t sz&#246;g &#233;s egy oldal, vagy k&#233;t oldal &#233;s a bez&#225;rt sz&#246;g ismert. A j&#243; jel&#246;l&#233;s &#233;s a megfelel&#337; t&#233;tel kiv&#225;laszt&#225;sa itt a legfontosabb l&#233;p&#233;s.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Jel&#246;l&#233;s:</b> az <span class="formula-line">A</span> sz&#246;ggel szemk&#246;zti oldal <span class="formula-line">a</span>.</li>
+            <li><b>Szinuszt&#233;tel:</b> <span class="formula-line">a / sin A = b / sin B = c / sin C</span>.</li>
+            <li><b>Koszinuszt&#233;tel:</b> <span class="formula-line">c<sup>2</sup> = a<sup>2</sup> + b<sup>2</sup> - 2ab cos C</span>.</li>
+            <li><b>Bez&#225;rt sz&#246;g:</b> a k&#233;t ismert oldal k&#246;z&#246;tti sz&#246;g.</li>
+            <li><b>Sz&#246;g&#246;sszeg:</b> <span class="formula-line">A + B + C = 180&#176;</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alap k&#233;pletek</h3>
+            <h4>1. p&#233;lda &#8211; szinuszt&#233;tel</h4>
+            <p>Adott: <span class="formula-line">A = 30&#176;</span>, <span class="formula-line">B = 70&#176;</span>, <span class="formula-line">a = 8 cm</span>. Sz&#225;mold ki <span class="formula-line">b</span>-t.</p>
+            <ol>
+                <li>Alkalmazd: <span class="formula-line">b = a &#183; sin B / sin A</span>.</li>
+                <li>Behelyettes&#237;t&#233;s: <span class="formula-line">b &#8776; 8 &#183; sin 70&#176; / sin 30&#176;</span>.</li>
+                <li>Sz&#225;mol&#225;s: <span class="formula-line">b &#8776; 8 &#183; 0.94 / 0.5 &#8776; 15.0 cm</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; koszinuszt&#233;tel (sz&#246;g keres&#233;se)</h4>
+            <p>Adott: <span class="formula-line">a = 7 cm</span>, <span class="formula-line">b = 9 cm</span>, <span class="formula-line">c = 10 cm</span>. Sz&#225;mold ki <span class="formula-line">C</span>-t.</p>
+            <ol>
+                <li>Koszinuszt&#233;tel: <span class="formula-line">cos C = (a<sup>2</sup> + b<sup>2</sup> - c<sup>2</sup>) / (2ab)</span>.</li>
+                <li>Behelyettes&#237;t&#233;s: <span class="formula-line">cos C = (49 + 81 - 100) / 126 = 30/126</span>.</li>
+                <li>Sz&#246;g: <span class="formula-line">C &#8776; arccos(0.238) &#8776; 76.2&#176;</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat</h3>
+            <p>Rajzolj egy h&#225;romsz&#246;get &#250;gy, hogy az <span class="formula-line">a</span> oldal mindig az <span class="formula-line">A</span> sz&#246;ggel szemben legyen (ugyanez <span class="formula-line">b</span>&#8211;<span class="formula-line">B</span>, <span class="formula-line">c</span>&#8211;<span class="formula-line">C</span>). Ha ezt a jel&#246;l&#233;st k&#246;veted, a szinuszt&#233;tel ar&#225;nyai &#233;s a koszinuszt&#233;tel &#8222;bez&#225;rt sz&#246;ge&#8221; egy&#233;rtelm&#369; lesz.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li><span class="formula-line">a / sin A = b / sin B = c / sin C</span></li>
-                <li><span class="formula-line">c<sup>2</sup> = a<sup>2</sup> + b<sup>2</sup> - 2ab cos C</span></li>
+                <li>Felcser&#233;led az oldalt &#233;s a sz&#246;get (nem az <span class="formula-line">A</span> szemk&#246;zti oldal az <span class="formula-line">a</span>).</li>
+                <li>Rossz sz&#246;get v&#225;lasztasz a koszinuszt&#233;telben (nem a bez&#225;rt sz&#246;g ker&#252;l a k&#233;pletbe).</li>
+                <li>Fok helyett radi&#225;nban sz&#225;molsz.</li>
+                <li>Kerek&#237;t&#233;s n&#233;lk&#252;l hagyod az eredm&#233;nyt, pedig tizedes kell.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>Haszn&#225;lati helyzetek</h3>
-                <ul>
-                    <li>2 sz&#246;g + 1 oldal &#8594; szinuszt&#233;tel.</li>
-                    <li>2 oldal + bez&#225;rt sz&#246;g &#8594; koszinuszt&#233;tel.</li>
-                    <li>3 oldal &#8594; koszinuszt&#233;tel a sz&#246;gre.</li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>Sz&#246;g eset&#233;n mindig fokban dolgozz.</li>
-                    <li>Sz&#246;g&#246;sszeg: A + B + C = 180&#176;.</li>
-                    <li>A kapott eredm&#233;nyeket kerek&#237;tsd tizedesre.</li>
-                </ul>
-            </div>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Haszn&#225;ld a szinuszt&#233;telt: <span class="formula-line">A = 45&#176;</span>, <span class="formula-line">B = 65&#176;</span>, <span class="formula-line">a = 10</span>, mennyi <span class="formula-line">b</span>?</li>
+            <li>Melyik t&#233;telt v&#225;lasztod, ha k&#233;t oldal &#233;s a bez&#225;rt sz&#246;g adott?</li>
+            <li>Sz&#225;mold ki <span class="formula-line">C</span>-t, ha <span class="formula-line">a = 5</span>, <span class="formula-line">b = 7</span>, <span class="formula-line">c = 8</span>.</li>
+            <li>Mi&#233;rt fontos ellen&#337;rizni, hogy <span class="formula-line">A + B + C = 180&#176;</span>?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Az oldalak &#233;s sz&#246;gek jel&#246;l&#233;se legyen k&#246;vetkezetes.</li>
+            <li>Szinuszt&#233;tel: ar&#225;nyokkal dolgozik a szemben l&#233;v&#337; oldalakhoz.</li>
+            <li>Koszinuszt&#233;tel: k&#233;t oldal &#233;s a bez&#225;rt sz&#246;g eset&#233;n a leggyorsabb.</li>
+            <li>Mindig fokban sz&#225;molj, &#233;s kerek&#237;ts &#233;sszer&#369;en.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -576,7 +606,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -620,7 +650,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

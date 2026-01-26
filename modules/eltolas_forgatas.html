@@ -484,25 +484,61 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Eltol&#225;s, elforgat&#225;s</h2>
-        <p>Az eltol&#225;s vektorral, a forgat&#225;s pedig sz&#246;ggel &#237;rhat&#243; le.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>K&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">Eltol&#225;s v=(a,b): (x,y) &#8594; (x+a, y+b)</span></li>
-<li><span class="formula-line">90&#176; balra: (x,y) &#8594; (-y, x)</span></li>
-<li><span class="formula-line">180&#176;: (x,y) &#8594; (-x, -y)</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>Eltol&#225;sn&#225;l komponensenk&#233;nt adj.</li>
-<li>Forgat&#225;sn&#225;l az el&#337;jelekre figyelj.</li>
-<li>90&#176;-n&#225;l a koordin&#225;t&#225;k helyet cser&#233;lnek.</li>
-                </ul>
-            </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Eltol&#225;sn&#225;l az alakzat minden pontj&#225;t ugyanazzal a vektorral &#8222;arr&#233;bb toljuk&#8221;. Forgat&#225;sn&#225;l egy adott k&#246;z&#233;ppont k&#246;r&#252;l elford&#237;tjuk egy sz&#246;ggel. Mindkett&#337; izometria: a hosszok &#233;s sz&#246;gek megmaradnak. Koordin&#225;t&#225;kkal gyorsan sz&#225;molhat&#243;, ha ismered az alapk&#233;pleteket.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Eltol&#225;s vektorral:</b> <span class="formula-line">v = (a, b)</span>, ekkor <span class="formula-line">(x, y) &#8594; (x + a, y + b)</span>.</li>
+            <li><b>Forgat&#225;s:</b> k&#246;z&#233;ppont &#233;s sz&#246;g megad&#225;sa sz&#252;ks&#233;ges.</li>
+            <li><b>90&#176; balra:</b> <span class="formula-line">(x, y) &#8594; (&#8722;y, x)</span>.</li>
+            <li><b>180&#176;:</b> <span class="formula-line">(x, y) &#8594; (&#8722;x, &#8722;y)</span>.</li>
+            <li><b>Izometria:</b> a t&#225;vols&#225;gok &#233;s sz&#246;gek v&#225;ltozatlanok.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; eltol&#225;s</h4>
+            <p>Adott: <span class="formula-line">A(2, &#8722;1)</span>, <span class="formula-line">v = (3, 4)</span>.</p>
+            <ol>
+                <li>x koordin&#225;ta: <span class="formula-line">2 + 3 = 5</span>.</li>
+                <li>y koordin&#225;ta: <span class="formula-line">&#8722;1 + 4 = 3</span>.</li>
+                <li>&#218;j pont: <span class="formula-line">A'(5, 3)</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; forgat&#225;s 90&#176;-kal</h4>
+            <p>Adott: <span class="formula-line">B(4, 1)</span>, forgat&#225;s az orig&#243; k&#246;r&#252;l balra.</p>
+            <ol>
+                <li>Szab&#225;ly: <span class="formula-line">(x, y) &#8594; (&#8722;y, x)</span>.</li>
+                <li>Helyettes&#237;t&#233;s: <span class="formula-line">(4, 1) &#8594; (&#8722;1, 4)</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat</h3>
+            <p>Eltol&#225;sn&#225;l k&#233;pzeld el, hogy minden pont ugyanakkora &#233;s ugyanabba az ir&#225;nyba mozdul el, mint a vektor nyila. Forgat&#225;sn&#225;l rajzolj k&#246;r&#237;vet a k&#246;z&#233;ppont k&#246;r&#233;: a pont ezen az &#237;ven &#8222;fordul el&#8221; a megadott sz&#246;ggel.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Eltol&#225;sn&#225;l csak az egyik koordin&#225;t&#225;t m&#243;dos&#237;tod.</li>
+                <li>Forgat&#225;sn&#225;l elt&#233;veszted az ir&#225;nyt (balra helyett jobbra).</li>
+                <li>90&#176;-n&#225;l elfelejted a koordin&#225;tacser&#233;t &#233;s az el&#337;jelv&#225;lt&#225;st.</li>
+                <li>A fok helyett radi&#225;nnal sz&#225;molsz.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi lesz <span class="formula-line">P(&#8722;1, 3)</span> k&#233;pe <span class="formula-line">v = (2, &#8722;5)</span> eltol&#225;s ut&#225;n?</li>
+            <li>Mi lesz <span class="formula-line">Q(2, &#8722;4)</span> k&#233;pe 180&#176;-os forgat&#225;s ut&#225;n az orig&#243; k&#246;r&#252;l?</li>
+            <li>Mi lesz <span class="formula-line">R(5, 0)</span> k&#233;pe 90&#176;-os forgat&#225;s ut&#225;n balra?</li>
+            <li>Milyen adat kell forgat&#225;shoz az orig&#243;n k&#237;v&#252;l?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Eltol&#225;s: <span class="formula-line">(x, y) &#8594; (x + a, y + b)</span>.</li>
+            <li>Forgat&#225;sn&#225;l k&#246;z&#233;ppontot &#233;s sz&#246;get adsz meg.</li>
+            <li>90&#176; balra: <span class="formula-line">(x, y) &#8594; (&#8722;y, x)</span>, 180&#176;: <span class="formula-line">(x, y) &#8594; (&#8722;x, &#8722;y)</span>.</li>
+            <li>Eltol&#225;s &#233;s forgat&#225;s izometri&#225;k: a hosszok megmaradnak.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -542,7 +578,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -586,7 +622,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

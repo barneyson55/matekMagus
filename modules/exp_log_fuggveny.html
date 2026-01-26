@@ -151,6 +151,42 @@
             animation: fadeIn 0.5s;
         }
 
+        @media (max-width: 600px) {
+            .tab-buttons {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                border-bottom: none;
+            }
+
+            .tab-button {
+                text-align: center;
+                padding: 10px 12px;
+            }
+
+            .tab-button::after {
+                bottom: 0;
+            }
+        }
+
+        @media (max-height: 480px) and (orientation: landscape) {
+            body {
+                padding: 24px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .tab-buttons {
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                margin-top: 20px;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -491,78 +527,92 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Exponenci&#225;lis &#233;s logaritmus f&#252;ggv&#233;nyek</h2>
-        <p>Az exponenci&#225;lis &#233;s a logaritmus f&#252;ggv&#233;nyek egym&#225;s inverzei: ugyanazt a kapcsolatot k&#233;t ir&#225;nyb&#243;l olvass&#225;k.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Az exponenci&#225;lis f&#252;ggv&#233;ny gyors n&#246;veked&#233;st vagy gyors cs&#246;kken&#233;st &#237;r le, p&#233;ld&#225;ul kamatos kamatn&#225;l vagy n&#233;pess&#233;gn&#233;l. A logaritmus ennek a visszaford&#237;t&#243;ja, vagyis megmondja, milyen kitev&#337; kell egy adott eredm&#233;nyhez. A k&#233;t f&#252;ggv&#233;ny egym&#225;s inverze, ez&#233;rt a grafikonjuk t&#252;kr&#246;z&#233;sben &#225;ll az <span class="formula-line">y = x</span> egyenesre. Ha ezt meg&#233;rted, sok k&#233;plet egyszer&#369;s&#246;dik.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Exponenci&#225;lis alak:</b> <span class="formula-line">f(x) = a^x</span>, ahol <span class="formula-line">a &gt; 0</span> &#233;s <span class="formula-line">a &#8800; 1</span>.</li>
+            <li><b>Logaritmus alak:</b> <span class="formula-line">g(x) = log_a x</span>, ahol <span class="formula-line">x &gt; 0</span>.</li>
+            <li><b>Inverz kapcsolat:</b> <span class="formula-line">log_a b = x &#8660; a^x = b</span>.</li>
+            <li><b>Tartom&#225;ny:</b> exponenci&#225;lisn&#225;l <span class="formula-line">R</span>, logaritmusn&#225;l <span class="formula-line">(0, &#8734;)</span>.</li>
+            <li><b>&#201;rt&#233;kk&#233;szlet:</b> exponenci&#225;lisn&#225;l <span class="formula-line">(0, &#8734;)</span>, logaritmusn&#225;l <span class="formula-line">R</span>.</li>
+            <li><b>Metsz&#233;spont:</b> <span class="formula-line">a^0 = 1</span> &#233;s <span class="formula-line">log_a 1 = 0</span>.</li>
+            <li><b>Aszimpt&#243;ta:</b> exponenci&#225;lisn&#225;l <span class="formula-line">y = 0</span>, logaritmusn&#225;l <span class="formula-line">x = 0</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alap defin&#237;ci&#243;</h3>
-            <ul>
-                <li><span class="formula-line">f(x) = a^x</span> (exponenci&#225;lis), ahol <span class="formula-line">a &gt; 0, a &ne; 1</span></li>
-                <li><span class="formula-line">g(x) = log<sub>a</sub> x</span> (logaritmus), ahol <span class="formula-line">x &gt; 0</span></li>
-                <li><span class="formula-line">log<sub>a</sub> b = x &hArr; a^x = b</span></li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>Exponenci&#225;lis f&#252;ggv&#233;ny</h3>
-                <ul>
-                    <li>&#201;rtelmez&#233;si tartom&#225;ny: <strong>R</strong>.</li>
-                    <li>&#201;rt&#233;kk&#233;szlet: <strong>(0, &#8734;)</strong>.</li>
-                    <li>Ha <strong>a &gt; 1</strong>, akkor szigor&#250;an n&#246;vekv&#337;.</li>
-                    <li>Ha <strong>0 &lt; a &lt; 1</strong>, akkor szigor&#250;an cs&#246;kken&#337;.</li>
-                    <li>Metsz&#233;spont: <span class="formula-line">f(0)=1</span>, aszimpt&#243;ta: <span class="formula-line">y = 0</span>.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Logaritmus f&#252;ggv&#233;ny</h3>
-                <ul>
-                    <li>&#201;rtelmez&#233;si tartom&#225;ny: <strong>(0, &#8734;)</strong>.</li>
-                    <li>&#201;rt&#233;kk&#233;szlet: <strong>R</strong>.</li>
-                    <li>Ha <strong>a &gt; 1</strong>, akkor szigor&#250;an n&#246;vekv&#337;.</li>
-                    <li>Ha <strong>0 &lt; a &lt; 1</strong>, akkor szigor&#250;an cs&#246;kken&#337;.</li>
-                    <li>Metsz&#233;spont: <span class="formula-line">f(1)=0</span>, aszimpt&#243;ta: <span class="formula-line">x = 0</span>.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Gyors ellen&#337;rz&#233;s</h3>
-            <ul>
-                <li>Az exponenci&#225;lis f&#252;ggv&#233;ny mindig pozit&#237;v.</li>
-                <li>A logaritmus csak pozit&#237;v sz&#225;mokra van &#233;rtelmezve.</li>
-                <li>Ha k&#233;ts&#233;ges, alak&#237;tsd vissza hatv&#225;nyalakba.</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h3>P&#233;ld&#225;k</h3>
-            <ul>
-                <li><span class="formula-line">2^3 = 8</span> &#233;s <span class="formula-line">log<sub>2</sub> 8 = 3</span></li>
-                <li><span class="formula-line">3^{-2} = 1/9</span> &#233;s <span class="formula-line">log<sub>3</sub> (1/9) = -2</span></li>
-                <li><span class="formula-line">a^{log_a b} = b</span> (ha <span class="formula-line">b &gt; 0</span>)</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>2&#179; &#233;s log&#8322;(8):</p>
+            <h4>1. p&#233;lda &#8211; exponenci&#225;lis egyenlet</h4>
+            <p>Oldd meg: <span class="formula-line">3^x = 81</span>.</p>
             <ol>
-                <li>2&#179; = 8.</li>
-                <li>log&#8322;(8) = 3, mert 2&#179; = 8.</li>
+                <li>&#205;rd &#225;t: <span class="formula-line">81 = 3^4</span>.</li>
+                <li>Azonos alapn&#225;l a kitev&#337;k egyenl&#337;k: <span class="formula-line">x = 4</span>.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: inverz p&#225;rok</h3>
+            <h4>2. p&#233;lda &#8211; logaritmus &#233;rt&#233;ke</h4>
+            <p>Sz&#225;mold ki: <span class="formula-line">log_2(1/8)</span>.</p>
+            <ol>
+                <li>&#205;rd &#225;t exponenci&#225;lisan: <span class="formula-line">2^x = 1/8</span>.</li>
+                <li><span class="formula-line">1/8 = 2^{-3}</span>, ez&#233;rt <span class="formula-line">x = -3</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (inverz p&#225;rok)</h3>
             <table style="border-collapse: collapse; width: 100%; max-width: 320px; text-align: center;">
                 <tr>
                     <th style="border: 1px solid var(--border-color); padding: 6px 8px;">x</th>
-                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">2&#739;</th>
-                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">log&#8322;</th>
+                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">2^x</th>
+                    <th style="border: 1px solid var(--border-color); padding: 6px 8px;">log_2(x)</th>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">0</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">1</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">&#8211;</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">1</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">2</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">0</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">2</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">4</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">1</td>
                 </tr>
                 <tr>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px;">3</td>
                     <td style="border: 1px solid var(--border-color); padding: 6px 8px;">8</td>
-                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">log&#8322;(8) = 3</td>
+                    <td style="border: 1px solid var(--border-color); padding: 6px 8px;">log_2(8) = 3</td>
                 </tr>
             </table>
-            <p style="font-size: 0.95em; color: var(--text-light);">A logaritmus az exponenci&#225;lis f&#252;ggv&#233;ny inverze.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">A logaritmus azt mondja meg, hogy mennyi a kitev&#337;.</p>
         </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Elfelejted, hogy logaritmusn&#225;l <span class="formula-line">x &gt; 0</span>.</li>
+                <li>Megengeded az <span class="formula-line">a = 1</span> vagy <span class="formula-line">a &#8804; 0</span> alapot.</li>
+                <li>&#214;sszekevered a <span class="formula-line">log_a b</span> &#233;s a <span class="formula-line">log_b a</span> jelent&#233;s&#233;t.</li>
+                <li>Nem &#237;rod &#225;t exponenci&#225;lis alakba a feladatot.</li>
+                <li>Elfelejted, hogy az exponenci&#225;lis f&#252;ggv&#233;ny mindig pozit&#237;v.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Mi a tartom&#225;nya a <span class="formula-line">f(x) = 3^x</span> f&#252;ggv&#233;nynek?</li>
+            <li>Sz&#225;mold ki: <span class="formula-line">log_5(25)</span>.</li>
+            <li>Oldd meg: <span class="formula-line">2^x = 1/4</span>.</li>
+            <li>Hol metszi a logaritmus f&#252;ggv&#233;ny az x-tengelyt?</li>
+            <li>Mi t&#246;rt&#233;nik a f&#252;ggv&#233;nnyel, ha <span class="formula-line">0 &lt; a &lt; 1</span>?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Az exponenci&#225;lis &#233;s a logaritmus f&#252;ggv&#233;nyek egym&#225;s inverzei.</li>
+            <li><span class="formula-line">f(x) = a^x</span> mindig pozit&#237;v &#233;rt&#233;keket ad.</li>
+            <li><span class="formula-line">g(x) = log_a x</span> csak pozit&#237;v <span class="formula-line">x</span>-re &#233;rtelmezett.</li>
+            <li>Az aszimpt&#243;ta exponenci&#225;lisn&#225;l <span class="formula-line">y = 0</span>, logaritmusn&#225;l <span class="formula-line">x = 0</span>.</li>
+            <li>Feladatn&#225;l gyakran seg&#237;t az &#225;t&#237;r&#225;s: <span class="formula-line">log_a b = x &#8660; a^x = b</span>.</li>
+        </ul>
 </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -633,7 +683,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -677,7 +727,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

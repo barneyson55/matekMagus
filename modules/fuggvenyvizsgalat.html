@@ -485,41 +485,69 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>F&#252;ggv&#233;nyvizsg&#225;lat deriv&#225;lttal</h2>
-        <p>A deriv&#225;lt seg&#237;ts&#233;g&#233;vel gyorsan meghat&#225;rozhatjuk a f&#252;ggv&#233;ny sz&#233;ls&#337;&#233;rt&#233;k&#233;t &#233;s monotonit&#225;s&#225;t, k&#252;l&#246;n&#246;sen m&#225;sodfok&#250; f&#252;ggv&#233;nyekn&#233;l.</p>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>A f&#252;ggv&#233;nyvizsg&#225;lat c&#233;lja, hogy &#225;tl&#225;sd, hol n&#337; vagy cs&#246;kken a f&#252;ggv&#233;ny, &#233;s hol vannak a sz&#233;ls&#337;&#233;rt&#233;kek. A deriv&#225;lt megmutatja a v&#225;ltoz&#225;s ir&#225;ny&#225;t, ez&#233;rt kulcseszk&#246;z a grafikon gyors v&#225;zlat&#225;hoz. &#205;gy tudsz optimaliz&#225;l&#225;si feladatokat megoldani &#233;s a f&#252;ggv&#233;ny viselked&#233;s&#233;t le&#237;rni. A m&#243;dszer l&#233;p&#233;sei mindig ugyanazok: deriv&#225;l&#225;s, z&#233;rushelyek, el&#337;jelvizsg&#225;lat.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Kritikus pont:</b> ahol <span class="formula-line">f'(x)=0</span> vagy a deriv&#225;lt nem l&#233;tezik.</li>
+            <li><b>Monotonit&#225;s:</b> <span class="formula-line">f'(x) &gt; 0</span> eset&#233;n n&#246;vekv&#337;, <span class="formula-line">f'(x) &lt; 0</span> eset&#233;n cs&#246;kken&#337;.</li>
+            <li><b>Sz&#233;ls&#337;&#233;rt&#233;k:</b> lok&#225;lis maximum vagy minimum a kritikus pontokn&#225;l.</li>
+            <li><b>El&#337;jel-t&#225;bl&#225;zat:</b> a deriv&#225;lt el&#337;jel&#233;nek vizsg&#225;lata az intervallumokon.</li>
+            <li><b>Cs&#250;cspont (m&#225;sodfok&#250;n&#225;l):</b> <span class="formula-line">x_v = -b/(2a)</span>.</li>
+            <li><b>&#201;rt&#233;k a kritikus pontban:</b> <span class="formula-line">f(x_k)</span> adja a sz&#233;ls&#337;&#233;rt&#233;ket.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapk&#233;pletek</h3>
+            <h4>1. p&#233;lda &#8211; k&#246;bf&#252;ggv&#233;ny vizsg&#225;lata</h4>
+            <p>Legyen <span class="formula-line">f(x) = x^3 - 3x</span>.</p>
+            <ol>
+                <li>Deriv&#225;l&#225;s: <span class="formula-line">f'(x) = 3x^2 - 3</span>.</li>
+                <li>Z&#233;rushelyek: <span class="formula-line">3x^2 - 3 = 0</span> &#8594; <span class="formula-line">x = &#177;1</span>.</li>
+                <li>El&#337;jelvizsg&#225;lat: k&#237;v&#252;l pozit&#237;v, k&#246;z&#233;pen negat&#237;v.</li>
+                <li>Sz&#233;ls&#337;&#233;rt&#233;kek: <span class="formula-line">f(-1)=2</span> (maximum), <span class="formula-line">f(1)=-2</span> (minimum).</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; m&#225;sodfok&#250; f&#252;ggv&#233;ny</h4>
+            <p>Legyen <span class="formula-line">f(x) = x^2 - 4x + 1</span>.</p>
+            <ol>
+                <li>Deriv&#225;l&#225;s: <span class="formula-line">f'(x) = 2x - 4</span>.</li>
+                <li>Kritikus pont: <span class="formula-line">2x-4=0</span> &#8594; <span class="formula-line">x=2</span>.</li>
+                <li>Mivel <span class="formula-line">a &gt; 0</span>, minimum: <span class="formula-line">f(2) = -3</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (el&#337;jel-t&#225;bl&#225;zat)</h3>
+            <div class="formula-line">x: (-&#8734;) | -1 | 1 | (+&#8734;)</div>
+            <div class="formula-line">f'(x): + | 0 | - | 0 | +</div>
+            <p style="font-size: 0.95em; color: var(--text-light);">Ahol a deriv&#225;lt pozit&#237;v, ott a f&#252;ggv&#233;ny n&#337;; ahol negat&#237;v, ott cs&#246;kken.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
             <ul>
-                <li><span class="formula-line">f(x) = ax^2 + bx + c</span></li>
-                <li><span class="formula-line">f'(x) = 2ax + b</span></li>
-                <li><span class="formula-line">x_v = -b/(2a)</span></li>
-                <li>a &gt; 0 &#8594; minimum, a &lt; 0 &#8594; maximum</li>
+                <li>Nem veszed figyelembe, hogy hol nem l&#233;tezik a deriv&#225;lt.</li>
+                <li>Csak a z&#233;rushelyeket sz&#225;molod, de nem vizsg&#225;lod az el&#337;jelet.</li>
+                <li>Elfelejted kisz&#225;molni a f&#252;ggv&#233;ny&#233;rt&#233;ket a kritikus pontban.</li>
+                <li>&#214;sszekevered a minimumot &#233;s maximumot az el&#337;jel alapj&#225;n.</li>
+                <li>Nem n&#233;zed meg az &#233;rtelmez&#233;si tartom&#225;nyt.</li>
             </ul>
         </div>
-        <div class="theory-grid">
-            <div class="card">
-                <h3>Sz&#233;ls&#337;&#233;rt&#233;k</h3>
-                <ul>
-                    <li>Deriv&#225;lt z&#233;rushely&#233;n van a cs&#250;cs.</li>
-                    <li>A cs&#250;cs x-koordin&#225;t&#225;ja a deriv&#225;ltb&#243;l sz&#225;m&#237;that&#243;.</li>
-                    <li>f(x_v) adja a sz&#233;ls&#337;&#233;rt&#233;k &#233;rt&#233;k&#233;t.</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Monotonit&#225;s</h3>
-                <ul>
-                    <li>a &gt; 0 eset&#233;n balr&#243;l cs&#246;kken, jobbr&#243;l n&#337;.</li>
-                    <li>a &lt; 0 eset&#233;n balr&#243;l n&#337;, jobbr&#243;l cs&#246;kken.</li>
-                    <li>Mindig vizsg&#225;ld a cs&#250;cspontot.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="card">
-            <h3>P&#233;lda</h3>
-            <ul>
-                <li>a = 1, b = -4, c = 1 &#8594; x_v = 2</li>
-                <li>a = -2, b = 4, c = 0 &#8594; maximum</li>
-            </ul>
-        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Deriv&#225;ld: <span class="formula-line">f(x) = x^2 + 2x</span>.</li>
+            <li>Hol van kritikus pont, ha <span class="formula-line">f'(x)=4x-8</span>?</li>
+            <li>Monoton n&#337; vagy cs&#246;kken, ha <span class="formula-line">f'(x) &lt; 0</span>?</li>
+            <li>Sz&#225;mold ki a minimumot: <span class="formula-line">f(x) = x^2 - 6x + 5</span>.</li>
+            <li>Mit jelent az el&#337;jel-t&#225;bl&#225;zat?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>Deriv&#225;lj, majd keresd meg a kritikus pontokat.</li>
+            <li>Az el&#337;jelvizsg&#225;lat mutatja a n&#246;veked&#233;st &#233;s cs&#246;kken&#233;st.</li>
+            <li>A kritikus pontokban sz&#225;mold ki a f&#252;ggv&#233;ny&#233;rt&#233;ket.</li>
+            <li>M&#225;sodfok&#250;n&#225;l a cs&#250;cspont adja a sz&#233;ls&#337;&#233;rt&#233;ket.</li>
+            <li>A m&#243;dszer gyors grafikonv&#225;zlatot ad.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -565,7 +593,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -609,7 +637,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

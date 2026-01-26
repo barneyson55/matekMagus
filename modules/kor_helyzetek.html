@@ -151,6 +151,24 @@
             animation: fadeIn 0.5s;
         }
 
+        @media (max-width: 600px) {
+            .tab-buttons {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                border-bottom: none;
+            }
+
+            .tab-button {
+                text-align: center;
+                padding: 10px 12px;
+            }
+
+            .tab-button::after {
+                bottom: 0;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -307,24 +325,37 @@
         #pagination-dots {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             flex: 1;
+            flex-wrap: wrap;
         }
 
         .dot {
-            width: 14px;
-            height: 14px;
-            background-color: var(--border-color);
+            width: 44px;
+            height: 44px;
+            background-color: transparent;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .dot.answered {
+        .dot::before {
+            content: '';
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .dot.answered::before {
             background-color: var(--success);
         }
 
-        .dot.current {
+        .dot.current::before {
             box-shadow: 0 0 0 4px var(--brand-light);
             transform: scale(1.15);
         }
@@ -484,25 +515,65 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>K&#246;r &#233;s egyenes, k&#246;r &#233;s k&#246;r</h2>
-        <p>A k&#246;r &#233;s egyenes, illetve k&#233;t k&#246;r metsz&#233;spontjainak sz&#225;ma a t&#225;vols&#225;gok &#246;sszehasonl&#237;t&#225;s&#225;val d&#246;nthet&#337; el.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>K&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">Egyenes: d &lt; r &#8594; 2, d = r &#8594; 1, d &gt; r &#8594; 0.</span></li>
-<li><span class="formula-line">K&#233;t k&#246;r: d &gt; r1 + r2 &#8594; 0, d = r1 + r2 &#8594; 1.</span></li>
-<li><span class="formula-line">Ha |r1 - r2| &lt; d &lt; r1 + r2, akkor 2 metsz&#233;spont.</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>A v&#225;lasz mindig 0, 1 vagy 2.</li>
-<li>&#201;rint&#233;s eset&#233;n egy metsz&#233;spont van.</li>
-<li>Mindig hasonl&#237;tsd &#246;ssze d-t a sugarakkal.</li>
-                </ul>
-            </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Itt azt d&#246;nt&#246;d el, h&#225;ny metsz&#233;spontja van a k&#246;rnek egy egyenessel, illetve k&#233;t k&#246;rnek egym&#225;ssal. Ez koordin&#225;tageometri&#225;ban, szerkeszt&#233;sekben &#233;s gyakorlati helyzetekben is el&#337;j&#246;n. A kulcs a k&#246;z&#233;ppontt&#243;l m&#233;rt t&#225;vols&#225;g &#233;s a sugarak &#246;sszehasonl&#237;t&#225;sa. Ha tudod, hogy a t&#225;vols&#225;g kisebb, nagyobb vagy &#233;ppen egyenl&#337;, azonnal megvan a metsz&#233;spontok sz&#225;ma.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Sug&#225;r (r):</b> a k&#246;r k&#246;z&#233;ppontj&#225;t&#243;l a k&#246;rvonalig m&#233;rt t&#225;vols&#225;g.</li>
+            <li><b>d t&#225;vols&#225;g (k&#246;r&#8211;egyenes):</b> a k&#246;r k&#246;z&#233;ppontj&#225;nak t&#225;vols&#225;ga az egyenest&#337;l.</li>
+            <li><b>d t&#225;vols&#225;g (k&#246;r&#8211;k&#246;r):</b> a k&#233;t k&#246;z&#233;ppont t&#225;vols&#225;ga.</li>
+            <li><b>&#201;rint&#233;s:</b> <span class="formula-line">d = r</span> (egyenes), <span class="formula-line">d = r1 + r2</span> (k&#252;ls&#337;), <span class="formula-line">d = |r1 - r2|</span> (bels&#337;).</li>
+            <li><b>Metsz&#233;spontok sz&#225;ma:</b> mindig 0, 1 vagy 2.</li>
+            <li><b>Egybees&#337; k&#246;r&#246;k:</b> <span class="formula-line">d = 0</span> &#233;s <span class="formula-line">r1 = r2</span> &#8594; v&#233;gtelen sok metsz&#233;spont.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; k&#246;r &#233;s egyenes</h4>
+            <p>Adott: <span class="formula-line">r = 5 cm</span>, <span class="formula-line">d = 3 cm</span>.</p>
+            <ol>
+                <li>&#214;sszehasonl&#237;t&#225;s: <span class="formula-line">d &lt; r</span>, mert <span class="formula-line">3 &lt; 5</span>.</li>
+                <li>K&#246;vetkeztet&#233;s: <b>2 metsz&#233;spont</b>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; k&#233;t k&#246;r</h4>
+            <p>Adott: <span class="formula-line">r1 = 4 cm</span>, <span class="formula-line">r2 = 2 cm</span>, <span class="formula-line">d = 6 cm</span>.</p>
+            <ol>
+                <li>Sz&#225;mol&#225;s: <span class="formula-line">r1 + r2 = 6 cm</span>.</li>
+                <li>Mivel <span class="formula-line">d = r1 + r2</span>, k&#252;ls&#337; &#233;rint&#233;s van.</li>
+                <li>K&#246;vetkeztet&#233;s: <b>1 metsz&#233;spont</b>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat</h3>
+            <p>K&#246;r &#233;s egyenes eset&#233;n h&#250;zz a k&#246;z&#233;ppontb&#243;l mer&#337;legest az egyenesre: ennek a hossza <span class="formula-line">d</span>. Ha ez r&#246;videbb, mint <span class="formula-line">r</span>, az egyenes &#225;tv&#225;gja a k&#246;rt. K&#233;t k&#246;rn&#233;l k&#246;sd &#246;ssze a k&#246;z&#233;ppontokat: ez a szakasz hossza a <span class="formula-line">d</span>, amit a <span class="formula-line">r1 + r2</span> &#233;s <span class="formula-line">|r1 - r2|</span> &#233;rt&#233;kekkel hasonl&#237;tasz &#246;ssze.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Az &#225;tm&#233;r&#337;h&#246;z hasonl&#237;tod <span class="formula-line">d</span>-t a sug&#225;r helyett.</li>
+                <li>Felcser&#233;led a felt&#233;teleket (<span class="formula-line">d &lt; r</span> helyett <span class="formula-line">d &gt; r</span>).</li>
+                <li>Elfelejted a bels&#337; &#233;rint&#233;s felt&#233;tel&#233;t: <span class="formula-line">d = |r1 - r2|</span>.</li>
+                <li>Nem veszed &#233;szre az egybees&#337; k&#246;r&#246;k eset&#233;t (<span class="formula-line">d = 0</span>, <span class="formula-line">r1 = r2</span>).</li>
+                <li>&#201;rint&#233;sn&#233;l 2 metsz&#233;spontot &#237;rsz 1 helyett.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Egy k&#246;r sugara <span class="formula-line">6 cm</span>, az egyenes t&#225;vols&#225;ga <span class="formula-line">6 cm</span>. H&#225;ny metsz&#233;spont van?</li>
+            <li>K&#233;t k&#246;r sugara <span class="formula-line">5 cm</span> &#233;s <span class="formula-line">1 cm</span>, <span class="formula-line">d = 3 cm</span>. H&#225;ny metsz&#233;spont?</li>
+            <li>K&#233;t k&#246;r sugara <span class="formula-line">3 cm</span> &#233;s <span class="formula-line">4 cm</span>, <span class="formula-line">d = 7 cm</span>. H&#225;ny metsz&#233;spont?</li>
+            <li>Mi t&#246;rt&#233;nik, ha <span class="formula-line">d = 0</span> &#233;s <span class="formula-line">r1 &#8800; r2</span>?</li>
+            <li>Mikor van pontosan <b>2</b> metsz&#233;spont k&#233;t k&#246;rn&#233;l?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>A metsz&#233;spontok sz&#225;ma mindig 0, 1 vagy 2.</li>
+            <li>K&#246;r&#8211;egyenes: <span class="formula-line">d &lt; r</span> &#8594; 2, <span class="formula-line">d = r</span> &#8594; 1, <span class="formula-line">d &gt; r</span> &#8594; 0.</li>
+            <li>K&#246;r&#8211;k&#246;r: hasonl&#237;tsd <span class="formula-line">d</span>-t a <span class="formula-line">r1 + r2</span> &#233;s <span class="formula-line">|r1 - r2|</span> &#233;rt&#233;kekhez.</li>
+            <li>&#201;rint&#233;sn&#233;l mindig 1 metsz&#233;spont van.</li>
+            <li>Egybees&#337; k&#246;r&#246;k eset&#233;n v&#233;gtelen sok metsz&#233;spont ad&#243;dik.</li>
+        </ul>
     </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
@@ -542,7 +613,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -586,7 +657,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

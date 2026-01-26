@@ -1,15 +1,37 @@
 # Status
 
 ## Snapshot
+- Buff system rules implemented (practice/test/quest unlocks + active states) with expanded catalog + SVG icon set; spec and asset list documented in `docs/buffs.md`.
+- Character sheet/profile views polished: list items wrap cleanly with focus states, achievements cards top-align, and results now adapt to theme settings + responsive layout tweaks.
 - Electron app: `main.js` main process, `index.html` renderer, iframe module loader.
 - AI TODO refreshed to focus on Desktop V1 systems/quality work; mobile backlog isolated in V2.
 - AI TODO restructured with Desktop V1 quality/UX/systems P0 focus and a separate V2/mobile backlog.
+- AI TODO now prioritized around theory expansion for every module with a shared template and glossary alignment.
+- Theory audit: most modules still have brief Elmélet blocks and lack template sections (gyakori hibák, mini önellenőrzés, összefoglaló); `modules/logikai_szita.html` is the main exception.
+- THEORY_TEMPLATE + glossary sweep applied to Alapozó modulzáró/témazáró + Halmaz/logika témakörök (alapozo_modulzaro, gondolkodas_temazaro, halmazmuveletek, logikai_szita, skatuly_elv, szamelmelet_temazaro), including difficulty label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to Számelmélet és Számrendszerek / Racionális számok témakörök (oszthatosag, lnko_lkkt, primtenyezok, szamrendszerek, racionalis_szamok_temazaro, tortek), including difficulty label and answer-submit copy alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to Racionális számok / Hatvány altéma témakörök (tizedes_tortek, szazalekszamitas, hatvany_temazaro, hatvanyozas, gyokvonas, logaritmus), including “nehézségi szint” label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to Algebra és Függvények modulzáró/témazáró + polinomok/nevezetes azonosságok/algebrai törtek (algebra_modulzaro, algebrai_kif_temazaro, polinomok, nevezetes_azonossagok, algebrai_tortek, egyenletek_temazaro), including “nehézségi szint” label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to egyenletek témakörök + függvények altéma témazáró (linearis_egyenletek, masodfoku_egyenlet, viete_formulak, parameteres_masodfoku, specialis_egyenletek, fuggvenyek_alt_temazaro), including “nehézségi szint” label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to függvényalapok/jellemzés/paritás/transzformációk + nevezetes függvények témazáró + lineáris függvény (fuggveny_alapok, fuggveny_jellemzes, paritas, fuggveny_transzformaciok, nevezetes_fuggvenyek_temazaro, linearis_fuggveny), including “nehézségi szint” label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to nevezetes függvények témakörök (masodfoku_fuggveny, hatvanyfuggvenyek, exp_log_fuggveny, trigonometrikus_fuggvenyek, specialis_fuggvenyek, linearis_fuggveny), including “nehézségi szint” label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to Geometria modulzáró/témazáró + háromszög témakörök (geometria_modulzaro, haromszogek_temazaro, nevezetes_vonalak, haromszog_egyenlotlenseg, szogtetelek, szinusz_koszinusz_tetel), including “nehézségi szint” label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to sokszögek/kör témakörök és témazárók (sokszogek_temazaro, terulet_kerulet, specialis_negyszogek, kor_temazaro, keruleti_szogek, latokoriv), including “nehézségi szint” label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to körhelyzetek, geometriai transzformációk témazáró, tükrözés, eltolás+forgatás, hasonlóság, koordinátageometria témazáró (kor_helyzetek, geo_transzform_temazaro, tukrozes, eltolas_forgatas, hasonlosag, koordinatageometria_temazaro), including practice hint label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to koordinátageometria témakörök + térgeometria témazáró (vektorok, egyenes_egyenlete, kor_egyenlete, alakzatok_metszespontja, tergeometria_temazaro, hasabok_gulak, forgastestek), including “nehézségi szint” label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to Valószínűségszámítás és Statisztika modulzáró/témazáró + kombinatorika témakörök (valstat_modulzaro, kombinatorika_temazaro, permutaciok, variaciok, kombinaciok, binomialis_tetel, valszam_temazaro), including “nehézségi szint” label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to valószínűség/statisztika témakörök (klasszikus_valoszinuseg, geometriai_valoszinuseg, felteteles_valoszinuseg, statisztika_temazaro, adatok_abrazolasa, kozepertekek, szorodas), including “nehézségi szint” label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to Emelt/Analízis sorozatok és differenciálás modulok (emelt_modulzaro, sorozatok_temazaro, szamtani_mertani, kamatoskamat, konvergencia, differencial_temazaro), including “nehézségi szint” label alignment.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to Emelt/Analízis témakörök (hatarertek, derivalt_fogalma, derivalasi_szabalyok, fuggvenyvizsgalat, integral_temazaro, hatarozatlan_integral), including “nehézségi szint” label alignment and integrálszámítás témazáró list refresh.
+- THEORY_TEMPLATE + Hungarian consistency sweep applied to Emelt/Analízis integrálszámítás modulok (hatarozott_integral, newton_leibniz, terfogatszamitas), including “nehézségi szint” label alignment.
+- Theory tab naming inconsistency spotted in `modules/halmazmuveletek.html` (Kulcsfogalmak instead of Elmélet).
 - Autopilot scripts now detect Codex CLI flags, enforce write-enabled sandboxing, and stream+tee logs with clean exits.
 - Automation policy clarified: autopilot prompt + AGENTS + setup docs now state tests should not be run automatically.
 - Skeleton docs added for upcoming work: `docs/TESTING.md` and `docs/XP_AUDIT.md`.
 - XP audit completed for `xp_config.js` + main XP utilities vs constitution; deltas recorded in `docs/XP_AUDIT.md`.
 - XP audit script added (`scripts/xp_audit.js`) and `docs/XP_AUDIT.md` now includes scripted level-delta and reachability metrics.
 - XP max-level config centralized in `xp_config.js`; XP cap/clamp behavior enforced in XP helpers and documented in `docs/XP_AUDIT.md`.
+- XP practice info clarified in core modules to note XP cap/pacing (practice vs test rewards) for reachability messaging.
 - XP unit tests added for max-level reachability, cap/clamp behavior, and monotonic level curve progression.
 - Module coverage audit: 95 of 95 roadmap-linked modules exist; 0 missing (see `docs/module_coverage.md`).
 - Modules implemented for foundational and algebra topics in `modules/`, plus `results.html`, `settings.html`, `character_sheet.html`, and `placeholder.html`.
@@ -40,6 +62,7 @@
 - CSS encoding normalized in `style.css` (UTF-8 charset, ASCII-safe glyph escapes).
 - Responsive breakpoints (desktop/tablet/mobile) defined in `style.css` and documented in `docs/responsive.md`, with refined tablet/mobile spacing, compact <=480px overrides, and a header-column min-width clamp to preserve the 5% layout across smaller widths.
 - Mobile Quest Log drawer now defaults closed on small screens, auto-closes after selection, hides closed-state shadow/border, and header stacking spacing is tightened for mobile.
+- Mobile app shell + Quest Log drawer re-validation completed; Quest Log entries now wrap in narrow drawers while quick links remain centered (verified in alapozo_modulzaro, linearis_egyenletek, linearis_fuggveny, terulet_kerulet, klasszikus_valoszinuseg, szamtani_mertani).
 - Quest Log collapse state now restores when leaving mobile breakpoints, keeping header/Quest Log layout stable across portrait/landscape changes.
 - Compact landscape sizing added for short-height orientation changes (header height + Quest Log spacing).
 - Legacy `modules/xp_guide.html` removed and the quest exclusions cleaned up in `index.html`.
@@ -51,6 +74,7 @@
 - Localization sweep #1 completed: difficulty phrasing aligned to "nehézségi szint", XP next-level labels updated, and achievement/settings fallbacks localized.
 - Localization sweep #2 completed: casing/diacritics normalized for tab/quest labels in release checklist references; legacy Beállítások title corrected in module coverage.
 - Localization sweep #3 completed: settings category label fully localized; tooltips and results/character sheet topic fallbacks now avoid ASCII IDs.
+- Settings module labels/theme presets aligned with glossary + overlay naming; theme selection made keyboard focusable; results modal close button now keyboard accessible; achievements category label aligned.
 - Hungarian locale number formatting applied to results, character sheet, and XP header summaries (thousand separators/decimal comma where applicable).
 - Results and character sheet now include trend summaries plus per-topic performance insights.
 - Character sheet layout now uses fixed panel sizing with internal scroll regions for tabs and achievements, keeping panel headers aligned.
@@ -61,9 +85,12 @@
 - Mobile layout rules applied: Quest Log drawer on small screens, stacked header, and responsive module tab wrapping/scrolling.
 - Iframe module responsive overrides updated with <=480px grid tab layout and overflow guards to eliminate horizontal scrolling at 360–414px.
 - Mobile touch targets enforced at a 44px minimum across app shell controls, settings inputs, and iframe module buttons/tabs/inputs (including checkbox labels and test pagination dots).
+- Mobile module tabs/pagination dots updated for overflow-safe grids and 44px touch targets in halmazmuveletek, polinomok, kor_helyzetek, vektorok, permutaciok, hatarozott_integral.
+- Orientation-change responsive tweaks applied to module iframes (mobile tab grid + compact landscape padding) for logaritmus, exp_log_fuggveny, trigonometrikus_fuggvenyek, forgastestek, kozepertekek, terfogatszamitas.
 - Orientation-change E2E coverage added to validate header and Quest Log layout stability across portrait/landscape viewports.
 - Mobile quest drawer E2E smoke coverage added (drawer/backdrop visibility and auto-close on navigation).
 - Mobile module tab layout E2E smoke coverage added (grid tabs, overflow guard, touch target token).
+- Mobile E2E coverage expanded for Quest Log drawer + tab layout across halmazmuveletek, linearis_fuggveny, terulet_kerulet, kor_helyzetek, permutaciok, hatarertek.
 - Manual release smoke-test checklist added in `docs/RELEASE_CHECKLIST.md`.
 - Release readiness report added in `docs/release_readiness_report.md`.
 - Bug triage log initialized in `docs/critical_todo.md` with severity labels and reproduction steps.
@@ -96,9 +123,34 @@
 - No missing roadmap modules; remaining validation risk is Windows coverage (see Partial or Unverified).
 
 ## Next Milestone
-- Desktop v1: complete Hungarian localization sweep and stabilize test strategy across Windows/WSL.
+- Desktop v1: expand Elmélet content across all modules using `docs/THEORY_TEMPLATE.md`, then follow with XP/settings/character sheet/buff polish.
 
 ## Recent Tests
+- 2026-01-26: Not run (automation policy: mobile E2E coverage expansion for Quest Log drawer + tab layout).
+- 2026-01-26: Not run (automation policy: orientation-change regression checks for selected modules).
+- 2026-01-26: Not run (automation policy: mobile module tab overflow + touch target audit).
+- 2026-01-26: Not run (automation policy: mobile app shell + Quest Log drawer re-validation).
+- 2026-01-26: Not run (automation policy: buff system rules + catalog/icon expansion).
+- 2026-01-26: Not run (automation policy: character sheet layout/visual polish in character_sheet/results/achievements).
+- 2026-01-26: Not run (automation policy: settings menu cleanup + glossary alignment in settings/results/achievements).
+- 2026-01-26: Not run (automation policy: XP pacing/maximum copy update in practice info for selected modules).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for hatarozott_integral, newton_leibniz, terfogatszamitas, hatarozatlan_integral, derivalt_fogalma, hatarertek).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for hatarertek, derivalt_fogalma, derivalasi_szabalyok, fuggvenyvizsgalat, integral_temazaro, hatarozatlan_integral).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for emelt_modulzaro, sorozatok_temazaro, szamtani_mertani, kamatoskamat, konvergencia, differencial_temazaro).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for klasszikus_valoszinuseg, geometriai_valoszinuseg, felteteles_valoszinuseg, statisztika_temazaro, adatok_abrazolasa, kozepertekek, szorodas).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for valstat_modulzaro, kombinatorika_temazaro, permutaciok, variaciok, kombinaciok, binomialis_tetel, valszam_temazaro).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for vektorok, egyenes_egyenlete, kor_egyenlete, alakzatok_metszespontja, tergeometria_temazaro, hasabok_gulak, forgastestek).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for kor_helyzetek, geo_transzform_temazaro, tukrozes, eltolas_forgatas, hasonlosag, koordinatageometria_temazaro).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for sokszogek_temazaro, terulet_kerulet, specialis_negyszogek, kor_temazaro, keruleti_szogek, latokoriv).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for geometria_modulzaro, haromszogek_temazaro, nevezetes_vonalak, haromszog_egyenlotlenseg, szogtetelek, szinusz_koszinusz_tetel).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for masodfoku_fuggveny, hatvanyfuggvenyek, exp_log_fuggveny, trigonometrikus_fuggvenyek, specialis_fuggvenyek, linearis_fuggveny).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for fuggveny_alapok, fuggveny_jellemzes, paritas, fuggveny_transzformaciok, nevezetes_fuggvenyek_temazaro, linearis_fuggveny).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for linearis_egyenletek, masodfoku_egyenlet, viete_formulak, parameteres_masodfoku, specialis_egyenletek, fuggvenyek_alt_temazaro).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for algebra_modulzaro, algebrai_kif_temazaro, polinomok, nevezetes_azonossagok, algebrai_tortek, egyenletek_temazaro).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for tizedes_tortek, szazalekszamitas, hatvany_temazaro, hatvanyozas, gyokvonas, logaritmus).
+- 2026-01-26: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for oszthatosag, lnko_lkkt, primtenyezok, szamrendszerek, racionalis_szamok_temazaro, tortek).
+- 2026-01-25: Not run (automation policy: THEORY_TEMPLATE + Hungarian sweep for Alapozó modulzáró/témazáró + Halmaz/logika témakörök).
+- 2026-01-25: Not run (documentation-only updates: AI TODO refresh + THEORY_TEMPLATE + glossary expansion).
 - 2026-01-25: Not run (automation policy: mobile module tab layout E2E smoke test).
 - 2026-01-25: Not run (automation policy: compact landscape header + Quest Log orientation tweaks).
 - 2026-01-25: Not run (automation policy: mobile touch target audit update for module pagination dots).

@@ -1,6 +1,6 @@
 # Critical TODO / Risks
 
-Last reviewed: 2026-01-25 (Bug triage log initialized)
+Last reviewed: 2026-01-26 (Bug triage log initialized)
 
 ## Bug Triage Log
 
@@ -35,6 +35,14 @@ Last reviewed: 2026-01-25 (Bug triage log initialized)
 
 ## Notes
 
+- 2026-01-26: Mobile E2E coverage expanded for Quest Log drawer + tab layout across halmazmuveletek, linearis_fuggveny, terulet_kerulet, kor_helyzetek, permutaciok, hatarertek; tests not run (automation policy).
+- 2026-01-26: Orientation-change responsive tweaks applied to logaritmus, exp_log_fuggveny, trigonometrikus_fuggvenyek, forgastestek, kozepertekek, terfogatszamitas; tests not run (automation policy).
+- 2026-01-26: Buff rendszer bővítve (új buffok + feloldási/aktív szabályok + ikon tokenek); buff specifikáció és asset lista dokumentálva; tesztek nem futottak (automation policy).
+- 2026-01-26: Character sheet/profile views polished (list wrapping + focus states; results theme overlay + responsive tweaks; achievements card alignment); tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to klasszikus_valoszinuseg, geometriai_valoszinuseg, felteteles_valoszinuseg, statisztika_temazaro, adatok_abrazolasa, kozepertekek, szorodas; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to valstat_modulzaro, kombinatorika_temazaro, permutaciok, variaciok, kombinaciok, binomialis_tetel, valszam_temazaro; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to vektorok, egyenes_egyenlete, kor_egyenlete, alakzatok_metszespontja, tergeometria_temazaro, hasabok_gulak, forgastestek; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to fuggveny_alapok, fuggveny_jellemzes, paritas, fuggveny_transzformaciok, nevezetes_fuggvenyek_temazaro, linearis_fuggveny; tests not run (automation policy).
 - 2026-01-25: Mobile module tab layout E2E smoke test added (grid tabs + overflow guard + touch target token); tests not run (automation policy).
 - 2026-01-25: Module tab responsive override refined with <=480px grid layout and overflow guards to avoid iframe horizontal scrolling at 360–414px.
 - 2026-01-25: Buff catalog config module added (`buffs_config.js`); tests not run (automation policy).
@@ -77,3 +85,20 @@ Last reviewed: 2026-01-25 (Bug triage log initialized)
 - 2026-01-25: Character sheet layout panels aligned with fixed sizing and internal scroll regions (tabs + achievements).
 - 2026-01-25: Character sheet UX updated with glossary-aligned labels, quest/achievement empty states, and keyboard tab focus handling.
 - 2026-01-25: Responsive breakpoint re-validation updated header column sizing to preserve the 5% HUD layout with minimum widths for tablet/mobile.
+- 2026-01-25: AI TODO refocused on theory expansion; THEORY_TEMPLATE + glossary updated; no new critical bugs logged.
+- 2026-01-25: THEORY_TEMPLATE + Hungarian consistency sweep applied to Alapozó modulzáró/témazáró and Halmaz/logika témakörök; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to oszthatosag, lnko_lkkt, primtenyezok, szamrendszerek, racionalis_szamok_temazaro, tortek; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to tizedes_tortek, szazalekszamitas, hatvany_temazaro, hatvanyozas, gyokvonas, logaritmus; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to algebra_modulzaro, algebrai_kif_temazaro, polinomok, nevezetes_azonossagok, algebrai_tortek, egyenletek_temazaro; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to linearis_egyenletek, masodfoku_egyenlet, viete_formulak, parameteres_masodfoku, specialis_egyenletek, fuggvenyek_alt_temazaro; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to masodfoku_fuggveny, hatvanyfuggvenyek, exp_log_fuggveny, trigonometrikus_fuggvenyek, specialis_fuggvenyek, linearis_fuggveny; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to hatarertek, derivalt_fogalma, derivalasi_szabalyok, fuggvenyvizsgalat, integral_temazaro, hatarozatlan_integral; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to geometria_modulzaro, haromszogek_temazaro, nevezetes_vonalak, haromszog_egyenlotlenseg, szogtetelek, szinusz_koszinusz_tetel; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to sokszogek_temazaro, terulet_kerulet, specialis_negyszogek, kor_temazaro, keruleti_szogek, latokoriv; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to kor_helyzetek, geo_transzform_temazaro, tukrozes, eltolas_forgatas, hasonlosag, koordinatageometria_temazaro; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to emelt_modulzaro, sorozatok_temazaro, szamtani_mertani, kamatoskamat, konvergencia, differencial_temazaro; tests not run (automation policy).
+- 2026-01-26: THEORY_TEMPLATE + Hungarian consistency sweep applied to hatarozott_integral, newton_leibniz, terfogatszamitas, hatarozatlan_integral, derivalt_fogalma, hatarertek; tests not run (automation policy).
+- 2026-01-26: Settings menu cleanup (labels, focus order, glossary alignment) applied to settings/results/achievements modules; tests not run (automation policy).
+- 2026-01-26: XP gyakorlás szöveg frissítve a maximális XP/pacing jelzésére (halmazmuveletek, linearis_egyenletek, linearis_fuggveny, terulet_kerulet, permutaciok, derivalt_fogalma); tesztek nem futottak (automation policy).
+- 2026-01-26: Mobile app shell + Quest Log drawer re-validation (Quest Log sorok tördelése + quick link középre igazítás); tesztek nem futottak (automation policy).
+- 2026-01-26: Mobile module tab overflow + touch target audit applied (halmazmuveletek, polinomok, kor_helyzetek, vektorok, permutaciok, hatarozott_integral); tesztek nem futottak (automation policy).

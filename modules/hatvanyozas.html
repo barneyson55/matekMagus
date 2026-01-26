@@ -495,54 +495,39 @@
     </div>
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
-        <h2>Hatv&#225;nyoz&#225;s azonoss&#225;gai</h2>
-        <p>A hatv&#225;nyoz&#225;s ism&#233;telt szorz&#225;st jelent, a szab&#225;lyok pedig seg&#237;tenek az azonos alap&#250; hatv&#225;nyok gyors egyszer&#369;s&#237;t&#233;s&#233;ben.</p>
+        <h2>Hatványozás azonosságai</h2>
+        <h3>Rövid bevezetés (Mi ez? Mire jó?)</h3>
+        <p>A hatványozás az ismételt szorzást rövidíti le, az azonosságok pedig segítenek gyorsan egyszerűsíteni. Ugyanazt az alapot sokszor szorzod? Akkor az exponensekkel dolgozol. Ezek a szabályok előjönnek algebrai átalakításoknál és képleteknél is. Ha az alap azonos, a kitevőkkel tudsz számolni.</p>
+        <h3>Alapfogalmak / definíciók</h3>
+        <ul>
+            <li><b>Hatvány:</b> a<sup>n</sup> = a · a · ... · a (n-szer).</li>
+            <li><b>Alap:</b> a, amit szorozgatunk.</li>
+            <li><b>Kitevő:</b> n, megmutatja, hányszor szorzunk.</li>
+            <li><b>Azonos alap:</b> ugyanazzal az alappal lehet a kitevőket összeadni/kivonni.</li>
+            <li><b>Zérus kitevő:</b> a<sup>0</sup> = 1 (a ≠ 0).</li>
+            <li><b>Negatív kitevő:</b> a<sup>-n</sup> = 1 / a<sup>n</sup>.</li>
+        </ul>
+        <h3>Lépésről lépésre példa (1–2 db)</h3>
         <div class="learning-hint">
-            <h3>Alapszab&#225;lyok</h3>
-            <ul>
-                <li><span class="formula-line">a<sup>m</sup> &#215; a<sup>n</sup> = a<sup>m+n</sup></span></li>
-                <li><span class="formula-line">a<sup>m</sup> / a<sup>n</sup> = a<sup>m-n</sup> (a &#8800; 0)</span></li>
-                <li><span class="formula-line">(a<sup>m</sup>)<sup>n</sup> = a<sup>m&#183;n</sup></span></li>
-                <li><span class="formula-line">(ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup></span></li>
-                <li><span class="formula-line">a<sup>0</sup> = 1 (a &#8800; 0)</span></li>
-                <li><span class="formula-line">a<sup>-n</sup> = 1 / a<sup>n</sup></span></li>
-            </ul>
-        </div>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>P&#233;ld&#225;k szorz&#225;sra</h3>
-                <ul>
-                    <li><span class="formula-line">2<sup>3</sup> &#215; 2<sup>4</sup> = 2<sup>7</sup> = 128</span></li>
-                    <li><span class="formula-line">5<sup>2</sup> &#215; 5<sup>1</sup> = 5<sup>3</sup> = 125</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>P&#233;ld&#225;k oszt&#225;sra &#233;s hatv&#225;ny hatv&#225;ny&#225;ra</h3>
-                <ul>
-                    <li><span class="formula-line">3<sup>5</sup> / 3<sup>2</sup> = 3<sup>3</sup> = 27</span></li>
-                    <li><span class="formula-line">(2<sup>3</sup>)<sup>2</sup> = 2<sup>6</sup> = 64</span></li>
-                </ul>
-            </div>
-        </div>
-        <div class="learning-hint">
-            <h3>Tippek</h3>
-            <ul>
-                <li>El&#337;sz&#246;r mindig hozd azonos alapra a hatv&#225;nyokat.</li>
-                <li>Oszt&#225;sn&#225;l csak a kitev&#337;k kivon&#225;s&#225;t kell elv&#233;gezni.</li>
-                <li>Ha az alap k&#246;z&#246;s, a szab&#225;lyok gyors&#237;tj&#225;k a sz&#225;mol&#225;st.</li>
-            </ul>
-        </div>
-    
-        <div class="learning-hint">
-            <h3>Kidolgozott p&#233;lda</h3>
-            <p>3&#8308; kisz&#225;m&#237;t&#225;sa:</p>
+            <h4>1. példa – szorzás azonos alappal</h4>
+            <p>Számold ki: 2<sup>3</sup> · 2<sup>4</sup>.</p>
             <ol>
-                <li>3&#8308; = 3 &#183; 3 &#183; 3 &#183; 3.</li>
-                <li>3 &#183; 3 = 9, 9 &#183; 3 = 27, 27 &#183; 3 = 81.</li>
+                <li>Az alap azonos, ezért a kitevőket összeadjuk.</li>
+                <li>2<sup>3</sup> · 2<sup>4</sup> = 2<sup>7</sup>.</li>
+                <li>2<sup>7</sup> = 128.</li>
             </ol>
         </div>
         <div class="learning-hint">
-            <h3>&#193;bra: hatv&#225;ny-l&#233;tra</h3>
+            <h4>2. példa – hatvány hatványa és osztás</h4>
+            <p>Számold ki: (3<sup>2</sup>)<sup>3</sup> / 3<sup>4</sup>.</p>
+            <ol>
+                <li>Hatvány hatványa: (3<sup>2</sup>)<sup>3</sup> = 3<sup>6</sup>.</li>
+                <li>Osztás azonos alappal: 3<sup>6</sup> / 3<sup>4</sup> = 3<sup>2</sup>.</li>
+                <li>3<sup>2</sup> = 9.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizuális magyarázat (hatvány-létra)</h3>
             <svg viewBox="0 0 320 80" style="width: 100%; max-width: 360px; height: auto; display: block; margin: 10px 0;">
                 <text x="20" y="40" font-size="16">3</text>
                 <line x1="40" y1="35" x2="80" y2="35" stroke="#4A55A2" stroke-width="2" marker-end="url(#arrow)" />
@@ -557,9 +542,35 @@
                     </marker>
                 </defs>
             </svg>
-            <p style="font-size: 0.95em; color: var(--text-light);">Minden l&#233;p&#233;sben m&#233;g egyszer megszorozzuk 3-mal.</p>
+            <p style="font-size: 0.95em; color: var(--text-light);">Minden lépésben még egyszer megszorozzuk 3-mal: 3, 3<sup>2</sup>, 3<sup>3</sup>, 3<sup>4</sup>.</p>
         </div>
-</div>
+        <div class="learning-hint">
+            <h3>Gyakori hibák / tévhitek</h3>
+            <ul>
+                <li>2<sup>3</sup> + 2<sup>3</sup> = 2<sup>6</sup> (ez nem igaz).</li>
+                <li>Különböző alapoknál is összeadod a kitevőket.</li>
+                <li>(a + b)<sup>2</sup> = a<sup>2</sup> + b<sup>2</sup> (hibás).</li>
+                <li>Elfelejted, hogy a<sup>0</sup> = 1.</li>
+                <li>Negatív kitevőnél nem veszed a reciprokot.</li>
+            </ul>
+        </div>
+        <h3>Mini önellenőrzés (válasz nélkül)</h3>
+        <ul>
+            <li>Számold ki: 5<sup>2</sup> · 5<sup>3</sup>.</li>
+            <li>Számold ki: 7<sup>4</sup> / 7<sup>2</sup>.</li>
+            <li>Egyszerűsítsd: (2<sup>3</sup>)<sup>2</sup>.</li>
+            <li>Írd fel: 4<sup>-2</sup> tört alakban.</li>
+            <li>Igaz vagy hamis: (ab)<sup>3</sup> = a<sup>3</sup>b<sup>3</sup>.</li>
+        </ul>
+        <h3>Összefoglaló</h3>
+        <ul>
+            <li>Azonos alapnál szorzáskor a kitevők összeadódnak, osztáskor kivonódnak.</li>
+            <li>Hatvány hatványánál a kitevők összeszorzódnak.</li>
+            <li>a<sup>0</sup> = 1, a<sup>-n</sup> = 1/a<sup>n</sup>.</li>
+            <li>Más alapokra nem használhatod az azonos alapú szabályokat.</li>
+            <li>A hatványozás az ismételt szorzás rövidítése.</li>
+        </ul>
+    </div>
 
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
@@ -628,7 +639,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -672,7 +683,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

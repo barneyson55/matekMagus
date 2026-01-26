@@ -484,27 +484,63 @@
 
     <div id="elmelet" class="tab-content card active" role="tabpanel">
         <h2>Pont, szakasz, egyenes</h2>
-        <p>Az egyenesek meredeks&#233;g&#233;t &#233;s egyenlet&#233;t pontokb&#243;l hat&#225;rozhatjuk meg.</p>
-        <div class="theory-grid">
-            <div class="learning-hint">
-                <h3>K&#233;pletek</h3>
-                <ul>
-                    <li><span class="formula-line">m = (y2 - y1) / (x2 - x1)</span></li>
-<li><span class="formula-line">y = m * x + b</span></li>
-<li><span class="formula-line">b = y - m * x</span></li>
-                </ul>
-            </div>
-            <div class="learning-hint">
-                <h3>Tippek</h3>
-                <ul>
-                    <li>Meredeks&#233;ghez k&#233;t pont sz&#252;ks&#233;ges.</li>
-<li>Ha x1 = x2, az egyenes f&#252;gg&#337;leges.</li>
-<li>Ellen&#337;rizd behelyettes&#237;t&#233;ssel.</li>
-                </ul>
-            </div>
+        <h3>R&#246;vid bevezet&#233;s (Mi ez? Mire j&#243;?)</h3>
+        <p>Egy egyenest k&#233;t pont vagy egy pont &#233;s meredeks&#233;g egy&#233;rtelm&#369;en meghat&#225;roz. Az egyenes egyenlete seg&#237;t gyorsan ellen&#337;rizni, hogy egy pont rajta van-e, &#233;s hol metszi a tengelyeket. A meredeks&#233;g azt mutatja, mennyit emelkedik vagy s&#252;llyed az egyenes, amikor jobbra l&#233;p&#252;nk. Ezeket a k&#233;pleteket grafikonokn&#225;l &#233;s sz&#246;veges feladatokn&#225;l is haszn&#225;lod.</p>
+        <h3>Alapfogalmak / defin&#237;ci&#243;k</h3>
+        <ul>
+            <li><b>Pont:</b> <span class="formula-line">P(x, y)</span>.</li>
+            <li><b>Meredeks&#233;g:</b> <span class="formula-line">m = (y2 - y1) / (x2 - x1)</span>, ha <span class="formula-line">x1 &#8800; x2</span>.</li>
+            <li><b>Egyenes egyenlete:</b> <span class="formula-line">y = m * x + b</span>.</li>
+            <li><b>Tengelymetszet:</b> <span class="formula-line">b = y - m * x</span> egy ismert pontb&#243;l.</li>
+            <li><b>F&#252;gg&#337;leges egyenes:</b> <span class="formula-line">x = c</span>.</li>
+            <li><b>V&#237;zszintes egyenes:</b> <span class="formula-line">y = c</span>.</li>
+        </ul>
+        <h3>L&#233;p&#233;sr&#337;l l&#233;p&#233;sre p&#233;lda (1&#8211;2 db)</h3>
+        <div class="learning-hint">
+            <h4>1. p&#233;lda &#8211; k&#233;t pontb&#243;l egyenes</h4>
+            <p>Adott: <span class="formula-line">A(1, 2)</span>, <span class="formula-line">B(3, 6)</span>.</p>
+            <ol>
+                <li>Meredeks&#233;g: <span class="formula-line">m = (6 - 2) / (3 - 1) = 4/2 = 2</span>.</li>
+                <li>Tengelymetszet: <span class="formula-line">b = 2 - 2 * 1 = 0</span>.</li>
+                <li>Egyenlet: <span class="formula-line">y = 2 * x</span>.</li>
+            </ol>
         </div>
+        <div class="learning-hint">
+            <h4>2. p&#233;lda &#8211; pont &#233;s meredeks&#233;g</h4>
+            <p>Adott: <span class="formula-line">m = -1</span> &#233;s <span class="formula-line">P(2, 3)</span>.</p>
+            <ol>
+                <li>Tengelymetszet: <span class="formula-line">b = 3 - (-1) * 2 = 5</span>.</li>
+                <li>Egyenlet: <span class="formula-line">y = -x + 5</span>.</li>
+            </ol>
+        </div>
+        <div class="learning-hint">
+            <h3>Vizu&#225;lis magyar&#225;zat (emelked&#233;s / fut&#225;s)</h3>
+            <p>A meredeks&#233;g azt jelenti: <b>mennyi emelked&#233;s jut egy egys&#233;gnyi jobbra l&#233;p&#233;sre</b>. P&#233;ld&#225;ul <span class="formula-line">m = 2</span> eset&#233;n 1-et l&#233;psz jobbra, 2-t felfel&#233;. <span class="formula-line">m = -1/2</span> eset&#233;n 2-t jobbra, 1-et lefel&#233;.</p>
+        </div>
+        <div class="learning-hint">
+            <h3>Gyakori hib&#225;k / t&#233;vhitek</h3>
+            <ul>
+                <li>Felcser&#233;led a <span class="formula-line">&#916;x</span> &#233;s <span class="formula-line">&#916;y</span> szerep&#233;t.</li>
+                <li>Null&#225;val osztasz, ha <span class="formula-line">x1 = x2</span>.</li>
+                <li>A <span class="formula-line">b</span> &#233;rt&#233;k&#233;t rossz el&#337;jellel sz&#225;molod.</li>
+                <li>&#214;sszekevered a <span class="formula-line">b</span> tengelymetszetet az <span class="formula-line">x</span>-tengely metsz&#233;spontj&#225;val.</li>
+            </ul>
+        </div>
+        <h3>Mini &#246;nellen&#337;rz&#233;s (v&#225;lasz n&#233;lk&#252;l)</h3>
+        <ul>
+            <li>Sz&#225;mold ki a meredeks&#233;get: <span class="formula-line">A(0, 1)</span>, <span class="formula-line">B(4, 9)</span>.</li>
+            <li>&#205;rd fel az egyenest, ami &#225;tmegy <span class="formula-line">P(1, -2)</span> ponton &#233;s <span class="formula-line">m = 3</span>.</li>
+            <li>Rajta van-e <span class="formula-line">Q(2, 5)</span> a <span class="formula-line">y = 2x + 1</span> egyenesen?</li>
+            <li>Milyen egyenes az <span class="formula-line">x = -3</span>?</li>
+        </ul>
+        <h3>&#214;sszefoglal&#243;</h3>
+        <ul>
+            <li>K&#233;t pontb&#243;l meredeks&#233;g sz&#225;molhat&#243;: <span class="formula-line">m = (y2 - y1)/(x2 - x1)</span>.</li>
+            <li>Egyenes egyenlete: <span class="formula-line">y = m * x + b</span>.</li>
+            <li>F&#252;gg&#337;leges egyenes: <span class="formula-line">x = c</span>, v&#237;zszintes: <span class="formula-line">y = c</span>.</li>
+            <li>Mindig ellen&#337;rizd visszahelyettes&#237;t&#233;ssel.</li>
+        </ul>
     </div>
-
     <div id="vizualis" class="tab-content card" role="tabpanel">
         <h2>Vizu&#225;lis modell</h2>
         <p>Meredeks&#233;g &#233;s tengelymetszet gyors kisz&#225;m&#237;t&#225;sa.</p>
@@ -542,7 +578,7 @@
         </div>
         <div class="test-meta">
             <div class="meta-row">
-                <span class="meta-label">Neh&#233;zs&#233;g:</span>
+                <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
                 <div class="difficulty-buttons">
                     <button class="btn btn-secondary difficulty-btn active" data-difficulty="k&#246;nny&#369;" type="button">K&#246;nny&#369;</button>
                     <button class="btn btn-secondary difficulty-btn" data-difficulty="norm&#225;l" type="button">Norm&#225;l</button>
@@ -586,7 +622,7 @@
             </ul>
         </div>
         <div class="practice-controls">
-            <span class="meta-label">Neh&#233;zs&#233;g:</span>
+            <span class="meta-label">Neh&#233;zs&#233;gi szint:</span>
             <label><input class="practice-difficulty" type="checkbox" value="k&#246;nny&#369;" checked> K&#246;nny&#369;</label>
             <label><input class="practice-difficulty" type="checkbox" value="norm&#225;l"> Norm&#225;l</label>
             <label><input class="practice-difficulty" type="checkbox" value="neh&#233;z"> Neh&#233;z</label>

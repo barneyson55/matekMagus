@@ -1,6 +1,7 @@
 # Status
 
 ## Snapshot
+- Windows release guide added (`docs/RELEASE_WINDOWS.md`) with packaging plan notes; release notes template added (`docs/RELEASE_NOTES_TEMPLATE.md`).
 - Added safety bounds to module test question pool fill loops (JS + legacy HTML) to prevent renderer freezes when random generation stalls.
 - Buff system rules implemented (practice/test/quest unlocks + active states) with expanded catalog + SVG icon set; spec and asset list documented in `docs/buffs.md`.
 - Character sheet/profile views polished: list items wrap cleanly with focus states, achievements cards top-align, and results now adapt to theme settings + responsive layout tweaks.
@@ -124,9 +125,10 @@
 - No missing roadmap modules; remaining validation risk is Windows coverage (see Partial or Unverified).
 
 ## Next Milestone
-- Desktop v1: expand Elmélet content across all modules using `docs/THEORY_TEMPLATE.md`, then follow with XP/settings/character sheet/buff polish.
+- Desktop v1: Windows release readiness (packaging config + Windows smoke/E2E runs + final HU sweep + module integrity scan + settings/character sheet/buffs polish).
 
 ## Recent Tests
+- 2026-01-27: Not run (automation policy: release docs + Windows packaging plan + ai_todo refresh).
 - 2026-01-26: Not run (automation policy: module test question pool safety guard update across JS + legacy HTML modules).
 - 2026-01-26: Not run (automation policy: mobile E2E coverage expansion for Quest Log drawer + tab layout).
 - 2026-01-26: Not run (automation policy: orientation-change regression checks for selected modules).

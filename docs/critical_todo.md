@@ -1,6 +1,6 @@
 # Critical TODO / Risks
 
-Last reviewed: 2026-01-26 (Bug triage log initialized)
+Last reviewed: 2026-01-27 (Bug triage log initialized)
 
 ## Bug Triage Log
 
@@ -33,6 +33,14 @@ Last reviewed: 2026-01-26 (Bug triage log initialized)
   - Notes: Verification gap that could hide platform regressions.
   - Update (2026-01-25): Test runner now auto-skips E2E in WSL/headless; Windows run still pending.
   - Update (2026-01-25): `npm run test:e2e` now routes through the same skip gate as `npm run test` for WSL/headless.
+
+- [MAJOR] Windows packaging tooling not configured
+  - Repro steps:
+    1. Check `package.json` for packaging scripts or config.
+    2. Look for electron-builder/electron-forge config files.
+  - Expected: A packaging command produces installer/portable artifacts for Windows.
+  - Actual: No packaging tool configured; release artifacts cannot be generated yet.
+  - Notes: 2026-01-27. Packaging plan documented in `docs/RELEASE_WINDOWS.md`; dependency/config pending.
 
 - [MINOR] Windows renderer glyph rendering for Quest Log disclosure arrows unverified
   - Repro steps:

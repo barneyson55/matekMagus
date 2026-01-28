@@ -1,17 +1,18 @@
-# Windows Release Guide (Desktop Only)
+﻿# Windows Release Guide (Desktop Only)
 
 ## Scope
 - Desktop (PC) release packaging for Windows only.
 - No mobile scope in this guide.
 
-## Current State (2026-01-27)
-- No packaging tool configured in `package.json`.
-- Planned standard approach: electron-builder (requires approval to add a devDependency).
+## Current State (2026-01-28)
+- electron-builder configured in `package.json`.
+- Auto-update uses GitHub Releases + electron-updater (NSIS only).
 
 ## Prerequisites
 - Windows 10/11
 - Node.js LTS + npm
 - Git
+- GitHub release access (GH_TOKEN with `repo` scope)
 
 ## Clean Install
 ```powershell
@@ -27,53 +28,28 @@ npm install
 npm start
 ```
 
-## Run Tests on Windows
+## Build Installer (NSIS + portable)
 ```powershell
-npm run test:unit
-npm run test
-npm run test:e2e
+npm run dist:win
 ```
+
+## Publish Installer + Update Metadata (GitHub Releases)
+```powershell
+$env:GH_TOKEN = "YOUR_GITHUB_TOKEN"
+npm run publish:win
+Remove-Item Env:GH_TOKEN
+```
+
 Notes:
-- `npm run test` runs unit + E2E (E2E should execute on Windows GUI).
-- Avoid WSL/headless for E2E; use a native Windows session.
-
-## Packaging (Planned Standard: electron-builder)
-This project does not yet include a packaging tool. The steps below are the planned minimal setup
-and require explicit approval because they add a new devDependency.
-
-### One-time Setup (pending approval)
-```powershell
-npm install --save-dev electron-builder
-```
-
-Add a minimal `electron-builder.yml` (example):
-```yaml
-appId: hu.matek.mester
-productName: MatekMester
-directories:
-  output: dist
-files:
-  - "**/*"
-  - "!**/tests/**"
-  - "!**/logs/**"
-win:
-  target:
-    - nsis
-    - portable
-  icon: assets/icon.png
-```
-
-### Build Installer + Portable (x64)
-```powershell
-npx electron-builder --win --x64
-```
+- Auto-update works only for the installed NSIS build.
+- Portable builds do not support silent auto-update.
 
 ## Artifacts Location
-- Default output directory: `dist/`
+- `dist/`
 - Expected outputs:
-  - `dist/win-unpacked/` (unpacked app)
   - NSIS installer `.exe` (e.g., `dist/MatekMester Setup <version>.exe`)
   - Portable `.exe` (e.g., `dist/MatekMester <version>.exe`)
+  - `latest.yml` + `*.blockmap` (auto-update metadata)
 
 ## Release Notes
 Use `docs/RELEASE_NOTES_TEMPLATE.md` for each release and record:

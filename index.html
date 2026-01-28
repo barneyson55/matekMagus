@@ -658,6 +658,13 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="settings-group settings-update-group">
+                            <h4>Frissítési állapot</h4>
+                            <div class="settings-field">
+                                <label for="update-status">Állapot</label>
+                                <div class="settings-status" id="update-status" role="status" aria-live="polite">Frissítési információ még nincs.</div>
+                            </div>
+                        </div>
                         <p class="settings-hint">A változások mentés után érvényesülnek.</p>
                     </section>
 
@@ -783,6 +790,7 @@
         const settingHintMode = document.getElementById('setting-hint-mode');
         const settingVisualAids = document.getElementById('setting-visual-aids');
         const settingPracticeDifficulty = document.getElementById('setting-practice-difficulty');
+        const updateStatusText = document.getElementById('update-status');
         const mobileQuestMedia = window.matchMedia('(max-width: 767px)');
         const QUEST_STORAGE_KEY = 'matek-mester-quests-v1';
         const QUEST_VERSION = 2;
@@ -840,6 +848,9 @@
         let achievementsInitialized = false;
         const MAX_ACHIEVEMENT_TOASTS = 4;
         const ACHIEVEMENT_TOAST_DURATION = 6500;
+        const MAX_SYSTEM_TOASTS = 2;
+        const SYSTEM_TOAST_DURATION = 4800;
+        const UPDATE_STATUS_DEFAULT = 'Frissítési információ még nincs.';
         let lastNonMobileQuestCollapsed = false;
         let hasNonMobileQuestState = false;
 
@@ -2747,6 +2758,41 @@ button {
             }, 220);
         }
 
+        function setUpdateStatus(message) {
+            if (!updateStatusText) return;
+            updateStatusText.textContent = message || UPDATE_STATUS_DEFAULT;
+        }
+
+        function showSystemToast(message) {
+            if (!achievementToastLayer || !message) return;
+            const toast = document.createElement('div');
+            toast.className = 'system-toast';
+            toast.innerHTML = `
+                <div>
+                    <div class="system-toast__title">Frissítés</div>
+                    <div class="system-toast__desc">${message}</div>
+                </div>
+                <button class="system-toast__close" type="button" aria-label="Bezárás">✕</button>
+            `;
+
+            const closeBtn = toast.querySelector('.system-toast__close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => closeAchievementToast(toast));
+            }
+
+            while (achievementToastLayer.children.length >= (MAX_ACHIEVEMENT_TOASTS + MAX_SYSTEM_TOASTS)) {
+                const oldest = achievementToastLayer.firstElementChild;
+                if (!oldest) break;
+                oldest.remove();
+            }
+
+            achievementToastLayer.appendChild(toast);
+            const duration = document.body.classList.contains('reduce-motion')
+                ? 2000
+                : SYSTEM_TOAST_DURATION;
+            window.setTimeout(() => closeAchievementToast(toast), duration);
+        }
+
         function showAchievementToast(achievement, state) {
             if (!achievementToastLayer || !achievement) return;
             const badgeText = ACHIEVEMENT_CATEGORY_BADGES[achievement.category] || 'A';
@@ -2812,6 +2858,15 @@ button {
             achievementSnapshot = buildAchievementSnapshot(summary);
         }
 
+        function handleUpdateStatus(payload) {
+            if (!payload) return;
+            const message = payload.message || UPDATE_STATUS_DEFAULT;
+            setUpdateStatus(message);
+            if (payload.status === 'downloaded') {
+                showSystemToast(message);
+            }
+        }
+
         function formatDifficultyTooltip(normalized, key, label) {
             const grade = normalized[key];
             if (!grade) return `${label}: Nincs adat.`;
@@ -2872,6 +2927,10 @@ button {
         });
 
         refreshProgressSummary();
+        setUpdateStatus(UPDATE_STATUS_DEFAULT);
+        if (window.electronAPI && typeof window.electronAPI.onUpdateStatus === 'function') {
+            window.electronAPI.onUpdateStatus(handleUpdateStatus);
+        }
 
         // Load and apply settings on page load
         async function loadAndApplySettings() {

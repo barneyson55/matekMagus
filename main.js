@@ -5,6 +5,7 @@
 // saving XP earned from practice sessions.
 
 const { app, BrowserWindow, session, ipcMain } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
 const {
@@ -28,6 +29,10 @@ if (customUserDataDir) {
 // Paths for storing progress and settings in the user's data directory
 const progressFilePath = path.join(app.getPath('userData'), 'progress.json');
 const settingsFilePath = path.join(app.getPath('userData'), 'settings.json');
+const UPDATE_LOG_FILE = 'auto-update.log';
+const UPDATE_INSTALL_DELAY_MS = 3500;
+let mainWindow = null;
+let lastUpdateStatus = null;
 
 const PROGRESS_VERSION = 2;
 const QUEST_VERSION = 2;
@@ -49,6 +54,95 @@ const TIER_MULTIPLIERS = {
 const TOPIC_ID_ALIASES = {
   abszolut_ertek_fuggveny: 'specialis_fuggvenyek',
 };
+
+function getUpdateLogPath() {
+  const logDir = path.join(app.getPath('userData'), 'logs');
+  return { logDir, logPath: path.join(logDir, UPDATE_LOG_FILE) };
+}
+
+function writeUpdateLog(message, error) {
+  const time = new Date().toISOString();
+  const details = error && error.message ? `${message} (${error.message})` : message;
+  const line = `[${time}] ${details}`;
+  console.log(line);
+  try {
+    const { logDir, logPath } = getUpdateLogPath();
+    fs.mkdirSync(logDir, { recursive: true });
+    fs.appendFileSync(logPath, `${line}\n`);
+  } catch (logError) {
+    console.warn('Auto-update log nem írható:', logError);
+  }
+}
+
+function sendUpdateStatus(status, data = {}) {
+  const payload = { status, ...data };
+  lastUpdateStatus = payload;
+  const targetWindow = mainWindow || BrowserWindow.getAllWindows()[0];
+  if (targetWindow && !targetWindow.isDestroyed()) {
+    targetWindow.webContents.send('update-status', payload);
+  }
+}
+
+function setupAutoUpdates() {
+  if (!app.isPackaged) {
+    writeUpdateLog('Auto-update letiltva fejlesztői módban.');
+    sendUpdateStatus('disabled', { message: 'Frissítés csak telepített verzióban érhető el.' });
+    return;
+  }
+  if (process.env.PORTABLE_EXECUTABLE_FILE || process.env.PORTABLE_EXECUTABLE_DIR) {
+    writeUpdateLog('Auto-update letiltva portable buildben.');
+    sendUpdateStatus('disabled', { message: 'Frissítés portable verzióban nem érhető el.' });
+    return;
+  }
+
+  autoUpdater.autoDownload = true;
+
+  autoUpdater.on('checking-for-update', () => {
+    writeUpdateLog('Frissítések ellenőrzése...');
+    sendUpdateStatus('checking', { message: 'Frissítések ellenőrzése folyamatban.' });
+  });
+
+  autoUpdater.on('update-available', (info) => {
+    writeUpdateLog(`Új frissítés érhető el: ${info?.version || 'ismeretlen verzió'}.`);
+    sendUpdateStatus('available', { message: 'Új frissítés érhető el. Letöltés indul.' });
+  });
+
+  autoUpdater.on('update-not-available', () => {
+    writeUpdateLog('Nincs új frissítés.');
+    sendUpdateStatus('not-available', { message: 'Nincs új frissítés.' });
+  });
+
+  autoUpdater.on('download-progress', (progress) => {
+    const percent = Math.max(0, Math.min(100, Math.round(progress?.percent || 0)));
+    sendUpdateStatus('downloading', {
+      message: `Frissítés letöltése: ${percent}%.`,
+      percent,
+    });
+  });
+
+  autoUpdater.on('update-downloaded', () => {
+    writeUpdateLog('Frissítés letöltve; telepítés indítása.');
+    sendUpdateStatus('downloaded', { message: 'Frissítés letöltve, telepítés indul...' });
+    setTimeout(() => {
+      try {
+        autoUpdater.quitAndInstall();
+      } catch (error) {
+        writeUpdateLog('Frissítés telepítése sikertelen.', error);
+        sendUpdateStatus('error', { message: 'Frissítés közben hiba történt.' });
+      }
+    }, UPDATE_INSTALL_DELAY_MS);
+  });
+
+  autoUpdater.on('error', (error) => {
+    writeUpdateLog('Frissítés közben hiba történt.', error);
+    sendUpdateStatus('error', { message: 'Frissítés közben hiba történt.' });
+  });
+
+  autoUpdater.checkForUpdates().catch((error) => {
+    writeUpdateLog('Frissítések ellenőrzése sikertelen.', error);
+    sendUpdateStatus('error', { message: 'Frissítések ellenőrzése sikertelen.' });
+  });
+}
 
 function buildLevelTable() {
   const table = [];
@@ -1485,7 +1579,7 @@ function recordPracticeXp(progress, payload) {
 
 // Create the main application window
 const createWindow = () => {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1280,
     height: 800,
     minWidth: 940,
@@ -1500,6 +1594,14 @@ const createWindow = () => {
     },
   });
   mainWindow.loadFile('index.html');
+  mainWindow.webContents.on('did-finish-load', () => {
+    if (lastUpdateStatus) {
+      mainWindow.webContents.send('update-status', lastUpdateStatus);
+    }
+  });
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 };
 
 // App ready handler
@@ -1515,6 +1617,7 @@ app.whenReady().then(() => {
     });
   });
   createWindow();
+  setupAutoUpdates();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });

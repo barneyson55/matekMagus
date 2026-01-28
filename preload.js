@@ -23,4 +23,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
   saveQuestState: (questState) => ipcRenderer.send('save-quest-state', questState),
   // Save buff state to the main process.
   saveBuffState: (buffState) => ipcRenderer.send('save-buff-state', buffState),
+  // Subscribe to auto-update status events from the main process.
+  onUpdateStatus: (handler) => {
+    if (typeof handler !== 'function') return () => {};
+    const wrapped = (_event, payload) => handler(payload);
+    ipcRenderer.on('update-status', wrapped);
+    return () => ipcRenderer.removeListener('update-status', wrapped);
+  },
 });

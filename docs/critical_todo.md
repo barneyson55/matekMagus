@@ -1,6 +1,6 @@
 # Critical TODO / Risks
 
-Last reviewed: 2026-01-27 (Bug triage log initialized)
+Last reviewed: 2026-01-28 (Bug triage log updated)
 
 ## Bug Triage Log
 
@@ -34,13 +34,38 @@ Last reviewed: 2026-01-27 (Bug triage log initialized)
   - Update (2026-01-25): Test runner now auto-skips E2E in WSL/headless; Windows run still pending.
   - Update (2026-01-25): `npm run test:e2e` now routes through the same skip gate as `npm run test` for WSL/headless.
 
-- [MAJOR] Windows packaging tooling not configured
+- [RESOLVED] Windows packaging tooling not configured
   - Repro steps:
     1. Check `package.json` for packaging scripts or config.
     2. Look for electron-builder/electron-forge config files.
   - Expected: A packaging command produces installer/portable artifacts for Windows.
-  - Actual: No packaging tool configured; release artifacts cannot be generated yet.
-  - Notes: 2026-01-27. Packaging plan documented in `docs/RELEASE_WINDOWS.md`; dependency/config pending.
+  - Actual: Packaging config was missing.
+  - Fix: `electron-builder` configured in `package.json`, NSIS/portable targets added, `dist:win`/`publish:win` scripts added.
+  - Notes: 2026-01-28.
+
+- [MAJOR] Windows code signing not configured
+  - Repro steps:
+    1. Build the NSIS installer (`npm run dist:win`).
+    2. Install on a clean Windows machine.
+  - Expected: Signed installer to reduce SmartScreen warnings.
+  - Actual: Unsigned build may trigger warnings.
+  - Notes: Requires user-provided signing certificate; not configured yet.
+
+- [MAJOR] SmartScreen reputation warnings unverified
+  - Repro steps:
+    1. Download the installer from GitHub Releases on a clean Windows machine.
+    2. Observe SmartScreen / Defender prompts.
+  - Expected: Minimal warnings for trusted builds.
+  - Actual: Reputation warnings likely without signing.
+  - Notes: Validate after signing is in place.
+
+- [MINOR] GitHub Release visibility can block auto-update
+  - Repro steps:
+    1. Publish a release as draft or prerelease.
+    2. Launch the installed app and trigger auto-update.
+  - Expected: Auto-update finds the latest release.
+  - Actual: Draft/prerelease assets are not used by auto-update.
+  - Notes: Ensure releases are published and visible.
 
 - [MINOR] Windows renderer glyph rendering for Quest Log disclosure arrows unverified
   - Repro steps:

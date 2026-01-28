@@ -555,6 +555,16 @@ body.high-contrast {
     width: 100%;
     accent-color: var(--button-bg);
 }
+.settings-status {
+    min-height: 36px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+}
 .settings-range {
     display: flex;
     align-items: center;
@@ -689,6 +699,48 @@ body.high-contrast {
     justify-content: center;
 }
 .achievement-toast__close:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 2px; }
+.system-toast {
+    background: var(--header-bg);
+    border: 1px solid var(--header-border);
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: start;
+    color: var(--text-primary);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: auto;
+}
+.system-toast.is-hiding {
+    opacity: 0;
+    transform: translateY(-6px);
+}
+.system-toast__title {
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+.system-toast__desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+.system-toast__close {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.system-toast__close:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 2px; }
 
 /* Responsive breakpoints: desktop >=1200px, tablet 768-1199px, mobile <=767px. */
 @media (min-width: 1200px) {

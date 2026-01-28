@@ -1,6 +1,9 @@
 # Status
 
 ## Snapshot
+- Windows installer + auto-update pipeline configured (electron-builder/electron-updater, `dist:win`/`publish:win` scripts, NSIS+portable targets, GitHub publish config).
+- Auto-update status now surfaces in Settings (Frissítési állapot) and a system toast on download completion, with optional log file under `userData/logs/`.
+- Windows installer + auto-update documentation added (`docs/WINDOWS_INSTALLER_AND_UPDATES.md`) and release guide refreshed.
 - Module integrity scan complete: all navigation modules confirm Elmélet/Vizuális modell/Teszt/Gyakorlás tabs, and inline module scripts were extracted to matching `.js` files (including achievements/results/settings/character_sheet + placeholder stub).
 - Final HU consistency sweep: MatekMester naming aligned in app shell/title + placeholder copy now references Küldetésnapló; emoji removed from landing hint.
 - Windows release guide added (`docs/RELEASE_WINDOWS.md`) with packaging plan notes; release notes template added (`docs/RELEASE_NOTES_TEMPLATE.md`).
@@ -120,16 +123,18 @@
 - Windows renderer verification pending for CSS glyph rendering in the sidebar disclosure arrow.
 - Windows smoke tests are still pending; no native Windows environment available in this session.
 - Latest orientation layout coverage is unverified on Windows (WSL2 run completed, but Windows coverage remains outstanding).
-- Packaging verification is pending (no packaging script configured in `package.json`).
+- Packaging verification is pending (scripts/config added, but no `dist:win` run yet).
+- Auto-update verification is pending on an installed NSIS build.
 - Mobile/responsive behavior is deferred to V2; existing CSS rules are not v1 gating.
 
 ## Missing or Risky
 - No missing roadmap modules; remaining validation risk is Windows coverage (see Partial or Unverified).
 
 ## Next Milestone
-- Desktop v1: Windows release readiness (packaging config + Windows smoke/E2E runs + final HU sweep + module integrity scan + settings/character sheet/buffs polish).
+- Desktop v1: Windows installer + auto-update readiness (build verification + update checklist + Windows smoke/E2E runs).
 
 ## Recent Tests
+- 2026-01-28: Not run (automation policy: Windows installer + auto-update integration).
 - 2026-01-27: Not run (automation policy: module integrity quick scan + module JS extraction).
 - 2026-01-27: Not run (automation policy: HU consistency sweep across app shell/settings/results/character sheet/modules).
 - 2026-01-27: Not run (automation policy: release docs + Windows packaging plan + ai_todo refresh).

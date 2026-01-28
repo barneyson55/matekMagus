@@ -3,8 +3,8 @@
 Last updated: 2026-01-27
 
 ## Desktop Release (Windows)
-- [ ] Final HU consistency sweep (mandatory) across app shell, settings, results, character sheet, and modules (align with `docs/localization_glossary.md`).
-- [ ] Module integrity quick scan: confirm every module has matching `.html` + `.js` and base structure matches constitution phrasing (Elmelet / Vizualis modell / Teszt / Gyakorlas).
+- [x] Final HU consistency sweep (mandatory) across app shell, settings, results, character sheet, and modules (align with `docs/localization_glossary.md`).
+- [x] Module integrity quick scan: confirm every module has matching `.html` + `.js` and base structure matches constitution phrasing (Elmelet / Vizualis modell / Teszt / Gyakorlas).
 - [ ] Run `node scripts/check_module_consistency.js` and fix any tab/payload mismatches it reports.
 - [ ] Verify module tab labels and quest copy are consistent with constitution wording (Elmelet/Vizualis modell/Teszt/Gyakorlas, Kuldetes elfogadasa).
 - [ ] Settings overlay final polish (spacing, focus order, labels, keyboard access).

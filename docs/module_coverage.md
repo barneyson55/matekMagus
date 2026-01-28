@@ -1,6 +1,6 @@
 # Module Coverage (Roadmap vs Repo)
 
-Last updated: 2026-01-25
+Last updated: 2026-01-27
 
 ## Summary
 - Roadmap topicIds (constitution/curriculum/roadmap.md): 95
@@ -24,14 +24,14 @@ Notes:
 | --- | --- | --- | --- | --- | --- |
 | Alapozó Modulok | modules/alapozo_modulzaro.html | OK | Yes | Y/Y/Y | Yes |
 | Gondolkodási módszerek, Halmazok | modules/gondolkodas_temazaro.html | OK | Yes | Y/Y/Y | Yes |
-| Halmazműveletek | modules/halmazmuveletek.html | OK | No | Y/Y/Y | No |
-| Logikai szita formula | modules/logikai_szita.html | OK | No | Y/Y/Y | No |
-| Skatulya-elv, párosítások | modules/skatulya_elv.html | OK | No | Y/Y/Y | No |
+| Halmazműveletek | modules/halmazmuveletek.html | OK | Yes | Y/Y/Y | No |
+| Logikai szita formula | modules/logikai_szita.html | OK | Yes | Y/Y/Y | No |
+| Skatulya-elv, párosítások | modules/skatulya_elv.html | OK | Yes | Y/Y/Y | No |
 | Számelmélet és Számrendszerek | modules/szamelmelet_temazaro.html | OK | Yes | Y/Y/Y | Yes |
-| Oszthatósági szabályok | modules/oszthatosag.html | OK | No | Y/Y/Y | No |
-| LNKO, LKKT | modules/lnko_lkkt.html | OK | No | Y/Y/Y | No |
-| Prímtényezős felbontás | modules/primtenyezok.html | OK | No | Y/Y/Y | No |
-| Számrendszerek | modules/szamrendszerek.html | OK | No | Y/Y/Y | No |
+| Oszthatósági szabályok | modules/oszthatosag.html | OK | Yes | Y/Y/Y | No |
+| LNKO, LKKT | modules/lnko_lkkt.html | OK | Yes | Y/Y/Y | No |
+| Prímtényezős felbontás | modules/primtenyezok.html | OK | Yes | Y/Y/Y | No |
+| Számrendszerek | modules/szamrendszerek.html | OK | Yes | Y/Y/Y | No |
 | Racionális számok | modules/racionalis_szamok_temazaro.html | OK | Yes | Y/Y/Y | Yes |
 | Törtek és műveletek | modules/tortek.html | OK | Yes | Y/Y/Y | No |
 | Tizedes törtek, átváltások | modules/tizedes_tortek.html | OK | Yes | Y/Y/Y | No |
@@ -57,7 +57,7 @@ Notes:
 | Paritás (páros, páratlan) | modules/paritas.html | OK | Yes | Y/Y/Y | No |
 | Függvénytranszformációk | modules/fuggveny_transzformaciok.html | OK | Yes | Y/Y/Y | No |
 | Nevezetes függvények | modules/nevezetes_fuggvenyek_temazaro.html | OK | Yes | Y/Y/Y | Yes |
-| Lineáris függvény | modules/linearis_fuggveny.html | OK | No | Y/Y/Y | No |
+| Lineáris függvény | modules/linearis_fuggveny.html | OK | Yes | Y/Y/Y | No |
 | Másodfokú függvény | modules/masodfoku_fuggveny.html | OK | Yes | Y/Y/Y | No |
 | Hatványfüggvények | modules/hatvanyfuggvenyek.html | OK | Yes | Y/Y/Y | No |
 | Exponenciális és logaritmus fv. | modules/exp_log_fuggveny.html | OK | Yes | Y/Y/Y | No |
@@ -117,7 +117,7 @@ Notes:
 | A határozott integrál | modules/hatarozott_integral.html | OK | Yes | Y/Y/Y | No |
 | Newton-Leibniz formula | modules/newton_leibniz.html | OK | Yes | Y/Y/Y | No |
 | Terfogatszámítás integrállal | modules/terfogatszamitas.html | OK | Yes | Y/Y/Y | No |
-| Karakterlap | modules/character_sheet.html | Not linked | No | Y/N/N | No |
-| placeholder | modules/placeholder.html | Placeholder | No | N/N/N | No |
-| Eredményeim | modules/results.html | Not linked | No | N/N/N | No |
-| Beállítások | modules/settings.html | Not linked | No | N/N/N | No |
+| Karakterlap | modules/character_sheet.html | Not linked | Yes | Y/N/N | No |
+| placeholder | modules/placeholder.html | Placeholder | Yes | N/N/N | No |
+| Eredményeim | modules/results.html | Not linked | Yes | N/N/N | No |
+| Beállítások | modules/settings.html | Not linked | Yes | N/N/N | No |

@@ -144,7 +144,7 @@ e2eTest('launches and navigates between modules', async () => {
     await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
 
     const title = await page.title();
-    assert.match(title, /Matek Mester/i);
+    assert.match(title, /MatekMester/i);
 
     await waitForIframeSrc(page, 'modules/placeholder.html');
     await page.waitForFunction(() => {

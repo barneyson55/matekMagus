@@ -1,6 +1,8 @@
 # Status
 
 ## Snapshot
+- Module integrity scan complete: all navigation modules confirm Elmélet/Vizuális modell/Teszt/Gyakorlás tabs, and inline module scripts were extracted to matching `.js` files (including achievements/results/settings/character_sheet + placeholder stub).
+- Final HU consistency sweep: MatekMester naming aligned in app shell/title + placeholder copy now references Küldetésnapló; emoji removed from landing hint.
 - Windows release guide added (`docs/RELEASE_WINDOWS.md`) with packaging plan notes; release notes template added (`docs/RELEASE_NOTES_TEMPLATE.md`).
 - Added safety bounds to module test question pool fill loops (JS + legacy HTML) to prevent renderer freezes when random generation stalls.
 - Buff system rules implemented (practice/test/quest unlocks + active states) with expanded catalog + SVG icon set; spec and asset list documented in `docs/buffs.md`.
@@ -128,6 +130,8 @@
 - Desktop v1: Windows release readiness (packaging config + Windows smoke/E2E runs + final HU sweep + module integrity scan + settings/character sheet/buffs polish).
 
 ## Recent Tests
+- 2026-01-27: Not run (automation policy: module integrity quick scan + module JS extraction).
+- 2026-01-27: Not run (automation policy: HU consistency sweep across app shell/settings/results/character sheet/modules).
 - 2026-01-27: Not run (automation policy: release docs + Windows packaging plan + ai_todo refresh).
 - 2026-01-26: Not run (automation policy: module test question pool safety guard update across JS + legacy HTML modules).
 - 2026-01-26: Not run (automation policy: mobile E2E coverage expansion for Quest Log drawer + tab layout).

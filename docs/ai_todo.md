@@ -1,6 +1,14 @@
 ﻿# AI TODO
 
-Last updated: 2026-01-28
+## Next Autopilot Batch (UI + Tests)
+- [ ] UI-PROD-001: Hide default app menu + dev shortcuts in packaged builds (spec: docs/tasks/UI-PROD-001.md)
+- [ ] UI-POLISH-001: Add safe base UI stylesheet + formatting automation (spec: docs/tasks/UI-POLISH-001.md)
+- [ ] TEST-SETUP-001: Establish deterministic test harness + npm scripts (spec: docs/tasks/TEST-SETUP-001.md)
+- [ ] TEST-UNIT-001: Write unit tests for core logic (spec: docs/tasks/TEST-UNIT-001.md)
+- [ ] TEST-E2E-001: Write Electron E2E smoke tests (spec: docs/tasks/TEST-E2E-001.md)
+- [ ] CI-001: Add GitHub Actions CI for lint + tests (spec: docs/tasks/CI-001.md)
+
+Last updated: 2026-01-31
 
 ## Desktop Release (Windows)
 - [ ] HU consistency sweep (mandatory) across app shell, settings, results, character sheet, and modules (align with `docs/localization_glossary.md`).

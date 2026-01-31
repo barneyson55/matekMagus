@@ -78,6 +78,7 @@ Last reviewed: 2026-01-28 (Bug triage log updated)
 
 ## Notes
 
+- 2026-01-31: Prepared autopilot task specs for UI polish, production UI gating, test foundation, and CI; tests not run (prep-only).
 - 2026-01-27: Module integrity quick scan completed; inline module scripts extracted into matching `.js` files (including achievements/results/settings/character_sheet + placeholder stub) and tab labels verified against constitution phrasing; tests not run (automation policy).
 - 2026-01-27: Final HU consistency sweep for app shell/settings/results/character sheet/modules (MatekMester naming + placeholder copy aligned); tests not run (automation policy).
 - 2026-01-26: Mobile E2E coverage expanded for Quest Log drawer + tab layout across halmazmuveletek, linearis_fuggveny, terulet_kerulet, kor_helyzetek, permutaciok, hatarertek; tests not run (automation policy).

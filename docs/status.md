@@ -1,5 +1,12 @@
 # Status
 
+## Next Autopilot Batch
+- Summary: Prepared task specs for UI polish, production UI gating (menu/shortcuts), test foundation (unit + E2E), and CI.
+- Verification checklist:
+  - [ ] Spec files exist under `docs/tasks/` (UI-PROD-001, UI-POLISH-001, TEST-SETUP-001, TEST-UNIT-001, TEST-E2E-001, CI-001).
+  - [ ] `docs/ai_todo.md` has the new top section linking these specs.
+  - [ ] Prep-only run confirmed: no tests, builds, or installs executed.
+
 ## Snapshot
 - Windows installer + auto-update pipeline configured (electron-builder/electron-updater, `dist:win`/`publish:win` scripts, NSIS+portable targets, GitHub publish config).
 - Auto-update status now surfaces in Settings (Frissítési állapot) and a system toast on download completion, with optional log file under `userData/logs/`.
@@ -134,6 +141,7 @@
 - Desktop v1: Windows installer + auto-update readiness (build verification + update checklist + Windows smoke/E2E runs).
 
 ## Recent Tests
+- 2026-01-31: Not run (prep-only: task specs + AI TODO/status updates).
 - 2026-01-28: Not run (automation policy: Windows installer + auto-update integration).
 - 2026-01-27: Not run (automation policy: module integrity quick scan + module JS extraction).
 - 2026-01-27: Not run (automation policy: HU consistency sweep across app shell/settings/results/character sheet/modules).

@@ -48,5 +48,3 @@
   - Fully functional linear and quadratic function modules.
   - Task generation, evaluation, and scoring.
   - Stable progress tracking integration.
-
-- [ ] Confirm how to handle existing uncommitted changes in `index.html` and `tests/e2e/electron-smoke.test.js` (title updated to MatekMester).

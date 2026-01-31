@@ -1,6 +1,6 @@
 # Critical TODO / Risks
 
-Last reviewed: 2026-01-28 (Bug triage log updated)
+Last reviewed: 2026-01-31 (Bug triage log updated)
 
 ## Bug Triage Log
 
@@ -33,6 +33,7 @@ Last reviewed: 2026-01-28 (Bug triage log updated)
   - Notes: Verification gap that could hide platform regressions.
   - Update (2026-01-25): Test runner now auto-skips E2E in WSL/headless; Windows run still pending.
   - Update (2026-01-25): `npm run test:e2e` now routes through the same skip gate as `npm run test` for WSL/headless.
+  - Update (2026-01-31): Windows E2E run not executed in this session (automation policy; no Windows environment). Recorded as not run in `docs/status.md`.
 
 - [RESOLVED] Windows packaging tooling not configured
   - Repro steps:
@@ -78,6 +79,27 @@ Last reviewed: 2026-01-28 (Bug triage log updated)
 
 ## Notes
 
+- 2026-01-31: Windows manual smoke run (app shell + module load + navigation) not executed in this session (no Windows environment); recorded in `docs/status.md`.
+- 2026-01-31: Windows manual click-through checklist added (`docs/WINDOWS_CLICKTHROUGH_CHECKLIST.md`); tests not run (automation policy).
+- 2026-01-31: `npm run dist:win` failed because electron-builder was not found; `npm install --no-fund --no-audit` failed with `EAI_AGAIN` for registry.npmjs.org, so `dist/` artifacts were not created.
+- 2026-01-31: Retried `npm run dist:win` (electron-builder still missing); `npm install --no-fund --no-audit` timed out after 120s, so `dist/` artifacts remain unverified.
+- 2026-01-31: Retried `npm install --no-fund --no-audit` (timed out after 120s); electron-builder still missing, `npm run dist:win` failed, and `dist/` was not created.
+- 2026-01-31: Retried `npm install --no-fund --no-audit` (failed with `EAI_AGAIN` for registry.npmjs.org and `/home/barney/.npm/_logs` write error); `npm run dist:win` failed (`electron-builder` not found) and `dist/` is still not created.
+- 2026-01-31: Retried `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit` (timed out after 120s); `npm run dist:win` failed (`electron-builder` not found) and `dist/` remains unverified.
+- 2026-01-31: Retried `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit --prefer-offline` (failed with `EAI_AGAIN` for registry.npmjs.org); `npm run dist:win` failed (`electron-builder` not found) and `dist/` is still not created.
+- 2026-01-31: Verified XP header values + level names against constitution; `docs/XP_AUDIT.md` updated; tests not run (automation policy).
+- 2026-01-31: Quest Log states + green check verified against constitution; completed check alignment tightened; tests not run (automation policy).
+- 2026-01-31: Character sheet final polish completed (layout balance, empty states, keyboard focus); tests not run (automation policy).
+- 2026-01-31: Settings overlay final polish (spacing, focus order, labels, keyboard access) completed; tests not run (automation policy).
+- 2026-01-31: Verified module tab labels and quest accept copy match constitution wording (Elmélet/Vizuális modell/Teszt/Gyakorlás, Küldetés elfogadása); no code changes; tests not run (automation policy).
+- 2026-01-31: Module consistency check run; testResult payloads now use explicit grade/percentage keys across modules; tests not run (automation policy).
+- 2026-01-31: HU consistency sweep completed for practice validation copy (nehézségi szint) across remaining modules; tests not run (automation policy).
+- 2026-01-31: TEST-E2E-001 completed (data-testid hooks for app shell/module list/module link + startup console-error smoke check); tests not run (automation policy).
+- 2026-01-31: TEST-UNIT-001 completed (core logic unit tests for progress persistence/normalization, difficulty normalization, results updates, achievements); tests not run (automation policy).
+- 2026-01-31: TEST-SETUP-001 completed (deterministic test helpers + headless xvfb-run gate); tests not run (automation policy).
+- 2026-01-31: UI-PROD-001 implemented (packaged builds hide menu + dev shortcuts; dev override via `MATEKMESTER_PROD_UI=1`); tests not run (automation policy).
+- 2026-01-31: UI-POLISH-001 implemented (base UI stylesheet + Prettier config/scripts); npm install not run (offline), package-lock update pending.
+- 2026-01-31: Buffs HUD finalized (icon alignment, tooltip content with unlock/active info, and locked/active visual states); tests not run (automation policy).
 - 2026-01-31: Prepared autopilot task specs for UI polish, production UI gating, test foundation, and CI; tests not run (prep-only).
 - 2026-01-27: Module integrity quick scan completed; inline module scripts extracted into matching `.js` files (including achievements/results/settings/character_sheet + placeholder stub) and tab labels verified against constitution phrasing; tests not run (automation policy).
 - 2026-01-27: Final HU consistency sweep for app shell/settings/results/character sheet/modules (MatekMester naming + placeholder copy aligned); tests not run (automation policy).

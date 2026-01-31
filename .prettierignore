@@ -1,0 +1,11 @@
+node_modules
+/dist
+/logs
+/coverage
+*.min.js
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg

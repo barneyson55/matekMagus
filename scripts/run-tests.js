@@ -11,6 +11,7 @@ function listTests(dir) {
   if (!fs.existsSync(dir)) return [];
   return fs.readdirSync(dir)
     .filter((name) => name.endsWith('.test.js'))
+    .sort()
     .map((name) => path.join(dir, name));
 }
 
@@ -53,6 +54,22 @@ const hasDisplay = Boolean(
 );
 const isHeadless = !IS_WINDOWS && !hasDisplay;
 const shouldSkipE2E = isWsl || isHeadless;
+const isXvfbAttempt = process.env.MATEK_XVFB === '1';
+
+function runE2EWithXvfb() {
+  const result = spawnSync(
+    'xvfb-run',
+    ['-a', process.execPath, __filename, '--e2e'],
+    {
+      stdio: 'inherit',
+      env: { ...process.env, MATEK_XVFB: '1' },
+    }
+  );
+  if (result.error) {
+    return null;
+  }
+  return result.status ?? 1;
+}
 
 let exitCode = 0;
 if (!runOnlyE2E) {
@@ -66,9 +83,15 @@ if (!runOnlyE2E) {
 }
 
 if (shouldSkipE2E) {
+  if (isHeadless && !isWsl && !isXvfbAttempt) {
+    const xvfbExit = runE2EWithXvfb();
+    if (xvfbExit !== null) {
+      process.exit(xvfbExit);
+    }
+  }
   const reason = isWsl
     ? 'WSL detected; skipping Electron E2E.'
-    : 'Headless environment detected; skipping Electron E2E.';
+    : 'Headless environment detected; xvfb-run unavailable; skipping Electron E2E.';
   console.log(reason);
   process.exit(0);
 }

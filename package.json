@@ -13,7 +13,10 @@
     "publish:win": "electron-builder --win --x64 --publish always",
     "test:unit": "node --test tests/unit",
     "test:e2e": "node scripts/run-tests.js --e2e",
-    "test": "node scripts/run-tests.js"
+    "test": "node scripts/run-tests.js",
+    "format": "prettier --write \"assets/styles/base.css\" \"index.html\" \"style.css\" \"docs/status.md\" \"docs/ai_todo.md\" \"docs/critical_todo.md\"",
+    "format:check": "prettier --check \"assets/styles/base.css\" \"index.html\" \"style.css\" \"docs/status.md\" \"docs/ai_todo.md\" \"docs/critical_todo.md\"",
+    "ui:check": "npm run format:check"
   },
   "author": "BarneySmith",
   "license": "ISC",
@@ -23,7 +26,8 @@
   "devDependencies": {
     "electron": "^25.0.0",
     "electron-builder": "^24.13.3",
-    "playwright-core": "^1.57.0"
+    "playwright-core": "^1.57.0",
+    "prettier": "^3.3.3"
   },
   "build": {
     "appId": "hu.matek.mester",

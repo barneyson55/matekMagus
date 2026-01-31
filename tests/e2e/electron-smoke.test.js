@@ -4,8 +4,9 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { _electron: electron } = require('playwright-core');
+const { repoRoot } = require('../helpers/paths');
+const { DEFAULT_TIMEOUT_MS } = require('../helpers/timeouts');
 
-const DEFAULT_TIMEOUT_MS = 15000;
 const E2E_RANDOM_SEED = 424242;
 const IS_WINDOWS = process.platform === 'win32';
 const WSL_ENV_VARS = ['WSL_DISTRO_NAME', 'WSL_INTEROP'];
@@ -25,6 +26,14 @@ const skipReason = isWsl
 const e2eTest = shouldSkipE2E
   ? (name, fn) => nodeTest(name, { skip: skipReason }, fn)
   : nodeTest;
+
+const CONSOLE_ERROR_ALLOWLIST = [
+  /DevTools failed to load source map/i,
+];
+
+function isBenignConsoleError(text) {
+  return CONSOLE_ERROR_ALLOWLIST.some((pattern) => pattern.test(text));
+}
 
 const MOBILE_QUEST_MODULES = [
   { id: 'halmazmuveletek', src: 'modules/halmazmuveletek.html' },
@@ -60,11 +69,22 @@ async function launchApp(options = {}) {
   };
   delete env.ELECTRON_RUN_AS_NODE;
   const app = await electron.launch({
-    args: ['.'],
+    args: [repoRoot],
     env,
   });
 
   const page = await app.firstWindow();
+  const consoleErrors = [];
+  const pageErrors = [];
+  page.on('console', (message) => {
+    if (message.type() !== 'error') return;
+    const text = message.text();
+    if (isBenignConsoleError(text)) return;
+    consoleErrors.push(text);
+  });
+  page.on('pageerror', (error) => {
+    pageErrors.push(error && error.message ? error.message : String(error));
+  });
   page.setDefaultTimeout(DEFAULT_TIMEOUT_MS);
   await page.waitForLoadState('domcontentloaded');
   await page.waitForSelector('#content-frame');
@@ -73,7 +93,7 @@ async function launchApp(options = {}) {
     : E2E_RANDOM_SEED;
   await applyE2ERandomSeed(page, seed);
 
-  return { app, page, userDataDir };
+  return { app, page, userDataDir, consoleErrors, pageErrors };
 }
 
 async function waitForIframeSrc(page, fragment) {
@@ -182,6 +202,29 @@ e2eTest('launches and navigates between modules', async () => {
       const overlay = document.getElementById('settings-overlay');
       return overlay && overlay.classList.contains('is-hidden');
     });
+  } finally {
+    await app.close();
+  }
+});
+
+e2eTest('launches without console errors and opens a module', async () => {
+  const { app, page, consoleErrors, pageErrors } = await launchApp();
+  try {
+    await page.waitForFunction(() => window.electronAPI && window.electronAPI.getProgressSummary);
+    await page.locator('[data-testid="app-shell"]').waitFor();
+    await page.locator('[data-testid="module-list"]').waitFor();
+
+    const moduleLink = page.locator('[data-testid="module-link-alapozo_modulzaro"]');
+    await moduleLink.scrollIntoViewIfNeeded();
+    await moduleLink.click();
+    await waitForIframeSrc(page, 'modules/alapozo_modulzaro.html');
+    await page.waitForFunction(() => {
+      const title = document.getElementById('module-title-text');
+      return title && title.textContent.trim().length > 0;
+    });
+
+    assert.equal(pageErrors.length, 0, `Page errors:\n${pageErrors.join('\n')}`);
+    assert.equal(consoleErrors.length, 0, `Console errors:\n${consoleErrors.join('\n')}`);
   } finally {
     await app.close();
   }

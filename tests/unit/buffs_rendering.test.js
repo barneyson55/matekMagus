@@ -4,7 +4,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const { BUFF_FIXTURES } = require('./fixtures/buffs_fixtures');
-const { getIconSvg, getIconLabel } = require(path.join(process.cwd(), 'buffs_icons.js'));
+const { repoRoot } = require('../helpers/paths');
+const { getIconSvg, getIconLabel } = require(path.join(repoRoot, 'buffs_icons.js'));
 
 test('buff icon mapping covers catalog tokens (scaffold)', () => {
   BUFF_FIXTURES.forEach((buff) => {
@@ -14,7 +15,7 @@ test('buff icon mapping covers catalog tokens (scaffold)', () => {
 });
 
 test('HUD exposes buff icon container (scaffold)', () => {
-  const html = fs.readFileSync(path.join(process.cwd(), 'index.html'), 'utf8');
+  const html = fs.readFileSync(path.join(repoRoot, 'index.html'), 'utf8');
   const hasBuffBar = html.includes('data-testid="buffs-bar"');
   assert.ok(hasBuffBar, 'TODO: ensure buff bar container is present');
   BUFF_FIXTURES.forEach((buff) => {

@@ -16,6 +16,7 @@
             trendPrevCount: document.getElementById('trend-prev-count'),
             trendDelta: document.getElementById('trend-delta'),
             trendDirection: document.getElementById('trend-direction'),
+            trendGrid: document.getElementById('trend-grid'),
             trendNote: document.getElementById('trend-note'),
             trendEmpty: document.getElementById('trend-empty'),
             topicInsightsList: document.getElementById('topic-insights-list'),
@@ -286,6 +287,15 @@
             }
         }
 
+        function setListButtonAction(button, topicId) {
+            if (topicId) {
+                button.addEventListener('click', () => navigateToTopic(topicId));
+                return;
+            }
+            button.disabled = true;
+            button.setAttribute('aria-disabled', 'true');
+        }
+
         function getQuestEntries() {
             const quests = summaryData && summaryData.quests ? summaryData.quests : {};
             const entries = [];
@@ -327,10 +337,12 @@
         function renderList(listEl, emptyEl, items, builder) {
             listEl.innerHTML = '';
             if (!items.length) {
-                emptyEl.style.display = 'block';
+                listEl.style.display = 'none';
+                emptyEl.style.display = 'grid';
                 return;
             }
             emptyEl.style.display = 'none';
+            listEl.style.display = 'grid';
             items.forEach(item => {
                 listEl.appendChild(builder(item));
             });
@@ -346,7 +358,7 @@
                 const scopeLabel = getScopeLabel(entry.scope);
                 const metaText = `Aktív küldetés · ${scopeLabel}`;
                 button.innerHTML = `<div class="item-details"><span class="item-title">${getTopicLabel(entry.topicId)}</span><span class="item-meta">${metaText}</span></div>`;
-                button.addEventListener('click', () => navigateToTopic(entry.topicId));
+                setListButtonAction(button, entry.topicId);
                 li.appendChild(button);
                 return li;
             });
@@ -370,7 +382,7 @@
                 metaParts.push(scopeLabel);
                 const metaText = metaParts.join(' · ');
                 button.innerHTML = `<div class="item-details"><span class="item-title">${getTopicLabel(entry.topicId)}</span><span class="item-meta">${metaText}</span></div>`;
-                button.addEventListener('click', () => navigateToTopic(entry.topicId));
+                setListButtonAction(button, entry.topicId);
                 li.appendChild(button);
                 return li;
             });
@@ -388,9 +400,7 @@
                     : Number.NaN;
                 const gradeText = Number.isFinite(gradeValue) ? formatNumber(gradeValue, '-') : '-';
                 button.innerHTML = `<div class="item-details"><span class="item-title">${getTopicLabel(result.topicId || '')}</span><span class="item-meta">Jegy: ${gradeText}</span></div>`;
-                if (result.topicId) {
-                    button.addEventListener('click', () => navigateToTopic(result.topicId));
-                }
+                setListButtonAction(button, result.topicId);
                 li.appendChild(button);
                 return li;
             });
@@ -416,9 +426,8 @@
                 : ACHIEVEMENT_FALLBACK;
             const states = summaryData && summaryData.achievements ? summaryData.achievements : {};
             dom.achievementList.innerHTML = '';
-            dom.achievementList.style.display = '';
             if (!catalog.length) {
-                dom.achievementEmpty.style.display = 'block';
+                dom.achievementEmpty.style.display = 'grid';
                 dom.achievementList.style.display = 'none';
                 return;
             }
@@ -430,11 +439,12 @@
                 })
                 .filter(Boolean);
             if (!unlockedAchievements.length) {
-                dom.achievementEmpty.style.display = 'block';
+                dom.achievementEmpty.style.display = 'grid';
                 dom.achievementList.style.display = 'none';
                 return;
             }
             dom.achievementEmpty.style.display = 'none';
+            dom.achievementList.style.display = 'grid';
             unlockedAchievements.forEach(({ achievement, state }) => {
                 const card = document.createElement('div');
                 card.className = 'achievement-item is-unlocked';
@@ -587,8 +597,10 @@
         function renderTrendSummary(sortedResults) {
             const summary = buildTrendSummary(sortedResults);
             if (!summary.total) {
-                dom.trendEmpty.style.display = 'block';
+                dom.trendEmpty.style.display = 'grid';
+                dom.trendGrid.style.display = 'none';
                 dom.trendNote.textContent = '';
+                dom.trendNote.style.display = 'none';
                 dom.trendLastAvg.textContent = '-';
                 dom.trendPrevAvg.textContent = '-';
                 dom.trendDelta.textContent = '-';
@@ -600,6 +612,8 @@
                 return;
             }
             dom.trendEmpty.style.display = 'none';
+            dom.trendGrid.style.display = 'grid';
+            dom.trendNote.style.display = 'block';
             dom.trendLastAvg.textContent = formatPercent(summary.lastAvg, '-');
             dom.trendPrevAvg.textContent = summary.prevCount ? formatPercent(summary.prevAvg, '-') : '-';
             dom.trendLastCount.textContent = `${summary.lastCount} teszt`;
@@ -623,10 +637,12 @@
             const insights = buildTopicInsights(sortedResults);
             dom.topicInsightsList.innerHTML = '';
             if (!insights.length) {
-                dom.topicInsightsEmpty.style.display = 'block';
+                dom.topicInsightsEmpty.style.display = 'grid';
+                dom.topicInsightsList.style.display = 'none';
                 return;
             }
             dom.topicInsightsEmpty.style.display = 'none';
+            dom.topicInsightsList.style.display = 'grid';
             insights.forEach((insight) => {
                 const li = document.createElement('li');
                 const button = document.createElement('button');
@@ -641,9 +657,7 @@
                 const deltaText = insight.delta === null ? '-' : `${formatSigned(insight.delta, '-')}\u0025`;
                 const directionLabel = getDirectionLabel(insight.direction);
                 button.innerHTML = `<div class="item-details"><span class="item-title">${insight.title || 'Ismeretlen'}</span><span class="item-meta">${gradeText} \u00b7 \u00c1tlag: ${avgText} \u00b7 Ut\u00f3bbi: ${lastText} \u00b7 ${attemptsText}</span></div><span class="${directionLabel.className}">${directionLabel.label} ${deltaText}</span>`;
-                if (insight.topicId) {
-                    button.addEventListener('click', () => navigateToTopic(insight.topicId));
-                }
+                setListButtonAction(button, insight.topicId);
                 li.appendChild(button);
                 dom.topicInsightsList.appendChild(li);
             });

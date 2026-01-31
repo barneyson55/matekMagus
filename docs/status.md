@@ -1,13 +1,35 @@
 # Status
 
 ## Next Autopilot Batch
-- Summary: Prepared task specs for UI polish, production UI gating (menu/shortcuts), test foundation (unit + E2E), and CI.
+- Summary: CI-001 implemented (GitHub Actions CI for format check + unit tests on Ubuntu/Windows, plus Ubuntu E2E via xvfb); tests not run.
 - Verification checklist:
-  - [ ] Spec files exist under `docs/tasks/` (UI-PROD-001, UI-POLISH-001, TEST-SETUP-001, TEST-UNIT-001, TEST-E2E-001, CI-001).
-  - [ ] `docs/ai_todo.md` has the new top section linking these specs.
+  - [ ] CI workflow exists at `.github/workflows/ci.yml`.
+  - [ ] `docs/ai_todo.md` shows CI-001 as completed.
   - [ ] Prep-only run confirmed: no tests, builds, or installs executed.
 
 ## Snapshot
+- 2026-01-31: Attempted `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit --prefer-offline` (failed with `EAI_AGAIN` for registry.npmjs.org); `npm run dist:win` failed (`electron-builder` not found); `dist/` missing.
+- 2026-01-31: Attempted `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit` (timed out after 120s); `npm run dist:win` failed (`electron-builder` not found); `dist/` missing.
+- 2026-01-31: Retried `npm install --no-fund --no-audit` (failed with `EAI_AGAIN` for registry.npmjs.org; also hit `/home/barney/.npm/_logs` write error); `npm run dist:win` failed (`electron-builder` not found) and `dist/` is still missing.
+- 2026-01-31: Attempted `npm install --no-fund --no-audit` (timed out after 120s); electron-builder still missing, `npm run dist:win` failed, and `dist/` was not created.
+- 2026-01-31: Retried `npm run dist:win`; electron-builder still missing. `npm install --no-fund --no-audit` timed out after 120s; `dist/` not created, so artifacts remain unverified.
+- 2026-01-31: `npm run dist:win` failed (electron-builder not found). `npm install --no-fund --no-audit` failed with `EAI_AGAIN` for registry.npmjs.org; `dist/` not created, so artifacts not verified.
+- 2026-01-31: Windows E2E (`npm run test:e2e`) recorded as not run; automation policy + no Windows environment in this session.
+- Windows manual smoke run (app shell + module load + navigation) recorded as not run; no Windows environment available in this session.
+- Windows manual click-through checklist added (`docs/WINDOWS_CLICKTHROUGH_CHECKLIST.md`); tests not run (automation policy).
+- XP header values + level names verified against constitution; `docs/XP_AUDIT.md` updated; tests not run (automation policy).
+- Buffs HUD finalized: icon alignment tweaks, custom tooltips with unlock/active info, and locked/active visual states; tests not run (automation policy).
+- Character sheet final polish: balanced panel sizing, richer empty states, and keyboard-focus styling/disabled states; tests not run (automation policy).
+- Settings overlay final polish: spacing tightened, focus order + keyboard access improved (tablist behavior, focus trap), labels clarified; tests not run.
+- Quest Log statuses verified against constitution (NOT_ACCEPTED/ACTIVE/COMPLETED + green check); completed check alignment tightened; tests not run.
+- Module tab labels and quest accept copy verified against constitution wording (Elmélet/Vizuális modell/Teszt/Gyakorlás, Küldetés elfogadása); no changes; tests not run.
+- Module consistency check: standardized testResult payload keys (`grade`, `percentage`) with explicit object entries across modules; script now reports OK; tests not run.
+- CI-001: GitHub Actions CI added (npm ci + format:check + unit tests on Ubuntu/Windows, E2E on Ubuntu with xvfb).
+- TEST-E2E-001: Electron E2E smoke test updated to verify startup console errors and module opening; data-testid hooks added for app shell + module list + module link; tests not run.
+- TEST-UNIT-001: Core logic unit tests added (progress persistence/normalization, difficulty normalization, results updates, achievement unlock flow); tests not run.
+- TEST-SETUP-001: Deterministic test helpers added (paths/timeouts), run-tests now sorts test order and attempts `xvfb-run` in headless Linux; docs updated; tests not run.
+- UI-PROD-001: Packaged UI gating added (menu hidden on Windows/Linux packaged builds, devtools disabled, dev shortcuts blocked); `MATEKMESTER_PROD_UI=1` forces the same behavior in dev; tests not run.
+- UI-POLISH-001: Base UI stylesheet added and loaded by shell + iframe modules; Prettier config/scripts added for formatting (npm install not run in this session; package-lock update pending).
 - Windows installer + auto-update pipeline configured (electron-builder/electron-updater, `dist:win`/`publish:win` scripts, NSIS+portable targets, GitHub publish config).
 - Auto-update status now surfaces in Settings (Frissítési állapot) and a system toast on download completion, with optional log file under `userData/logs/`.
 - Windows installer + auto-update documentation added (`docs/WINDOWS_INSTALLER_AND_UPDATES.md`) and release guide refreshed.
@@ -88,6 +110,7 @@
 - Localization sweep #1 completed: difficulty phrasing aligned to "nehézségi szint", XP next-level labels updated, and achievement/settings fallbacks localized.
 - Localization sweep #2 completed: casing/diacritics normalized for tab/quest labels in release checklist references; legacy Beállítások title corrected in module coverage.
 - Localization sweep #3 completed: settings category label fully localized; tooltips and results/character sheet topic fallbacks now avoid ASCII IDs.
+- HU consistency sweep: practice validation copy now consistently uses "nehézségi szint" across remaining modules.
 - Settings module labels/theme presets aligned with glossary + overlay naming; theme selection made keyboard focusable; results modal close button now keyboard accessible; achievements category label aligned.
 - Hungarian locale number formatting applied to results, character sheet, and XP header summaries (thousand separators/decimal comma where applicable).
 - Results and character sheet now include trend summaries plus per-topic performance insights.
@@ -130,7 +153,7 @@
 - Windows renderer verification pending for CSS glyph rendering in the sidebar disclosure arrow.
 - Windows smoke tests are still pending; no native Windows environment available in this session.
 - Latest orientation layout coverage is unverified on Windows (WSL2 run completed, but Windows coverage remains outstanding).
-- Packaging verification is pending (scripts/config added, but no `dist:win` run yet).
+- Packaging verification is pending (`npm run dist:win` failed: electron-builder missing; npm install blocked by `EAI_AGAIN` and timed out on retry; `dist/` not created).
 - Auto-update verification is pending on an installed NSIS build.
 - Mobile/responsive behavior is deferred to V2; existing CSS rules are not v1 gating.
 
@@ -141,6 +164,20 @@
 - Desktop v1: Windows installer + auto-update readiness (build verification + update checklist + Windows smoke/E2E runs).
 
 ## Recent Tests
+- 2026-01-31: Not run (automation policy: Windows E2E `npm run test:e2e` requires a Windows environment; recorded as skipped in this session).
+- 2026-01-31: Not run (manual Windows smoke run for app shell + module load + navigation; no Windows environment available).
+- 2026-01-31: Not run (automation policy: Windows manual click-through checklist added).
+- 2026-01-31: Not run (automation policy: Quest Log status/visual verification).
+- 2026-01-31: Not run (automation policy: character sheet final polish).
+- 2026-01-31: Not run (automation policy: settings overlay final polish).
+- 2026-01-31: Not run (automation policy: tab/quest label verification; no tests run).
+- 2026-01-31: Not run (automation policy: module consistency fix; ran `node scripts/check_module_consistency.js` only).
+- 2026-01-31: Not run (automation policy: CI-001 GitHub Actions workflow added; no local execution).
+- 2026-01-31: Not run (automation policy: HU consistency sweep for practice validation copy).
+- 2026-01-31: Not run (automation policy: TEST-E2E-001 E2E smoke tests updated; no execution).
+- 2026-01-31: Not run (automation policy: TEST-SETUP-001 deterministic test harness + xvfb-run gate).
+- 2026-01-31: Not run (automation policy: UI-POLISH-001 base stylesheet + formatting automation).
+- 2026-01-31: Not run (automation policy: UI-PROD-001 packaged UI gating).
 - 2026-01-31: Not run (prep-only: task specs + AI TODO/status updates).
 - 2026-01-28: Not run (automation policy: Windows installer + auto-update integration).
 - 2026-01-27: Not run (automation policy: module integrity quick scan + module JS extraction).

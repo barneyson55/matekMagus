@@ -79,7 +79,8 @@ To change the seed, update `E2E_RANDOM_SEED` in the test file or pass
 - Windows (native, with GUI): E2E runs normally.
 - Linux/macOS with a display server (X11/Wayland/MIR): E2E runs normally.
 - WSL (any): E2E is auto-skipped by design in `scripts/run-tests.js`.
-- Headless Linux (no DISPLAY/WAYLAND/MIR): E2E is auto-skipped by design in `scripts/run-tests.js`.
+- Headless Linux (no DISPLAY/WAYLAND/MIR): `scripts/run-tests.js` attempts to run via `xvfb-run`.
+  If `xvfb-run` is unavailable, E2E is auto-skipped.
 
 The skip behavior is implemented in `scripts/run-tests.js` (primary gate) and
 `tests/e2e/electron-smoke.test.js` (secondary guard). The test file reports
@@ -89,11 +90,10 @@ one of these reasons:
 
 ## Headless caveats
 
-- In WSL or headless environments, `npm run test` logs the skip reason after unit tests.
-- In WSL or headless environments, `npm run test:e2e` logs the skip reason and exits
-  without invoking the test runner (the test file still has a secondary skip guard).
-- If CI needs E2E coverage, use Windows or Linux with a virtual display (Xvfb)
-  and set `DISPLAY` so Electron can launch.
+- In WSL environments, `npm run test` and `npm run test:e2e` log the skip reason after unit tests.
+- In headless Linux environments, `scripts/run-tests.js` tries `xvfb-run -a` to launch Electron.
+  If `xvfb-run` is unavailable, the script logs a skip reason and exits cleanly.
+- For CI E2E coverage on Linux, ensure `xvfb-run` is installed or provide a DISPLAY server.
 
 ## Expected failures
 

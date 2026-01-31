@@ -4,9 +4,10 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { _electron: electron } = require('playwright-core');
+const { repoRoot } = require('../helpers/paths');
+const { DEFAULT_TIMEOUT_MS } = require('../helpers/timeouts');
 const { BUFF_CATALOG } = require('../../buffs_config');
 
-const DEFAULT_TIMEOUT_MS = 15000;
 const IS_WINDOWS = process.platform === 'win32';
 const WSL_ENV_VARS = ['WSL_DISTRO_NAME', 'WSL_INTEROP'];
 const isWsl = !IS_WINDOWS
@@ -37,7 +38,7 @@ async function launchApp() {
   };
   delete env.ELECTRON_RUN_AS_NODE;
   const app = await electron.launch({
-    args: ['.'],
+    args: [repoRoot],
     env,
   });
 
@@ -167,9 +168,9 @@ e2eTest('buff icons expose tooltip text (scaffold)', async () => {
     for (const buff of BUFF_CATALOG) {
       const icon = page.locator(`[data-testid="buff-icon-${buff.id}"]`);
       await icon.waitFor();
-      const title = await icon.getAttribute('title');
+      const tooltip = await icon.locator('.buff-tooltip').textContent();
       const token = await icon.getAttribute('data-icon');
-      assert.ok(title && title.includes(buff.nameHu), 'TODO: confirm buff tooltip uses Hungarian copy');
+      assert.ok(tooltip && tooltip.includes(buff.nameHu), 'TODO: confirm buff tooltip uses Hungarian copy');
       assert.equal(token, buff.iconToken, 'TODO: confirm buff icon token mapping');
     }
   } finally {

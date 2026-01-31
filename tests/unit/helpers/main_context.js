@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const { createRequire } = require('node:module');
+const { appEntry } = require('../../helpers/paths');
 
 function createFsStub(initialFiles = {}) {
   const store = new Map(Object.entries(initialFiles));
@@ -75,7 +76,7 @@ function createElectronStub() {
 
 function loadMainContext(options = {}) {
   const { fsStub, electronStub } = options;
-  const mainPath = path.join(process.cwd(), 'main.js');
+  const mainPath = appEntry;
   const code = fs.readFileSync(mainPath, 'utf8');
   const electron = electronStub || createElectronStub();
   const requireFromMain = createRequire(mainPath);

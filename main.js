@@ -4,7 +4,7 @@
 // messages from the renderer process. This version includes support for
 // saving XP earned from practice sessions.
 
-const { app, BrowserWindow, session, ipcMain } = require('electron');
+const { app, BrowserWindow, session, ipcMain, Menu } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
@@ -25,6 +25,8 @@ const customUserDataDir = process.env.MATEK_MESTER_USER_DATA;
 if (customUserDataDir) {
   app.setPath('userData', customUserDataDir);
 }
+
+const prodUI = app.isPackaged || process.env.MATEKMESTER_PROD_UI === '1';
 
 // Paths for storing progress and settings in the user's data directory
 const progressFilePath = path.join(app.getPath('userData'), 'progress.json');
@@ -1584,6 +1586,7 @@ const createWindow = () => {
     height: 800,
     minWidth: 940,
     minHeight: 600,
+    autoHideMenuBar: prodUI,
     icon: path.join(__dirname, 'assets/icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -1591,9 +1594,25 @@ const createWindow = () => {
       nodeIntegration: false,
       webSecurity: true,
       allowRunningInsecureContent: false,
+      devTools: !prodUI,
     },
   });
+  if (prodUI && process.platform !== 'darwin') {
+    Menu.setApplicationMenu(null);
+    mainWindow.removeMenu();
+    mainWindow.setMenuBarVisibility(false);
+    mainWindow.setAutoHideMenuBar(true);
+  }
   mainWindow.loadFile('index.html');
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    if (!prodUI || input.type !== 'keyDown') return;
+    const key = input.key ? input.key.toLowerCase() : '';
+    const isReload = input.key === 'F5' || (input.control && key === 'r');
+    const isDevTools = input.control && input.shift && key === 'i';
+    if (isReload || isDevTools) {
+      event.preventDefault();
+    }
+  });
   mainWindow.webContents.on('did-finish-load', () => {
     if (lastUpdateStatus) {
       mainWindow.webContents.send('update-status', lastUpdateStatus);

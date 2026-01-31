@@ -47,7 +47,7 @@
             position: relative;
             z-index: 1;
             display: grid;
-            grid-template-columns: minmax(280px, 1.1fr) minmax(320px, 0.9fr);
+            grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
             grid-template-rows: minmax(0, 1fr);
             gap: 24px;
             flex: 1;
@@ -91,16 +91,19 @@
             flex: 1;
             min-height: 0;
             overflow-y: auto;
-            padding-right: 4px;
+            padding-right: 6px;
+            padding-bottom: 4px;
             scrollbar-gutter: stable;
+            flex-direction: column;
+            gap: 12px;
         }
-        .tab-panel.is-active { display: block; }
+        .tab-panel.is-active { display: flex; }
         .list {
             list-style: none;
             padding: 0;
             margin: 0;
             display: grid;
-            gap: 10px;
+            gap: 12px;
         }
         .list-item {
             width: 100%;
@@ -114,15 +117,23 @@
             justify-content: space-between;
             gap: 12px;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
         .list-item:hover {
             transform: translateY(-1px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         .list-item:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
+            outline: none;
+            border-color: var(--accent);
+            transform: translateY(-1px);
+            box-shadow: 0 0 0 2px var(--accent) inset, 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        .list-item:disabled {
+            cursor: default;
+            opacity: 0.6;
+            transform: none;
+            box-shadow: none;
         }
         .item-title { font-weight: 600; overflow-wrap: anywhere; }
         .item-meta { color: var(--muted); font-size: 0.9rem; line-height: 1.35; overflow-wrap: anywhere; }
@@ -132,9 +143,22 @@
             border: 1px dashed var(--border);
             color: var(--muted);
             background: rgba(255, 255, 255, 0.5);
+            display: grid;
+            gap: 6px;
+            text-align: center;
+            justify-items: center;
+            min-height: 80px;
+            line-height: 1.4;
+        }
+        .empty-state strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        .empty-state span {
+            font-size: 0.85rem;
         }
         .section-title {
-            margin: 18px 0 10px;
+            margin: 10px 0 6px;
             font-size: 1rem;
             color: var(--muted);
             text-transform: uppercase;
@@ -225,6 +249,7 @@
         .achievement-section {
             display: flex;
             flex-direction: column;
+            gap: 12px;
             min-height: 0;
             flex: 1;
         }
@@ -379,8 +404,9 @@
             color: inherit;
         }
         .tab-button:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent);
         }
 </style>
 </head>
@@ -394,13 +420,19 @@
 
             <div class="tab-panel is-active" id="tab-active" role="tabpanel" aria-labelledby="tab-button-active" data-testid="character-sheet-panel-active">
                 <ul class="list" id="active-quest-list" data-testid="character-sheet-active-list"></ul>
-                <div class="empty-state" id="active-empty" style="display:none;" data-testid="character-sheet-active-empty">M&eacute;g nincs akt&iacute;v k&uuml;ldet&eacute;s.</div>
+                <div class="empty-state" id="active-empty" style="display:none;" data-testid="character-sheet-active-empty">
+                    <strong>M&eacute;g nincs akt&iacute;v k&uuml;ldet&eacute;s.</strong>
+                    <span>V&aacute;lassz modult a K&uuml;ldet&eacute;snapl&oacute;ban, &eacute;s fogadj el egy k&uuml;ldet&eacute;st.</span>
+                </div>
             </div>
 
             <div class="tab-panel" id="tab-results" role="tabpanel" aria-labelledby="tab-button-results" hidden data-testid="character-sheet-panel-results">
                 <div class="section-title">Kimaxolt modulok</div>
                 <ul class="list" id="completed-quest-list" data-testid="character-sheet-completed-list"></ul>
-                <div class="empty-state" id="completed-empty" style="display:none;" data-testid="character-sheet-completed-empty">M&eacute;g nincs kimaxolt modul.</div>
+                <div class="empty-state" id="completed-empty" style="display:none;" data-testid="character-sheet-completed-empty">
+                    <strong>M&eacute;g nincs kimaxolt modul.</strong>
+                    <span>Teljes&iacute;ts teszteket &eacute;s gyakorl&aacute;st, hogy kimaxolj egy modult.</span>
+                </div>
 
                 <div class="section-title">Trend &ouml;sszegz&eacute;s</div>
                 <div class="trend-grid" id="trend-grid" data-testid="character-sheet-trend-grid">
@@ -421,15 +453,24 @@
                     </div>
                 </div>
                 <div class="trend-note" id="trend-note"></div>
-                <div class="empty-state" id="trend-empty" style="display:none;" data-testid="character-sheet-trend-empty">M&eacute;g nincs elegend&#337; teszteredm&eacute;ny trendhez.</div>
+                <div class="empty-state" id="trend-empty" style="display:none;" data-testid="character-sheet-trend-empty">
+                    <strong>M&eacute;g nincs elegend&#337; teszteredm&eacute;ny trendhez.</strong>
+                    <span>T&ouml;lts ki legal&aacute;bb 6 tesztet a trendhez.</span>
+                </div>
 
                 <div class="section-title">T&eacute;mak&ouml;r betekint&eacute;s</div>
                 <ul class="list" id="topic-insights-list" data-testid="character-sheet-topic-insights"></ul>
-                <div class="empty-state" id="topic-insights-empty" style="display:none;" data-testid="character-sheet-topic-insights-empty">M&eacute;g nincsenek t&eacute;mak&ouml;r adatok.</div>
+                <div class="empty-state" id="topic-insights-empty" style="display:none;" data-testid="character-sheet-topic-insights-empty">
+                    <strong>M&eacute;g nincsenek t&eacute;mak&ouml;r adatok.</strong>
+                    <span>Teljes&iacute;ts n&eacute;h&aacute;ny tesztet, hogy l&aacute;ssuk a t&eacute;mak&ouml;r adatait.</span>
+                </div>
 
                 <div class="section-title">Legut&oacute;bbi tesztek</div>
                 <ul class="list" id="recent-results-list" data-testid="character-sheet-recent-results"></ul>
-                <div class="empty-state" id="results-empty" style="display:none;" data-testid="character-sheet-results-empty">M&eacute;g nincsenek mentett teszteredm&eacute;nyek.</div>
+                <div class="empty-state" id="results-empty" style="display:none;" data-testid="character-sheet-results-empty">
+                    <strong>M&eacute;g nincsenek mentett teszteredm&eacute;nyek.</strong>
+                    <span>Ind&iacute;ts tesztet egy modulban, &eacute;s itt megjelennek.</span>
+                </div>
             </div>
         </section>
 
@@ -475,7 +516,10 @@
             <div class="achievement-section">
                 <div class="section-title">Achievementek</div>
                 <div class="achievement-list" id="achievement-list" data-testid="character-sheet-achievements"></div>
-                <div class="empty-state" id="achievement-empty" style="display:none;" data-testid="character-sheet-achievements-empty">M&eacute;g nincsenek achievementek.</div>
+                <div class="empty-state" id="achievement-empty" style="display:none;" data-testid="character-sheet-achievements-empty">
+                    <strong>M&eacute;g nincsenek achievementek.</strong>
+                    <span>Teljes&iacute;ts k&uuml;ldet&eacute;seket &eacute;s teszteket a felold&aacute;shoz.</span>
+                </div>
             </div>
         </section>
     </div>

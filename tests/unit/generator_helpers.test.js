@@ -4,6 +4,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 
+const { repoRoot } = require('../helpers/paths');
+
 function createElementStub() {
   return {
     value: '',
@@ -50,7 +52,7 @@ function createDocumentStub() {
 }
 
 function loadModule(relativePath) {
-  const modulePath = path.join(process.cwd(), relativePath);
+  const modulePath = path.join(repoRoot, relativePath);
   const code = fs.readFileSync(modulePath, 'utf8');
   const document = createDocumentStub();
   const window = {

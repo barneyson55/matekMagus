@@ -447,8 +447,8 @@
                 topicId: TOPIC_ID,
                 topicName: TOPIC_NAME,
                 difficulty: currentTestDifficulty,
-                grade,
-                percentage,
+                grade: grade,
+                percentage: percentage,
                 timestamp: new Date().toISOString(),
                 questions: testQuestions.map((q) => ({
                     question: q.question,
@@ -515,7 +515,7 @@
         function nextPracticeQuestion() {
             const enabled = getEnabledPracticeDifficulties();
             if (!enabled.length) {
-                practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
+                practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9gi szintet.';
                 practiceFeedback.style.color = '#f04747';
                 return;
             }
@@ -625,7 +625,7 @@
             practiceStartBtn.addEventListener('click', () => {
                 const enabled = getEnabledPracticeDifficulties();
                 if (!enabled.length) {
-                    practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9get.';
+                    practiceFeedback.textContent = 'V\u00e1lassz legal\u00e1bb egy neh\u00e9zs\u00e9gi szintet.';
                     practiceFeedback.style.color = '#f04747';
                     return;
                 }

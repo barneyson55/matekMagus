@@ -3,7 +3,7 @@
 ## Scope
 - `xp_config.js` topic weights/base XP + `main.js` XP utilities (`calculateTestXp`, level curve, level names)
 - Constitution references: `constitution/xp/xp_formula.md` + `constitution/xp/xp_roadmap.md`
-- Audit date: 2026-01-25
+- Audit date: 2026-01-31
 
 ## Findings
 ### Aligned
@@ -14,6 +14,7 @@
 - Level curve parameters in `xp_config.js` (used by `main.js`) (`LEVEL_BASE_XP = 50`, `LEVEL_GROWTH = 1.07`, `MAX_LEVEL = 50`) match `xp_formula.md`/`xp_roadmap.md`.
 - `LEVEL_NAMES` contains 50 names and matches the labels listed in `xp_roadmap.md`.
 - Max-level behavior is explicit: total XP is clamped to the XP cap (20,325), and level stats are computed against the clamped value.
+- XP header values (Lv, XP total, and “Következő szint” tooltip) are sourced from `calculateLevelStats` and match the `xp_roadmap.md` per-level XP table.
 
 ### Deltas / Gaps
 - **Legacy fallback XP rewards:** `XP_REWARDS_FALLBACK = { konnyu: 120, normal: 200, nehez: 320 }` is used when a topic is missing or lacks base XP. These values are not defined in the constitution and can produce off-formula XP for unmapped topics.

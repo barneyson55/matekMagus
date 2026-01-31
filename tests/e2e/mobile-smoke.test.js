@@ -4,8 +4,9 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { _electron: electron } = require('playwright-core');
+const { repoRoot } = require('../helpers/paths');
+const { DEFAULT_TIMEOUT_MS } = require('../helpers/timeouts');
 
-const DEFAULT_TIMEOUT_MS = 15000;
 const IS_WINDOWS = process.platform === 'win32';
 const WSL_ENV_VARS = ['WSL_DISTRO_NAME', 'WSL_INTEROP'];
 const isWsl = !IS_WINDOWS
@@ -45,7 +46,7 @@ async function launchApp() {
   };
   delete env.ELECTRON_RUN_AS_NODE;
   const app = await electron.launch({
-    args: ['.'],
+    args: [repoRoot],
     env,
   });
 

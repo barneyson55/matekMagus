@@ -5,6 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const { SUMMARY_FIXTURE, RESULTS_FIXTURE } = require('./fixtures/character_sheet_fixtures');
+const { repoRoot } = require('../helpers/paths');
 
 function createElementStub(tagName = 'div') {
   return {
@@ -68,7 +69,7 @@ function createDocumentStub() {
 }
 
 function loadCharacterSheetContext() {
-  const filePath = path.join(process.cwd(), 'modules', 'character_sheet.html');
+  const filePath = path.join(repoRoot, 'modules', 'character_sheet.html');
   const html = fs.readFileSync(filePath, 'utf8');
   const match = html.match(/<script>([\s\S]*?)<\/script>/);
   if (!match) throw new Error('Character sheet script block not found');

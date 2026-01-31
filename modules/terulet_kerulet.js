@@ -311,8 +311,8 @@ function finishTest() {
     topicId: TOPIC_ID,
     topicName: TOPIC_NAME,
     difficulty: currentTestDifficulty,
-    grade,
-    percentage,
+    grade: grade,
+    percentage: percentage,
     timestamp: new Date().toISOString(),
     questions: testQuestions.map((q) => ({
       question: q.question,

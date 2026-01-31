@@ -6,6 +6,7 @@ const vm = require('node:vm');
 
 const { loadMainContext, createFsStub } = require('./helpers/main_context');
 const { DEFAULT_SETTINGS, CUSTOM_SETTINGS } = require('./fixtures/settings_fixtures');
+const { repoRoot } = require('../helpers/paths');
 
 function createClassList() {
   const entries = new Set();
@@ -190,7 +191,7 @@ function createStorageStub(initial = {}) {
 }
 
 function loadIndexContext(options = {}) {
-  const filePath = path.join(process.cwd(), 'index.html');
+  const filePath = path.join(repoRoot, 'index.html');
   const html = fs.readFileSync(filePath, 'utf8');
   const match = html.match(/<script>([\s\S]*?)<\/script>/);
   if (!match) throw new Error('index.html script block not found');

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MatekMester</title>
+    <link rel="stylesheet" href="assets/styles/base.css">
     <link rel="stylesheet" href="style.css">
     <style>
         details details { margin-left: 15px; }
@@ -16,7 +17,7 @@
     </style>
 </head>
 <body>
-    <div class="app-shell">
+    <div class="app-shell" data-testid="app-shell">
         <header class="app-header">
             <div class="header-hamburger">
                 <button class="icon-button" id="quest-toggle" type="button" aria-label="Küldetésnapló" aria-expanded="true">
@@ -56,13 +57,13 @@
                 <a href="#" class="module-link quick-link results-btn" id="results-btn">Eredm&#233;nyeim</a>
                 <a href="#" class="module-link quick-link achievements-btn" id="achievements-btn">Achievementek</a>
             </div>
-            <div class="module-list">
+            <div class="module-list" data-testid="module-list">
                 <!-- Navigation source-of-truth: keep this manual list in index.html (no temakorok generation in this phase). -->
 
                 <details>
                     <summary>
                         <a href="#" class="module-link main-topic" data-src="modules/alapozo_modulzaro.html"
-                            data-topic-id="alapozo_modulzaro">&#173;&#269;&#244;&#220; Alapoz&#9500;&#9474; Modulok</a>
+                            data-topic-id="alapozo_modulzaro" data-testid="module-link-alapozo_modulzaro">&#173;&#269;&#244;&#220; Alapoz&#9500;&#9474; Modulok</a>
                         <span class="status grade-0" data-grade-for="alapozo_modulzaro"></span>
                     </summary>
                     <details>
@@ -522,7 +523,7 @@
     <div class="achievement-toast-layer" id="achievement-toast-layer" aria-live="polite" aria-atomic="false"></div>
     </div>
 
-    <button class="settings-fab" id="settings-fab" type="button" aria-haspopup="dialog" aria-controls="settings-overlay" aria-label="Beállítások" data-testid="settings-open">
+    <button class="settings-fab" id="settings-fab" type="button" aria-haspopup="dialog" aria-controls="settings-overlay" aria-expanded="false" aria-label="Beállítások" data-testid="settings-open">
         <span class="settings-fab-icon" aria-hidden="true">⚙</span>
     </button>
 
@@ -533,34 +534,34 @@
                 <button class="icon-button settings-close" id="settings-close" type="button" aria-label="Bezárás" data-testid="settings-close">✕</button>
             </div>
             <div class="settings-body">
-                <nav class="settings-categories" aria-label="Beállítás kategóriák" data-testid="settings-tabs">
-                    <button class="settings-tab is-active" data-section="theme" type="button" data-testid="settings-tab-theme">Skin &amp; Téma</button>
-                    <button class="settings-tab" data-section="ui" type="button" data-testid="settings-tab-ui">Felhasználói felület &amp; Hozzáférhetőség</button>
-                    <button class="settings-tab" data-section="sound" type="button" data-testid="settings-tab-sound">Hang &amp; Visszajelzések</button>
-                    <button class="settings-tab" data-section="gameplay" type="button" data-testid="settings-tab-gameplay">Játékélmény &amp; Segítség</button>
+                <nav class="settings-categories" aria-label="Beállítás kategóriák" role="tablist" aria-orientation="vertical" data-testid="settings-tabs">
+                    <button class="settings-tab is-active" data-section="theme" type="button" role="tab" id="settings-tab-theme" aria-controls="settings-panel-theme" aria-selected="true" tabindex="0" data-testid="settings-tab-theme">Skin &amp; Téma</button>
+                    <button class="settings-tab" data-section="ui" type="button" role="tab" id="settings-tab-ui" aria-controls="settings-panel-ui" aria-selected="false" tabindex="-1" data-testid="settings-tab-ui">Felhasználói felület &amp; Hozzáférhetőség</button>
+                    <button class="settings-tab" data-section="sound" type="button" role="tab" id="settings-tab-sound" aria-controls="settings-panel-sound" aria-selected="false" tabindex="-1" data-testid="settings-tab-sound">Hang &amp; Visszajelzések</button>
+                    <button class="settings-tab" data-section="gameplay" type="button" role="tab" id="settings-tab-gameplay" aria-controls="settings-panel-gameplay" aria-selected="false" tabindex="-1" data-testid="settings-tab-gameplay">Játékélmény &amp; Segítség</button>
                 </nav>
                 <div class="settings-content">
-                    <section class="settings-section is-active" data-section="theme" data-testid="settings-section-theme">
+                    <section class="settings-section is-active" data-section="theme" id="settings-panel-theme" role="tabpanel" aria-labelledby="settings-tab-theme" aria-hidden="false" data-testid="settings-section-theme">
                         <h3>Skin &amp; Téma</h3>
                         <p class="settings-hint">Válassz alap témát, majd finomhangold az egyéni színeket vagy háttérképet.</p>
                         <div class="settings-theme-grid" role="list" data-testid="settings-theme-grid">
-                            <button class="theme-card" type="button" data-theme="pergamen" role="listitem" data-testid="theme-card-pergamen">
+                            <button class="theme-card" type="button" data-theme="pergamen" role="listitem" aria-pressed="false" data-testid="theme-card-pergamen">
                                 <h4>Pergamen</h4>
                                 <p>Meleg, klasszikus hangulat.</p>
                             </button>
-                            <button class="theme-card" type="button" data-theme="galaxis" role="listitem" data-testid="theme-card-galaxis">
+                            <button class="theme-card" type="button" data-theme="galaxis" role="listitem" aria-pressed="false" data-testid="theme-card-galaxis">
                                 <h4>Galaxis</h4>
                                 <p>Mély kék, kozmikus akcentus.</p>
                             </button>
-                            <button class="theme-card" type="button" data-theme="futurisztikus" role="listitem" data-testid="theme-card-futurisztikus">
+                            <button class="theme-card" type="button" data-theme="futurisztikus" role="listitem" aria-pressed="false" data-testid="theme-card-futurisztikus">
                                 <h4>Futurisztikus</h4>
                                 <p>Letisztult, neon jelleg.</p>
                             </button>
-                            <button class="theme-card" type="button" data-theme="dark" role="listitem" data-testid="theme-card-dark">
+                            <button class="theme-card" type="button" data-theme="dark" role="listitem" aria-pressed="false" data-testid="theme-card-dark">
                                 <h4>Sötét / Éjszakai</h4>
                                 <p>Alacsony fény, fókuszált tanulás.</p>
                             </button>
-                            <button class="theme-card" type="button" data-theme="custom" role="listitem" data-testid="theme-card-custom">
+                            <button class="theme-card" type="button" data-theme="custom" role="listitem" aria-pressed="false" data-testid="theme-card-custom">
                                 <h4>Egyéni</h4>
                                 <p>Saját színbeállításokkal.</p>
                             </button>
@@ -581,7 +582,7 @@
                                 <input type="color" id="setting-button-bg" value="#5865f2">
                             </div>
                             <div class="settings-field">
-                                <label for="setting-button-text">Elsődleges szöveg</label>
+                                <label for="setting-button-text">Elsődleges gomb szöveg</label>
                                 <input type="color" id="setting-button-text" value="#ffffff">
                             </div>
                             <div class="settings-field">
@@ -589,7 +590,7 @@
                                 <input type="color" id="setting-link-color" value="#b9bbbe">
                             </div>
                             <div class="settings-field">
-                                <label for="setting-content-overlay">Tartalom fedőréteg</label>
+                                <label for="setting-content-overlay">Tartalom fedőréteg színe (RGBA)</label>
                                 <input type="text" id="setting-content-overlay" value="rgba(255, 255, 255, 0.8)" placeholder="rgba(255, 255, 255, 0.8)">
                             </div>
                             <div class="settings-field">
@@ -628,7 +629,7 @@
                         </div>
                     </section>
 
-                    <section class="settings-section" data-section="ui" data-testid="settings-section-ui">
+                    <section class="settings-section" data-section="ui" id="settings-panel-ui" role="tabpanel" aria-labelledby="settings-tab-ui" aria-hidden="true" data-testid="settings-section-ui">
                         <h3>Felhasználói felület &amp; Hozzáférhetőség</h3>
                         <div class="settings-group">
                             <div class="settings-field">
@@ -661,14 +662,14 @@
                         <div class="settings-group settings-update-group">
                             <h4>Frissítési állapot</h4>
                             <div class="settings-field">
-                                <label for="update-status">Állapot</label>
-                                <div class="settings-status" id="update-status" role="status" aria-live="polite">Frissítési információ még nincs.</div>
+                                <span class="settings-label" id="update-status-label">Állapot</span>
+                                <output class="settings-status" id="update-status" role="status" aria-live="polite" aria-labelledby="update-status-label">Frissítési információ még nincs.</output>
                             </div>
                         </div>
                         <p class="settings-hint">A változások mentés után érvényesülnek.</p>
                     </section>
 
-                    <section class="settings-section" data-section="sound" data-testid="settings-section-sound">
+                    <section class="settings-section" data-section="sound" id="settings-panel-sound" role="tabpanel" aria-labelledby="settings-tab-sound" aria-hidden="true" data-testid="settings-section-sound">
                         <h3>Hang &amp; Visszajelzések</h3>
                         <div class="settings-group">
                             <div class="settings-field">
@@ -695,7 +696,7 @@
                         <p class="settings-hint">A hangos és vizuális jelzéseket külön szabályozhatod.</p>
                     </section>
 
-                    <section class="settings-section" data-section="gameplay" data-testid="settings-section-gameplay">
+                    <section class="settings-section" data-section="gameplay" id="settings-panel-gameplay" role="tabpanel" aria-labelledby="settings-tab-gameplay" aria-hidden="true" data-testid="settings-section-gameplay">
                         <h3>Játékélmény &amp; Segítség</h3>
                         <div class="settings-group">
                             <div class="settings-field">
@@ -757,6 +758,7 @@
         const moduleSubtitle = document.getElementById('module-subtitle');
         const questAcceptBtn = document.getElementById('quest-accept-btn');
         const moduleLock = document.getElementById('module-lock');
+        const appShell = document.querySelector('.app-shell');
         const settingsFab = document.getElementById('settings-fab');
         const settingsOverlay = document.getElementById('settings-overlay');
         const settingsPanel = document.getElementById('settings-panel');
@@ -764,6 +766,7 @@
         const settingsCancel = document.getElementById('settings-cancel');
         const settingsSave = document.getElementById('settings-save');
         const settingsTabs = document.querySelectorAll('.settings-tab');
+        const settingsTabsArray = Array.from(settingsTabs || []);
         const settingsSections = document.querySelectorAll('.settings-section');
         const themeCards = document.querySelectorAll('.theme-card');
         const settingSidebarBg = document.getElementById('setting-sidebar-bg');
@@ -1002,6 +1005,20 @@
         let activeSettings = null;
         let draftSettings = null;
         let lastFocusedElement = null;
+        const SETTINGS_FOCUSABLE_SELECTOR = [
+            'button:not([disabled])',
+            '[href]:not([tabindex="-1"])',
+            'input:not([type="hidden"]):not([disabled])',
+            'select:not([disabled])',
+            'textarea:not([disabled])',
+            '[tabindex]:not([tabindex="-1"])'
+        ].join(', ');
+        if (settingsOverlay) {
+            settingsOverlay.setAttribute('inert', '');
+            if ('inert' in settingsOverlay) {
+                settingsOverlay.inert = true;
+            }
+        }
 
         function setActiveLink(activeLink) { allLinks.forEach(l => l.classList.remove('active')); if(activeLink) { activeLink.classList.add('active'); } }
 
@@ -1237,10 +1254,26 @@
                 doc.body.classList.toggle('reduce-motion', Boolean(normalized.reduceMotion));
                 doc.body.classList.toggle('high-contrast', normalized.contrastMode === 'high');
             }
+            ensureModuleBaseStyles(doc);
             ensureModuleResponsiveStyles(doc);
         }
 
+        const MODULE_BASE_STYLE_ID = 'module-base-style';
         const MODULE_RESPONSIVE_STYLE_ID = 'module-responsive-overrides';
+
+        function ensureModuleBaseStyles(doc) {
+            if (!doc) return;
+            const existing = doc.getElementById(MODULE_BASE_STYLE_ID);
+            if (existing) return;
+            const link = doc.createElement('link');
+            link.id = MODULE_BASE_STYLE_ID;
+            link.rel = 'stylesheet';
+            link.href = '../assets/styles/base.css';
+            const target = doc.head || doc.body;
+            if (target) {
+                target.insertBefore(link, target.firstChild);
+            }
+        }
 
         function ensureModuleResponsiveStyles(doc) {
             if (!doc) return;
@@ -1475,8 +1508,77 @@ button {
 
         function setThemeSelection(themeId) {
             themeCards.forEach(card => {
-                card.classList.toggle('selected', card.dataset.theme === themeId);
+                const isSelected = card.dataset.theme === themeId;
+                card.classList.toggle('selected', isSelected);
+                card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
             });
+        }
+
+        function setActiveSettingsTab(tab, options = {}) {
+            if (!tab) return;
+            const { focus = false } = options;
+            const target = tab.dataset.section;
+            settingsTabsArray.forEach((btn) => {
+                const isActive = btn === tab;
+                btn.classList.toggle('is-active', isActive);
+                btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                btn.tabIndex = isActive ? 0 : -1;
+            });
+            settingsSections.forEach((section) => {
+                const isActive = section.dataset.section === target;
+                section.classList.toggle('is-active', isActive);
+                section.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+            });
+            if (focus) {
+                tab.focus();
+            }
+        }
+
+        function getSettingsFocusableElements() {
+            if (!settingsPanel) return [];
+            return Array.from(settingsPanel.querySelectorAll(SETTINGS_FOCUSABLE_SELECTOR))
+                .filter((el) => {
+                    if (!(el instanceof HTMLElement)) return false;
+                    if (el.hasAttribute('disabled')) return false;
+                    if (el.getAttribute('tabindex') === '-1') return false;
+                    return el.offsetWidth > 0 || el.offsetHeight > 0 || el.getClientRects().length > 0;
+                });
+        }
+
+        function trapSettingsFocus(event) {
+            if (event.key !== 'Tab') return;
+            const focusable = getSettingsFocusableElements();
+            if (!focusable.length) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            const active = document.activeElement;
+            if (event.shiftKey && active === first) {
+                event.preventDefault();
+                last.focus();
+                return;
+            }
+            if (!event.shiftKey && active === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        }
+
+        function setSettingsOverlayInert(isOpen) {
+            if (!appShell) return;
+            if (isOpen) {
+                appShell.setAttribute('aria-hidden', 'true');
+                if ('inert' in appShell) {
+                    appShell.inert = true;
+                } else {
+                    appShell.setAttribute('inert', '');
+                }
+                return;
+            }
+            appShell.removeAttribute('aria-hidden');
+            if ('inert' in appShell) {
+                appShell.inert = false;
+            }
+            appShell.removeAttribute('inert');
         }
 
         function syncSettingsUI(settings) {
@@ -1538,10 +1640,22 @@ button {
                 draftSettings = { ...(activeSettings || getDefaultSettings()) };
             }
             syncSettingsUI(draftSettings);
+            const activeTab = settingsTabsArray.find(tab => tab.classList.contains('is-active')) || settingsTabsArray[0];
+            if (activeTab) {
+                setActiveSettingsTab(activeTab);
+            }
             settingsOverlay.classList.remove('is-hidden');
             settingsOverlay.setAttribute('aria-hidden', 'false');
             document.body.classList.add('settings-open');
-            const focusTarget = settingsTabs && settingsTabs.length ? settingsTabs[0] : settingsClose;
+            if (settingsFab) {
+                settingsFab.setAttribute('aria-expanded', 'true');
+            }
+            settingsOverlay.removeAttribute('inert');
+            if ('inert' in settingsOverlay) {
+                settingsOverlay.inert = false;
+            }
+            setSettingsOverlayInert(true);
+            const focusTarget = activeTab || settingsClose || getSettingsFocusableElements()[0];
             if (focusTarget) {
                 focusTarget.focus();
             }
@@ -1552,6 +1666,14 @@ button {
             settingsOverlay.classList.add('is-hidden');
             settingsOverlay.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('settings-open');
+            if (settingsFab) {
+                settingsFab.setAttribute('aria-expanded', 'false');
+            }
+            settingsOverlay.setAttribute('inert', '');
+            if ('inert' in settingsOverlay) {
+                settingsOverlay.inert = true;
+            }
+            setSettingsOverlayInert(false);
             if (resetDraft && activeSettings) {
                 draftSettings = { ...activeSettings };
                 applySettings(activeSettings);
@@ -2186,14 +2308,34 @@ button {
             });
         }
 
-        if (settingsTabs && settingsTabs.length) {
-            settingsTabs.forEach(tab => {
+        function handleSettingsTabKeydown(event, currentIndex) {
+            const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End'];
+            if (!keys.includes(event.key)) return;
+            event.preventDefault();
+            if (!settingsTabsArray.length) return;
+            let nextIndex = currentIndex;
+            if (event.key === 'Home') {
+                nextIndex = 0;
+            } else if (event.key === 'End') {
+                nextIndex = settingsTabsArray.length - 1;
+            } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+                nextIndex = (currentIndex - 1 + settingsTabsArray.length) % settingsTabsArray.length;
+            } else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+                nextIndex = (currentIndex + 1) % settingsTabsArray.length;
+            }
+            const nextTab = settingsTabsArray[nextIndex];
+            if (nextTab) {
+                setActiveSettingsTab(nextTab, { focus: true });
+            }
+        }
+
+        if (settingsTabsArray.length) {
+            settingsTabsArray.forEach((tab, index) => {
                 tab.addEventListener('click', () => {
-                    const target = tab.dataset.section;
-                    settingsTabs.forEach(btn => btn.classList.toggle('is-active', btn === tab));
-                    settingsSections.forEach(section => {
-                        section.classList.toggle('is-active', section.dataset.section === target);
-                    });
+                    setActiveSettingsTab(tab);
+                });
+                tab.addEventListener('keydown', (event) => {
+                    handleSettingsTabKeydown(event, index);
                 });
             });
         }
@@ -2406,9 +2548,14 @@ button {
             });
         }
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && settingsOverlay && !settingsOverlay.classList.contains('is-hidden')) {
+            if (!settingsOverlay || settingsOverlay.classList.contains('is-hidden')) return;
+            if (event.key === 'Escape') {
                 event.preventDefault();
                 closeSettingsOverlay(true);
+                return;
+            }
+            if (event.key === 'Tab') {
+                trapSettingsFocus(event);
             }
         });
 
@@ -2599,32 +2746,52 @@ button {
             return '?';
         }
 
-        function buildBuffTooltip(buff) {
-            const name = buff && buff.nameHu ? buff.nameHu : 'Ismeretlen buff';
-            const description = buff && buff.description ? buff.description : '';
-            return description ? `${name} - ${description}` : name;
+        function getBuffStateLabel(state) {
+            if (state === 'active') return 'Aktív';
+            if (state === 'inactive') return 'Inaktív';
+            return 'Zárolt';
         }
 
-        function buildBuffIconElement(buff, isActive) {
+        function buildBuffTooltip(buff, state) {
+            const name = buff && buff.nameHu ? buff.nameHu : 'Ismeretlen buff';
+            const description = buff && buff.description ? buff.description : '';
+            const unlockRule = buff && buff.unlockRule ? buff.unlockRule : '';
+            const activeRule = buff && buff.activeRule ? buff.activeRule : '';
+            const stateLabel = getBuffStateLabel(state);
+            const lines = [name];
+            lines.push(`Állapot: ${stateLabel}`);
+            if (description) lines.push(description);
+            if (unlockRule) lines.push(`Feloldás: ${unlockRule}`);
+            if (activeRule) lines.push(`Aktív szabály: ${activeRule}`);
+            return lines.join('\n');
+        }
+
+        function buildBuffIconElement(buff, state) {
             const icon = document.createElement('span');
             icon.className = 'buff-icon';
             icon.dataset.buffId = buff.id || 'unknown';
             if (buff.iconToken) icon.dataset.icon = buff.iconToken;
-            icon.dataset.state = isActive ? 'active' : 'inactive';
-            const tooltip = buildBuffTooltip(buff);
-            icon.setAttribute('title', tooltip);
+            icon.dataset.state = state;
+            icon.tabIndex = 0;
+            const tooltip = buildBuffTooltip(buff, state);
+            const name = buff && buff.nameHu ? buff.nameHu : 'Ismeretlen buff';
             icon.setAttribute('role', 'img');
-            icon.setAttribute('aria-label', tooltip);
+            icon.setAttribute('aria-label', `${name} (${getBuffStateLabel(state)})`);
             icon.setAttribute('data-testid', `buff-icon-${buff.id || 'unknown'}`);
             const svgMarkup = getBuffIconSvg(buff.iconToken);
             if (svgMarkup) {
-                icon.innerHTML = svgMarkup;
+                icon.insertAdjacentHTML('beforeend', svgMarkup);
             } else {
                 const glyph = document.createElement('span');
                 glyph.className = 'buff-icon__glyph';
                 glyph.textContent = getBuffIconLabel(buff.iconToken);
                 icon.appendChild(glyph);
             }
+            const tooltipEl = document.createElement('span');
+            tooltipEl.className = 'buff-tooltip';
+            tooltipEl.textContent = tooltip;
+            tooltipEl.setAttribute('role', 'tooltip');
+            icon.appendChild(tooltipEl);
             return icon;
         }
 
@@ -2645,6 +2812,13 @@ button {
             return map;
         }
 
+        function getBuffDisplayState(buffId, unlocked, activeMap) {
+            if (activeMap.has(buffId)) return 'active';
+            const entry = unlocked && unlocked[buffId];
+            if (entry && entry.isUnlocked) return 'inactive';
+            return 'locked';
+        }
+
         async function renderBuffIcons(summary) {
             if (!buffBar) return;
             await ensureBuffCatalog(summary);
@@ -2655,23 +2829,39 @@ button {
             const activeList = Array.isArray(buffsState.active) ? buffsState.active : [];
             const activeMap = buildActiveBuffMap(activeList);
             const activeIds = Array.from(activeMap.keys());
-            let displayIds = Object.keys(unlocked || {});
-            if (!displayIds.length) {
-                displayIds = activeIds;
+            const sortByUnlockTime = (first, second) => {
+                const firstRecord = unlocked[first] || {};
+                const secondRecord = unlocked[second] || {};
+                const firstTime = typeof firstRecord.unlockedAt === 'string' ? firstRecord.unlockedAt : '';
+                const secondTime = typeof secondRecord.unlockedAt === 'string' ? secondRecord.unlockedAt : '';
+                if (firstTime && secondTime) {
+                    const diff = new Date(firstTime) - new Date(secondTime);
+                    if (!Number.isNaN(diff) && diff !== 0) return diff;
+                }
+                if (firstTime && !secondTime) return -1;
+                if (!firstTime && secondTime) return 1;
+                return getBuffCatalogIndex(first) - getBuffCatalogIndex(second);
+            };
+            let displayIds = [];
+            const catalogIds = buffCatalog.map((buff) => buff.id);
+            if (catalogIds.length) {
+                displayIds = [...catalogIds];
+                const known = new Set(catalogIds);
+                const extra = Array.from(new Set([
+                    ...Object.keys(unlocked || {}),
+                    ...activeIds,
+                ])).filter((id) => id && !known.has(id));
+                if (extra.length) {
+                    extra.sort(sortByUnlockTime);
+                    displayIds.push(...extra);
+                }
             } else {
-                displayIds.sort((first, second) => {
-                    const firstRecord = unlocked[first] || {};
-                    const secondRecord = unlocked[second] || {};
-                    const firstTime = typeof firstRecord.unlockedAt === 'string' ? firstRecord.unlockedAt : '';
-                    const secondTime = typeof secondRecord.unlockedAt === 'string' ? secondRecord.unlockedAt : '';
-                    if (firstTime && secondTime) {
-                        const diff = new Date(firstTime) - new Date(secondTime);
-                        if (!Number.isNaN(diff) && diff !== 0) return diff;
-                    }
-                    if (firstTime && !secondTime) return -1;
-                    if (!firstTime && secondTime) return 1;
-                    return getBuffCatalogIndex(first) - getBuffCatalogIndex(second);
-                });
+                displayIds = Object.keys(unlocked || {});
+                if (!displayIds.length) {
+                    displayIds = activeIds;
+                } else {
+                    displayIds.sort(sortByUnlockTime);
+                }
             }
 
             buffBar.innerHTML = '';
@@ -2683,9 +2873,16 @@ button {
 
             const fragment = document.createDocumentFragment();
             displayIds.forEach((id) => {
-                const buff = buffCatalogById[id] || { id, nameHu: 'Ismeretlen buff', description: '', iconToken: '' };
-                const isActive = activeMap.has(id);
-                fragment.appendChild(buildBuffIconElement(buff, isActive));
+                const buff = buffCatalogById[id] || {
+                    id,
+                    nameHu: 'Ismeretlen buff',
+                    description: '',
+                    iconToken: '',
+                    unlockRule: '',
+                    activeRule: '',
+                };
+                const state = getBuffDisplayState(id, unlocked, activeMap);
+                fragment.appendChild(buildBuffIconElement(buff, state));
             });
             buffBar.appendChild(fragment);
         }

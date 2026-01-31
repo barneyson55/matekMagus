@@ -394,8 +394,8 @@ function finishTest() {
     topicId: TOPIC_ID,
     topicName: TOPIC_NAME,
     difficulty: currentTestDifficulty,
-    grade,
-    percentage,
+    grade: grade,
+    percentage: percentage,
     timestamp: new Date().toISOString(),
     questions: testQuestions.map((q) => ({
       question: q.question,
@@ -580,7 +580,7 @@ if (practiceStartBtn) {
   practiceStartBtn.addEventListener('click', () => {
     const enabled = getEnabledPracticeDifficulties();
     if (!enabled.length) {
-      practiceFeedback.textContent = 'V\xe1lassz legal\xe1bb egy neh\xe9zs\xe9get.';
+      practiceFeedback.textContent = 'V\xe1lassz legal\xe1bb egy neh\xe9zs\xe9gi szintet.';
       practiceFeedback.style.color = '#f04747';
       return;
     }

@@ -44,6 +44,15 @@ Last reviewed: 2026-01-31 (Bug triage log updated)
   - Fix: `electron-builder` configured in `package.json`, NSIS/portable targets added, `dist:win`/`publish:win` scripts added.
   - Notes: 2026-01-28.
 
+- [MAJOR] Windows installer build blocked by symlink privilege (winCodeSign extraction)
+  - Repro steps:
+    1. Run `npm run dist:win` on Windows.
+    2. Observe electron-builder extracting `winCodeSign` cache.
+  - Expected: Build completes and produces NSIS installer in `dist/`.
+  - Actual: Extraction fails with "Cannot create symbolic link" due to missing privilege.
+  - Fix: Enable Windows Developer Mode or run the build in an elevated terminal that can create symlinks.
+  - Notes: 2026-01-31.
+
 - [MAJOR] Windows code signing not configured
   - Repro steps:
     1. Build the NSIS installer (`npm run dist:win`).

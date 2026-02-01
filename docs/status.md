@@ -8,6 +8,7 @@
   - [ ] Prep-only run confirmed: no tests, builds, or installs executed.
 
 ## Snapshot
+- 2026-01-31: `npm run dist:win` failed while extracting `winCodeSign` (symlink privilege missing); installer not produced.
 - 2026-01-31: Attempted `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit --prefer-offline` (failed with `EAI_AGAIN` for registry.npmjs.org); `npm run dist:win` failed (`electron-builder` not found); `dist/` missing.
 - 2026-01-31: Attempted `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit` (timed out after 120s); `npm run dist:win` failed (`electron-builder` not found); `dist/` missing.
 - 2026-01-31: Retried `npm install --no-fund --no-audit` (failed with `EAI_AGAIN` for registry.npmjs.org; also hit `/home/barney/.npm/_logs` write error); `npm run dist:win` failed (`electron-builder` not found) and `dist/` is still missing.

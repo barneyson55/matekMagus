@@ -22,7 +22,7 @@ Last updated: 2026-01-31
 - [x] Windows manual click-through checklist (app shell, module load, navigation, settings, results, achievements).
 - [x] Windows smoke run (manual) for app shell + module load + navigation; recorded as not run (no Windows environment available in this session).
 - [x] Run Windows E2E tests (`npm run test:e2e`) and record results in `docs/status.md`. (Recorded as not run due to automation policy / no Windows environment.)
-- [ ] Build Windows installer artifacts (`npm run dist:win`) and verify `dist/` outputs. (Blocked: electron-builder missing; `npm install --no-fund --no-audit` failed with `EAI_AGAIN` for registry.npmjs.org and a `/home/barney/.npm/_logs` write error on 2026-01-31; `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit` timed out after 120s on 2026-01-31; `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit --prefer-offline` failed with `EAI_AGAIN` on 2026-01-31; `dist/` still not created.)
+- [ ] Build Windows installer artifacts (`npm run dist:win`) and verify `dist/` outputs. (Blocked: `winCodeSign` extraction failed with "Cannot create symbolic link" due to missing symlink privilege on 2026-01-31; enable Windows Developer Mode or run the build in an elevated terminal.)
 - [ ] Install NSIS build and verify app launch + progress persistence.
 - [ ] Auto-update verification checklist on installed build (update available → download → quitAndInstall).
 - [ ] Confirm GitHub Release assets include `latest.yml` and `*.blockmap` files.

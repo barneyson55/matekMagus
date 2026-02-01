@@ -1,6 +1,6 @@
 # Critical TODO / Risks
 
-Last reviewed: 2026-01-31 (Bug triage log updated)
+Last reviewed: 2026-02-01 (Bug triage log updated)
 
 ## Bug Triage Log
 
@@ -88,6 +88,12 @@ Last reviewed: 2026-01-31 (Bug triage log updated)
 
 ## Notes
 
+- 2026-02-01: MOBILE-005 completed (offline detection + banner via connectivity service + tests); checks not run (automation policy).
+- 2026-02-01: MOBILE-004 completed (AppState + Provider wiring + unit test); checks not run (automation policy).
+- 2026-02-01: MOBILE-003 completed (mobile domain models + repository interface + in-memory repo + tests); checks not run (automation policy).
+- 2026-02-01: MOBILE-001 mobile_check.sh added (Flutter pub get/format/analyze/test); checks not run (automation policy).
+- 2026-02-01: `npm install --no-fund --no-audit` and `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit --prefer-offline` timed out after 120s; `npm run dist:win` failed (`electron-builder` not found); `dist/` not created.
+- 2026-02-01: Retried `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit --prefer-offline` (timed out after 120s); `npm run dist:win` still failed (`electron-builder` not found); `dist/` still missing.
 - 2026-01-31: Windows manual smoke run (app shell + module load + navigation) not executed in this session (no Windows environment); recorded in `docs/status.md`.
 - 2026-01-31: Windows manual click-through checklist added (`docs/WINDOWS_CLICKTHROUGH_CHECKLIST.md`); tests not run (automation policy).
 - 2026-01-31: `npm run dist:win` failed because electron-builder was not found; `npm install --no-fund --no-audit` failed with `EAI_AGAIN` for registry.npmjs.org, so `dist/` artifacts were not created.

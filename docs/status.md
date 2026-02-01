@@ -1,13 +1,23 @@
 # Status
 
 ## Next Autopilot Batch
-- Summary: CI-001 implemented (GitHub Actions CI for format check + unit tests on Ubuntu/Windows, plus Ubuntu E2E via xvfb); tests not run.
+- Summary: MOBILE-005 completed (offline detection + banner + connectivity service); checks not run.
 - Verification checklist:
-  - [ ] CI workflow exists at `.github/workflows/ci.yml`.
-  - [ ] `docs/ai_todo.md` shows CI-001 as completed.
-  - [ ] Prep-only run confirmed: no tests, builds, or installs executed.
+  - [ ] `mobile_app/lib/domain/services/connectivity_service.dart` defines watch/check APIs.
+  - [ ] `mobile_app/lib/data/connectivity/connectivity_plus_service.dart` implements connectivity_plus wiring.
+  - [ ] `mobile_app/lib/app_state/app_state.dart` exposes isOnline + startConnectivity.
+  - [ ] `mobile_app/lib/main.dart` wires ConnectivityService and renders the offline banner.
+  - [ ] `mobile_app/test` uses fake connectivity and covers banner toggling.
+  - [ ] `docs/ai_todo.md` shows MOBILE-005 as completed.
+  - [ ] Prep-only run confirmed: no Flutter checks executed.
 
 ## Snapshot
+- 2026-02-01: Retried Windows build prep; `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit --prefer-offline` timed out after 120s; `npm run dist:win` failed (`electron-builder` not found); `dist/` still missing.
+- 2026-02-01: MOBILE-005 completed; added ConnectivityService abstraction with connectivity_plus implementation, AppState online state, offline banner UI, and fake-driven tests; checks not run (automation policy).
+- 2026-02-01: MOBILE-004 completed; added AppState (ChangeNotifier) with load/mutation, wired provider in `mobile_app/lib/main.dart`, and added unit test coverage; checks not run (automation policy).
+- 2026-02-01: MOBILE-003 completed; added domain models (UserProfile/Achievement/Buff), UserRepository + in-memory implementation, and unit tests for JSON roundtrips/stream updates; checks not run (automation policy).
+- 2026-02-01: MOBILE-001 completed; added `scripts/mobile_check.sh` to run Flutter pub get/format/analyze/test in `mobile_app`; checks not executed (automation policy).
+- 2026-02-01: Attempted `npm install --no-fund --no-audit` and `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit --prefer-offline` (both timed out after 120s); `npm run dist:win` failed (`electron-builder` not found); `dist/` not created.
 - 2026-01-31: `npm run dist:win` failed while extracting `winCodeSign` (symlink privilege missing); installer not produced.
 - 2026-01-31: Attempted `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit --prefer-offline` (failed with `EAI_AGAIN` for registry.npmjs.org); `npm run dist:win` failed (`electron-builder` not found); `dist/` missing.
 - 2026-01-31: Attempted `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit` (timed out after 120s); `npm run dist:win` failed (`electron-builder` not found); `dist/` missing.
@@ -165,6 +175,9 @@
 - Desktop v1: Windows installer + auto-update readiness (build verification + update checklist + Windows smoke/E2E runs).
 
 ## Recent Tests
+- 2026-02-01: Not run (automation policy: MOBILE-005 offline detection + banner).
+- 2026-02-01: Not run (automation policy: MOBILE-004 AppState + provider wiring).
+- 2026-02-01: Not run (automation policy: MOBILE-001 added mobile_check.sh; no Flutter checks executed).
 - 2026-01-31: Not run (automation policy: Windows E2E `npm run test:e2e` requires a Windows environment; recorded as skipped in this session).
 - 2026-01-31: Not run (manual Windows smoke run for app shell + module load + navigation; no Windows environment available).
 - 2026-01-31: Not run (automation policy: Windows manual click-through checklist added).

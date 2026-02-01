@@ -1,6 +1,8 @@
 # User TODO
 
 
+- [ ] Run `npm install` with registry access and `npm run dist:win` on Windows in Developer Mode or an elevated terminal (symlink privilege) and share the resulting `dist/` artifact list.
+
 - [x] Provide npm registry access or offline dependency cache so `electron-builder` can be installed; required to run `npm run dist:win` and generate `dist/` artifacts.
 
 - [x] Provide Codex CLI install and login steps for this environment.

@@ -1,6 +1,5 @@
 # User TODO
 
-- [x] Enable Windows Developer Mode or run PowerShell as Administrator so electron-builder can create symlinks (required for `npm run dist:win`).
 
 - [x] Provide npm registry access or offline dependency cache so `electron-builder` can be installed; required to run `npm run dist:win` and generate `dist/` artifacts.
 

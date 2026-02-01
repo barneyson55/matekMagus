@@ -124,9 +124,9 @@ body, html { font-family: 'Inter', sans-serif; background-color: var(--bg-dark);
 .buff-icon[data-state="locked"] { opacity: 0.2; filter: grayscale(1); border-style: dashed; }
 .buff-tooltip {
     position: absolute;
-    bottom: calc(100% + 8px);
+    top: calc(100% + 8px);
     left: 50%;
-    transform: translateX(-50%) translateY(4px);
+    transform: translateX(-50%) translateY(-4px);
     background: rgba(10, 12, 14, 0.95);
     color: #f5f6f7;
     border: 1px solid rgba(255, 255, 255, 0.12);

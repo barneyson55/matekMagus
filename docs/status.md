@@ -1,17 +1,16 @@
 # Status
 
 ## Next Autopilot Batch
-- Summary: MOBILE-005 completed (offline detection + banner + connectivity service); checks not run.
+- Summary: UI-BUFF-001 completed (header buff tooltip positioning); checks not run.
 - Verification checklist:
-  - [ ] `mobile_app/lib/domain/services/connectivity_service.dart` defines watch/check APIs.
-  - [ ] `mobile_app/lib/data/connectivity/connectivity_plus_service.dart` implements connectivity_plus wiring.
-  - [ ] `mobile_app/lib/app_state/app_state.dart` exposes isOnline + startConnectivity.
-  - [ ] `mobile_app/lib/main.dart` wires ConnectivityService and renders the offline banner.
-  - [ ] `mobile_app/test` uses fake connectivity and covers banner toggling.
-  - [ ] `docs/ai_todo.md` shows MOBILE-005 as completed.
-  - [ ] Prep-only run confirmed: no Flutter checks executed.
+  - [ ] Hover header buff icons; tooltip stays visible within the app window.
+  - [ ] Confirm tooltip appears below the buff icon without layout shift.
+  - [ ] Ensure tooltip renders above header/content (no clipping).
+  - [ ] `docs/ai_todo.md` shows UI-BUFF-001 as completed.
+  - [ ] Prep-only run confirmed: no tests executed.
 
 ## Snapshot
+- 2026-02-01: UI-BUFF-001 completed; header buff tooltips now anchor below icons to stay within the viewport; checks not run (automation policy).
 - 2026-02-01: Retried Windows build prep; `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit --prefer-offline` timed out after 120s; `npm run dist:win` failed (`electron-builder` not found); `dist/` still missing.
 - 2026-02-01: MOBILE-005 completed; added ConnectivityService abstraction with connectivity_plus implementation, AppState online state, offline banner UI, and fake-driven tests; checks not run (automation policy).
 - 2026-02-01: MOBILE-004 completed; added AppState (ChangeNotifier) with load/mutation, wired provider in `mobile_app/lib/main.dart`, and added unit test coverage; checks not run (automation policy).

@@ -1,15 +1,18 @@
 # Status
 
 ## Next Autopilot Batch
-- Summary: UI-BUFF-001 completed (header buff tooltip positioning); checks not run.
+- Summary: HEALTH-001 completed (scripts/check_all.sh added to run npm test + mobile_check.sh); checks not run.
 - Verification checklist:
-  - [ ] Hover header buff icons; tooltip stays visible within the app window.
-  - [ ] Confirm tooltip appears below the buff icon without layout shift.
-  - [ ] Ensure tooltip renders above header/content (no clipping).
-  - [ ] `docs/ai_todo.md` shows UI-BUFF-001 as completed.
+  - [ ] `scripts/check_all.sh` exists and is executable.
+  - [ ] `docs/ai_todo.md` shows HEALTH-001 as completed.
   - [ ] Prep-only run confirmed: no tests executed.
 
 ## Snapshot
+- 2026-02-03: HEALTH-001 completed; added `scripts/check_all.sh` to run npm test + `scripts/mobile_check.sh`; checks not run (automation policy).
+- 2026-02-03: SYNC-002 completed; added `sync_merge.js` merge rules + unit tests; checks not run (automation policy).
+- 2026-02-03: SYNC-001 completed; added `docs/sync_contract.md` with Firestore schema + conflict rules; checks not run (automation policy).
+- 2026-02-03: DESKTOP-ARCH-001 completed; extracted progress.json persistence into ProgressRepository/LocalProgressRepository with atomic temp rename and unit tests; checks not run (automation policy).
+- 2026-02-03: MOBILE-006 completed; added SharedPreferences-backed LocalUserRepository, defaulted mobile app persistence to it, and added unit tests for roundtrip + stream updates; checks not run (automation policy).
 - 2026-02-01: UI-BUFF-001 completed; header buff tooltips now anchor below icons to stay within the viewport; checks not run (automation policy).
 - 2026-02-01: Retried Windows build prep; `NPM_CONFIG_CACHE=/tmp/npm-cache npm install --no-fund --no-audit --prefer-offline` timed out after 120s; `npm run dist:win` failed (`electron-builder` not found); `dist/` still missing.
 - 2026-02-01: MOBILE-005 completed; added ConnectivityService abstraction with connectivity_plus implementation, AppState online state, offline banner UI, and fake-driven tests; checks not run (automation policy).
@@ -174,6 +177,9 @@
 - Desktop v1: Windows installer + auto-update readiness (build verification + update checklist + Windows smoke/E2E runs).
 
 ## Recent Tests
+- 2026-02-03: Not run (automation policy: SYNC-002 merge helpers + unit tests added).
+- 2026-02-03: Not run (automation policy: DESKTOP-ARCH-001 ProgressRepository abstraction + tests added).
+- 2026-02-03: Not run (automation policy: MOBILE-006 local persistence + tests added).
 - 2026-02-01: Not run (automation policy: MOBILE-005 offline detection + banner).
 - 2026-02-01: Not run (automation policy: MOBILE-004 AppState + provider wiring).
 - 2026-02-01: Not run (automation policy: MOBILE-001 added mobile_check.sh; no Flutter checks executed).

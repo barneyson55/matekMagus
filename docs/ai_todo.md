@@ -14,7 +14,13 @@
 - [x] MOBILE-005: Offline detection + banner (spec: docs/tasks/MOBILE-005.md)
 
 - [x] UI-BUFF-001: Fix header buff tooltip hover positioning (spec: docs/tasks/UI-BUFF-001.md)
-Last updated: 2026-02-01
+
+- [x] MOBILE-006: Persist UserProfile locally (SharedPreferences-backed UserRepository) (spec: docs/tasks/MOBILE-006.md)
+- [x] DESKTOP-ARCH-001: Extract progress.json persistence into ProgressRepository (sync-ready) (spec: docs/tasks/DESKTOP-ARCH-001.md)
+- [x] SYNC-001: Define sync contract (Firestore schema + conflict rules) (spec: docs/tasks/SYNC-001.md)
+- [x] SYNC-002: Implement pure merge/resolve helpers + tests (desktop-first) (spec: docs/tasks/SYNC-002.md)
+- [x] HEALTH-001: Add scripts/check_all.sh to run Node + Flutter checks in WSL (spec: docs/tasks/HEALTH-001.md)
+Last updated: 2026-02-03
 
 ## Desktop Release (Windows)
 - [x] HU consistency sweep (mandatory) across app shell, settings, results, character sheet, and modules (align with `docs/localization_glossary.md`).

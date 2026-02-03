@@ -7,8 +7,12 @@ const { appEntry } = require('../../helpers/paths');
 function createFsStub(initialFiles = {}) {
   const store = new Map(Object.entries(initialFiles));
   const writes = [];
+  const renameCalls = [];
+  const unlinkCalls = [];
   return {
     writes,
+    renameCalls,
+    unlinkCalls,
     store,
     existsSync(filePath) {
       return store.has(filePath);
@@ -25,6 +29,26 @@ function createFsStub(initialFiles = {}) {
       const payload = typeof data === 'string' ? data : data.toString();
       store.set(filePath, payload);
       writes.push({ path: filePath, data: payload });
+    },
+    renameSync(fromPath, toPath) {
+      if (!store.has(fromPath)) {
+        const error = new Error(`ENOENT: no such file or directory, rename '${fromPath}' -> '${toPath}'`);
+        error.code = 'ENOENT';
+        throw error;
+      }
+      const payload = store.get(fromPath);
+      store.delete(fromPath);
+      store.set(toPath, payload);
+      renameCalls.push({ from: fromPath, to: toPath });
+    },
+    unlinkSync(filePath) {
+      if (!store.has(filePath)) {
+        const error = new Error(`ENOENT: no such file or directory, unlink '${filePath}'`);
+        error.code = 'ENOENT';
+        throw error;
+      }
+      store.delete(filePath);
+      unlinkCalls.push({ path: filePath });
     },
   };
 }

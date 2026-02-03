@@ -18,6 +18,7 @@ const {
   XP_CAP,
 } = require('./xp_config');
 const { BUFF_CATALOG } = require('./buffs_config');
+const { LocalProgressRepository } = require('./progress_repository');
 const BUFF_INDEX = Object.fromEntries(BUFF_CATALOG.map((buff, index) => [buff.id, index]));
 const FOCUS_ACTIVE_MINUTES = 15;
 
@@ -35,6 +36,16 @@ const UPDATE_LOG_FILE = 'auto-update.log';
 const UPDATE_INSTALL_DELAY_MS = 3500;
 let mainWindow = null;
 let lastUpdateStatus = null;
+
+const progressRepository = new LocalProgressRepository({
+  filePath: progressFilePath,
+  fs,
+  logger: console,
+  messages: {
+    readError: 'Hiba a progress.json olvasása közben:',
+    writeError: 'Hiba a progress.json írása közben:',
+  },
+});
 
 const PROGRESS_VERSION = 2;
 const QUEST_VERSION = 2;
@@ -290,23 +301,12 @@ const ACHIEVEMENT_CATALOG = [
 
 // Read the progress.json file if it exists, otherwise return an empty object
 function readProgress() {
-  try {
-    if (fs.existsSync(progressFilePath)) {
-      return JSON.parse(fs.readFileSync(progressFilePath));
-    }
-  } catch (error) {
-    console.error('Hiba a progress.json olvasása közben:', error);
-  }
-  return {};
+  return progressRepository.read();
 }
 
 // Save the progress object back to disk
 function saveProgress(data) {
-  try {
-    fs.writeFileSync(progressFilePath, JSON.stringify(data, null, 2));
-  } catch (error) {
-    console.error('Hiba a progress.json írása közben:', error);
-  }
+  progressRepository.write(data);
 }
 
 // Save settings to disk

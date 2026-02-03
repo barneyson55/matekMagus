@@ -23,8 +23,10 @@ test('progress persistence reads defaults and writes JSON', () => {
 
   context.saveProgress({ totalXp: 5 });
   assert.equal(fsStub.writes.length, 1);
-  assert.equal(fsStub.writes[0].path, context.progressFilePath);
-  assert.equal(JSON.parse(fsStub.writes[0].data).totalXp, 5);
+  assert.equal(fsStub.renameCalls.length, 1);
+  assert.equal(fsStub.renameCalls[0].from, `${context.progressFilePath}.tmp`);
+  assert.equal(fsStub.renameCalls[0].to, context.progressFilePath);
+  assert.equal(JSON.parse(fsStub.store.get(context.progressFilePath)).totalXp, 5);
 
   fsStub.store.set(context.progressFilePath, JSON.stringify({ totalXp: 42 }));
   const loaded = context.readProgress();

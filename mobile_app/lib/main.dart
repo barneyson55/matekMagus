@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'app_state/app_state.dart';
 import 'data/connectivity/connectivity_plus_service.dart';
 import 'data/in_memory/in_memory_user_repository.dart';
+import 'data/local/local_user_repository.dart';
 import 'domain/repositories/user_repository.dart';
 import 'domain/services/connectivity_service.dart';
 
@@ -26,9 +27,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<UserRepository>(
-          create: (_) => userRepository ?? InMemoryUserRepository(),
+          create: (_) => userRepository ?? LocalUserRepository(),
           dispose: (_, repository) {
             if (repository is InMemoryUserRepository) {
+              repository.dispose();
+            }
+            if (repository is LocalUserRepository) {
               repository.dispose();
             }
           },

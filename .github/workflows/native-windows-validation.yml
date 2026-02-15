@@ -1,0 +1,94 @@
+name: Native Windows Validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - autopilot/windows-native-validation-20260215
+
+jobs:
+  native-windows-validation:
+    runs-on: windows-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: npm install
+        id: npm_install
+        continue-on-error: true
+        shell: pwsh
+        run: npm install
+
+      - name: npm run test:unit
+        id: test_unit
+        continue-on-error: true
+        shell: pwsh
+        run: npm run test:unit
+
+      - name: npm run test:e2e
+        id: test_e2e
+        continue-on-error: true
+        shell: pwsh
+        run: npm run test:e2e
+
+      - name: npm run dist:win
+        id: dist_win
+        continue-on-error: true
+        shell: pwsh
+        run: npm run dist:win
+
+      - name: Collect dist file list
+        if: always()
+        shell: pwsh
+        run: |
+          if (Test-Path dist) {
+            Get-ChildItem -Path dist -Recurse -File |
+              Select-Object -ExpandProperty FullName |
+              Tee-Object -FilePath dist-file-list.txt
+          } else {
+            "dist directory not created." | Tee-Object -FilePath dist-file-list.txt
+          }
+
+      - name: Command outcome summary
+        if: always()
+        shell: pwsh
+        run: |
+          @(
+            "npm install: ${{ steps.npm_install.outcome }}"
+            "npm run test:unit: ${{ steps.test_unit.outcome }}"
+            "npm run test:e2e: ${{ steps.test_e2e.outcome }}"
+            "npm run dist:win: ${{ steps.dist_win.outcome }}"
+          ) | Tee-Object -FilePath command-outcomes.txt
+
+      - name: Upload validation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-windows-validation
+          if-no-files-found: warn
+          path: |
+            command-outcomes.txt
+            dist-file-list.txt
+            dist/**
+
+      - name: Enforce success
+        if: always()
+        shell: pwsh
+        run: |
+          $failed = @()
+          if ("${{ steps.npm_install.outcome }}" -ne "success") { $failed += "npm install" }
+          if ("${{ steps.test_unit.outcome }}" -ne "success") { $failed += "npm run test:unit" }
+          if ("${{ steps.test_e2e.outcome }}" -ne "success") { $failed += "npm run test:e2e" }
+          if ("${{ steps.dist_win.outcome }}" -ne "success") { $failed += "npm run dist:win" }
+
+          if ($failed.Count -gt 0) {
+            Write-Error ("Failed commands: " + ($failed -join ", "))
+          }

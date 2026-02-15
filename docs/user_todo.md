@@ -1,6 +1,14 @@
 # User TODO
 
 
+- [ ] Home TODO (Barney) — natív Windows validáció a MatekMagus repohoz.
+  1. Nyisd meg a repót natív Windows terminálból (ne WSL-ből).
+  2. Futtasd: `npm install` (ez létrehozza/frissíti a `package-lock.json`-t).
+  3. Futtasd: `npm run test:unit`.
+  4. Futtasd: `npm run test:e2e`.
+  5. Futtasd: `npm run dist:win`.
+  6. Küldd vissza az eredményeket (siker/hiba + rövid log), és ha létrejött, a `dist/` fájllistát.
+
 - [x] Run `npm install` with registry access and `npm run dist:win` on Windows in Developer Mode or an elevated terminal (symlink privilege) and share the resulting `dist/` artifact list.
 
 - [x] Provide npm registry access or offline dependency cache so `electron-builder` can be installed; required to run `npm run dist:win` and generate `dist/` artifacts.

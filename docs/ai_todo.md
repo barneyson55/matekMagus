@@ -38,3 +38,11 @@ Last updated: 2026-02-03
 - [x] (meta) Remaining Windows release tasks moved out of ai_todo (manual/backlog).
 ## V2 / Mobile (later)
 - [x] (meta) V2 mobile backlog moved to docs/ai_backlog.md.
+
+
+<!-- ASPM_SWEEP_2026-02-25 -->
+## ASPM Sweep 2026-02-25
+- [x] Portfolio sweep triage logged on branch `main` (pre-sweep repo state: `clean`).
+- [x] First unchecked item in `docs/user_todo.md`: none.
+- [x] Top-level unchecked count in `docs/ai_todo.md` at sweep start: 0.
+- Next step: Promote one concrete repo task into a top-level checkbox and execute it in the next cycle.

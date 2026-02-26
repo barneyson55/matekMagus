@@ -8,6 +8,7 @@
   - [ ] Prep-only run confirmed: no tests executed.
 
 ## Snapshot
+- 2026-02-26: Release-notes backlog milestone completed (`docs/RELEASE_NOTES_v0.1.1.md`), `package.json` bumped to `0.1.1`; local tests currently failing in this environment.
 - 2026-02-03: HEALTH-001 completed; added `scripts/check_all.sh` to run npm test + `scripts/mobile_check.sh`; checks not run (automation policy).
 - 2026-02-03: SYNC-002 completed; added `sync_merge.js` merge rules + unit tests; checks not run (automation policy).
 - 2026-02-03: SYNC-001 completed; added `docs/sync_contract.md` with Firestore schema + conflict rules; checks not run (automation policy).
@@ -177,6 +178,8 @@
 - Desktop v1: Windows installer + auto-update readiness (build verification + update checklist + Windows smoke/E2E runs).
 
 ## Recent Tests
+- 2026-02-26 (WSL2): `npm run test:unit` — fail (`MODULE_NOT_FOUND: /mnt/c/CORE/matekMagus/tests/unit`).
+- 2026-02-26 (WSL2): `npm run test` — fail (20 unit failures; `electron-updater` app adapter `getVersion` undefined in test context; character/settings test harness mismatches).
 - 2026-02-03: Not run (automation policy: SYNC-002 merge helpers + unit tests added).
 - 2026-02-03: Not run (automation policy: DESKTOP-ARCH-001 ProgressRepository abstraction + tests added).
 - 2026-02-03: Not run (automation policy: MOBILE-006 local persistence + tests added).

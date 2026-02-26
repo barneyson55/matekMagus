@@ -45,4 +45,5 @@ Last updated: 2026-02-03
 - [x] Portfolio sweep triage logged on branch `main` (pre-sweep repo state: `clean`).
 - [x] First unchecked item in `docs/user_todo.md`: none.
 - [x] Top-level unchecked count in `docs/ai_todo.md` at sweep start: 0.
-- Next step: Promote one concrete repo task into a top-level checkbox and execute it in the next cycle.
+- [x] Promoted backlog item "release notes + version bump" and completed it (`docs/RELEASE_NOTES_v0.1.1.md`, `package.json` 0.1.1).
+- Next step: Continue with next open item in `docs/ai_backlog.md`.

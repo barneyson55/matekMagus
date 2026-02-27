@@ -47,6 +47,7 @@ Last updated: 2026-02-03
   - [x] Re-ran `node --test tests/e2e/mobile-smoke.test.js` in ASPM hourly cycle #9; WSL skip-only outcome remained stable (1 skipped, 0 failed).
   - [x] Re-ran `node --test tests/e2e/mobile-smoke.test.js` in ASPM hourly cycle #10; WSL skip-only outcome remained stable (1 skipped, 0 failed).
   - [x] Re-ran `node --test tests/e2e/mobile-smoke.test.js` in ASPM hourly cycle #11; WSL skip-only outcome remained stable (1 skipped, 0 failed).
+  - [x] Re-ran `node --test tests/e2e/mobile-smoke.test.js` in ASPM hourly cycle #12; WSL skip-only outcome remained stable (1 skipped, 0 failed).
   - [ ] Perform manual small-screen validation on Windows desktop build (Quest Log drawer open/close, navigation, overflow) and record results.
 
 
@@ -161,4 +162,14 @@ Last updated: 2026-02-03
 - [x] Completed one milestone on `MOBILE-REVAL-001`: added hourly cycle #11 baseline checkpoint with stable WSL skip-only outcome.
 - [x] Ran relevant check: `node --test tests/e2e/mobile-smoke.test.js` (WSL: 1 skipped, 0 failed).
 - [x] Updated `docs/ai_todo.md` checkbox state for hourly cycle #11.
+- Next step: perform and record the remaining manual Windows small-screen validation.
+
+
+<!-- ASPM_SWEEP_2026-02-27M -->
+## ASPM Sweep 2026-02-27 (hourly #12)
+- [x] First unchecked item in `docs/user_todo.md`: none.
+- [x] Top-level unchecked count in `docs/ai_todo.md`: 1 (`MOBILE-REVAL-001`).
+- [x] Completed one milestone on `MOBILE-REVAL-001`: added hourly cycle #12 baseline checkpoint with stable WSL skip-only outcome.
+- [x] Ran relevant check: `node --test tests/e2e/mobile-smoke.test.js` (WSL: 1 skipped, 0 failed).
+- [x] Updated `docs/ai_todo.md` checkbox state for hourly cycle #12.
 - Next step: perform and record the remaining manual Windows small-screen validation.

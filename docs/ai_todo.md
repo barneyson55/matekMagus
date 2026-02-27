@@ -41,6 +41,7 @@ Last updated: 2026-02-03
 - [ ] MOBILE-REVAL-001: Mobile app shell + Quest Log drawer re-validation on small screens.
   - [x] Promote from `docs/ai_backlog.md` and capture a fresh validation checkpoint for this cycle.
   - [x] Run baseline automated check: `node --test tests/e2e/mobile-smoke.test.js` (WSL skip expected in this environment).
+  - [x] Re-run baseline automated check in current ASPM cycle and confirm WSL skip behavior is stable.
   - [ ] Perform manual small-screen validation on Windows desktop build (Quest Log drawer open/close, navigation, overflow) and record results.
 
 
@@ -102,3 +103,12 @@ Last updated: 2026-02-03
 - [x] Completed one milestone: baseline re-validation check executed via `node --test tests/e2e/mobile-smoke.test.js` (WSL: 1 skipped, 0 failed).
 - [x] Updated todo checkboxes in both `docs/ai_backlog.md` and `docs/ai_todo.md`.
 - Next step: run/manual-verify `MOBILE-REVAL-001` on Windows small-screen viewport and log outcomes.
+
+<!-- ASPM_SWEEP_2026-02-27G -->
+## ASPM Sweep 2026-02-27 (hourly #6)
+- [x] First unchecked item in `docs/user_todo.md`: none.
+- [x] Top-level unchecked count in `docs/ai_todo.md`: 1 (`MOBILE-REVAL-001`).
+- [x] Completed one milestone on `MOBILE-REVAL-001`: re-ran baseline mobile smoke check in this cycle; WSL skip remained stable.
+- [x] Ran relevant check: `node --test tests/e2e/mobile-smoke.test.js` (WSL: 1 skipped, 0 failed).
+- [x] Updated `docs/ai_todo.md` checkbox state for the new cycle milestone.
+- Next step: perform and record the remaining manual Windows small-screen validation.

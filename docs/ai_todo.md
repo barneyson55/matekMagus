@@ -47,3 +47,11 @@ Last updated: 2026-02-03
 - [x] Top-level unchecked count in `docs/ai_todo.md` at sweep start: 0.
 - [x] Promoted backlog item "release notes + version bump" and completed it (`docs/RELEASE_NOTES_v0.1.1.md`, `package.json` 0.1.1).
 - Next step: Continue with next open item in `docs/ai_backlog.md`.
+
+<!-- ASPM_SWEEP_2026-02-27 -->
+## ASPM Sweep 2026-02-27
+- [x] First unchecked item in `docs/user_todo.md`: none.
+- [x] Top-level unchecked count in `docs/ai_todo.md`: 0.
+- [x] Ran `npm test` (WSL): 18 pass, 20 fail.
+- [x] Logged current blocking failures: `electron-updater` `getVersion` in unit harness, missing character sheet script block, and iframe mock `insertBefore` gaps.
+- Next step: promote first actionable fix from `docs/ai_backlog.md` into `docs/ai_todo.md` before next ASPM execution.

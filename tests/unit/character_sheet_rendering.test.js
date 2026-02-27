@@ -49,6 +49,10 @@ function createDocumentStub() {
     elements,
     documentElement,
     body,
+    querySelector(selector) {
+      if (selector === '.tab-button.is-active') return tabButtons[0];
+      return null;
+    },
     querySelectorAll(selector) {
       if (selector === '.tab-button') return tabButtons;
       return [];
@@ -69,11 +73,22 @@ function createDocumentStub() {
 }
 
 function loadCharacterSheetContext() {
-  const filePath = path.join(repoRoot, 'modules', 'character_sheet.html');
-  const html = fs.readFileSync(filePath, 'utf8');
-  const match = html.match(/<script>([\s\S]*?)<\/script>/);
-  if (!match) throw new Error('Character sheet script block not found');
-  const script = match[1];
+  const htmlPath = path.join(repoRoot, 'modules', 'character_sheet.html');
+  const html = fs.readFileSync(htmlPath, 'utf8');
+  const srcMatch = html.match(/<script[^>]*src=["']([^"']+)["'][^>]*><\/script>/i);
+  const inlineMatch = html.match(/<script>([\s\S]*?)<\/script>/);
+
+  let filePath = htmlPath;
+  let script = '';
+
+  if (srcMatch) {
+    filePath = path.join(path.dirname(htmlPath), srcMatch[1]);
+    script = fs.readFileSync(filePath, 'utf8');
+  } else if (inlineMatch) {
+    script = inlineMatch[1];
+  } else {
+    throw new Error('Character sheet script block not found');
+  }
   const document = createDocumentStub();
   const window = {
     parent: {

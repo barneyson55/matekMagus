@@ -81,3 +81,12 @@ Last updated: 2026-02-03
 - [x] Ran focused checks: `node --test tests/unit/core_logic.test.js tests/unit/settings_persistence.test.js` (11 pass, 0 fail).
 - [x] Full suite status after change: `npm test` now **34 pass / 4 fail** (remaining: character-sheet script block extraction tests).
 - Next step: adapt `tests/unit/character_sheet_rendering.test.js` loader to current `character_sheet.html` script structure.
+
+<!-- ASPM_SWEEP_2026-02-27E -->
+## ASPM Sweep 2026-02-27 (hourly #4)
+- [x] First unchecked item in `docs/user_todo.md`: none.
+- [x] Top-level unchecked count in `docs/ai_todo.md`: 0.
+- [x] Completed one milestone from prior next-step: updated `character_sheet` rendering unit loader to support external `character_sheet.js` and DOM query stubs.
+- [x] Ran `npm test` (WSL): **38 pass / 0 fail**.
+- [x] Cleared remaining character-sheet test blockers from prior sweep.
+- Next step: promote the next open item from `docs/ai_backlog.md` into `docs/ai_todo.md` for the next ASPM cycle.

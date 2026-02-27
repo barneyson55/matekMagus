@@ -38,6 +38,10 @@ Last updated: 2026-02-03
 - [x] (meta) Remaining Windows release tasks moved out of ai_todo (manual/backlog).
 ## V2 / Mobile (later)
 - [x] (meta) V2 mobile backlog moved to docs/ai_backlog.md.
+- [ ] MOBILE-REVAL-001: Mobile app shell + Quest Log drawer re-validation on small screens.
+  - [x] Promote from `docs/ai_backlog.md` and capture a fresh validation checkpoint for this cycle.
+  - [x] Run baseline automated check: `node --test tests/e2e/mobile-smoke.test.js` (WSL skip expected in this environment).
+  - [ ] Perform manual small-screen validation on Windows desktop build (Quest Log drawer open/close, navigation, overflow) and record results.
 
 
 <!-- ASPM_SWEEP_2026-02-25 -->
@@ -90,3 +94,11 @@ Last updated: 2026-02-03
 - [x] Ran `npm test` (WSL): **38 pass / 0 fail**.
 - [x] Cleared remaining character-sheet test blockers from prior sweep.
 - Next step: promote the next open item from `docs/ai_backlog.md` into `docs/ai_todo.md` for the next ASPM cycle.
+
+<!-- ASPM_SWEEP_2026-02-27F -->
+## ASPM Sweep 2026-02-27 (hourly #5)
+- [x] First unchecked item in `docs/user_todo.md`: none.
+- [x] Promoted first open backlog item to `docs/ai_todo.md` as `MOBILE-REVAL-001`.
+- [x] Completed one milestone: baseline re-validation check executed via `node --test tests/e2e/mobile-smoke.test.js` (WSL: 1 skipped, 0 failed).
+- [x] Updated todo checkboxes in both `docs/ai_backlog.md` and `docs/ai_todo.md`.
+- Next step: run/manual-verify `MOBILE-REVAL-001` on Windows small-screen viewport and log outcomes.

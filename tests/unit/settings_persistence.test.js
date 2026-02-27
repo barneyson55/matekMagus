@@ -8,6 +8,10 @@ const { loadMainContext, createFsStub } = require('./helpers/main_context');
 const { DEFAULT_SETTINGS, CUSTOM_SETTINGS } = require('./fixtures/settings_fixtures');
 const { repoRoot } = require('../helpers/paths');
 
+function toPlain(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
 function createClassList() {
   const entries = new Set();
   return {
@@ -263,7 +267,7 @@ test('get-settings handler returns stored settings when present', async () => {
   const handler = electron.ipcMain._handlers.get('get-settings');
   assert.equal(typeof handler, 'function');
   const payload = await handler();
-  assert.deepEqual(payload, CUSTOM_SETTINGS);
+  assert.deepEqual(toPlain(payload), CUSTOM_SETTINGS);
 });
 
 test('get-settings handler returns empty object when no settings exist', async () => {
@@ -272,13 +276,13 @@ test('get-settings handler returns empty object when no settings exist', async (
   const handler = electron.ipcMain._handlers.get('get-settings');
   assert.equal(typeof handler, 'function');
   const payload = await handler();
-  assert.deepEqual(payload, {});
+  assert.deepEqual(toPlain(payload), {});
 });
 
 test('getDefaultSettings returns default settings baseline', () => {
   const { context } = loadIndexContext();
   const defaults = context.getDefaultSettings();
-  assert.deepEqual(defaults, DEFAULT_SETTINGS);
+  assert.deepEqual(toPlain(defaults), DEFAULT_SETTINGS);
 });
 
 test('settings cancel restores active settings and skips persistence', () => {
@@ -298,8 +302,8 @@ test('settings cancel restores active settings and skips persistence', () => {
   cancelHandlers.forEach((handler) => handler());
   const activeAfter = getContextValue(context, 'activeSettings');
   const draftAfter = getContextValue(context, 'draftSettings');
-  assert.deepEqual(activeAfter, DEFAULT_SETTINGS);
-  assert.deepEqual(draftAfter, activeAfter);
+  assert.deepEqual(toPlain(activeAfter), DEFAULT_SETTINGS);
+  assert.deepEqual(toPlain(draftAfter), toPlain(activeAfter));
   assert.equal(saveCalls.length, 0);
 });
 
@@ -329,5 +333,5 @@ test('settings save persists normalized draft settings', async () => {
   assert.equal(activeAfter.contrastMode, 'high');
   assert.equal(activeAfter.hintMode, 'always');
   assert.equal(saveCalls.length, 1);
-  assert.deepEqual(saveCalls[0], activeAfter);
+  assert.deepEqual(toPlain(saveCalls[0]), toPlain(activeAfter));
 });

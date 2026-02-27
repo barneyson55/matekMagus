@@ -72,3 +72,12 @@ Last updated: 2026-02-03
 - [x] Ran `npm test` (WSL): pass improved **28 -> 29**, fail reduced **10 -> 9**.
 - [x] Cleared prior iframe `insertBefore` blocker (`settings save` test now passing).
 - Next step: tackle cross-context object equality assertions in settings tests, then character-sheet script extraction blockers.
+
+<!-- ASPM_SWEEP_2026-02-27D -->
+## ASPM Sweep 2026-02-27 (hourly #3)
+- [x] First unchecked item in `docs/user_todo.md`: none.
+- [x] Top-level unchecked count in `docs/ai_todo.md`: 0.
+- [x] Completed one milestone from prior next-step: fixed cross-context assertion instability in settings/core unit tests.
+- [x] Ran focused checks: `node --test tests/unit/core_logic.test.js tests/unit/settings_persistence.test.js` (11 pass, 0 fail).
+- [x] Full suite status after change: `npm test` now **34 pass / 4 fail** (remaining: character-sheet script block extraction tests).
+- Next step: adapt `tests/unit/character_sheet_rendering.test.js` loader to current `character_sheet.html` script structure.

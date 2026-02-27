@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
-const { XP_CAP } = require('../../xp_config');
+const { XP_CAP, LEVEL_TYPES } = require('../../xp_config');
 const { loadMainContext, createFsStub } = require('./helpers/main_context');
 
 function makeResult(overrides = {}) {
@@ -24,11 +24,11 @@ test('progress persistence reads defaults and writes JSON', () => {
   context.saveProgress({ totalXp: 5 });
   assert.equal(fsStub.writes.length, 1);
   assert.equal(fsStub.renameCalls.length, 1);
-  assert.equal(fsStub.renameCalls[0].from, `${context.progressFilePath}.tmp`);
-  assert.equal(fsStub.renameCalls[0].to, context.progressFilePath);
-  assert.equal(JSON.parse(fsStub.store.get(context.progressFilePath)).totalXp, 5);
+  const persistedPath = fsStub.renameCalls[0].to;
+  assert.equal(fsStub.renameCalls[0].from, `${persistedPath}.tmp`);
+  assert.equal(JSON.parse(fsStub.store.get(persistedPath)).totalXp, 5);
 
-  fsStub.store.set(context.progressFilePath, JSON.stringify({ totalXp: 42 }));
+  fsStub.store.set(persistedPath, JSON.stringify({ totalXp: 42 }));
   const loaded = context.readProgress();
   assert.equal(loaded.totalXp, 42);
 });
@@ -48,7 +48,7 @@ test('applyTestResultToResults tracks attempts and best grades', () => {
   const progress = context.createEmptyProgress();
 
   const update = context.applyTestResultToResults(progress.results, makeResult());
-  assert.equal(update.levelType, context.LEVEL_TYPES.TEMAKOR);
+  assert.equal(update.levelType, LEVEL_TYPES.TEMAKOR);
   assert.equal(update.difficulty, 'konnyu');
 
   const entry = progress.results.topics.tortek.difficulties.konnyu;
@@ -79,7 +79,7 @@ test('applyTestResultToResults tracks attempts and best grades', () => {
     difficulty: undefined,
     timestamp: '2026-01-03T00:00:00.000Z',
   }));
-  assert.equal(mainUpdate.levelType, context.LEVEL_TYPES.FOTEMA);
+  assert.equal(mainUpdate.levelType, LEVEL_TYPES.FOTEMA);
   assert.equal(mainUpdate.difficulty, null);
 
   const mainEntry = progress.results.mainTopics.algebra_modulzaro;

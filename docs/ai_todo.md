@@ -63,3 +63,12 @@ Last updated: 2026-02-03
 - [x] Ran `npm test` (WSL): pass improved **18 -> 28**, fail reduced **20 -> 10**.
 - [x] Remaining blockers narrowed to character-sheet script extraction, iframe mock `insertBefore`, and strict-equality assertions in settings/core tests.
 - Next step: add DOM-test-safe guards for iframe style injection and align failing assertions with current repository path/default exports.
+
+<!-- ASPM_SWEEP_2026-02-27C -->
+## ASPM Sweep 2026-02-27 (hourly #2)
+- [x] First unchecked item in `docs/user_todo.md`: none.
+- [x] Top-level unchecked count in `docs/ai_todo.md`: 0.
+- [x] Implemented DOM-test-safe fallback in `ensureModuleBaseStyles`: use `appendChild` when `insertBefore` is unavailable.
+- [x] Ran `npm test` (WSL): pass improved **28 -> 29**, fail reduced **10 -> 9**.
+- [x] Cleared prior iframe `insertBefore` blocker (`settings save` test now passing).
+- Next step: tackle cross-context object equality assertions in settings tests, then character-sheet script extraction blockers.

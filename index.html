@@ -1270,8 +1270,10 @@
             link.rel = 'stylesheet';
             link.href = '../assets/styles/base.css';
             const target = doc.head || doc.body;
-            if (target) {
-                target.insertBefore(link, target.firstChild);
+            if (target?.insertBefore) {
+                target.insertBefore(link, target.firstChild || null);
+            } else if (target?.appendChild) {
+                target.appendChild(link);
             }
         }
 

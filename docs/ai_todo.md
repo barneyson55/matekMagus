@@ -49,6 +49,7 @@ Last updated: 2026-02-03
   - [x] Re-ran `node --test tests/e2e/mobile-smoke.test.js` in ASPM hourly cycle #11; WSL skip-only outcome remained stable (1 skipped, 0 failed).
   - [x] Re-ran `node --test tests/e2e/mobile-smoke.test.js` in ASPM hourly cycle #12; WSL skip-only outcome remained stable (1 skipped, 0 failed).
   - [x] Re-ran `node --test tests/e2e/mobile-smoke.test.js` in ASPM hourly cycle #13; WSL skip-only outcome remained stable (1 skipped, 0 failed).
+  - [x] Prepared Windows small-screen manual validation checklist (`docs/mobile_reval_windows_checklist.md`) so the remaining manual run has explicit PASS/FAIL criteria.
   - [ ] Perform manual small-screen validation on Windows desktop build (Quest Log drawer open/close, navigation, overflow) and record results.
 
 
@@ -183,3 +184,13 @@ Last updated: 2026-02-03
 - [x] Ran relevant check: `node --test tests/e2e/mobile-smoke.test.js` (WSL: 1 skipped, 0 failed).
 - [x] Updated `docs/ai_todo.md` checkbox state for hourly cycle #13.
 - Next step: perform and record the remaining manual Windows small-screen validation.
+
+
+<!-- ASPM_SWEEP_2026-02-27O -->
+## ASPM Sweep 2026-02-27 (hourly #14)
+- [x] First unchecked item in `docs/user_todo.md`: none.
+- [x] Top-level unchecked count in `docs/ai_todo.md`: 1 (`MOBILE-REVAL-001`).
+- [x] Completed one milestone on `MOBILE-REVAL-001`: prepared a Windows small-screen manual validation checklist (`docs/mobile_reval_windows_checklist.md`) with explicit PASS/FAIL steps.
+- [x] Ran relevant check: `node --test tests/e2e/mobile-smoke.test.js` (WSL: 1 skipped, 0 failed).
+- [x] Updated `docs/ai_todo.md` checkbox state for hourly cycle #14.
+- Next step: execute and record the remaining manual Windows small-screen validation using the new checklist.

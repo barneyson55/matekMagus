@@ -55,3 +55,11 @@ Last updated: 2026-02-03
 - [x] Ran `npm test` (WSL): 18 pass, 20 fail.
 - [x] Logged current blocking failures: `electron-updater` `getVersion` in unit harness, missing character sheet script block, and iframe mock `insertBefore` gaps.
 - Next step: promote first actionable fix from `docs/ai_backlog.md` into `docs/ai_todo.md` before next ASPM execution.
+
+<!-- ASPM_SWEEP_2026-02-27B -->
+## ASPM Sweep 2026-02-27 (hourly)
+- [x] First unchecked item in `docs/user_todo.md`: none.
+- [x] Promoted actionable fix from backlog: stabilize unit harness by lazy-loading `electron-updater` only in packaged update flow.
+- [x] Ran `npm test` (WSL): pass improved **18 -> 28**, fail reduced **20 -> 10**.
+- [x] Remaining blockers narrowed to character-sheet script extraction, iframe mock `insertBefore`, and strict-equality assertions in settings/core tests.
+- Next step: add DOM-test-safe guards for iframe style injection and align failing assertions with current repository path/default exports.

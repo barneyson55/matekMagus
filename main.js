@@ -5,7 +5,6 @@
 // saving XP earned from practice sessions.
 
 const { app, BrowserWindow, session, ipcMain, Menu } = require('electron');
-const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
 const {
@@ -36,6 +35,18 @@ const UPDATE_LOG_FILE = 'auto-update.log';
 const UPDATE_INSTALL_DELAY_MS = 3500;
 let mainWindow = null;
 let lastUpdateStatus = null;
+let cachedAutoUpdater = null;
+
+function getAutoUpdater() {
+  if (cachedAutoUpdater) return cachedAutoUpdater;
+  try {
+    ({ autoUpdater: cachedAutoUpdater } = require('electron-updater'));
+  } catch (error) {
+    writeUpdateLog('electron-updater nem tölthető be ebben a környezetben.', error);
+    return null;
+  }
+  return cachedAutoUpdater;
+}
 
 const progressRepository = new LocalProgressRepository({
   filePath: progressFilePath,
@@ -105,6 +116,12 @@ function setupAutoUpdates() {
   if (process.env.PORTABLE_EXECUTABLE_FILE || process.env.PORTABLE_EXECUTABLE_DIR) {
     writeUpdateLog('Auto-update letiltva portable buildben.');
     sendUpdateStatus('disabled', { message: 'Frissítés portable verzióban nem érhető el.' });
+    return;
+  }
+
+  const autoUpdater = getAutoUpdater();
+  if (!autoUpdater) {
+    sendUpdateStatus('disabled', { message: 'Frissítő modul nem érhető el ebben a környezetben.' });
     return;
   }
 

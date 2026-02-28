@@ -359,3 +359,12 @@ Last updated: 2026-02-03
 - [x] Updated `docs/ai_todo.md` checkbox state for hourly cycle #33.
 - Next step: perform and record the remaining manual Windows small-screen validation.
 
+<!-- ASPM_SWEEP_2026-02-28Q -->
+## ASPM Sweep 2026-02-28 (hourly #34)
+- [x] First unchecked item in `docs/user_todo.md`: none.
+- [x] Top-level unchecked count in `docs/ai_todo.md`: 1 (`MOBILE-REVAL-001`).
+- [x] Completed one milestone on `MOBILE-REVAL-001`: re-ran baseline mobile smoke validation and recorded stable WSL skip-only behavior.
+- [x] Ran relevant check: `node --test tests/e2e/mobile-smoke.test.js` (WSL: 1 skipped, 0 failed).
+- [x] Updated `docs/ai_todo.md` checkbox state for hourly cycle #34.
+- Next step: perform and record the remaining manual Windows small-screen validation.
+

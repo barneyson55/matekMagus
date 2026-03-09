@@ -70,6 +70,8 @@ Last updated: 2026-02-03
   - [x] Re-ran `node --test tests/e2e/mobile-smoke.test.js` in ASPM hourly cycle #32; WSL skip-only outcome remained stable (1 skipped, 0 failed).
   - [x] Re-ran `node --test tests/e2e/mobile-smoke.test.js` in ASPM hourly cycle #33; WSL skip-only outcome remained stable (1 skipped, 0 failed).
   - [ ] Perform manual small-screen validation on Windows desktop build (Quest Log drawer open/close, navigation, overflow) and record results.
+    - Blocker: this session has no native Windows desktop environment, so the final verification cannot be completed honestly from WSL/Linux.
+    - Required human action: on Windows, run the app at 360x740 and 390x844, follow `docs/mobile_reval_windows_checklist.md`, then log PASS/FAIL and any defects in `docs/status.md`.
 
 
 <!-- ASPM_SWEEP_2026-02-25 -->

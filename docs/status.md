@@ -112,7 +112,7 @@
 - CSS encoding normalized in `style.css` (UTF-8 charset, ASCII-safe glyph escapes).
 - Responsive breakpoints (desktop/tablet/mobile) defined in `style.css` and documented in `docs/responsive.md`, with refined tablet/mobile spacing, compact <=480px overrides, and a header-column min-width clamp to preserve the 5% layout across smaller widths.
 - Mobile Quest Log drawer now defaults closed on small screens, auto-closes after selection, hides closed-state shadow/border, and header stacking spacing is tightened for mobile.
-- Mobile app shell + Quest Log drawer re-validation completed; Quest Log entries now wrap in narrow drawers while quick links remain centered (verified in alapozo_modulzaro, linearis_egyenletek, linearis_fuggveny, terulet_kerulet, klasszikus_valoszinuseg, szamtani_mertani).
+- Mobile app shell + Quest Log drawer layout polish is implemented, but MOBILE-REVAL-001 remains open pending a manual Windows small-screen validation run. The WSL/mobile smoke baseline is stable, while the final human verification must confirm drawer open/close, navigation, and overflow behavior at 360x740 and 390x844 using `docs/mobile_reval_windows_checklist.md`.
 - Quest Log collapse state now restores when leaving mobile breakpoints, keeping header/Quest Log layout stable across portrait/landscape changes.
 - Compact landscape sizing added for short-height orientation changes (header height + Quest Log spacing).
 - Legacy `modules/xp_guide.html` removed and the quest exclusions cleaned up in `index.html`.
@@ -165,6 +165,7 @@
 
 ## Partial or Unverified
 - Windows renderer verification pending for CSS glyph rendering in the sidebar disclosure arrow.
+- MOBILE-REVAL-001 blocker: no native Windows desktop session is available here to perform the final small-screen manual validation. Required human action: on a Windows machine, launch the app (`npm run dev` or packaged build), set viewports to 360x740 and 390x844, execute `docs/mobile_reval_windows_checklist.md`, and record PASS/FAIL plus notes in `docs/status.md` and `docs/ai_todo.md`.
 - Windows smoke tests are still pending; no native Windows environment available in this session.
 - Latest orientation layout coverage is unverified on Windows (WSL2 run completed, but Windows coverage remains outstanding).
 - Packaging verification is pending (`npm run dist:win` failed: electron-builder missing; npm install blocked by `EAI_AGAIN` and timed out on retry; `dist/` not created).
